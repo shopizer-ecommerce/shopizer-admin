@@ -1,0 +1,35 @@
+<nb-card size="small" [nbSpinner]="loading" nbSpinnerStatus="info" nbSpinnerSize="xlarge">
+  <nb-card-header>
+    {{ "HOME.STORE_INFORMATION" | translate }}
+  </nb-card-header>
+  <nb-card-body>
+
+    <div class="info-block">
+      <span><strong>{{user?.merchantName}}</strong></span>
+      <span>{{user?.address}}</span>
+      <span>{{user?.city}}, {{user?.stateProvince}}, {{user?.postalCode}}</span>
+      <span>{{user?.country}}</span>
+      <span>{{user?.phone}}</span>
+    </div>
+
+    <div class="info-block">
+      <span>
+        <i class="fa fa-user"></i>
+        {{user?.userName}}
+      </span>
+      <span>
+      <i class="fa fa-calendar-alt"></i>
+      {{ "HOME.LAST_ACCESS" | translate }}: {{user?.lastAccess | date : 'medium'}}
+      </span>
+    </div>
+  </nb-card-body>
+</nb-card>
+
+<nb-card size="small" *ngIf="canAccessToOrder">
+  <nb-card-header>
+    {{ "HOME.RECENT_ORDERS" | translate }}
+  </nb-card-header>
+  <nb-card-body>
+<!--    <ngx-order-list></ngx-order-list>-->
+  </nb-card-body>
+</nb-card>

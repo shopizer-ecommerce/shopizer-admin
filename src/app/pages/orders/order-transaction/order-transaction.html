@@ -1,0 +1,50 @@
+<div class="transaction-box">
+
+  <span class="titleBar">
+    <span></span>
+    <span class="title_text">{{'ORDER_FORM.TRANSACTIONS_LIST' | translate}}</span>
+    <button class="close" type="button" (click)="cancel()"></button>
+  </span>
+  <div class="tabelSec">
+    <table cellpadding="0" cellspacing="0" id="print-section">
+      <thead>
+        <tr class="heading">
+          <th>
+            {{'COMMON.ID' | translate}}
+          </th>
+          <th>
+            {{'ORDER_FORM.DATE' | translate}}
+          </th>
+          <th>
+            {{'COMMON.TYPE' | translate}}
+          </th>
+          <th>
+            {{'ORDER_FORM.AMOUNT' | translate}}
+          </th>
+          <th>
+            {{'COMMON.DETAILS' | translate}}
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="item" *ngFor="let transaction of transactionData">
+          <td>
+            {{transaction.id}}
+          </td>
+          <td>
+            {{transaction.transactionDate}}
+          </td>
+          <td>
+            {{transaction.transactionType}}
+          </td>
+          <td>
+            {{transaction.amount}}
+          </td>
+          <td style="word-break: break-all;">
+            {{transaction.details}}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -1,0 +1,49 @@
+<div class="inner_pages">
+  <h1 class="page_title_marg">Manage Files</h1>.
+  <ngx-dropzone class="custom_dropzone_click" (change)="handleUpload($event)">
+    <ngx-dropzone-label>Drop files here or click to upload.</ngx-dropzone-label>
+    <!-- <ngx-dropzone-preview *ngFor="let f of files" [removable]="true">
+      <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
+    </ngx-dropzone-preview> -->
+  </ngx-dropzone>
+  <div class="row" [nbSpinner]="loadingList" nbSpinnerSize="large" nbSpinnerStatus="primary">
+    <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12">
+      <div class="file_listing_scroll">
+        <ul class="file_listing_main">
+          <ngx-dropzone class="custom_dropzone_full" (change)="handleUpload($event)">
+            <!-- <ngx-dropzone-preview *ngFor="let f of files" [removable]="true">
+              <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
+            </ngx-dropzone-preview> -->
+          </ngx-dropzone>
+          <li *ngFor="let images of data;let i=index">
+            <div class="file_listing_box">
+              <div class="image-title-main">
+                <div class="close_main">
+                  <i class="fa fa-eye" (click)="openImage(i)"></i>
+                  <i class="fa fa-copy" (click)="copyText(images.path + images.name)"></i>
+                  <i class="fa fa-trash" (click)="removeImage(images.name)"></i>
+                </div>
+              </div>
+              <div class="image_box" *ngIf="images.contentType == 1">
+                <img src="{{images.path}}" class="banner-image">
+              </div>
+              <div class="image_box" *ngIf="images.contentType != 1">
+                <img src="{{images.path}}{{images.name}}" class="banner-image">
+              </div>
+            </div>
+          </li>
+          <!-- <li>
+            <ngx-dropzone class="dropzone_custom" (change)="onSelect($event)">
+              <ngx-dropzone-label>Drop files here or click to upload.</ngx-dropzone-label>
+              <ngx-dropzone-preview *ngFor="let f of files" [removable]="true">
+                <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
+              </ngx-dropzone-preview>
+            </ngx-dropzone>
+            <!-- <upload [onUpload]="handleUpload" [multi]="true"></upload> --
+          </li> -->
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</div>

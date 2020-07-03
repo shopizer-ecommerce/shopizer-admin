@@ -1,0 +1,30 @@
+<nb-card size="small" class="page-card">
+  <nb-card-body [nbSpinner]="loadingList" nbSpinnerSize="large" nbSpinnerStatus="primary">
+
+    <nb-actions size="medium" class="back-button">
+      <nb-action>
+        <i class="fas fa-plus"></i>&nbsp;
+        <a [routerLink]="['/pages/catalogue/products/'+ params.productId +'/inventory/'+params.inventoryId+'/create-price']">
+          {{ 'INVENTORY.ADD_PRICE' | translate}}
+        </a>
+      </nb-action>
+    </nb-actions>
+
+    <div *ngIf="prices && prices.length">
+      <ng2-smart-table
+        [settings]="settings"
+        [source]="source"
+        (custom)="route($event)">
+      </ng2-smart-table>
+
+      <ngx-paginator
+        (changePage)="changePage($event)"
+        [pagesToShow]="5"
+        [currentPage]="currentPage"
+        [perPage]="perPage"
+        [count]="totalCount">
+      </ngx-paginator>
+    </div>
+
+  </nb-card-body>
+</nb-card>

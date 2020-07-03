@@ -1,0 +1,25 @@
+.page-card {
+    background: transparent;
+    border: none;
+    .storeDetails {
+        .main_header {
+            padding: 6px 30px 14px 0px;
+
+            .page_title {
+                margin-top: -25px;
+                font-weight: 600;
+            }
+        }
+    }
+}
+:host ::ng-deep .page-card {
+    .storeDetails {
+        .main_header {
+            .headerDropdown {
+                button {
+                    margin: 17px 0 5px 0 !important;
+                }
+            }
+        }
+    }
+}

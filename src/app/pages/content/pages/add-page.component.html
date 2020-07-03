@@ -1,0 +1,130 @@
+<nb-card size="small" class="page-card">
+  <form #pagesForm="ngForm" role="form">
+    <nb-card-header class="main_header">
+      <h1 class="page_title">{{titleText}}</h1>
+      <div class="content_spacing">
+        <nb-select placeholder="Language" outline shape="rectangle" [(ngModel)]="language"
+          (ngModelChange)="getContentDetails()" name="language" [selected]="'en'">
+          <nb-option *ngFor="let lan of languages" [value]="lan.code">{{ lan.name }}</nb-option>
+        </nb-select>
+      </div>
+      <div class="content_spacing">
+        <button type="button" nbButton status="warning">Cancel</button>
+      </div>
+      <div class="content_spacing">
+        <button type="button" nbButton class="success_button" [disabled]="!pagesForm.form.valid"
+          (click)="createPages()">{{buttonText}}</button>
+      </div>
+    </nb-card-header>
+    <div class="" [nbSpinner]="loadingList" nbSpinnerSize="large" nbSpinnerStatus="primary">
+      <div class="custom_scroll" malihu-scrollbar [scrollbarOptions]="scrollbarOptions">
+        <div class="row">
+          <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+            <nb-card class="nb-card inline-form-card">
+              <nb-card-header class="nb-card-header">Basic Details</nb-card-header>
+              <nb-card-body class="nb-card-body">
+                <div class="row">
+                  <div class="col-lg-12">
+                    <div class="form-group">
+                      <nb-checkbox [(ngModel)]="visible" name="visible" status="success">Visible</nb-checkbox>
+                      <nb-checkbox [(ngModel)]="mainmenu" name="mainmenu" status="success">Display this page in main
+                        menu
+                      </nb-checkbox>
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                    <div class="form-group">
+                      <label for="inputWebsite" class="label">Code <span>*</span></label>
+                      <input type="text" [(ngModel)]="code" name="code" class="form-control" id="code"
+                        placeholder="Code" (focusout)="focusOutFunction()" required>
+                      <span *ngIf="codeExits" class="err-message">{{message}}</span>
+                      <span *ngIf="!codeExits" class="err-message-success">{{message}}</span>
+                    </div>
+                  </div>
+                  <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                    <div class="form-group">
+                      <label for="exampleInputPassword1" class="label">Order</label>
+                      <input type="number" [(ngModel)]="order" name="order" class="form-control" id="order"
+                        placeholder="Order">
+                    </div>
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                    <div class="form-group">
+                      <label for="exampleInputPassword1" class="label">Page name <span>*</span></label>
+                      <input type="text" [(ngModel)]="en.name" name="name" class="form-control" id="page_name"
+                        placeholder="Page Name" (keyup)="urlTitle($event)" required>
+                    </div>
+                  </div>
+                  <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                    <div class="form-group">
+                      <label for="exampleInputPassword1" class="label">Search engine friendly url</label>
+                      <input type="text" [(ngModel)]="en.slug" name="slug" class="form-control" id="url"
+                        placeholder="Url">
+                    </div>
+                  </div>
+                </div>
+              </nb-card-body>
+            </nb-card>
+          </div>
+          <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+            <nb-card class="nb-card inline-form-card">
+              <nb-card-header class="nb-card-header">SEO Details</nb-card-header>
+              <nb-card-body class="nb-card-body">
+
+                <div class="row">
+                  <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                    <div class="form-group">
+                      <label for="exampleInputPassword1" class="label">Title</label>
+                      <input type="text" [(ngModel)]="en.title" name="title" class="form-control" id="title"
+                        placeholder="Title">
+                    </div>
+                  </div>
+                  <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                    <div class="form-group">
+                      <label for="exampleInputPassword1" class="label">Keywords</label>
+                      <input type="text" [(ngModel)]="en.keyword" name="keyword" class="form-control" id="keyword"
+                        placeholder="keyword">
+                    </div>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                    <div class="form-group">
+                      <label for="exampleInputPassword1" class="label">Product group</label>
+                      <input type="text" [(ngModel)]="en.productGroup" name="productGroup" class="form-control"
+                        id="product_group" placeholder="Product group">
+                    </div>
+                  </div>
+                  <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                    <div class="form-group">
+                      <label for="exampleInputPassword1" class="label">Description metatag</label>
+                      <input type="text" [(ngModel)]="en.metaDetails" name="metaDetails" class="form-control"
+                        id="description" placeholder="Description metatag">
+                    </div>
+                  </div>
+                </div>
+
+              </nb-card-body>
+            </nb-card>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <nb-card class="nb-card inline-form-card">
+              <nb-card-header class="nb-card-header">Page content</nb-card-header>
+              <nb-card-body class="nb-card-body ckeditor">
+                <ckeditor [(ngModel)]="en.pageContent" name="pageContent" [config]="ckeConfig" debounce="500" #ckeditor>
+                </ckeditor>
+              </nb-card-body>
+            </nb-card>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</nb-card>

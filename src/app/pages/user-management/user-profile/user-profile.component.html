@@ -1,0 +1,16 @@
+<nb-card size="small" class="page-card">
+  <div *ngIf="loading" class="loading-block" [nbSpinner]="loading" nbSpinnerSize="large" nbSpinnerStatus="primary">
+  </div>
+  <nb-card-body *ngIf="!loading">
+    <div class="inner_pages_legacy myProfile">
+      <nb-card-header class="main_header">
+        <h1 class="page_title">{{ 'COMPONENTS.PROFILE' | translate }}</h1>
+        <div class="content_spacing" style="height:60px;">
+        </div>
+        <button type="submit" class="btn success_button" (click)="save()">Save</button>
+
+      </nb-card-header>
+    </div>
+    <ngx-user-form [user]="user"></ngx-user-form>
+  </nb-card-body>
+</nb-card>

@@ -1,0 +1,8 @@
+.info-block {
+  display: flex;
+  flex-direction: column;
+}
+
+.info-block:last-child {
+  margin-top: 20px;
+}

@@ -1,0 +1,45 @@
+.pagination {
+  width: 100%;
+  margin-top: 20px;
+  position: relative;
+  flex: 1;
+  font-size: 14px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  .description {
+    position: absolute;
+    top: 50%;
+    transform: translate(0, -50%);
+    right: 0;
+
+    .page-counts {
+    }
+  }
+
+  .numbers {
+    display: block;
+    text-align: center;
+    flex: 1;
+
+    button {
+      flex: 0 0 auto;
+      outline: none;
+      border: 1px solid #edf1f7;
+      padding: 5px 10px;
+      background: transparent;
+      cursor: pointer;
+
+      &.active {
+        background-color: #36f;
+        color: #ffffff;
+      }
+
+      &.disabled {
+        color: #dadfe6;
+      }
+    }
+  }
+
+}

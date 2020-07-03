@@ -1,0 +1,40 @@
+<div class="twolistselection" role="region" aria-label="Transfer List Boxes">
+  <div class="row">
+    <div class="col-xs-5 col-sm-5">
+      <div class="left">
+        <app-filterlistbox [itemsMap]="leftAreaMap" [componentId]="leftAreaId" [listName]="leftAreaLabel"
+          (itemStateChanged)="itemSelectedOrUnSelected($event)" [itemStateChanged]="toggleButtonClicked">
+        </app-filterlistbox>
+      </div>
+    </div>
+    <div class="col-xs-2 col-sm-2">
+      <div class="center">
+        <div class="row">
+          <div class="col-12">
+            <button type="button" class="btn btn-primary" attr.aria-label="{{leftAreaLabel}} to {{rightAreaLabel}}"
+              (click)="toggleLeftToRight()" title="Click here to move items from {{leftAreaLabel}} To {{rightAreaLabel}}">
+              <i class="fa fa-arrow-right" aria-hidden="true"></i>
+            </button>
+          </div>
+        </div>
+        <br />
+        <div class="row">
+          <div class="col-12">
+            <button type="button" class="btn btn-primary" attr.aria-label="{{rightAreaLabel}} to {{leftAreaLabel}}"
+              (click)="toggleRightToLeft()" title="Click here to move items from {{rightAreaLabel}} to {{leftAreaLabel}}">
+              <i class="fa fa-arrow-left" aria-hidden="true"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-5 col-sm-5">
+      <div class="right">
+        <app-filterlistbox [itemsMap]="rightAreaMap" [componentId]="rightAreaId" [listName]="rightAreaLabel"
+          (itemStateChanged)="itemSelectedOrUnSelected($event)" [itemStateChanged]="toggleButtonClicked">
+        </app-filterlistbox>
+      </div>
+    </div>
+  </div>
+  <app-alerts [srOnly]="isSrOnly" [alertMessage]="message" [alertAriaLive]="alertAriaLive" [alertClass]="alertsClass"></app-alerts>
+</div>

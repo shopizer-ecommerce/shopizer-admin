@@ -1,0 +1,6 @@
+{
+  "/api": {
+    "target": "http://aws-demo.shopizer.com:8080",
+    "secure": false
+  }
+}

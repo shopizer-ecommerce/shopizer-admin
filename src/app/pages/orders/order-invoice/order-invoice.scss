@@ -1,0 +1,203 @@
+.invoice-box {
+  width: 800px;
+  // margin: auto;
+  background: #fff;
+  padding: 30px;
+  border: 1px solid #eee;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+  font-size: 16px;
+  // line-height: 24px;
+  // font-family: "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
+  color: #555;
+
+  .titleBar {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid grey;
+    align-items: center;
+    margin: -26px 0px 0px 0px;
+
+    .title_text {
+      margin: 0;
+      padding: 12px;
+      font-size: 1.5rem;
+      font-weight: 600;
+    }
+
+    .close {
+      right: 25px;
+      top: 25px;
+      width: 25px;
+      height: 25px;
+      opacity: 0.3;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+
+      &:hover {
+        opacity: 1;
+      }
+
+      &:before,
+      &:after {
+        position: absolute;
+        content: " ";
+        height: 20px;
+        width: 2px;
+        background-color: #333;
+      }
+
+      &:before {
+        transform: rotate(45deg);
+      }
+
+      &:after {
+        transform: rotate(-45deg);
+      }
+    }
+  }
+
+  table {
+    width: 100%;
+    line-height: inherit;
+    text-align: left;
+
+    td {
+      padding: 5px;
+      vertical-align: top;
+    }
+
+    tr {
+      td:nth-child(2) {
+        text-align: right;
+      }
+
+      td:nth-child(3) {
+        text-align: right;
+      }
+
+      &.top table td {
+        padding-bottom: 20px;
+
+        &.title {
+          font-size: 45px;
+          line-height: 45px;
+          color: #333;
+        }
+      }
+
+      &.information table td {
+        padding-bottom: 40px;
+      }
+
+      &.heading td {
+        background: #eee;
+        border-bottom: 1px solid #ddd;
+        font-weight: bold;
+      }
+
+      &.details td {
+        padding-bottom: 20px;
+      }
+
+      &.item {
+        .sku_section {
+          color: #28bef8
+        }
+
+        td {
+          border-bottom: 1px solid #eee;
+        }
+
+        &.last td {
+          border-bottom: none;
+        }
+      }
+
+      &.total td:nth-child(2) {
+        // border-top: 2px solid #eee;
+        font-weight: bold;
+      }
+
+      &.total {
+        .success_button {
+          border-radius: 5px !important;
+          min-width: 150px;
+          padding: 12px 20px 12px 20px !important;
+          border: 0 !important;
+          margin-top: 65px;
+          background: #73a1ff;
+          color: #fff;
+        }
+
+        .total_section {
+          margin-top: 10px;
+
+          .total_module {
+            text-transform: capitalize;
+            font-weight: 500;
+            width: 55%; // margin: 10px;
+            // margin-right: -25px;
+            float: left;
+          }
+
+          .total_value {
+            width: 45%
+          }
+        }
+
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .invoice-box table tr {
+
+    &.top table td,
+    &.information table td {
+      width: 100%;
+      display: block;
+      text-align: center;
+    }
+  }
+}
+
+/** RTL **/
+
+.rtl {
+  direction: rtl;
+  // font-family: Tahoma, "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
+
+  table {
+    text-align: right;
+
+    tr td:nth-child(2) {
+      text-align: left;
+    }
+  }
+}
+
+@media print {
+
+  .invoice-box {
+    width: 1048px !important;
+    height: 1513px !important;
+
+    border: 0px !important;
+    box-shadow: none !important;
+    padding-top: 150px !important;
+
+
+    .titleBar {
+      display: none !important;
+    }
+
+
+
+    .success_button {
+      display: none !important;
+    }
+  }
+}

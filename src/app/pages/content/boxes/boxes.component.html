@@ -1,0 +1,15 @@
+<div class="pages">
+  <h1 class="page_title">Content Boxes</h1>
+  <nb-card-header class="header_full">
+    <div class="table_search">
+      <input type="text" name="code" class="form-control" placeholder="Search">
+    </div>
+    <button nbButton (click)="addBoxes()">
+      Create Box
+    </button>
+  </nb-card-header>
+  <nb-card-body>
+    <ng2-smart-table [settings]="settings" [source]="source" (deleteConfirm)="onDeleteConfirm($event)" class="custom_scroll home-table">
+    </ng2-smart-table>
+  </nb-card-body>
+</div>

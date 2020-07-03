@@ -1,0 +1,34 @@
+#imageInput {
+  display: none;
+}
+
+.image-actions {
+  display: flex;
+  flex-direction: row;
+
+  button:first-child {
+    margin-right: 20px;
+  }
+}
+
+.image-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+
+  .image-item {
+    display: flex;
+    flex-direction: column;
+    margin-right: 20px;
+    margin-bottom: 20px;
+
+    span {
+      margin-top: 5px;
+      text-align: center;
+
+      i {
+        cursor: pointer;
+      }
+    }
+  }
+}

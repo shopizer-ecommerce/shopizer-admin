@@ -1,0 +1,16 @@
+.short-header {
+  width: 70px;
+}
+
+.remove-button {
+  text-align: center;
+  i:hover {
+    cursor: pointer;
+  }
+}
+
+td {
+  white-space: nowrap !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+}

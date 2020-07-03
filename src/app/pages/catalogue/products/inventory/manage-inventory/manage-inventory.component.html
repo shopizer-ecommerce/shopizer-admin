@@ -1,0 +1,32 @@
+<ngx-back-button></ngx-back-button>
+<nb-card size="small" class="page-card">
+  <nb-card-header>
+    {{product?.description.name}}
+  </nb-card-header>
+  <nb-card-body [nbSpinner]="loadingList" nbSpinnerSize="large" nbSpinnerStatus="primary">
+
+    <nb-actions size="medium" class="back-button">
+      <nb-action>
+        <i class="fas fa-plus"></i>&nbsp;
+        <a [routerLink]="['/pages/catalogue/products/' + productId +'/inventory-creation']">
+          {{ 'INVENTORY.ADD_TO_INVENTORY' | translate}}
+        </a>
+      </nb-action>
+    </nb-actions>
+
+    <ng2-smart-table
+      [settings]="settings"
+      [source]="source"
+      (custom)="route($event)">
+    </ng2-smart-table>
+
+    <ngx-paginator
+      (changePage)="changePage($event)"
+      [pagesToShow]="5"
+      [currentPage]="currentPage"
+      [perPage]="perPage"
+      [count]="totalCount">
+    </ngx-paginator>
+
+  </nb-card-body>
+</nb-card>

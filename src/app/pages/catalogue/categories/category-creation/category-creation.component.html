@@ -1,0 +1,16 @@
+<div *ngIf="loading" class="loading-block" [nbSpinner]="loading" nbSpinnerSize="large" nbSpinnerStatus="primary"></div>
+  <nb-card size="small" class="page-card">
+    <nb-card-body [nbSpinner]="loadingList" nbSpinnerSize="large" nbSpinnerStatus="primary">
+    <div class="inner_pages_legacy">
+        <nb-card-header class="main_header">
+          <h1 class="page_title">{{ 'COMPONENTS.CREATE_CATEGORY' | translate }}</h1>
+          <div class="content_spacing_empty"></div>
+        
+        </nb-card-header>
+        <nb-card-body class="loading-block" [nbSpinner]="loadingInfo" nbSpinnerSize="large" nbSpinnerStatus="primary">
+          <ngx-category-form [category]="category"></ngx-category-form>
+       </nb-card-body>
+    </div>
+    </nb-card-body>
+</nb-card>
+

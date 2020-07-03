@@ -1,0 +1,59 @@
+// change color of header
+.nb-theme-corporate nb-layout .layout nb-layout-header nav {
+  background: #0088cc !important;
+}
+
+// hide user avatar
+.user-picture.background {
+  display: none !important;
+}
+
+// size for icons in side menu
+.nb-theme-corporate nb-menu .menu-item .menu-icon {
+  font-size: 2rem !important;
+}
+
+// cursor for logo, username
+.logo, .header-action {
+  cursor: pointer;
+}
+
+//.ng2-smart-actions ng2-st-tbody-edit-delete {
+//  display: none !important;
+//}
+
+.nb-theme-corporate ng2-smart-table .ng2-smart-actions a.ng2-smart-action {
+  font-size: 14px !important;
+}
+
+.cdk-global-scrollblock {
+  top: 0 !important;
+}
+
+// changing card styles
+nb-card {
+  display: flex;
+  flex-grow: 1;
+  margin-right: 40px;
+}
+
+nb-card.small-card, nb-card.large-card  {
+  height: auto !important;
+}
+
+nb-card-header {
+  background-color: #F5F5F5;
+}
+
+.toggle-children-wrapper {
+  padding-right: 0 !important;
+}
+
+.ng2-smart-actions {
+  width: 100px;
+}
+
+.nb-theme-corporate ng2-smart-table .ng2-smart-actions {
+  padding: 0;
+  height: auto !important;
+}

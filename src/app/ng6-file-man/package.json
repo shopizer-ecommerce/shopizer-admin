@@ -1,0 +1,58 @@
+{
+  "_args": [
+    [
+      "ng6-file-man@0.0.10",
+      "/Users/nimble_sencha/Downloads/ng6-file-man-test-master"
+    ]
+  ],
+  "_from": "ng6-file-man@0.0.10",
+  "_id": "ng6-file-man@0.0.10",
+  "_inBundle": false,
+  "_integrity": "sha512-Y/0ILghPQIv9073GFhS/9LaXQdWDXTAr0fc+fezKU1KmwEG0m7j11qBLaOzhwPLMYpkT0j3zFIyf+u4Dyl+M1A==",
+  "_location": "/ng6-file-man",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "version",
+    "registry": true,
+    "raw": "ng6-file-man@0.0.10",
+    "name": "ng6-file-man",
+    "escapedName": "ng6-file-man",
+    "rawSpec": "0.0.10",
+    "saveSpec": null,
+    "fetchSpec": "0.0.10"
+  },
+  "_requiredBy": [
+    "/"
+  ],
+  "_resolved": "https://registry.npmjs.org/ng6-file-man/-/ng6-file-man-0.0.10.tgz",
+  "_spec": "0.0.10",
+  "_where": "/Users/nimble_sencha/Downloads/ng6-file-man-test-master",
+  "dependencies": {
+    "@biesbjerg/ngx-translate-extract": "^2.3.4",
+    "@fortawesome/fontawesome-free": "^5.1.1",
+    "@ngrx/store": "^6.1.0",
+    "@ngx-translate/core": "^10.0.2",
+    "@ngx-translate/http-loader": "^3.0.1",
+    "fine-uploader": "5.16.2",
+    "ngx-smart-modal": "^7.0.3",
+    "tslib": "^1.9.0"
+  },
+  "es2015": "fesm2015/ng6-file-man.js",
+  "esm2015": "esm2015/ng6-file-man.js",
+  "esm5": "esm5/ng6-file-man.js",
+  "fesm2015": "fesm2015/ng6-file-man.js",
+  "fesm5": "fesm5/ng6-file-man.js",
+  "main": "bundles/ng6-file-man.umd.js",
+  "metadata": "ng6-file-man.metadata.json",
+  "module": "fesm5/ng6-file-man.js",
+  "name": "ng6-file-man",
+  "peerDependencies": {
+    "@angular/common": "^6.0.3",
+    "@angular/core": "^6.0.3",
+    "@angular/http": "^6.0.3",
+    "rxjs": "^6.0.0"
+  },
+  "sideEffects": false,
+  "typings": "ng6-file-man.d.ts",
+  "version": "0.0.10"
+}

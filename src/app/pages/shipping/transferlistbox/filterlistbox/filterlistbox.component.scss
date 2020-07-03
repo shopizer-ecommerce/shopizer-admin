@@ -1,0 +1,65 @@
+.twolistselection .card-block {
+    min-height: 500px;
+    overflow-y: auto;
+    max-height: 500px
+}
+
+.keyword-search {
+    position: relative;
+    top: 0px;
+    margin-top: 3px;
+}
+
+:focus {
+    outline: -webkit-focus-ring-color auto 5px;
+    outline-color: -webkit-focus-ring-color;
+    outline-style: auto;
+    outline-width: 5px;
+}
+
+.twolistselection .form-group {
+    margin-bottom: 0.3rem;
+}
+
+.list-group .list-item {
+    padding: 0.5rem 1.5rem;
+}
+
+.list-group {
+    padding-left: 0px !important;
+}
+
+.list-group li {
+    list-style-type: none;
+
+    .list-item {
+        padding: 0.5rem 1.5rem;
+    }
+
+    &:nth-child(even) {
+        background: #ebeff3
+    }
+
+    &:nth-child(odd) {
+        background: #fff
+    }
+
+    &:hover {
+        cursor: pointer;
+        font-weight: bold;
+    }
+
+    i {
+        margin-left: -1.25rem;
+        color: #007bff;
+    }
+
+    &[data-activedesendent='true'] {
+        background: #007bff;
+        color: #fff;
+
+        i {
+            color: #fff;
+        }
+    }
+}

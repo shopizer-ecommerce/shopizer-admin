@@ -1,0 +1,38 @@
+<div class="history-box">
+
+  <span class="titleBar">
+    <span></span>
+    <span class="title_text">{{'ORDER_FORM.HISTORY_LIST' | translate}}</span>
+    <button class="close" type="button" (click)="cancel()"></button>
+  </span>
+  <div class="tabelSec">
+    <table cellpadding="0" cellspacing="0" id="print-section">
+      <thead>
+        <tr class="heading">
+          <th>
+            {{'ORDER_FORM.ORDER_STATUS' | translate}}
+          </th>
+          <th style="text-align:center">
+            {{'ORDER_FORM.DATE' | translate}}
+          </th>
+          <th>
+            {{'ORDER_FORM.COMMENT' | translate}}
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="item" *ngFor="let history of historyData">
+          <td>
+            {{history.orderStatus}}
+          </td>
+          <td style="text-align:center">
+            {{moment(history.date).format('YYYY-DD-MM')}}
+          </td>
+          <td>
+            {{history.comments}}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

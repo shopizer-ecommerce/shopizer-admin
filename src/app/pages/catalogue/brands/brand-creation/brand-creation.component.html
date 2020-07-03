@@ -1,0 +1,22 @@
+<!-- <nb-card size="small" class="page-card">
+  <nb-card-header>
+    {{ 'COMPONENTS.CREATE_BRAND' | translate}}
+  </nb-card-header>
+  <nb-card-body>
+    <ngx-brand-form [brand]="brand"></ngx-brand-form>
+  </nb-card-body>
+</nb-card> -->
+<nb-card size="small" class="page-card">
+  <!-- <div *ngIf="loading" class="loading-block" [nbSpinner]="loading" nbSpinnerSize="large" nbSpinnerStatus="primary"></div> -->
+  <nb-card-body class="newBrand">
+    <div class="inner_pages_legacy">
+      <nb-card-header class="main_header">
+        <h1 class="page_title">{{ 'COMPONENTS.CREATE_BRAND' | translate}}</h1>
+        <div class="content_spacing" style="height:60px;">
+        </div>
+        <button type="submit" class="btn success_button">Save</button>
+      </nb-card-header>
+    </div>
+    <ngx-brand-form [brand]="brand"></ngx-brand-form>
+  </nb-card-body>
+</nb-card>

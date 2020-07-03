@@ -1,0 +1,77 @@
+@import "../../../@theme/styles/themes";
+
+@include nb-install-component() {
+  nb-card {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.page-card {
+  background: none;
+  border: none;
+  .inner_pages_legacy {
+    .main_header {
+      padding: 0px 30px 10px 0px;
+      .page_title {
+        margin-top: -25px;
+        font-weight: 600;
+      }
+    }
+    .form-inline {
+      justify-content: space-between;
+      background: #fff;
+      padding: 10px 15px 10px 15px;
+      margin: -10px 0px 10px 0px;
+      .flexView {
+        display: flex;
+        .search {
+          margin-right: 5px;
+        }
+        .pointer {
+          padding: 6px;
+          margin-top: 4px;
+          margin-right: 5px;
+        }
+        label {
+          margin-top: 3px;
+          cursor: pointer;
+        }
+        .createBtn {
+          display: flex;
+          &:link,
+          &:visited,
+          &:hover,
+          &:active {
+            color: #222b45;
+            text-decoration: none;
+            cursor: pointer;
+          }
+        }
+      }
+    }
+  }
+}
+:host ::ng-deep .page-card {
+  .inner_pages_legacy {
+    .home-table {
+      thead {
+        .ng2-smart-titles {
+          th {
+            a {
+              font-weight: 600;
+            }
+          }
+        }
+      }
+      tbody {
+        tr {
+          cursor: pointer;
+          &:hover,
+          &.selected {
+            background: #e6f3ff !important;
+          }
+        }
+      }
+    }
+  }
+}

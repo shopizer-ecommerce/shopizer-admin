@@ -1,0 +1,8 @@
+<div class="inline-block">
+  <div ngfDrop ngfSelect [multiple]="multi" class="dropzone" (filesChange)="onFilesChange()" [(validDrag)]="validDrag"
+    [class.dragActive]="validDrag" [class.dragReject]="validDrag===false" [class.success]="validDrag" [class.error]="validDrag===false"
+    [(files)]="files" [accept]="'image/*'" [selectable]="false">
+    {{validDrag == null ? 'Drop files here to upload' : validDrag ? 'Click or Drop files here to upload' :
+    'File not supported'}}
+  </div>
+</div>

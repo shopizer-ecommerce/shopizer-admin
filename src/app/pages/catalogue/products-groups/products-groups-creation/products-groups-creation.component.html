@@ -1,0 +1,89 @@
+<!--<ngx-back-button></ngx-back-button>-->
+<nb-card size="small" class="page-card">
+  <nb-card-header>
+    {{ 'PRODUCT_ATTRIBUTES.OPTIONS_ATTRIBUTES' | translate}}
+  </nb-card-header>
+  <nb-card-body>
+    <div *ngIf="loader" [nbSpinner]="loader" nbSpinnerSize="large" nbSpinnerStatus="primary"></div>
+    <form [formGroup]='form'>
+      <div class="form-group">
+        <label class="col-sm-10 col-form-label">{{ 'PRODUCT_ATTRIBUTES.ATTRIBUTE_NAME' | translate}}</label>
+        <div class="col-sm-12">
+          <p-dropdown *ngIf="options.length" [options]="options" formControlName='attributeName' filter="true">
+            <ng-template let-item pTemplate="selectedItem">{{item.label}}</ng-template>
+            <ng-template let-el pTemplate="item">{{el.label}}</ng-template>
+          </p-dropdown>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="col-sm-12 group-block">
+          <nb-checkbox status="success" formControlName='displayOnly'>
+            {{ 'PRODUCT_ATTRIBUTES.DISPLAY_ONLY' | translate}}
+          </nb-checkbox>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-10 col-form-label">{{ 'PRODUCT_ATTRIBUTES.PRODUCT_OPTION' | translate}}</label>
+        <div class="col-sm-12">
+          <p-dropdown *ngIf="optionValues.length" [options]="optionValues" formControlName='optionValue' filter="true">
+            <ng-template let-item pTemplate="selectedItem">{{item.label}}</ng-template>
+            <ng-template let-el pTemplate="item">{{el.label}}</ng-template>
+          </p-dropdown>
+        </div>
+      </div>
+
+
+      <div class="form-group">
+        <label for="optionPrice" class="col-sm-10 col-form-label">{{ 'PRODUCT_ATTRIBUTES.OPTION_PRICE' | translate}}</label>
+        <div class="col-sm-12">
+          <input type="number" class="form-control" id="optionPrice" formControlName='optionPrice'
+                 placeholder="{{ 'PRODUCT.QUANTITY' | translate}}" required>
+        </div>
+      </div>
+
+
+      <div class="form-group">
+        <label for="order" class="col-sm-10 col-form-label">{{ 'COMMON.ORDER' | translate}}</label>
+        <div class="col-sm-12">
+          <input type="number" class="form-control" id="order" formControlName='order'
+                 placeholder="{{ 'PRODUCT.QUANTITY' | translate}}" required>
+        </div>
+      </div>
+
+
+      <div class="form-group">
+        <div class="col-sm-12 group-block">
+          <nb-checkbox status="success" formControlName='defaultOption'>
+            {{ 'PRODUCT_ATTRIBUTES.DEFAULT_OPTION' | translate}}
+          </nb-checkbox>
+        </div>
+      </div>
+
+
+      <div class="form-group">
+        <div class="col-sm-12 group-block">
+          <nb-checkbox status="success" formControlName='requiredOption'>
+            {{ 'PRODUCT_ATTRIBUTES.REQUIRED_OPTION' | translate}}
+          </nb-checkbox>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="additionalWeight" class="col-sm-10 col-form-label">{{ 'PRODUCT_ATTRIBUTES.ADDITIONAL_WEIGHT' | translate}}</label>
+        <div class="col-sm-12">
+          <input type="number" class="form-control" id="additionalWeight" formControlName='additionalWeight'
+                 placeholder="additionalWeight" required>
+        </div>
+      </div>
+
+      <hr/>
+
+      <div class="form-group actions-button">
+        <button type="submit" class="btn btn-primary" (click)="save()">{{ 'COMMON.SAVE' | translate }}</button>
+      </div>
+
+    </form>
+  </nb-card-body>
+</nb-card>

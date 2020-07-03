@@ -1,0 +1,238 @@
+<div *ngIf="loader" [nbSpinner]="loader" nbSpinnerSize="large" nbSpinnerStatus="primary"></div>
+
+
+<nb-card size="small" class="page-card">
+  <form [formGroup]='form' *ngIf="!loader">
+    <div class="inner_pages">
+      <nb-card-header class="main_header">
+        <h1 class="page_title">{{ 'COMPONENTS.CATEGORY' | translate}}</h1>
+
+        <div class="content_spacing">
+          <!-- store default language -->
+          <nb-select *ngIf="languages.length" placeholder="{{ 'COMMON.LANGUAGE' | translate}}" outline shape="rectangle"
+            formControlName='selectedLanguage' [selected]="defaultLanguage" class="categorydropdownStyle">
+            <nb-option *ngFor="let language of languages" [value]="language.code">{{ ('LANG.'+language.code) |
+              translate }}</nb-option>
+          </nb-select>
+        </div>
+
+        <!-- if save -->
+        <div class="content_spacing">
+          <button type="button" nbButton class="success_button"
+            (click)="save()">{{ 'COMMON.SAVE' | translate }}</button>
+        </div>
+        <!-- if update -->
+
+        <!-- delete / only available from category list-->
+
+      </nb-card-header>
+
+      <nb-card-body class="loading-block" [nbSpinner]="loadingInfo" nbSpinnerSize="large" nbSpinnerStatus="primary">
+
+        <!-- redesign -->
+
+        <div class="custom_scroll" malihu-scrollbar>
+
+          <div class="row">
+            <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
+              <nb-card class="nb-card inline-form-card">
+                <nb-card-header class="nb-card-header">Basic Details - TRANSLATE</nb-card-header>
+                <nb-card-body class="nb-card-body">
+                  <div class="row">
+                    <div class="col-lg-12">
+                      <div class="form-group">
+                        <nb-checkbox status="success" formControlName='visible'>
+                          {{ 'COMMON.VISIBLE' | translate}}
+                        </nb-checkbox>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                      <div class="form-group">
+                        <label for="order"
+                          class="col-form-label inputLabel">{{ 'STORE.MERCHANT_STORE' | translate }}</label>
+                        <nb-select *ngIf="stores.length" placeholder="{{ 'STORE.MERCHANT_STORE' | translate }}"
+                          formControlName='store' outline shape="rectangle" class="fullWidth">
+                          <nb-option *ngFor="let store of stores" [value]="store.code">{{ store.code }}</nb-option>
+                        </nb-select>
+                      </div>
+                    </div>
+                  </div>
+
+
+                  <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                      <div class="form-group">
+                        <label class="col-form-label inputLabel">{{ 'CATEGORY.PARENT' | translate }}</label>
+                        <nb-select *ngIf="roots.length" placeholder="{{ 'STORE.MERCHANT_STORE' | translate }}"
+                          formControlName='parent' outline shape="rectangle" class="fullWidth">
+                          <nb-option *ngFor="let category of roots" [value]="category.code">{{ category.code }}
+                          </nb-option>
+                        </nb-select>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                      <div class="form-group">
+                        <label for="code" class="col-form-label inputLabel">Code *</label>
+                        <input type="text" class="form-control inputText" id="code" formControlName='code'
+                          [readOnly]="category.id" placeholder="{{ 'COMMON.CODE' | translate}}"
+                          (change)="checkCode($event)" required>
+                        <div class="err-message" *ngIf="(code.dirty || code.touched) && code.invalid && code">
+                          <span *ngIf="code.errors.required">
+                            {{ 'COMMON.CODE_REQUIRED' | translate}}
+                          </span>
+                          <span *ngIf="code.errors.pattern">
+                            {{ 'COMMON.ALPHA_DECIMAL_RULE' | translate}}
+                          </span>
+                        </div>
+                        <span *ngIf="!isCodeUnique" class="err-message">
+                          {{ 'COMMON.CODE_EXISTS' | translate}}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                      <div class="form-group">
+                        <label for="order" class="col-form-label inputLabel">{{ 'COMMON.ORDER' | translate}}</label>
+                        <input type="text" class="form-control inputText" id="order" formControlName='sortOrder'
+                          ngxValidateNumber placeholder="{{ 'COMMON.ORDER' | translate}}" required>
+                      </div>
+                    </div>
+                  </div>
+                </nb-card-body>
+              </nb-card>
+            </div>
+
+            <div class="col-lg-7 col-md-7 col-sm-12 col-xs-12">
+              <nb-card class="nb-card inline-form-card">
+                <nb-card-header class="nb-card-header">-- SEO Details - TRANSLATE</nb-card-header>
+                <nb-card-body class="nb-card-body">
+                  <div class="row">
+                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                      <div *ngIf="selectedLanguage.value !== ''" formArrayName='descriptions'>
+                        <!--formarray descriptions-->
+                        <div *ngFor="let descr of descriptions.controls; let j=index">
+                          <!--descriptions iterator-->
+                          <div *ngIf="descr.value.language === selectedLanguage.value">
+                            <!--language selected-->
+
+                            <div [formGroupName]="j" class="description-block">
+                              <!--form group-->
+
+                              <!-- title -->
+                              <div class="form-group">
+                                <label for="title"
+                                  class="col-form-label inputLabel">{{ 'DESCRIPTION_FORM.TITLE' | translate}}</label>
+                                <input type="text" class="form-control inputText" id="title" formControlName='title'
+                                  placeholder="{{ 'DESCRIPTION_FORM.TITLE' | translate}}">
+                              </div>
+                              <!-- end title -->
+
+                              <!--name-->
+                              <div class="form-group">
+                                <label for="name"
+                                  class="col-form-label inputLabel">{{ 'DESCRIPTION_FORM.NAME' | translate}}
+                                  *</label>
+                                <input type="text" class="form-control inputText" id="name" formControlName='name'
+                                  placeholder="{{ 'DESCRIPTION_FORM.NAME' | translate}}"
+                                  (ngModelChange)="changeName($event, j)">
+                                <span *ngIf="(descr.get('name').dirty || descr.get('name').touched)
+                                    && descr.get('name').invalid && descr.get('name').errors.required"
+                                  class="err-message">
+                                  {{ 'DESCRIPTION_FORM.NAME_REQUIRED' | translate}}
+                                </span>
+                              </div>
+                              <!--end name-->
+
+                              <!-- friendly url -->
+                              <div class="form-group">
+                                <label for="friendlyUrl" class="col-form-label inputLabel">{{ 'DESCRIPTION_FORM.FRIENDLY_URL' |
+                                  translate}} *</label>
+                                <input type="text" class="form-control inputText" id="friendlyUrl"
+                                  formControlName='friendlyUrl'
+                                  placeholder="{{ 'DESCRIPTION_FORM.FRIENDLY_URL' | translate}}">
+                                <span *ngIf="(descr.get('friendlyUrl').dirty || descr.get('friendlyUrl').touched)
+                                    && descr.get('friendlyUrl').invalid && descr.get('friendlyUrl').errors.required"
+                                  class="err-message">
+                                  {{ 'DESCRIPTION_FORM.FRIENDLY_URL_REQUIRED' | translate}}
+                                </span>
+                              </div>
+
+                              <!-- highlight -->
+                              <div class="form-group">
+                                <label for="highlight" class="col-form-label inputLabel">{{ 'DESCRIPTION_FORM.HIGHLIGHT' |
+                                  translate}}</label>
+                                <input type="text" class="form-control inputText" id="highlight"
+                                  formControlName='highlights'
+                                  placeholder="{{ 'DESCRIPTION_FORM.HIGHLIGHT' | translate}}">
+                              </div>
+
+                              <!-- meta description keywords -->
+                              <div class="form-group">
+                                <label for="metaDescription" class="col-form-label inputLabel">{{
+                                  'DESCRIPTION_FORM.META_DESCRIPTION' | translate}}</label>
+                                <input type="text" class="form-control inputText" id="metaDescription"
+                                  formControlName='metaDescription'
+                                  placeholder="{{ 'DESCRIPTION_FORM.META_DESCRIPTION' | translate}}">
+                              </div>
+
+                            </div>
+                            <!--end form group-->
+
+                          </div><!-- end language collection-->
+                        </div>
+                        <!--end description iterator-->
+
+                      </div>
+                      <!--end formarray-->
+                    </div>
+                    <!--end div-->
+                  </div>
+                  <!--end row-->
+
+                </nb-card-body>
+              </nb-card>
+            </div>
+          </div>
+
+          <!--Description-->
+          <div class="row m-t-10">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              <nb-card class="nb-card inline-form-card">
+                <nb-card-header class="nb-card-header">{{ 'DESCRIPTION_FORM.DESCRIPTION' | translate}}</nb-card-header>
+                <nb-card-body class="nb-card-body">
+                  <div class="row">
+                    <div *ngIf="selectedLanguage.value !== ''" formArrayName='descriptions' class="width100">
+                      <!--formarray descriptions-->
+                      <div *ngFor="let descr of descriptions.controls; let k=index">
+                        <!--descriptions iterator-->
+                        <div *ngIf="descr.value.language === selectedLanguage.value">
+                          <!--language selected-->
+                          <div [formGroupName]="k" class="description-block">
+                            <!--form group-->
+                            <div class="form-group">
+                              <div formControlName="description" [ngxSummernote]="editorConfig">
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </nb-card-body>
+              </nb-card>
+            </div>
+          </div>
+          <!-- end redesign-->
+
+        </div><!-- end custom scroll -->
+
+      </nb-card-body>
+    </div>
+  </form>
+</nb-card>

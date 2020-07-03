@@ -1,0 +1,11 @@
+<div class="image-container" *ngIf="images.length">
+  <div *ngFor='let image of images' class="image-item">
+    <img [src]="image?.imageUrl" alt="Image" height="200">
+    <span><i class="fas fa-times" (click)="removeImage(image)"></i></span>
+  </div>
+</div>
+
+<input type="file" name="file[]" id="imageInput" #imageInput (change)='onSelectFile($event)' accept="image/jpeg,image/gif,image/png,image/jpg," multiple/>
+<div class="image-actions" *ngIf="images.length < 10">
+  <button nbButton size="small" outline status="success" (click)='imageInput.click()'>{{ 'COMMON.ADD_IMAGES' | translate }}</button>
+</div>

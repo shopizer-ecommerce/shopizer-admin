@@ -1,0 +1,150 @@
+<ngx-back-button></ngx-back-button>
+<nb-card size="small" class="page-card">
+  <nb-card-header>
+    {{ 'COMPONENTS.PRICE' | translate}}
+  </nb-card-header>
+  <nb-card-body>
+    <div *ngIf="loader" [nbSpinner]="loader" nbSpinnerSize="large" nbSpinnerStatus="primary"></div>
+    <form [formGroup]='form'>
+
+      <!--  <div class="form-group">-->
+      <!--    <label class="col-sm-10 col-form-label">{{ 'PRODUCT.DATE_AVAILABLE' | translate}}</label>-->
+      <!--    <div class="col-sm-12">-->
+      <!--      <input class="form-control has-person-icon" nbInput placeholder="{{ 'PRODUCT.DATE_AVAILABLE' | translate}}" formControlName='dateAvailable'-->
+      <!--             [nbDatepicker]="formpicker">-->
+      <!--      <nb-datepicker #formpicker></nb-datepicker>-->
+      <!--    </div>-->
+      <!--  </div>-->
+
+      <div class="form-group">
+        <label for="finalPrice" class="col-sm-10 col-form-label">{{ 'PRICE.FINAL_PRICE' | translate}}</label>
+        <div class="col-sm-12">
+          <input type="number" class="form-control" id="finalPrice" formControlName='finalPrice' (blur)="transformTotal()"
+                 placeholder="{{ 'PRICE.FINAL_PRICE' | translate}}" required>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="originalPrice" class="col-sm-10 col-form-label">{{ 'PRICE.ORIGINAL_PRICE' | translate}}</label>
+        <div class="col-sm-12">
+          <input type="number" class="form-control" id="originalPrice" formControlName='originalPrice' (blur)="transformTotal()"
+                 placeholder="{{ 'PRICE.ORIGINAL_PRICE' | translate}}" required>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="discountedPrice" class="col-sm-10 col-form-label">{{ 'PRICE.DISCOUNTED_PRICE' | translate}}</label>
+        <div class="col-sm-12">
+          <input type="number" class="form-control" id="discountedPrice" formControlName='discountedPrice' (blur)="transformTotal()"
+                 placeholder="{{ 'PRICE.DISCOUNTED_PRICE' | translate}}" required>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <div class="col-sm-12 group-block">
+          <nb-checkbox status="success" formControlName='discounted'>
+            {{ 'PRICE.DISCOUNTED' | translate}}
+          </nb-checkbox>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="col-sm-10 col-form-label">{{ 'COMMON.LANGUAGE' | translate }} *</label>
+        <div class="col-sm-12">
+          <nb-select *ngIf="languages.length" placeholder="{{ 'COMMON.LANGUAGE' | translate }}" outline
+                     shape="rectangle"
+                     formControlName='selectedLanguage'>
+            <nb-option *ngFor="let language of languages" [value]="language.code">{{ language.code }}</nb-option>
+          </nb-select>
+        </div>
+      </div>
+
+      <div *ngIf="selectedLanguage.value !== ''" formArrayName='descriptions'>
+        <div *ngFor="let descr of descriptions.controls; let j=index">
+          <div *ngIf="descr.value.language === selectedLanguage.value">
+
+            <div [formGroupName]="j" class="description-block">
+
+              <div class="form-group">
+                <label for="name" class="col-sm-10 col-form-label">{{ 'DESCRIPTION_FORM.NAME' | translate }} *</label>
+                <div class="col-sm-12">
+                  <input type="text" class="form-control" id="name" formControlName='name'
+                         placeholder="{{ 'DESCRIPTION_FORM.NAME' | translate }}" (ngModelChange)="changeName($event, j)">
+                  <span *ngIf="(descr.get('name').dirty || descr.get('name').touched)
+                    && descr.get('name').invalid && descr.get('name').errors.required"
+                        class="err-message">
+                     {{ 'DESCRIPTION_FORM.NAME_REQUIRED' | translate }}
+                    </span>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="highlight" class="col-sm-10 col-form-label">{{ 'DESCRIPTION_FORM.HIGHLIGHT' | translate }}</label>
+                <div class="col-sm-12">
+                  <input type="text" class="form-control" id="highlight" formControlName='highlights'
+                         placeholder="{{ 'DESCRIPTION_FORM.HIGHLIGHT' | translate }}">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="friendlyUrl" class="col-sm-10 col-form-label">{{ 'DESCRIPTION_FORM.FRIENDLY_URL' | translate }}</label>
+                <div class="col-sm-12">
+                  <input type="text" class="form-control" id="friendlyUrl" formControlName='friendlyUrl'
+                         placeholder="{{ 'DESCRIPTION_FORM.FRIENDLY_URL' | translate }}">
+                  <span *ngIf="(descr.get('friendlyUrl').dirty || descr.get('friendlyUrl').touched)
+                    && descr.get('friendlyUrl').invalid && descr.get('friendlyUrl').errors.required"
+                        class="err-message">
+                      {{ 'DESCRIPTION_FORM.FRIENDLY_URL_REQUIRED' | translate }}
+                    </span>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label class="col-sm-10 col-form-label">{{ 'DESCRIPTION_FORM.DESCRIPTION' | translate }}</label>
+                <div class="col-sm-12">
+                  <div formControlName="description"
+                       [ngxSummernote]="config">
+                  </div>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="title" class="col-sm-10 col-form-label">{{ 'DESCRIPTION_FORM.TITLE' | translate }}</label>
+                <div class="col-sm-12">
+                  <input type="text" class="form-control" id="title" formControlName='title'
+                         placeholder="{{ 'DESCRIPTION_FORM.TITLE' | translate }}">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="keyWords" class="col-sm-10 col-form-label">{{ 'DESCRIPTION_FORM.KEYWORDS' | translate }}</label>
+                <div class="col-sm-12">
+                  <input type="text" class="form-control" id="keyWords" formControlName='keyWords'
+                         placeholder="{{ 'DESCRIPTION_FORM.KEYWORDS_PLACEHOLDER' | translate }}">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="metaDescription"
+                       class="col-sm-10 col-form-label">{{ 'DESCRIPTION_FORM.META_DESCRIPTION' | translate }}</label>
+                <div class="col-sm-12">
+                  <input type="text" class="form-control" id="metaDescription" formControlName='metaDescription'
+                         placeholder="{{ 'DESCRIPTION_FORM.DESCRIPTION' | translate }}">
+                </div>
+              </div>
+
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <hr/>
+
+      <div class="form-group actions-button">
+        <button type="submit" class="btn btn-primary" (click)="save()">{{ 'COMMON.SAVE' | translate }}</button>
+      </div>
+
+    </form>
+  </nb-card-body>
+</nb-card>

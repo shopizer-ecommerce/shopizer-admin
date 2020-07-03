@@ -1,0 +1,58 @@
+<ngx-back-button></ngx-back-button>
+<nb-card>
+  <nb-card-header>{{'PRODUCT_ATTRIBUTES.PRODUCT_OPTIONS_ATTRIBUTES' | translate}}</nb-card-header>
+  <nb-card-body *ngIf="data.length">
+    <nb-actions size="medium" class="back-button">
+      <nb-action>
+        <i class="fas fa-plus"></i>&nbsp;
+        <a [routerLink]="['/pages/catalogue/products/' + productId + '/create-attribute']">
+          {{ 'COMPONENTS.CREATE_PRODUCT_ATTRIBUTES' | translate}}
+        </a>
+      </nb-action>
+    </nb-actions>
+    <div *ngIf="loader" [nbSpinner]="loader" nbSpinnerSize="large" nbSpinnerStatus="primary"></div>
+    <p-treeTable [value]="data" *ngIf="!loader">
+      <ng-template pTemplate="header">
+        <tr>
+          <th>{{ 'COMMON.ID' | translate}}</th>
+          <th>{{ 'PRODUCT_ATTRIBUTES.OPTION_NAME' | translate}}</th>
+          <th>{{ 'PRODUCT_ATTRIBUTES.PRODUCT_OPTION' | translate}}</th>
+          <th>{{ 'PRODUCT_ATTRIBUTES.DISPLAY_ONLY' | translate}}</th>
+          <th>{{ 'PRODUCT_ATTRIBUTES.PRICE' | translate}}</th>
+          <th>{{ 'COMMON.ORDER' | translate}}</th>
+          <th class="short-header"></th>
+          <th class="short-header"></th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-rowNode let-rowData="rowData">
+        <tr *ngIf="!rowData.parent">
+          <td>{{rowData.id}}</td>
+          <td>{{rowData.option}}</td>
+          <td>{{rowData.optionValue}}</td>
+          <td>
+            <nb-checkbox status="success" [value]="rowData.attributeDisplayOnly"></nb-checkbox>
+          </td>
+          <td>{{rowData.productAttributePrice}}</td>
+          <td>{{rowData.sortOrder}}</td>
+          <td>
+            <a [routerLink]="['/pages/catalogue/products/' + productId + '/attribute/' + rowData.id]">
+              {{ 'COMMON.DETAILS' | translate}}
+            </a>
+          </td>
+          <td class="remove-button">
+            <i class="fas fa-trash-alt pointer" (click)="removeAttribute(rowData.id)"></i>
+          </td>
+        </tr>
+        <tr *ngIf="rowData.parent && !rowData.empty">
+          <td colspan="8">
+            <p-treeTableToggler [rowNode]="rowNode"></p-treeTableToggler>
+            {{rowData.parentName}}
+          </td>
+        </tr>
+      </ng-template>
+    </p-treeTable>
+  </nb-card-body>
+  <div class="no-items" *ngIf="isEmpty">
+    {{'COMMON.NO_ITEMS' | translate}}
+  </div>
+</nb-card>

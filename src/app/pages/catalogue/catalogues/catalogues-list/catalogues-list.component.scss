@@ -1,0 +1,71 @@
+.page-card {
+    background: none;
+    border: none;
+    .inner_pages_legacy {
+        .main_header {
+            padding: 0px 30px 10px 0px;
+            .page_title {
+                margin-top: -25px;
+                font-weight: 600;
+            }
+        }
+        .form-inline {
+            margin: -10px 0 10px 0 !important;
+            background: #fff;
+            padding: 10px 15px;
+            border-radius: 5px;
+            justify-content: space-between;
+            .flexView {
+                display: flex;
+                .search {
+                    margin-right: 5px;
+                }
+                .pointer {
+                    padding: 6px;
+                    margin-right: 5px;
+                    margin-top: 3px;
+                }
+
+                label {
+                    margin-top: 3px;
+                    cursor: pointer;
+                }
+                .createBtn {
+                    display: flex;
+                    &:link,
+                    &:visited,
+                    &:hover,
+                    &:active {
+                        color: #222b45;
+                        text-decoration: none;
+                        cursor: pointer;
+                    }
+                }
+            }
+        }
+    }
+}
+:host ::ng-deep .page-card {
+    .inner_pages_legacy {
+        .home-table {
+            thead {
+                .ng2-smart-titles {
+                    th {
+                        a {
+                            font-weight: 600;
+                        }
+                    }
+                }
+            }
+            tbody {
+                tr {
+                    cursor: pointer;
+                    &:hover,
+                    &.selected {
+                        background: #e6f3ff !important;
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,107 @@
+<!-- <nb-card-header>Invoice</nb-card-header> -->
+<div class="invoice-box">
+
+  <span class="titleBar">
+    <span></span>
+    <span class="title_text">{{'ORDER_FORM.INVOICE' | translate}}</span>
+    <button class="close" type="button" (click)="cancel()"></button>
+  </span>
+
+  <table cellpadding="0" cellspacing="0" id="print-section">
+    <tr class="top">
+      <td colspan="3">
+        <table>
+          <tr>
+            <td class="title">
+              <img src="{{orderData.store.logo.path}}" style="width:100%; max-width:250px;">
+            </td>
+
+            <td>
+              {{'ORDER_FORM.INVOICE' | translate}} #: {{orderData.id}}<br>
+              {{'PRODUCT.CREATION_DATE' | translate}}: {{orderData.datePurchased}}<br>
+              <!-- Due: February 1, 2015 -->
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr class="information">
+      <td colspan="3">
+        <table>
+          <tr>
+            <td>
+              {{orderData.store.name}}<br>
+              {{orderData.store.address.address}}<br>
+              {{orderData.store.address.city}} {{orderData.store.address.country}}
+              {{orderData.store.address.postalCode}}
+            </td>
+
+            <td>
+              {{orderData.store.name}}.<br>
+              {{orderData.store.email}}<br>
+              {{orderData.store.phone}}
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+
+    <tr class="heading">
+      <td>
+        {{'ORDER.PAYMENT_TYPE' | translate}}
+      </td>
+      <td></td>
+      <td>
+        {{'ORDER.PAYMENT_MODULE' | translate}}
+      </td>
+    </tr>
+
+    <tr class="details">
+      <td>
+        {{orderData.paymentType}}
+      </td>
+      <td></td>
+      <td>
+        {{orderData.paymentModule}}
+      </td>
+    </tr>
+
+    <tr class="heading">
+      <td>
+        {{'ORDER_FORM.ITEM' | translate}}
+      </td>
+      <td style="text-align:center">
+        {{'ORDER_FORM.QUANTITY' | translate}}
+      </td>
+      <td>
+        {{'ORDER_FORM.PRICE' | translate}}
+      </td>
+    </tr>
+
+    <tr class="item" *ngFor="let product of orderData.products">
+      <td>
+        {{product.productName}} - <span class="sku_section">{{product.sku}}</span>
+      </td>
+      <td style="text-align:center">
+        {{product.orderedQuantity}}
+      </td>
+      <td>
+        {{product.subTotal}}
+      </td>
+    </tr>
+
+    <tr class="total">
+      <td>
+        <button type="button" class="success_button" (click)="print()">{{'ORDER_FORM.PRINT_INVOICE' |translate}}
+        </button>
+      </td>
+      <td></td>
+      <td>
+        <div *ngFor="let total of orderData.totals" class="total_section">
+          <span class="total_module">{{total.module}} : </span> <span class="total_value">US${{total.value}}</span>
+        </div>
+      </td>
+    </tr>
+  </table>
+</div>

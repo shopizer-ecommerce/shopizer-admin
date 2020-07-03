@@ -1,0 +1,60 @@
+:host ::ng-deep .userManagement {
+    .inputLabel {
+        font-size: 0.75rem;
+        color: #8f9bb3;
+        font-weight: 700;
+    }
+
+    .fullWidth {
+        width: 100%;
+        display: block;
+        max-width: none !important;
+
+        button {
+            font-weight: 600 !important;
+            font-size: 14px !important;
+        }
+    }
+    .inputText {
+        border-radius: 0.17rem;
+        font-size: 14px;
+        font-weight: 600;
+        line-height: 1.5rem;
+        padding: 0.6875rem 1rem;
+        width: 100%;
+        background-color: #f7f9fc;
+        border-color: #e4e9f2;
+        color: #222b45;
+        transition-duration: 0.15s;
+        transition-property: border, background-color, color, box-shadow;
+        transition-timing-function: ease-in;
+        border-style: solid;
+        border-width: 1px;
+        -webkit-appearance: none;
+        &::-webkit-input-placeholder {
+            /* Chrome/Opera/Safari */
+            color: #8e9ab4;
+            font-weight: 200;
+        }
+        &::-moz-placeholder {
+            /* Firefox 19+ */
+            font-weight: 200;
+            color: #8e9ab4;
+        }
+        &:-ms-input-placeholder {
+            /* IE 10+ */
+            font-weight: 200;
+            color: #8e9ab4;
+        }
+        &:-moz-placeholder {
+            /* Firefox 18- */
+            font-weight: 200;
+            color: #8e9ab4;
+        }
+    }
+    .err-message {
+        margin-top: -8px;
+        color: #ff3d71;
+        font-size: 12px;
+    }
+}

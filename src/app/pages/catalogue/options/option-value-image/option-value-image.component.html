@@ -1,0 +1,11 @@
+<div class="image-container">
+  <div *ngIf="image.url" class="image-item">
+    <img [src]="image.url" alt="Image" height="200" width="auto">
+    <span><i class="fas fa-trash-alt" (click)="removeImage()"></i></span>
+  </div>
+</div>
+
+<input type="file" name="file" id="imageInput" #imageInput (change)='onSelectFile($event)' accept="image/jpeg,image/gif,image/png,image/jpg,"/>
+<div  class="image-actions">
+  <button nbButton size="small" outline status="success" (click)='imageInput.click()'>{{ 'COMMON.ADD_IMAGE' | translate }}</button>
+</div>

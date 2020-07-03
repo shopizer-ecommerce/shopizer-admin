@@ -1,0 +1,57 @@
+.page-card {
+    background: transparent;
+    border: none;
+    .storeList {
+        .main_header {
+            padding: 0px 30px 10px 0px;
+            .page_title {
+                margin-top: -25px;
+                font-weight: 600;
+            }
+        }
+        .search {
+            margin-left: 20px;
+        }
+
+        .pointer {
+            height: 18px;
+            width: 18px;
+            margin-left: 20px;
+            cursor: pointer;
+        }
+    }
+}
+:host ::ng-deep .page-card {
+    .storeList {
+        .form-inline {
+            margin: -10px 0 10px 0 !important;
+            background: #fff;
+            padding: 10px 0;
+            border-radius: 5px;
+        }
+        .home-table {
+            thead {
+                .ng2-smart-titles {
+                    th {
+                        a {
+                            font-weight: 600;
+                        }
+                    }
+                }
+            }
+            tbody {
+                tr {
+                    cursor: pointer;
+                    &:hover,
+                    &.selected {
+                        background: #e6f3ff !important;
+                    }
+                    a.ng2-smart-action:not(:last-child) {
+                        padding-right: 0px !important;
+                        margin-right: 0px !important;
+                    }
+                }
+            }
+        }
+    }
+}

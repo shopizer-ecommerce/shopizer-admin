@@ -1,0 +1,10 @@
+<nb-card>
+  <nb-card-header></nb-card-header>
+  <nb-card-body>
+    <h5>{{ actionText }} {{ text }}</h5>
+  </nb-card-body>
+  <nb-card-footer class="dialog-footer">
+    <button nbButton status="danger" (click)="dismiss()">{{ 'COMMON.CANCEL' | translate}}</button>
+    <button nbButton status="primary" (click)="remove()">{{ 'COMMON.OK' | translate}}</button>
+  </nb-card-footer>
+</nb-card>

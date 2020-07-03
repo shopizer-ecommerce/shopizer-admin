@@ -1,0 +1,46 @@
+<nb-card size="small" class="page-card">
+    <div *ngIf="loading" class="loading-block" [nbSpinner]="loading" nbSpinnerSize="large" nbSpinnerStatus="primary"></div>
+    <nb-card-body *ngIf="!loading">
+    <div class="inner_pages_legacy">
+        <nb-card-header class="main_header">
+          <h1 class="page_title">{{'COMPONENTS.PRODUCT' | translate}}</h1>
+          <div class="content_spacing">
+              <nb-select [(selected)]="selectedItem" outline shape="rectangle">
+                <nb-option *ngFor="let item of sidemenuLinks" [value]="item.id" (click)="route(item.link)">{{ item.title }}</nb-option>
+              </nb-select>
+          </div>
+
+          <div class="content_spacing">
+
+          </div>
+        
+        </nb-card-header>
+      </div>
+      <ngx-product-form [product]="product"></ngx-product-form>
+    </nb-card-body>
+</nb-card>
+
+<!--
+<nb-card size="small" class="page-card">
+  <nb-card-header>
+    {{'COMPONENTS.PRODUCT' | translate}}
+  </nb-card-header>
+  <nb-card-body [nbSpinner]="loadingInfo" class="loading-block" nbSpinnerSize="large"
+                nbSpinnerStatus="primary">
+    <nb-select [(selected)]="selectedItem" outline shape="rectangle" class="right-card-select">
+      <nb-option value="0">{{'COMPONENTS.PRODUCT_DETAILS' | translate}}</nb-option>
+      <nb-option value="1" [routerLink]="['/pages/catalogue/products/' + product.id + '/inventory-list']">
+        {{'COMPONENTS.LIST_INVENTORY' | translate}}
+      </nb-option>
+      <nb-option value="2" [routerLink]="['/pages/catalogue/products/association']">
+        {{'COMPONENTS.PRODUCT_TO_CATEGORY' | translate}}
+      </nb-option>
+      <nb-option value="3" [routerLink]="['/pages/catalogue/products/' + this.product.id + '/product-attributes']">
+        {{'COMPONENTS.PRODUCT_ATTRIBUTES' | translate}}
+      </nb-option>
+    </nb-select>
+    <ngx-product-form *ngIf="product.id" [product]="product"></ngx-product-form>
+  </nb-card-body>
+</nb-card>
+-->
+

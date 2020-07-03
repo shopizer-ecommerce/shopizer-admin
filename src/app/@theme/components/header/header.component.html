@@ -1,0 +1,27 @@
+<div class="header-container">
+  <div class="logo-container">
+    <a (click)="toggleSidebar()" href="#" class="sidebar-toggle">
+      <nb-icon icon="menu-2-outline"></nb-icon>
+    </a>
+    <a class="logo" href="#" (click)="navigateHome()"><img src="../../../../assets/img/shopizer-logo.png" alt="" /></a>
+  </div>
+  <!-- <div class="logo-containter">
+    <a (click)="toggleSidebar()" href="#" class="navigation"><i class="nb-menu"></i></a>
+    <div class="logo" (click)="goToHome()" routerLink="/pages/home">
+      <img src="../../../../assets/img/shopizer-logo.png" alt=""/>
+    </div>
+  </div> -->
+</div>
+
+<div class="header-container">
+  <nb-actions class="header-action" size="medium" [class.right]="position === 'normal'" [class.left]="position === 'inverse'">
+    <nb-action size="large" [nbContextMenu]="languages" nbContextMenuTag="language">
+      {{ 'COMMON.LANGUAGES' | translate}}
+    </nb-action>
+    <nb-action *nbIsGranted="['view', 'user']">
+      <nb-user [nbContextMenu]="localedMenu" [name]="user"></nb-user>
+    </nb-action>
+
+
+  </nb-actions>
+</div>

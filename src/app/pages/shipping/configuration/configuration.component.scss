@@ -1,0 +1,26 @@
+@import "../../../@theme/styles/themes";
+
+@include nb-install-component() {
+  nb-card {
+    transform: translate3d(0, 0, 0);
+  }
+}
+.inner_pages {
+  .main_header {
+    .page_title {
+      margin-top: -25px;
+      font-weight: 600;
+    }
+  }
+}
+
+.mode {
+  label {
+    display: block;
+    margin-bottom: 10px;
+  }
+
+  nb-radio {
+    display: inline-block;
+  }
+}

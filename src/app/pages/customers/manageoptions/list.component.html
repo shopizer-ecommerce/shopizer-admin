@@ -1,0 +1,19 @@
+<div class="pages">
+  <h1 class="page_title"> Manage Options</h1>
+  <nb-card-header class="header_full">
+    <div class="table_search">
+      <input type="text" name="code" class="form-control" placeholder="Search">
+    </div>
+    <div class="buttons-row">
+      <button nbButton (click)="manageOptions()">
+        Set Customer option
+      </button>
+    </div>
+  </nb-card-header>
+
+  <nb-card-body [nbSpinner]="loadingList" nbSpinnerSize="large" nbSpinnerStatus="primary">
+    <ng2-smart-table [settings]="settings" [source]="source" (custom)="onClickAction($event)" class="custom_scroll home-table">
+    </ng2-smart-table>
+  </nb-card-body>
+  <!-- </nb-card> -->
+</div>

@@ -1,0 +1,51 @@
+<div class="inner_pages">
+  <form #customerForm="ngForm" role="form">
+    <nb-card-header class="main_header">
+      <h1 class="page_title">Set Customer Option</h1>
+      <div class="content_spacing">
+        <button type="button" nbButton status="warning">Cancle</button>
+      </div>
+      <div class="content_spacing">
+        <button type="button" nbButton class="success_button">Save</button>
+      </div>
+    </nb-card-header>
+    <div [nbSpinner]="loadingList" nbSpinnerSize="large" nbSpinnerStatus="primary">
+      <div class="custom_scroll" malihu-scrollbar [scrollbarOptions]="scrollbarOptions">
+        <div class="row">
+          <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <nb-card class="nb-card inline-form-card">
+              <nb-card-header class="nb-card-header">Customer Option Details</nb-card-header>
+              <nb-card-body class="nb-card-body">
+                <div class="row">
+                  <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                    <div class="form-group">
+                      <label class="label">Customer Option <span>*</span></label>
+                      <nb-select placeholder="Select customer option" outline shape="rectangle" required>
+                        <nb-option *ngFor="let text of displayText" [value]="text.name">{{ text.name }}</nb-option>
+                      </nb-select>
+                    </div>
+                  </div>
+                  <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                    <div class="form-group">
+                      <label class="label">Customer Option value <span>*</span></label>
+                      <nb-select placeholder="Select customer value" outline shape="rectangle" required>
+                        <nb-option *ngFor="let text of displayText" [value]="text.name">{{ text.name }}</nb-option>
+                      </nb-select>
+                    </div>
+                  </div>
+                  <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                    <div class="form-group">
+                      <label class="label">Order <span>*</span></label>
+                      <input type="number" class="form-control" id="first_name" placeholder="Order" name="firstName"
+                        required>
+                    </div>
+                  </div>
+                </div>
+              </nb-card-body>
+            </nb-card>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

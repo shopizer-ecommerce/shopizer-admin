@@ -1,0 +1,8 @@
+<div class="side-right-menu border-top-right">
+<!--  {{ title }}: {{ value }}-->
+  <ul>
+    <li *ngFor="let link of links">
+      <a [routerLink]="[link.link]" routerLinkActive="active">{{link.title}}</a>
+    </li>
+  </ul>
+</div>

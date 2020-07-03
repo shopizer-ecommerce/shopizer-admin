@@ -1,0 +1,30 @@
+.wrapper {
+  border: 10px dashed #ccc;
+  width: 80%;
+  min-height: 200px;
+  margin: 20px auto;
+  padding: 20px;
+}
+
+.wrapper.hover {
+  border: 10px dashed #0c0;
+}
+
+#imageDrop img {
+  display: block;
+  margin: 10px auto;
+}
+
+.uploadingPhrase {
+  font-size: 14px;
+  width: 150px;
+  margin: 65px auto 0;
+}
+
+#imageInput {
+  display: none;
+}
+
+.pointer {
+  cursor: pointer;
+}

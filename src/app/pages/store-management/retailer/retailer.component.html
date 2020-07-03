@@ -1,0 +1,14 @@
+<nb-card size="small" class="page-card">
+  <nb-card-header class="card-h">
+    {{ 'STORE.RETAILER_INFORMATION' | translate}}
+    <!--<a routerLink="/pages/store-management/retailer-stores">{{ 'COMPONENTS.STORES_LIST' | translate}}</a>-->
+  </nb-card-header>
+  <div *ngIf="loading" class="loading-block" [nbSpinner]="loading" nbSpinnerSize="large" nbSpinnerStatus="primary">
+  </div>
+  <nb-card-body *ngIf="!loading">
+    <span>
+      {{ 'STORE.INFORMATION_TEXT' | translate}}
+    </span>
+    <ngx-store-form *ngIf="store.id" [store]="store"></ngx-store-form>
+  </nb-card-body>
+</nb-card>

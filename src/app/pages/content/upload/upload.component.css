@@ -1,0 +1,45 @@
+.inline-block {
+    width: 100%;
+
+}
+
+/* .dropzone {
+    width: 100%;
+    border: 2px dashed #ddd;
+    border-radius: 4px;
+    display: flex;
+    cursor: pointer;
+    justify-content: center;
+    align-items: center;
+    padding: 10%;
+    transition: height 0.2s ease;
+} */
+
+input {
+    height: 50%;
+    width: 100%;
+}
+
+.success,
+.error {
+    font-weight: 600;
+}
+
+.success {
+    color: #78e5d5;
+}
+
+.error {
+    color: #e57878;
+}
+
+.dragActive {
+    border: 2px dashed #ddd;
+    border-radius: 4px;
+    /* opacity: 0.1; */
+    border-color: #78e5d5;
+}
+
+.dragReject {
+    border-color: #e57878;
+}
