@@ -1,35 +1,5 @@
-<!-- <nb-card size="small" class="page-card">
-  <nb-card-header>
-    {{ 'COMPONENTS.CATALOGUES_LIST' | translate}}
-  </nb-card-header>
-  <nb-card-body [nbSpinner]="loadingList" nbSpinnerSize="large" nbSpinnerStatus="primary">
-    <nb-actions size="medium" class="back-button">
-      <nb-action>
-        <i class="fas fa-plus"></i>&nbsp;
-        <a [routerLink]="['/pages/catalogue/catalogues/create-catalogue']">
-          {{ 'COMPONENTS.CREATE_CATALOGUE' | translate}}
-        </a>
-      </nb-action>
-    </nb-actions>
-
-    <ng2-smart-table [settings]="settings"
-                     [source]="source">
-    </ng2-smart-table>
-
-    <ngx-paginator
-      (changePage)="changePage($event)"
-      [pagesToShow]="5"
-      [currentPage]="currentPage"
-      [perPage]="perPage"
-      [count]="totalCount">
-    </ngx-paginator>
-
-  </nb-card-body>
-</nb-card> -->
-<nb-card size="small" class="page-card">
-  <div *ngIf="loading" class="loading-block" [nbSpinner]="loading" nbSpinnerSize="large" nbSpinnerStatus="primary">
-  </div>
-  <nb-card-body [nbSpinner]="loadingList" nbSpinnerSize="large" nbSpinnerStatus="primary">
+<nb-card class="page-card inner_pages">
+  <nb-card-body [nbSpinner]="loadingList" nbSpinnerSize="large" nbSpinnerStatus="primary" class="cataloguesList">
     <div class="inner_pages_legacy">
       <nb-card-header class="main_header">
         <h1 class="page_title">{{ 'COMPONENTS.CATALOGUES_LIST' | translate}}</h1>
@@ -37,21 +7,21 @@
 
       </nb-card-header>
 
-      <form class="form-inline">
-        <div class="flexView">
-          <input #search class="search form-control ng-pristine ng-valid ng-touched" value="{{ searchValue }}"
-            type="text" placeholder="Search" (keydown.enter)="onSearch(search.value)" style="widows: 210px;">
-          <img class="pointer" src="../../../../assets/img/magnifying-glass.png"
-            title="{{ 'COMMON.SEARCH' | translate}}" width="32" height="32" (click)="onSearch(search.value)">
+      <form class="form-inline filter_section">
+        <div class="filter_left_section">
+          <input #search class="search form-control ng-pristine ng-valid ng-touched" value="{{ searchValue }}" type="text"
+            placeholder="{{ 'COMPONENTS.SEARCH' | translate }}" (keydown.enter)="onSearch(search.value)" style="width:25%">
+          <img class="pointer" src="../../../../assets/img/magnifying-glass.png" title="{{ 'COMMON.SEARCH' | translate}}"
+            (click)="onSearch(search.value)" class="sda">
           <img class="pointer" src="../../../../assets/img/reload.png" title="{{ 'COMMON.RESET' | translate}}" alt=""
-            width="32" height="32" (click)="resetSearch()">
+            (click)="resetSearch()" class="sda">
+
         </div>
-        <div class="flexView">
-          <a class="createBtn" [routerLink]="['/pages/catalogue/catalogues/create-catalogue']"> <img class="pointer"
-              src="../../../../assets/img/plus.png" title="{{ 'COMPONENTS.CREATE_CATEGORY' | translate}}" alt=""
-              width="32" height="32"><label>
+        <!-- <div class="filter_right_section">
+          <a class="createBtn sda" [routerLink]="['/pages/catalogue/catalogues/create-catalogue']"> <img class="pointer"
+              src="../../../../assets/img/plus.png" title="{{ 'COMPONENTS.CREATE_CATEGORY' | translate}}" alt=""><label>
               {{ 'COMPONENTS.CREATE_CATALOGUE' | translate}}</label></a>
-        </div>
+        </div> -->
       </form>
 
 

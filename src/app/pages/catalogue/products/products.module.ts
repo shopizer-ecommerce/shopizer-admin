@@ -52,7 +52,8 @@ import { InventoryRoutingModule } from './routing/inventory-routing.module';
     AttributeRoutingModule,
 
     SharedModule,
-    NgxSummernoteModule,
+    NgxSummernoteModule
+
   ],
   entryComponents: [AvailableButtonComponent]
 })

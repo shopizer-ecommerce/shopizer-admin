@@ -1,6 +1,6 @@
-<nb-card size="small" class="page-card">
-  <div *ngIf="loadingList" class="loading-block" [nbSpinner]="loadingList" nbSpinnerSize="large"
-    nbSpinnerStatus="primary"></div>
+<nb-card class="page-card inner_pages">
+  <!-- <div *ngIf="loadingList" class="loading-block" [nbSpinner]="loadingList" nbSpinnerSize="large"
+    nbSpinnerStatus="primary"></div> -->
   <nb-card-body [nbSpinner]="loadingList" nbSpinnerSize="large" nbSpinnerStatus="primary" class="brandsList">
     <div class="inner_pages_legacy">
       <nb-card-header class="main_header">
@@ -8,14 +8,17 @@
         <div class="content_spacing_empty"></div>
 
       </nb-card-header>
+      <form class="form-inline filter_section">
+        <div class="filter_left_section">
+          <input #search class="search form-control ng-pristine ng-valid ng-touched" value="{{ searchValue }}" type="text"
+            placeholder="{{ 'COMPONENTS.SEARCH' | translate }}" (keydown.enter)="onSearch(search.value)" style="width:25%">
+          <img class="pointer" src="../../../../assets/img/magnifying-glass.png" title="{{ 'COMMON.SEARCH' | translate}}"
+            (click)="onSearch(search.value)" class="sda">
+          <img class="pointer" src="../../../../assets/img/reload.png" title="{{ 'COMMON.RESET' | translate}}" alt=""
+            (click)="resetSearch()" class="sda">
 
-      <form class="form-inline">
-        <input #search class="search form-control ng-pristine ng-valid ng-touched" value="{{ searchValue }}" type="text"
-          placeholder="{{ 'COMPONENTS.SEARCH' | translate }}" (keydown.enter)="onSearch(search.value)"
-          style="width:25%">
-        <img class="pointer" src="../../../../assets/img/magnifying-glass.png" width="32" height="32"
-          (click)="onSearch(search.value)">
-        <img class="pointer" src="../../../../assets/img/reload.png" width="32" height="32" (click)="resetSearch()">
+        </div>
+
       </form>
       <ng2-smart-table [settings]="settings" [source]="source" (custom)="route($event)" class="home-table">
       </ng2-smart-table>

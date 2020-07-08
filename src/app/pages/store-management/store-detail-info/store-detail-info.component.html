@@ -1,4 +1,4 @@
-<nb-card size="small" class="page-card">
+<!-- <nb-card size="small" class="page-card">
 
   <div *ngIf="loadingInfo" [nbSpinner]="loadingInfo" class="loading-block" nbSpinnerSize="large"
     nbSpinnerStatus="primary"></div>
@@ -19,7 +19,9 @@
 
 
       </nb-card-header>
-    </div>
-    <ngx-store-form [store]="store"></ngx-store-form>
-  </nb-card-body>
-</nb-card>
+    </div> -->
+<div *ngIf="!loadingInfo">
+  <ngx-store-form [store]="store" title="STORE.STORE_INFORMATION" isCancel="0"></ngx-store-form>
+</div>
+<!-- </nb-card-body>
+</nb-card> -->

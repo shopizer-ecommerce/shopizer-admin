@@ -390,21 +390,21 @@ export const MENU_ITEMS: MenuItem[] = [
         key: 'COMPONENTS.CUSTOMER_LIST',
         link: '/pages/customer/list',
       },
-      {
-        title: 'COMPONENTS.OPTIONS',
-        key: 'COMPONENTS.OPTIONS',
-        link: '/pages/customer/option/list',
-      },
-      {
-        title: 'COMPONENTS.OPTIONS_VALUE',
-        key: 'COMPONENTS.OPTIONS_VALUE',
-        link: '/pages/customer/value/list',
-      },
-      {
-        title: 'COMPONENTS.MANAGE_OPTIONS',
-        key: 'COMPONENTS.MANAGE_OPTIONS',
-        link: '/pages/customer/manage/list',
-      }
+      // {
+      //   title: 'COMPONENTS.OPTIONS',
+      //   key: 'COMPONENTS.OPTIONS',
+      //   link: '/pages/customer/option/list',
+      // },
+      // {
+      //   title: 'COMPONENTS.OPTIONS_VALUE',
+      //   key: 'COMPONENTS.OPTIONS_VALUE',
+      //   link: '/pages/customer/value/list',
+      // },
+      // {
+      //   title: 'COMPONENTS.MANAGE_OPTIONS',
+      //   key: 'COMPONENTS.MANAGE_OPTIONS',
+      //   link: '/pages/customer/manage/list',
+      // }
     ]
   },
   // {

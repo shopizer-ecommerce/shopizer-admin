@@ -44,7 +44,6 @@ export class ProductFormComponent implements OnInit {
   uploadData = new FormData();
   removedImagesArray = [];
   saved = false;
-
   constructor(
     private fb: FormBuilder,
     private manufactureService: ManufactureService,

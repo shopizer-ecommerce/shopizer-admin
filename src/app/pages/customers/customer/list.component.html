@@ -1,17 +1,44 @@
-<div class="pages">
-  <h1 class="page_title">Customers List</h1>
-  <nb-card-header class="header_full">
-    <div class="table_search">
-      <input type="text" name="search_text" [(ngModel)]="search_text" class="form-control" placeholder="Search" (keyup)="search()">
+<nb-card class="page-card inner_pages">
+  <nb-card-body [nbSpinner]="loadingList" nbSpinnerSize="large" nbSpinnerStatus="primary" class="customerList">
+    <div class="inner_pages_legacy">
+      <nb-card-header class="main_header">
+        <h1 class="page_title">Customers List</h1>
+        <div class="content_spacing_empty"></div>
+
+      </nb-card-header>
+
+      <form class="form-inline filter_section">
+        <div class="filter_left_section">
+          <input #search class="search form-control ng-pristine ng-valid ng-touched" value="{{ searchValue }}" type="text"
+            placeholder="{{ 'COMPONENTS.SEARCH' | translate }}" (keydown.enter)="onSearch(search.value)" style="width:45%">
+          <img class="pointer" src="../../../../assets/img/magnifying-glass.png" title="{{ 'COMMON.SEARCH' | translate}}"
+            (click)="onSearch(search.value)" class="sda">
+          <img class="pointer" src="../../../../assets/img/reload.png" title="{{ 'COMMON.RESET' | translate}}" alt=""
+            (click)="resetSearch()" class="sda">
+
+        </div>
+        <div class="filter_right_section">
+          <nb-select placeholder="{{'ORDER_FORM.SELECT_STORE' | translate}}" [(ngModel)]="selectedStore"
+            (selectedChange)="onSelectStore($event)" name="selectedStore" class="store_select" outline shape="rectangle"
+            name="store" [selected]="'DEFAULT'">
+            <label class="label">yes<span>*</span></label>
+            <nb-option *ngFor="let store of stores" [value]="store.code">{{store.code}}</nb-option>
+          </nb-select>
+          <a class="createBtn" (click)="addCustomer()">
+            <img class="pointer sda" src="../../../../assets/img/plus.png" title="create_customer">
+            <label>Create Customer</label>
+          </a>
+        </div>
+
+      </form>
+
+
+      <ng2-smart-table [settings]="settings" [source]="source" (custom)="onClickAction($event)" class="home-table">
+      </ng2-smart-table>
+
+      <ngx-paginator (changePage)="changePage($event)" [pagesToShow]="5" [currentPage]="currentPage" [perPage]="perPage"
+        [count]="totalCount">
+      </ngx-paginator>
     </div>
-    <div class="buttons-row">
-      <button nbButton (click)="addCustomer()">
-        Create Customer
-      </button>
-    </div>
-  </nb-card-header>
-  <nb-card-body [nbSpinner]="loadingList" nbSpinnerSize="large" nbSpinnerStatus="primary">
-    <ng2-smart-table [settings]="settings" [source]="source" (custom)="onClickAction($event)" class="custom_scroll home-table">
-    </ng2-smart-table>
   </nb-card-body>
-</div>
+</nb-card>

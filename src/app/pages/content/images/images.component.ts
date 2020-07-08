@@ -7,7 +7,7 @@ import { ShowcaseDialogComponent } from '../../shared/components/showcase-dialog
 import { Lightbox } from 'ngx-lightbox';
 import { MalihuScrollbarService } from 'ngx-malihu-scrollbar';
 
-import { TreeModel, NodeInterface, ConfigInterface } from '../../../ng6-file-man';
+import { TreeModel, NodeInterface, ConfigInterface } from 'ng6-file-man';
 @Component({
   selector: 'images-table',
   templateUrl: './images.component.html',

@@ -1,130 +1,149 @@
-<div *ngIf="loader" [nbSpinner]="loader" nbSpinnerSize="large" nbSpinnerStatus="primary"></div>
-<form [formGroup]='form' *ngIf="!loader" class="brandFormmanagement">
+<!-- <div *ngIf="loader" [nbSpinner]="loader" nbSpinnerSize="large" nbSpinnerStatus="primary"></div> -->
+<div class="inner_pages brand_create_page">
 
-  <div class="form-group">
-    <label for="code" class="col-sm-10 col-form-label inputLabel">{{ 'COMMON.CODE' | translate}}</label>
-    <div class="col-sm-12">
-      <input type="text" class="form-control inputText" id="code" formControlName='code' [readOnly]="brand.id"
-        placeholder="{{ 'COMMON.CODE' | translate}}" (change)="checkCode($event)" required>
-      <div class="err-message" *ngIf="(code.dirty || code.touched) && code.invalid && code">
-        <span *ngIf="code.errors.required">
-          {{ 'COMMON.CODE_REQUIRED' | translate}}
-        </span>
-        <span *ngIf="code.errors.pattern">
-          {{ 'COMMON.ALPHA_DECIMAL_RULE' | translate}}
-        </span>
-      </div>
-      <span *ngIf="!isCodeUnique" class="err-message">
-        {{ 'COMMON.CODE_EXISTS' | translate}}
-      </span>
+  <nb-card-header class="main_header">
+    <h1 class="page_title">{{ title | translate}}</h1>
+    <div class="content_spacing" *ngIf="title == 'COMPONENTS.BRAND'">
+      <button type="button" nbButton class="cancel_button" (click)="goToback()">{{ 'ORDER_FORM.CANCLE'
+        | translate}}</button>
     </div>
-  </div>
-
-  <div class="form-group">
-    <label for="sortOrder" class="col-sm-10 col-form-label inputLabel">{{ 'COMMON.ORDER' | translate }}</label>
-    <div class="col-sm-12">
-      <input type="text" class="form-control inputText" id="sortOrder" formControlName='order' ngxValidateNumber
-        placeholder="{{ 'COMMON.ORDER' | translate }}" required>
+    <div class="content_spacing">
+      <button type="submit" nbButton class="success_button" (click)="save()">{{'COMMON.SAVE' | translate }}</button>
     </div>
-  </div>
+  </nb-card-header>
 
-  <div class="form-group">
-    <label class="col-sm-10 col-form-label inputLabel">{{ 'COMMON.LANGUAGE' | translate}} *</label>
-    <div class="col-sm-12">
-      <nb-select *ngIf="languages.length" placeholder="{{ 'COMMON.LANGUAGE' | translate}}" outline shape="rectangle"
-        formControlName='selectedLanguage' class="fullWidth">
-        <nb-option *ngFor="let language of languages" [value]="language.code">{{ language.code }}</nb-option>
-      </nb-select>
-    </div>
-  </div>
+  <div [nbSpinner]="loader" nbSpinnerSize="large" nbSpinnerStatus="primary">
 
-  <div *ngIf="selectedLanguage.value !== ''" formArrayName='descriptions'>
-    <div *ngFor="let descr of descriptions.controls; let j=index">
-      <div *ngIf="descr.value.language === selectedLanguage.value">
+    <!-- <div malihu-scrollbar [scrollbarOptions]="scrollbarOptions"> -->
 
-        <div [formGroupName]="j" class="description-block">
-
+    <form [formGroup]='form' class="brandFormmanagement">
+      <nb-card class="nb-card inline-form-card">
+        <nb-card-body class="nb-card-body">
           <div class="form-group">
-            <label for="name"
-              class="col-sm-10 col-form-label inputLabel">{{ 'DESCRIPTION_FORM.NAME' | translate}}</label>
+            <label for="code" class="col-sm-10 col-form-label inputLabel">{{ 'COMMON.CODE' | translate}}</label>
             <div class="col-sm-12">
-              <input type="text" class="form-control inputText" id="name" formControlName='name'
-                placeholder="{{ 'DESCRIPTION_FORM.NAME' | translate}}" (ngModelChange)="changeName($event, j)">
-              <span *ngIf="(descr.get('name').dirty || descr.get('name').touched)
-              && descr.get('name').invalid && descr.get('name').errors.required" class="err-message">
-                {{ 'DESCRIPTION_FORM.NAME_REQUIRED' | translate}}
+              <input type="text" class="form-control inputText" id="code" formControlName='code' [readOnly]="brand.id"
+                placeholder="{{ 'COMMON.CODE' | translate}}" (change)="checkCode($event)" required>
+              <div class="err-message" *ngIf="(code.dirty || code.touched) && code.invalid && code">
+                <span *ngIf="code.errors.required">
+                  {{ 'COMMON.CODE_REQUIRED' | translate}}
+                </span>
+                <span *ngIf="code.errors.pattern">
+                  {{ 'COMMON.ALPHA_DECIMAL_RULE' | translate}}
+                </span>
+              </div>
+              <span *ngIf="!isCodeUnique" class="err-message">
+                {{ 'COMMON.CODE_EXISTS' | translate}}
               </span>
             </div>
           </div>
 
           <div class="form-group">
-            <label for="highlight"
-              class="col-sm-10 col-form-label inputLabel">{{ 'DESCRIPTION_FORM.HIGHLIGHT' | translate}}</label>
+            <label for="sortOrder" class="col-sm-10 col-form-label inputLabel">{{ 'COMMON.ORDER' | translate }}</label>
             <div class="col-sm-12">
-              <input type="text" class="form-control inputText" id="highlight" formControlName='highlights'
-                placeholder="{{ 'DESCRIPTION_FORM.HIGHLIGHT' | translate}}">
+              <input type="text" class="form-control inputText" id="sortOrder" formControlName='order'
+                ngxValidateNumber placeholder="{{ 'COMMON.ORDER' | translate }}" required>
             </div>
           </div>
 
           <div class="form-group">
-            <label for="friendlyUrl"
-              class="col-sm-10 col-form-label inputLabel">{{ 'DESCRIPTION_FORM.FRIENDLY_URL' | translate}}</label>
+            <label class="col-sm-10 col-form-label inputLabel">{{ 'COMMON.LANGUAGE' | translate}} *</label>
             <div class="col-sm-12">
-              <input type="text" class="form-control inputText" id="friendlyUrl" formControlName='friendlyUrl'
-                placeholder="{{ 'DESCRIPTION_FORM.FRIENDLY_URL' | translate}}">
-              <span *ngIf="(descr.get('friendlyUrl').dirty || descr.get('friendlyUrl').touched)
-              && descr.get('friendlyUrl').invalid && descr.get('friendlyUrl').errors.required" class="err-message">
-                {{ 'DESCRIPTION_FORM.FRIENDLY_URL_REQUIRED' | translate}}
-              </span>
+              <nb-select *ngIf="languages.length" placeholder="{{ 'COMMON.LANGUAGE' | translate}}" outline shape="rectangle"
+                formControlName='selectedLanguage' class="fullWidth">
+                <nb-option *ngFor="let language of languages" [value]="language.code">{{ language.code }}</nb-option>
+              </nb-select>
             </div>
           </div>
 
-          <div class="form-group">
-            <label class="col-sm-10 col-form-label inputLabel">{{ 'DESCRIPTION_FORM.DESCRIPTION' | translate}}</label>
-            <div class="col-sm-12">
-              <div formControlName="description" [ngxSummernote]="config">
+          <div *ngIf="selectedLanguage.value !== ''" formArrayName='descriptions'>
+            <div *ngFor="let descr of descriptions.controls; let j=index">
+              <div *ngIf="descr.value.language === selectedLanguage.value">
+
+                <div [formGroupName]="j" class="description-block">
+
+                  <div class="form-group">
+                    <label for="name" class="col-sm-10 col-form-label inputLabel">{{ 'DESCRIPTION_FORM.NAME' |
+                      translate}}</label>
+                    <div class="col-sm-12">
+                      <input type="text" class="form-control inputText" id="name" formControlName='name' placeholder="{{ 'DESCRIPTION_FORM.NAME' | translate}}"
+                        (ngModelChange)="changeName($event, j)">
+                      <span *ngIf="(descr.get('name').dirty || descr.get('name').touched)
+                              && descr.get('name').invalid && descr.get('name').errors.required"
+                        class="err-message">
+                        {{ 'DESCRIPTION_FORM.NAME_REQUIRED' | translate}}
+                      </span>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="highlight" class="col-sm-10 col-form-label inputLabel">{{
+                      'DESCRIPTION_FORM.HIGHLIGHT' | translate}}</label>
+                    <div class="col-sm-12">
+                      <input type="text" class="form-control inputText" id="highlight" formControlName='highlights'
+                        placeholder="{{ 'DESCRIPTION_FORM.HIGHLIGHT' | translate}}">
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="friendlyUrl" class="col-sm-10 col-form-label inputLabel">{{
+                      'DESCRIPTION_FORM.FRIENDLY_URL' | translate}}</label>
+                    <div class="col-sm-12">
+                      <input type="text" class="form-control inputText" id="friendlyUrl" formControlName='friendlyUrl'
+                        placeholder="{{ 'DESCRIPTION_FORM.FRIENDLY_URL' | translate}}">
+                      <span *ngIf="(descr.get('friendlyUrl').dirty || descr.get('friendlyUrl').touched)
+                              && descr.get('friendlyUrl').invalid && descr.get('friendlyUrl').errors.required"
+                        class="err-message">
+                        {{ 'DESCRIPTION_FORM.FRIENDLY_URL_REQUIRED' | translate}}
+                      </span>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label class="col-sm-10 col-form-label inputLabel">{{ 'DESCRIPTION_FORM.DESCRIPTION' |
+                      translate}}</label>
+                    <div class="col-sm-12">
+                      <div formControlName="description" [ngxSummernote]="config">
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="title" class="col-sm-10 col-form-label inputLabel">{{ 'DESCRIPTION_FORM.TITLE' |
+                      translate}}</label>
+                    <div class="col-sm-12">
+                      <input type="text" class="form-control inputText" id="title" formControlName='title' placeholder="{{ 'DESCRIPTION_FORM.TITLE' | translate}}">
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="keyWords" class="col-sm-10 col-form-label inputLabel">{{ 'DESCRIPTION_FORM.KEYWORDS'
+                      | translate}}</label>
+                    <div class="col-sm-12">
+                      <input type="text" class="form-control inputText" id="keyWords" formControlName='keyWords'
+                        placeholder="{{ 'DESCRIPTION_FORM.KEYWORDS_PLACEHOLDER' | translate}}">
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="metaDescription" class="col-sm-10 col-form-label inputLabel">{{
+                      'DESCRIPTION_FORM.META_DESCRIPTION' | translate}}</label>
+                    <div class="col-sm-12">
+                      <input type="text" class="form-control inputText" id="metaDescription" formControlName='metaDescription'
+                        placeholder="{{ 'DESCRIPTION_FORM.DESCRIPTION' | translate}}">
+                    </div>
+                  </div>
+
+                </div>
+
+
               </div>
             </div>
           </div>
 
-          <div class="form-group">
-            <label for="title"
-              class="col-sm-10 col-form-label inputLabel">{{ 'DESCRIPTION_FORM.TITLE' | translate}}</label>
-            <div class="col-sm-12">
-              <input type="text" class="form-control inputText" id="title" formControlName='title'
-                placeholder="{{ 'DESCRIPTION_FORM.TITLE' | translate}}">
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label for="keyWords"
-              class="col-sm-10 col-form-label inputLabel">{{ 'DESCRIPTION_FORM.KEYWORDS' | translate}}</label>
-            <div class="col-sm-12">
-              <input type="text" class="form-control inputText" id="keyWords" formControlName='keyWords'
-                placeholder="{{ 'DESCRIPTION_FORM.KEYWORDS_PLACEHOLDER' | translate}}">
-            </div>
-          </div>
-
-          <div class="form-group">
-            <label for="metaDescription"
-              class="col-sm-10 col-form-label inputLabel">{{ 'DESCRIPTION_FORM.META_DESCRIPTION' | translate}}</label>
-            <div class="col-sm-12">
-              <input type="text" class="form-control inputText" id="metaDescription" formControlName='metaDescription'
-                placeholder="{{ 'DESCRIPTION_FORM.DESCRIPTION' | translate}}">
-            </div>
-          </div>
-
-        </div>
-
-
-      </div>
-    </div>
+        </nb-card-body>
+      </nb-card>
+    </form>
+    <!-- </div> -->
   </div>
-
-  <!-- <hr />
-
-  <div class="form-group actions-button">
-    <button type="submit" class="btn btn-primary" (click)="save()">{{ 'COMMON.SAVE' | translate }}</button>
-  </div> -->
-
-</form>
+</div>

@@ -7,6 +7,8 @@
 }
 
 .order_details {
+
+
   .main_header {
     .page_title {
       margin-top: -25px;
@@ -22,6 +24,15 @@
         text-transform: uppercase;
         font-weight: 600;
         font-size: 0.875rem;
+
+        &:disabled {
+          background-color: #598bff96;
+
+          &:hover {
+            background-color: #598bff96;
+            border-color: #598bff96;
+          }
+        }
 
         &:hover {
           background-color: #598bff;
@@ -81,17 +92,6 @@
     }
   }
 
-}
-
-// .refund_button {
-//   background-color: red !important;
-// }
-
-// .capture_button {
-//   background-color: green !important;
-// }
-
-.order_details {
   .nb-card {
     .nb-card-body {
       min-height: 545px;
@@ -225,6 +225,16 @@
             font-weight: 600;
             font-size: 0.875rem;
 
+            &:disabled {
+              background-color: #598bff96;
+              border-color: #598bff96;
+
+              &:hover {
+                background-color: #598bff96;
+                border-color: #598bff96;
+              }
+            }
+
             &:hover {
               background-color: #598bff;
               border-color: #598bff;
@@ -239,13 +249,32 @@
       }
     }
   }
+
 }
+
 
 :host ::ng-deep .order_details {
   .nb-card-header {
     font-weight: 700;
   }
+  .select_fields {
+    width: 100%;
+    max-width: 23rem !important;
 
+
+    .select-button {
+      height: 35px !important;
+      font-size: 14px !important;
+      font-weight: 600 !important;
+      line-height: 1.5rem;
+      padding: 0 1rem !important;
+
+      .placeholder {
+        color: #8e9ab4 !important;
+        font-weight: 200;
+      }
+    }
+  }
   .inputLabel {
     font-size: 0.75rem;
     color: #8f9bb3;

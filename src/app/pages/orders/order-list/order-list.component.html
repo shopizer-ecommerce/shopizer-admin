@@ -1,19 +1,5 @@
-<!-- <nb-accordion>
-  <nb-accordion-item #item>
-    <nb-accordion-item-header>
-      Order
-    </nb-accordion-item-header>
-    <nb-accordion-item-body>
-      <ng2-smart-table [settings]="settings" [source]="source" (custom)="route($event)">
-      </ng2-smart-table>
-    </nb-accordion-item-body>
-  </nb-accordion-item>
-</nb-accordion> -->
-
-<nb-card size="small" class="page-card inner_pages">
-  <div *ngIf="loading" class="loading-block" [nbSpinner]="loading" nbSpinnerSize="large" nbSpinnerStatus="primary">
-  </div>
-  <nb-card-body [nbSpinner]="loadingList" nbSpinnerSize="large" nbSpinnerStatus="primary" class="orderList">
+<nb-card class="page-card inner_pages">
+  <nb-card-body [nbSpinner]="loading" nbSpinnerSize="large" nbSpinnerStatus="primary" class="orderList">
     <div class="inner_pages_legacy">
       <nb-card-header class="main_header">
         <h1 class="page_title">{{ 'COMPONENTS.ORDERS' | translate}}</h1>
@@ -23,15 +9,6 @@
 
       <form class="form-inline filter_section">
 
-        <!-- <div class="filter_left_section">
-          <input #search class="search form-control ng-pristine ng-valid ng-touched" value="{{ searchValue }}"
-            type="text" placeholder="{{ 'COMPONENTS.SEARCH' | translate }}" (keydown.enter)="onSearch(search.value)"
-            style="width:25%">
-          <img class="pointer" src="../../../../assets/img/magnifying-glass.png"
-            title="{{ 'COMMON.SEARCH' | translate}}" (click)="onSearch(search.value)" class="sda">
-          <img class="pointer" src="../../../../assets/img/reload.png" title="{{ 'COMMON.RESET' | translate}}" alt=""
-            (click)="resetSearch()" class="sda">
-        </div> -->
         <div class="filter_right_section" *ngIf="isSuperAdmin">
           <nb-select placeholder="{{'ORDER_FORM.SELECT_STORE' | translate}}" [(ngModel)]="selectedStore"
             (selectedChange)="onSelectStore($event)" name="selectedStore" class="store_select" outline shape="rectangle"
@@ -52,21 +29,3 @@
     </div>
   </nb-card-body>
 </nb-card>
-
-
-
-
-
-<!-- <div class="pages">
-  <h1 class="page_title">Orders List</h1>
-  <nb-card-header class="header_full">
-    <div class="table_search">
-      <input type="text" name="search_text" [(ngModel)]="search_text" class="form-control" placeholder="Search"
-        (keyup)="search()">
-    </div>
-  </nb-card-header>
-  <nb-card-body [nbSpinner]="loadingList" nbSpinnerSize="large" nbSpinnerStatus="primary">
-    <ng2-smart-table [settings]="settings" [source]="source" (custom)="route($event)" class="custom_scroll home-table">
-    </ng2-smart-table>
-  </nb-card-body>
-</div> -->

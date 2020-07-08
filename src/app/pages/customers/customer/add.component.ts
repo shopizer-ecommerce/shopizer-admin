@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { CrudService } from '../../shared/services/crud.service';
+// import { CrudService } from '../../shared/services/crud.service';
+import { CustomersService } from '../services/customer.service';
 import { ToastrService } from 'ngx-toastr';
 import { NbDialogService } from '@nebular/theme';
 import { ShowcaseDialogComponent } from '../../shared/components/showcase-dialog/showcase-dialog.component';
 import { PasswordPromptComponent } from '../../shared/components/password-prompt/password-prompt';
-
+import { Router } from '@angular/router';
 @Component({
   selector: 'ngx-add',
   templateUrl: './add.component.html',
@@ -51,18 +52,24 @@ export class AddComponent implements OnInit {
   title: any = 'Create Customer'
   buttonText: any = 'Save'
   languages: Array<any> = [{ 'code': 'en', 'name': 'English' }, { 'code': 'fr', 'name': 'French' }]
-  constructor(private crudService: CrudService, private toastr: ToastrService,
-    private dialogService: NbDialogService) {
+  constructor(
+    // private crudService: CrudService,
+    private customersService: CustomersService,
+    private toastr: ToastrService,
+    public router: Router,
+    private dialogService: NbDialogService
+  ) {
     this.getCountry();
-    this.getStore();
+    this.getGroups();
 
   }
   getCustomerDetails() {
     this.loadingList = true;
-    this.crudService.get('/v1/private/customer/' + this.customerID)
+    this.customersService.getCustomerDetails(this.customerID)
       .subscribe(data => {
+        // console.log(data, '*************')
         this.loadingList = false;
-        this.onBillingChange(data.billing.country)
+        this.onBillingChange(data.billing.country, 0)
 
 
         this.info.emailAddress = data.emailAddress;
@@ -70,7 +77,7 @@ export class AddComponent implements OnInit {
         this.info.userName = data.userName;
         this.billing = data.billing;
         if (data.delivery) {
-          this.onShippingChange(data.delivery.country)
+          this.onShippingChange(data.delivery.country, 0)
           this.shipping = data.delivery;
         }
 
@@ -88,7 +95,7 @@ export class AddComponent implements OnInit {
   }
 
   getCountry() {
-    this.crudService.get('/v1/country')
+    this.customersService.getCountry()
       .subscribe(data => {
         this.shippingCountry = data;
         this.billingCountry = data;
@@ -96,25 +103,43 @@ export class AddComponent implements OnInit {
 
       });
   }
-  getStore() {
-    this.crudService.get('/v1/sec/private/groups')
+  getGroups() {
+    this.customersService.getGroup()
       .subscribe(data => {
         this.groups = data;
-      }, error => {
-      });
-  }
-  onBillingChange(value) {
-    this.crudService.get('/v1/zones?code=' + value)
-      .subscribe(data => {
-        this.billingStateData = data;
       }, error => {
 
       });
   }
-  onShippingChange(value) {
-    this.crudService.get('/v1/zones?code=' + value)
+  onBillingChange(value, flag) {
+    console.log(flag)
+    this.customersService.getBillingZone(value)
       .subscribe(data => {
-        this.shippingStateData = data;
+        if (data.length > 0) {
+          this.billingStateData = data;
+          if (flag == 1) {
+            this.billing.zone = data[0].code;
+          }
+        } else {
+          this.billingStateData = data;
+          this.billing.zone = '';
+        }
+      }, error => {
+
+      });
+  }
+  onShippingChange(value, flag) {
+    this.customersService.getShippingZone(value)
+      .subscribe(data => {
+        if (data.length > 0) {
+          this.shippingStateData = data;
+          if (flag == 1) {
+            this.shipping.zone = data[0].code;
+          }
+        } else {
+          this.shippingStateData = data;
+          this.shipping.zone = '';
+        }
       }, error => {
 
       });
@@ -161,12 +186,12 @@ export class AddComponent implements OnInit {
         "userName": this.info.userName,
 
       }
-      this.crudService.post('/v1/private/customer', param)
+      this.customersService.addCustomers(param)
         .subscribe(data => {
-          console.log(data);
+          // console.log(data);
           this.loadingList = false;
           this.toastr.success('Customer has been added successfully');
-          // this.router.navigate(['/pages/content/pages/list']);
+          this.goToback()
         }, error => {
           this.loadingList = false;
         });
@@ -203,24 +228,19 @@ export class AddComponent implements OnInit {
         // "userName": this.info.userName,
 
       }
-      this.crudService.put('/v1/private/customer/' + this.customerID, param)
+      this.customersService.updateCustomers(param, this.customerID)
         .subscribe(data => {
-          console.log(data);
+          // console.log(data);
           this.loadingList = false;
           this.toastr.success('Customer has been updated successfully');
-          // this.router.navigate(['/pages/content/pages/list']);
+          this.goToback()
         }, error => {
           this.loadingList = false;
         });
     }
   }
 
-  /**
-   *   //context: {
-        //  title: 'Are you sure!',
-        //  body: 'Do you really want to remove this entity?'
-        //},
-   */
+
   showDialog(value) {
     console.log(value)
     if (value == 1) {
@@ -243,5 +263,8 @@ export class AddComponent implements OnInit {
 
         });
     }
+  }
+  goToback() {
+    this.router.navigate(['/pages/customer/list']);
   }
 }

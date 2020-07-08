@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CrudService } from '../../shared/services/crud.service';
 import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 @Component({
   selector: 'ngx-manage-add',
   templateUrl: './add.component.html',
@@ -11,11 +12,15 @@ export class ManageAddComponent implements OnInit {
   public scrollbarOptions = { axis: 'y', theme: 'minimal-dark' };
   constructor(
     private crudService: CrudService,
-    private toastr: ToastrService
+    private toastr: ToastrService,
+    public router: Router
   ) {
 
   }
   ngOnInit() {
 
+  }
+  goToBack() {
+    this.router.navigate(['pages/customer/value/list']);
   }
 }

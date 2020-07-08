@@ -6,7 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./store-creation.component.scss']
 })
 export class StoreCreationComponent implements OnInit {
-  store = {};
+  store: any;
   constructor() { }
 
   ngOnInit() {

@@ -26,7 +26,6 @@ export class CategoryFormComponent implements OnInit {
   languages = [];
   //default language
   defaultLanguage = environment.client.language.default;
-
   //select store
   stores = [];
   isSuperAdmin = false;
@@ -75,10 +74,10 @@ export class CategoryFormComponent implements OnInit {
     this.isSuperAdmin = this.roles.isSuperadmin;
     this.merchant = this.storageService.getMerchant();
     //for populating stores dropdown list
-    this.storeService.getListOfMerchantStoreNames({'store':''})
-    .subscribe(res => {
-       this.stores = res;
-    });
+    this.storeService.getListOfMerchantStoreNames({ 'store': '' })
+      .subscribe(res => {
+        this.stores = res;
+      });
 
     //for selecting parent category - root or child of a parent
     this.categoryService.getListOfCategories()
@@ -105,7 +104,7 @@ export class CategoryFormComponent implements OnInit {
         this.fillEmptyForm();
         if (this.category.id) {
           this.fillForm();
-        } 
+        }
         this.loader = false;
       });
   }
@@ -120,7 +119,7 @@ export class CategoryFormComponent implements OnInit {
       selectedLanguage: ['', [Validators.required]],
       descriptions: this.fb.array([]),
     });
-    if(!this.isSuperAdmin) {
+    if (!this.isSuperAdmin) {
       this.form.get("store").disable();
     }
   }
@@ -233,7 +232,7 @@ export class CategoryFormComponent implements OnInit {
   save() {
     const categoryObject = this.prepareSaveData();
 
-    if(!this.isSuperAdmin) {
+    if (!this.isSuperAdmin) {
       this.form.patchValue({ store: this.merchant });
     }
 
@@ -289,7 +288,7 @@ export class CategoryFormComponent implements OnInit {
       }
 
       let errors = this.findInvalidControls();
-      if(errors.length>0) {
+      if (errors.length > 0) {
         this.toastr.error(this.translate.instant('COMMON.FILL_REQUIRED_FIELDS'));
         return;
       }
@@ -312,17 +311,17 @@ export class CategoryFormComponent implements OnInit {
     }
   }
 
-  public findInvalidControls():string[] {
-    var invalidControls:string[] = [];
-    let recursiveFunc = (form:FormGroup|FormArray) => {
-      Object.keys(form.controls).forEach(field => { 
+  public findInvalidControls(): string[] {
+    var invalidControls: string[] = [];
+    let recursiveFunc = (form: FormGroup | FormArray) => {
+      Object.keys(form.controls).forEach(field => {
         const control = form.get(field);
         if (control.invalid) invalidControls.push(field);
         if (control instanceof FormGroup) {
           recursiveFunc(control);
         } else if (control instanceof FormArray) {
           recursiveFunc(control);
-        }        
+        }
       });
     }
     recursiveFunc(this.form);

@@ -85,5 +85,7 @@ export class AddBoxComponent {
         this.loadingList = false;
       });
   }
-
+  goToback() {
+    this.router.navigate(['/pages/content/pages/list']);
+  }
 }

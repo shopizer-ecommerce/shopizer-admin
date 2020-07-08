@@ -30,21 +30,7 @@ nb-action,
   }
 }
 
-//custom css for apply all pages changes
 
-ngx-user-management {
-  .page-content {
-    nb-card {
-      background-color: transparent !important;
-      border: none !important;
-    }
-
-    form {
-      background: #fff !important;
-      padding: 10px 0;
-    }
-  }
-}
 
 a:hover,
 a:active,
@@ -263,7 +249,7 @@ ng2-st-tbody-custom {
   background-color: #ffffff !important;
   border-top: 3px solid grey !important;
   border: 0px;
-  height: 100% !important;
+  // height: 100% !important;
 }
 
 // .nb-theme-corporate nb-sidebar.compacted nb-menu .menu-items>.menu-item i {

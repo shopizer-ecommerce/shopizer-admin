@@ -1,40 +1,3 @@
-<!--<ngx-back-button></ngx-back-button>-->
-<!-- <nb-card size="small" class="page-card">
-  <nb-card-header>
-    {{ 'PRODUCT_GROUP.CREATE_PRODUCT_GROUP' | translate}}
-  </nb-card-header>
-  <nb-card-body>
-    <form [formGroup]='form'>
-
-      <div class="form-group">
-        <label for="code" class="col-sm-10 col-form-label">{{ 'COMMON.CODE' | translate}} *</label>
-        <div class="col-sm-12">
-          <input type="text" class="form-control" id="code" formControlName='code' (change)="checkCode($event)"
-            placeholder="{{ 'COMMON.CODE' | translate}}" required>
-          <div class="err-message" *ngIf="(code.dirty || code.touched) && code.invalid && code">
-            <span *ngIf="code.errors.required">
-              {{ 'COMMON.CODE_REQUIRED' | translate}}
-            </span>
-            <span *ngIf="code.errors.pattern">
-              {{ 'COMMON.ALPHA_DECIMAL_RULE' | translate}}
-            </span>
-          </div>
-          <span *ngIf="!isCodeUnique" class="err-message">
-            {{ 'COMMON.CODE_EXISTS' | translate}}
-          </span>
-        </div>
-      </div>
-
-      <hr/>
-
-      <div class="form-group actions-button">
-        <button type="submit" class="btn btn-primary" (click)="save()">{{ 'COMMON.SAVE' | translate }}</button>
-      </div>
-
-    </form>
-  </nb-card-body>
-</nb-card> -->
-
 <nb-card size="small" class="page-card">
   <!-- <div *ngIf="loading" class="loading-block" [nbSpinner]="loading" nbSpinnerSize="large" nbSpinnerStatus="primary"></div> -->
   <nb-card-body class="productGroupPage">
@@ -51,8 +14,8 @@
       <div class="form-group">
         <label for="code" class="col-sm-10 col-form-label inputLabel">{{ 'COMMON.CODE' | translate}} *</label>
         <div class="col-sm-12">
-          <input type="text" class="form-control inputText" id="code" formControlName='code'
-            (change)="checkCode($event)" placeholder="{{ 'COMMON.CODE' | translate}}" required>
+          <input type="text" class="form-control inputText" id="code" formControlName='code' (change)="checkCode($event)"
+            placeholder="{{ 'COMMON.CODE' | translate}}" required>
           <div class="err-message" *ngIf="(code.dirty || code.touched) && code.invalid && code">
             <span *ngIf="code.errors.required">
               {{ 'COMMON.CODE_REQUIRED' | translate}}

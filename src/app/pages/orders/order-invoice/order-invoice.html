@@ -12,8 +12,11 @@
       <td colspan="3">
         <table>
           <tr>
-            <td class="title">
+            <td class="title" *ngIf="orderData.store.logo !== null">
               <img src="{{orderData.store.logo.path}}" style="width:100%; max-width:250px;">
+            </td>
+            <td class="title" *ngIf="orderData.store.logo == null">
+              <img src="../../../../assets/img/shopizer-logo.png" style="width:100%; max-width:150px;">
             </td>
 
             <td>
