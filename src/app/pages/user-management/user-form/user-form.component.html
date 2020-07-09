@@ -88,7 +88,7 @@
           </div>
 
           <div class="form-group">
-            <nb-checkbox status="success" class="col-sm-4" formControlName='active'>{{ 'USER_FORM.ACTIVE' | translate
+            <nb-checkbox class="col-sm-4" formControlName='active'>{{ 'USER_FORM.ACTIVE' | translate
               }}
             </nb-checkbox>
           </div>
@@ -109,7 +109,7 @@
           <div class="form-group">
             <label class="col-sm-3 col-form-label inputLabel">{{ 'USER_FORM.GROUPS' | translate }} *</label>
             <div class="col-sm-12 group-block">
-              <nb-checkbox *ngFor="let group of groups" status="success" [value]="group.checked" (change)="group.checked = !group.checked"
+              <nb-checkbox *ngFor="let group of groups" [value]="group.checked" (change)="group.checked = !group.checked"
                 [disabled]="group.disabled">
                 {{ group.name }}
               </nb-checkbox>

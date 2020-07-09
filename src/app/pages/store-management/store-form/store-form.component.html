@@ -172,7 +172,7 @@
           <div class="form-group">
             <label class="col-sm-10 col-form-label inputLabel">{{ 'STORE_FORM.SUPPORTED_LANGUAGES' | translate }} *</label>
             <div class="col-sm-12 group-block">
-              <nb-checkbox *ngFor="let language of supportedLanguages" status="success" [value]="userHasSupportedLanguage(language)"
+              <nb-checkbox *ngFor="let language of supportedLanguages" [value]="userHasSupportedLanguage(language)"
                 (change)="addSupportedLanguage(language.code)">
                 {{ ('LANG.'+language.code) | translate }}
               </nb-checkbox>
@@ -202,7 +202,7 @@
 
           <div class="form-group">
             <div class="col-sm-12 group-block">
-              <nb-checkbox status="success" formControlName='currencyFormatNational'>
+              <nb-checkbox formControlName='currencyFormatNational'>
                 {{ 'STORE_FORM.CURRENCY_FORMAT' | translate }}
               </nb-checkbox>
             </div>
@@ -243,7 +243,7 @@
 
           <div class="form-group">
             <div class="col-sm-12 group-block">
-              <nb-checkbox status="success" formControlName='useCache'>
+              <nb-checkbox formControlName='useCache'>
                 {{ 'STORE_FORM.USE_CACHE' | translate }}
               </nb-checkbox>
             </div>
@@ -253,7 +253,7 @@
           <div>
             <div class="form-group">
               <div class="col-sm-12 group-block">
-                <nb-checkbox status="success" formControlName='retailer' (change)="showRetailers($event)">
+                <nb-checkbox formControlName='retailer' (change)="showRetailers($event)">
                   {{ 'COMPONENTS.RETAILER' | translate }}
                 </nb-checkbox>
               </div>

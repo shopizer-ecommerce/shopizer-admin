@@ -1,7 +1,8 @@
 <div class="inner_pages create_customer">
 
   <nb-card-header class="main_header">
-    <h1 class="page_title">{{title}}</h1>
+    <h1 class="page_title" *ngIf="buttonText == 'Save'">{{'CUSTOMERS.CREATE_CUSTOMER' | translate}}</h1>
+    <h1 class="page_title" *ngIf="buttonText == 'Update'">{{'CUSTOMERS.UPDATE_CUSTOMER' | translate}}</h1>
     <div class="content_spacing">
       <div *ngIf="buttonText == 'Update'">
         <nb-select placeholder="More Options...." outline shape="rectangle" (selectedChange)="showDialog($event)">
@@ -11,11 +12,19 @@
       </div>
     </div>
     <div class="content_spacing">
-      <button type="button" nbButton class="cancel_button" (click)="goToback()">Cancle</button>
+      <button type="button" nbButton class="cancel_button" (click)="goToback()">{{ 'ORDER_FORM.CANCLE'
+        | translate}}</button>
     </div>
     <div class="
           content_spacing">
-      <button type="button" nbButton class="success_button" [disabled]="!customerForm.form.valid" (click)="onAddCustomer()">{{buttonText}}</button>
+      <button type="button" *ngIf="buttonText == 'Update'" nbButton class="success_button" [disabled]="!customerForm.form.valid"
+        (click)="onAddCustomer()">{{'CUSTOMERS.UPDATE'
+        |
+        translate }}</button>
+      <button type="button" *ngIf="buttonText == 'Save'" nbButton class="success_button" [disabled]="!customerForm.form.valid"
+        (click)="onAddCustomer()">{{'COMMON.SAVE'
+        |
+        translate }}</button>
     </div>
   </nb-card-header>
 
@@ -25,21 +34,21 @@
       <div class="row">
         <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
           <nb-card class="nb-card inline-form-card">
-            <nb-card-header class="nb-card-header">Billing information</nb-card-header>
+            <nb-card-header class="nb-card-header">{{'ORDER_FORM.BILLING_INFO' | translate}}</nb-card-header>
             <nb-card-body class="nb-card-body">
 
               <div class="row">
                 <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                   <div class="form-group">
-                    <label class="label inputLabel">First Name <span>*</span></label>
-                    <input type="text" class="form-control inputText" id="first_name" placeholder="First Name"
+                    <label class="label inputLabel">{{'ORDER_FORM.FIRST_NAME' | translate}}<span>*</span></label>
+                    <input type="text" class="form-control inputText" id="first_name" placeholder="{{'ORDER_FORM.FIRST_NAME' | translate}}"
                       [(ngModel)]="billing.firstName" name="firstName" required #firstName="ngModel">
                   </div>
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                   <div class="form-group">
-                    <label class="label inputLabel">Last Name <span>*</span></label>
-                    <input type="text" class="form-control inputText" id="last_name" placeholder="Last Name"
+                    <label class="label inputLabel">{{'ORDER_FORM.LAST_NAME' | translate}}<span>*</span></label>
+                    <input type="text" class="form-control inputText" id="last_name" placeholder="{{'ORDER_FORM.LAST_NAME' | translate}}"
                       [(ngModel)]="billing.lastName" name="lastName" required #lastName="ngModel">
                   </div>
                 </div>
@@ -48,15 +57,15 @@
               <div class="row">
                 <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                   <div class="form-group">
-                    <label class="label inputLabel">User Name</label>
-                    <input type="text" class="form-control inputText" id="user_name" placeholder="User Name"
+                    <label class="label inputLabel">{{'CUSTOMERS.USER_NAME' | translate}}</label>
+                    <input type="text" class="form-control inputText" id="user_name" placeholder="{{'CUSTOMERS.USER_NAME' | translate}}"
                       [(ngModel)]="info.userName" name="userName" #userName="ngModel">
                   </div>
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                   <div class="form-group">
-                    <label class="label inputLabel">Billing Company</label>
-                    <input type="text" class="form-control inputText" id="billing_company" placeholder="Billing Company"
+                    <label class="label inputLabel">{{'CUSTOMERS.COMPANY' | translate}}</label>
+                    <input type="text" class="form-control inputText" id="billing_company" placeholder="{{'CUSTOMERS.Company' | translate}}"
                       [(ngModel)]="billing.company" name="company">
                   </div>
                 </div>
@@ -66,63 +75,26 @@
               <div class="row">
                 <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                   <div class="form-group">
-                    <label class="label inputLabel">Billing Street Address <span>*</span></label>
-                    <input type="text" class="form-control inputText" id="billing_address" placeholder="Billing Street Address"
+                    <label class="label inputLabel">{{'ORDER_FORM.STREET_ADDRESS' | translate}}<span>*</span></label>
+                    <input type="text" class="form-control inputText" id="billing_address" placeholder="{{'ORDER_FORM.STREET_ADDRESS' | translate}}"
                       [(ngModel)]="billing.address" name="address" required #address="ngModel">
                   </div>
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                   <div class="form-group">
-                    <label class="label inputLabel">Billing City <span>*</span></label>
-                    <input type="text" class="form-control inputText" id="billing_city" placeholder="Billing City"
+                    <label class="label inputLabel">{{'ORDER_FORM.CITY' | translate}}<span>*</span></label>
+                    <input type="text" class="form-control inputText" id="billing_city" placeholder="{{'ORDER_FORM.CITY' | translate}}"
                       [(ngModel)]="billing.city" name="city" required #city="ngModel">
                   </div>
                 </div>
               </div>
-
               <div class="row">
                 <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                   <div class="form-group">
-                    <label class="label inputLabel">Billing Postal Code <span>*</span></label>
-                    <input type="text" class="form-control inputText" id="billing_postal" placeholder="Billing Postal Code"
-                      [(ngModel)]="billing.postalCode" name="postalCode" required #postalCode="ngModel">
-                  </div>
-                </div>
-                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                  <div class="form-group">
-                    <label class="label inputLabel">Email Address <span>*</span></label>
-                    <input type="text" class="form-control inputText" id="billing_email" placeholder="Email Address"
-                      [(ngModel)]="info.emailAddress" name="emailAddress" required #email="ngModel">
-                  </div>
-                </div>
-              </div>
-
-              <div class="row">
-                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                  <div class="form-group">
-                    <label class="label inputLabel">Phone Number <span>*</span></label>
-                    <input type="text" class="form-control inputText" id="billing_phone" placeholder="Phone Number"
-                      [(ngModel)]="billing.phone" name="phone" required #phone="ngModel" minlength=10 maxlength=13>
-                  </div>
-                </div>
-                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                  <div class="form-group">
-                    <label class="label inputLabel">Default language</label>
-                    <nb-select placeholder="Language" outline shape="rectangle" [(ngModel)]="info.language" name="language"
-                      class="select_fields" [selected]="'en'">
-                      <nb-option *ngFor="let lan of languages" [value]="lan.code">{{ lan.name }}</nb-option>
-                    </nb-select>
-                  </div>
-                </div>
-              </div>
-
-              <div class="row">
-                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                  <div class="form-group">
-                    <label class="label inputLabel">Billing Country <span>*</span></label>
-                    <nb-select *ngIf="billingCountry.length > 0" placeholder="Select Country" outline shape="rectangle"
-                      [(ngModel)]="billing.country" name="country" (selectedChange)="onBillingChange($event, 1)" class="select_fields"
-                      required>
+                    <label class="label inputLabel">{{'ORDER_FORM.COUNTRY' | translate}}<span>*</span></label>
+                    <nb-select *ngIf="billingCountry.length > 0" placeholder="{{'ORDER_FORM.SELECT_COUNTRY' | translate}}"
+                      outline shape="rectangle" [(ngModel)]="billing.country" name="country" (selectedChange)="onBillingChange($event, 1)"
+                      class="select_fields" required>
                       <nb-option *ngFor="let country of billingCountry" [value]="country.code">{{ country.name }}
                       </nb-option>
                     </nb-select>
@@ -130,9 +102,9 @@
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                   <div class="form-group" *ngIf="billingStateData.length > 0">
-                    <label class="label inputLabel">Billing State / Province <span>*</span></label>
-                    <nb-select placeholder="Select State" class="select_fields" outline shape="rectangle" [(ngModel)]="billing.zone"
-                      name="zone" required>
+                    <label class="label inputLabel">{{'ORDER_FORM.STATE' | translate}}<span>*</span></label>
+                    <nb-select placeholder="{{'ORDER_FORM.SELECT_STATE' | translate}}" class="select_fields" outline
+                      shape="rectangle" [(ngModel)]="billing.zone" name="zone" required>
                       <nb-option *ngFor="let state of billingStateData" [value]="state.code">{{ state.name }}
                       </nb-option>
                     </nb-select>
@@ -144,6 +116,43 @@
                   </div>
                 </div>
               </div>
+              <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                  <div class="form-group">
+                    <label class="label inputLabel">{{'ORDER_FORM.POSTAL_CODE' | translate}}<span>*</span></label>
+                    <input type="text" class="form-control inputText" id="billing_postal" placeholder="{{'ORDER_FORM.POSTAL_CODE' | translate}}"
+                      [(ngModel)]="billing.postalCode" name="postalCode" required #postalCode="ngModel">
+                  </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                  <div class="form-group">
+                    <label class="label inputLabel">{{'ORDER_FORM.EMAIL' | translate}}<span>*</span></label>
+                    <input type="text" class="form-control inputText" id="billing_email" placeholder="{{'ORDER_FORM.EMAIL' | translate}}"
+                      [(ngModel)]="info.emailAddress" name="emailAddress" required #email="ngModel">
+                  </div>
+                </div>
+              </div>
+
+              <div class="row">
+                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                  <div class="form-group">
+                    <label class="label inputLabel">{{'ORDER_FORM.PHONE_NUMBER' | translate}}<span>*</span></label>
+                    <input type="text" class="form-control inputText" id="billing_phone" placeholder="{{'ORDER_FORM.PHONE_NUMBER' | translate}}"
+                      [(ngModel)]="billing.phone" name="phone" required #phone="ngModel" minlength=10 maxlength=13>
+                  </div>
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                  <div class="form-group">
+                    <label class="label inputLabel">{{'CUSTOMERS.DEFAULT_LANGUAGE' | translate}}</label>
+                    <nb-select placeholder="{{'CUSTOMERS.SELECT_LANGUAGE' | translate}}" outline shape="rectangle"
+                      [(ngModel)]="info.language" name="language" class="select_fields" [selected]="'en'">
+                      <nb-option *ngFor="let lan of languages" [value]="lan.code">{{ lan.name }}</nb-option>
+                    </nb-select>
+                  </div>
+                </div>
+              </div>
+
+
 
             </nb-card-body>
           </nb-card>
@@ -151,20 +160,24 @@
 
         <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
           <nb-card class="nb-card inline-form-card">
-            <nb-card-header class="nb-card-header">Shipping information</nb-card-header>
+            <nb-card-header class="nb-card-header">{{'ORDER_FORM.SHIPPING_INFO' | translate}}</nb-card-header>
             <nb-card-body class="nb-card-body">
               <div class="row">
                 <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                   <div class="form-group">
-                    <label for="exampleInputPassword1" class="label inputLabel">First Name</label>
-                    <input type="text" class="form-control inputText" id="first_name" placeholder="First Name"
+                    <label for="exampleInputPassword1" class="label inputLabel">{{'ORDER_FORM.FIRST_NAME' |
+                      translate}}</label>
+                    <input type="text" class="form-control inputText" id="first_name" placeholder="{{'ORDER_FORM.FIRST_NAME' |
+                    translate}}"
                       [(ngModel)]="shipping.firstName" name="shipping.firstName" #firstName="ngModel">
                   </div>
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                   <div class="form-group">
-                    <label for="exampleInputPassword1" class="label inputLabel">Last Name</label>
-                    <input type="text" class="form-control inputText" id="last_name" placeholder="Last Name"
+                    <label for="exampleInputPassword1" class="label inputLabel">{{'ORDER_FORM.LAST_NAME' |
+                      translate}}</label>
+                    <input type="text" class="form-control inputText" id="last_name" placeholder="{{'ORDER_FORM.LAST_NAME' |
+                    translate}}"
                       [(ngModel)]="shipping.lastName" name="shipping.lastName" #lastName="ngModel">
                   </div>
                 </div>
@@ -172,15 +185,16 @@
               <div class="row">
                 <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                   <div class="form-group">
-                    <label for="exampleInputPassword1" class="label inputLabel">Shipping Company</label>
-                    <input type="text" class="form-control inputText" id="shipping_company" placeholder="Shipping Company"
+                    <label for="exampleInputPassword1" class="label inputLabel">{{'CUSTOMERS.COMPANY' | translate}}</label>
+                    <input type="text" class="form-control inputText" id="shipping_company" placeholder="{{'CUSTOMERS.Company' | translate}}"
                       [(ngModel)]="shipping.company" name="shipping.company">
                   </div>
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                   <div class="form-group">
-                    <label for="exampleInputPassword1" class="label inputLabel">Shipping Street Address</label>
-                    <input type="text" class="form-control inputText" id="shipping_address" placeholder="Shipping Street Address"
+                    <label for="exampleInputPassword1" class="label inputLabel">{{'ORDER_FORM.STREET_ADDRESS' |
+                      translate}}</label>
+                    <input type="text" class="form-control inputText" id="shipping_address" placeholder="{{'ORDER_FORM.STREET_ADDRESS' | translate}}"
                       [(ngModel)]="shipping.address" name="shipping.address" #address="ngModel">
                   </div>
                 </div>
@@ -188,15 +202,15 @@
               <div class="row">
                 <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                   <div class="form-group">
-                    <label for="exampleInputPassword1" class="label inputLabel">Shipping City</label>
-                    <input type="text" class="form-control inputText" id="shipping_city" placeholder="Shipping City"
+                    <label for="exampleInputPassword1" class="label inputLabel">{{'ORDER_FORM.CITY' | translate}}</label>
+                    <input type="text" class="form-control inputText" id="shipping_city" placeholder="{{'ORDER_FORM.CITY' | translate}}"
                       [(ngModel)]="shipping.city" name="shipping.city" #city="ngModel">
                   </div>
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                   <div class="form-group">
-                    <label class="label inputLabel">Shipping Postal Code</label>
-                    <input type="text" class="form-control inputText" id="shipping_postal" placeholder="Shipping Postal Code"
+                    <label class="label inputLabel">{{'ORDER_FORM.POSTAL_CODE' | translate}}</label>
+                    <input type="text" class="form-control inputText" id="shipping_postal" placeholder="{{'ORDER_FORM.POSTAL_CODE' | translate}}"
                       [(ngModel)]="shipping.postalCode" name="shipping.postalCode">
                   </div>
                 </div>
@@ -204,10 +218,10 @@
               <div class="row">
                 <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                   <div class="form-group">
-                    <label class="label inputLabel">Shipping Country</label>
-                    <nb-select *ngIf="shippingCountry.length > 0" placeholder="Select Country" outline shape="rectangle"
-                      (selectedChange)="onShippingChange($event, 1)" [(ngModel)]="shipping.country" class="select_fields"
-                      name="shipping.country">
+                    <label class="label inputLabel">{{'ORDER_FORM.COUNTRY' | translate}}</label>
+                    <nb-select *ngIf="shippingCountry.length > 0" placeholder="{{'ORDER_FORM.SELECT_COUNTRY' | translate}}"
+                      outline shape="rectangle" (selectedChange)="onShippingChange($event, 1)" [(ngModel)]="shipping.country"
+                      class="select_fields" name="shipping.country">
                       <nb-option *ngFor="let country of shippingCountry" [value]="country.code">{{
                         country.name }}</nb-option>
                     </nb-select>
@@ -215,9 +229,9 @@
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                   <div class="form-group" *ngIf="shippingStateData.length > 0">
-                    <label class="label inputLabel">Shipping State / Province</label>
-                    <nb-select placeholder="Select State" outline shape="rectangle" class="select_fields" [(ngModel)]="shipping.zone"
-                      name="shipping.zone">
+                    <label class="label inputLabel">{{'ORDER_FORM.STATE' | translate}}</label>
+                    <nb-select placeholder="{{'ORDER_FORM.SELECT_STATE' | translate}}" outline shape="rectangle" class="select_fields"
+                      [(ngModel)]="shipping.zone" name="shipping.zone">
                       <nb-option *ngFor="let state of shippingStateData" [value]="state.code">{{ state.name }}
                       </nb-option>
                     </nb-select>
@@ -232,9 +246,9 @@
               <div class="row">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                   <div class="form-group">
-                    <label class="col-form-label">{{ 'Groups' | translate }}</label>
-                    <div class="form-group">
-                      <nb-checkbox *ngFor="let group of groups" status="success" (change)="addRole(group)">
+                    <label class="label inputLabel">{{ 'CUSTOMERS.GROUPS' | translate }}</label>
+                    <div>
+                      <nb-checkbox *ngFor="let group of groups" (change)="addRole(group)">
                         {{ group.name }}
                       </nb-checkbox>
                     </div>

@@ -10,7 +10,7 @@
       <form class="form-inline filter_section">
         <div class="filter_left_section">
           <input #search class="search form-control ng-pristine ng-valid ng-touched" value="{{ searchValue }}" type="text"
-            placeholder="{{ 'COMPONENTS.SEARCH' | translate }}" (keydown.enter)="onSearch(search.value)" style="width:25%">
+            placeholder="{{ 'COMPONENTS.SEARCH' | translate }}" (keydown.enter)="onSearch(search.value)" style="width:45%">
           <img class="pointer" src="../../../../assets/img/magnifying-glass.png" title="{{ 'COMMON.SEARCH' | translate}}"
             (click)="onSearch(search.value)" class="sda">
           <img class="pointer" src="../../../../assets/img/reload.png" title="{{ 'COMMON.RESET' | translate}}" alt=""
@@ -18,9 +18,14 @@
 
         </div>
         <div class="filter_right_section">
-          <nb-select *ngIf="stores.length" outline shape="rectangle" (selectedChange)="choseStore($event)" [selected]="'DEFAULT'">
+          <nb-select *ngIf="stores.length" class="store_select" outline shape="rectangle" (selectedChange)="choseStore($event)"
+            [selected]="'DEFAULT'">
             <nb-option *ngFor="let store of stores" [value]="store.code">{{ store.code }}</nb-option>
           </nb-select>
+          <a class="createBtn " [routerLink]="['/pages/catalogue/products/create-product']">
+            <img class="pointer sda" src="../../../../assets/img/plus.png" title="{{ 'COMPONENTS.CREATE_PRODUCT' | translate}}"
+              alt="">
+            <label>{{ 'COMPONENTS.CREATE_PRODUCT' | translate}}</label></a>
         </div>
 
       </form>

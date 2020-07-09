@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { StorageService } from '../../shared/services/storage.service';
 import { CustomersService } from '../services/customer.service';
 import { StoreService } from '../../store-management/services/store.service';
+import { TranslateService } from '@ngx-translate/core';
 @Component({
   selector: 'ngx-list',
   templateUrl: './list.component.html',
@@ -28,10 +29,16 @@ export class ListComponent implements OnInit {
     public router: Router,
     // private mScrollbarService: MalihuScrollbarService,
     private storageService: StorageService,
-    private storeService: StoreService
+    private storeService: StoreService,
+    private translate: TranslateService
   ) {
     this.getStoreList()
     this.selectedStore = this.storageService.getMerchant();
+
+    this.translate.onLangChange.subscribe((lang) => {
+      this.params.lang = this.storageService.getLanguage();
+      this.getCustomers();
+    });
   }
   ngOnInit() {
     this.getCustomers();
@@ -70,6 +77,7 @@ export class ListComponent implements OnInit {
     this.settings = {
 
       actions: {
+        columnTitle: this.translate.instant('ORDER.ACTIONS'),
         add: false,
         edit: false,
         delete: false,
@@ -90,25 +98,25 @@ export class ListComponent implements OnInit {
       },
       columns: {
         id: {
-          title: 'ID',
+          title: this.translate.instant('COMMON.ID'),
           type: 'number',
           filter: false
         },
         storeCode: {
-          title: 'Merchant Store',
+          title: this.translate.instant('STORE.MERCHANT_STORE'),
           type: 'string'
         },
         firstName: {
-          title: 'First Name',
+          title: this.translate.instant('ORDER_FORM.FIRST_NAME'),
           type: 'string',
           filter: false
         },
         lastName: {
-          title: 'Last Name',
+          title: this.translate.instant('ORDER_FORM.LAST_NAME'),
           type: 'string',
         },
         emailAddress: {
-          title: 'Email',
+          title: this.translate.instant('USER_FORM.EMAIL_ADDRESS'),
           type: 'string'
         },
         // country: {

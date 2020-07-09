@@ -84,8 +84,8 @@ export const MENU_ITEMS: MenuItem[] = [
     home: true,
   },
   {
-    title: 'COMPONENTS.USER',
-    key: 'COMPONENTS.USER',
+    title: 'COMPONENTS.USER_MANAGEMENT',
+    key: 'COMPONENTS.USER_MANAGEMENT',
     icon: 'person',
     children: [
       {
@@ -94,12 +94,12 @@ export const MENU_ITEMS: MenuItem[] = [
         link: '/pages/user-management/profile',
         hidden: false
       },
-      {
-        title: 'COMPONENTS.CHANGE_PASSWORD',
-        key: 'COMPONENTS.CHANGE_PASSWORD',
-        link: '/pages/user-management/change-password',
-        hidden: false
-      },
+      // {
+      //   title: 'COMPONENTS.CHANGE_PASSWORD',
+      //   key: 'COMPONENTS.CHANGE_PASSWORD',
+      //   link: '/pages/user-management/change-password',
+      //   hidden: false
+      // },
       {
         title: 'COMPONENTS.CREATE_USER',
         key: 'COMPONENTS.CREATE_USER',
@@ -117,8 +117,8 @@ export const MENU_ITEMS: MenuItem[] = [
     ],
   },
   {
-    title: 'COMPONENTS.STORE',
-    key: 'COMPONENTS.STORE',
+    title: 'COMPONENTS.STORE_MANAGEMENT',
+    key: 'COMPONENTS.STORE_MANAGEMENT',
     icon: 'shopping-bag',
     link: '',
     hidden: false,
@@ -148,8 +148,8 @@ export const MENU_ITEMS: MenuItem[] = [
     ],
   },
   {
-    title: 'COMPONENTS.CATALOGUE',
-    key: 'COMPONENTS.CATALOGUE',
+    title: 'COMPONENTS.CATALOUGE_MANAGEMENT',
+    key: 'COMPONENTS.CATALOUGE_MANAGEMENT',
     icon: 'pricetags',
     hidden: false,
     guards: [IsAdminRetail],
@@ -192,58 +192,124 @@ export const MENU_ITEMS: MenuItem[] = [
         guards: [IsSuperadmin, IsAdmin, IsAdminRetail, IsAdminCatalogue],
         children: [
           {
-            title: 'COMPONENTS.PRODUCTS_LIST',
-            key: 'COMPONENTS.PRODUCTS_LIST',
-            link: '/pages/catalogue/products/products-list',
-            hidden: false
-          },
-          {
-            title: 'COMPONENTS.CREATE_PRODUCT',
-            key: 'COMPONENTS.CREATE_PRODUCT',
-            link: '/pages/catalogue/products/create-product',
-            hidden: false
-          }
+            title: 'COMPONENTS.PRODUCTS',
+            key: 'COMPONENTS.PRODUCTS',
+            hidden: false,
+            guards: [IsSuperadmin, IsAdmin, IsAdminRetail, IsAdminCatalogue],
+            children: [
+              {
+                title: 'COMPONENTS.PRODUCTS_LIST',
+                key: 'COMPONENTS.PRODUCTS_LIST',
+                link: '/pages/catalogue/products/products-list',
+                hidden: false
+              },
+              // {
+              //   title: 'COMPONENTS.CREATE_PRODUCT',
+              //   key: 'COMPONENTS.CREATE_PRODUCT',
+              //   link: '/pages/catalogue/products/create-product',
+              //   hidden: false
+              // }
 
-          /**
-          {
-             title: 'COMPONENTS.MANAGE_INVENTORY',
-             key: 'COMPONENTS.MANAGE_INVENTORY',
-             link: '/pages/catalogue/products/manage-inventory',
-             hidden: false
-           },
-           **/
-        ],
-      },
-      {
-        title: 'COMPONENTS.BRANDS',
-        key: 'COMPONENTS.BRANDS',
-        hidden: false,
-        children: [
-          {
-            title: 'COMPONENTS.CREATE_BRAND',
-            key: 'COMPONENTS.CREATE_BRAND',
-            link: '/pages/catalogue/brands/create-brand',
-            hidden: false
+            ],
           },
           {
-            title: 'COMPONENTS.BRANDS_LIST',
-            key: 'COMPONENTS.BRANDS_LIST',
-            link: '/pages/catalogue/brands/brands-list',
-            hidden: false
+            title: 'COMPONENTS.OPTIONS',
+            key: 'COMPONENTS.OPTIONS',
+            hidden: false,
+            children: [
+              {
+                title: 'COMPONENTS.OPTIONS_LIST',
+                key: 'COMPONENTS.OPTIONS_LIST',
+                link: '/pages/catalogue/options/options-list',
+                hidden: false
+              },
+
+              {
+                title: 'COMPONENTS.OPTIONS_VALUES_LIST',
+                key: 'COMPONENTS.OPTIONS_VALUES_LIST',
+                link: '/pages/catalogue/options/options-values-list',
+                hidden: false
+              }
+            ]
           },
-        ],
+          {
+            title: 'COMPONENTS.BRANDS',
+            key: 'COMPONENTS.BRANDS',
+            hidden: false,
+            children: [
+              // {
+              //   title: 'COMPONENTS.CREATE_BRAND',
+              //   key: 'COMPONENTS.CREATE_BRAND',
+              //   link: '/pages/catalogue/brands/create-brand',
+              //   hidden: false
+              // },
+              {
+                title: 'COMPONENTS.BRANDS_LIST',
+                key: 'COMPONENTS.BRANDS_LIST',
+                link: '/pages/catalogue/brands/brands-list',
+                hidden: false
+              }
+            ]
+          },
+          {
+            title: 'COMPONENTS.PRODUCTS_GROUPS',
+            key: 'COMPONENTS.PRODUCTS_GROUPS',
+            hidden: false,
+            children: [
+              // {
+              //   title: 'COMPONENTS.CREATE_PRODUCTS_GROUPS',
+              //   key: 'COMPONENTS.CREATE_PRODUCTS_GROUPS',
+              //   link: '/pages/catalogue/products-groups/create-products-group',
+              //   hidden: false
+              // },
+              {
+                title: 'COMPONENTS.LIST_PRODUCTS_GROUPS',
+                key: 'COMPONENTS.LIST_PRODUCTS_GROUPS',
+                link: '/pages/catalogue/products-groups/products-groups-list',
+                hidden: false
+              },
+              {
+                title: 'COMPONENTS.PRODUCTS_GROUPS_LIST',
+                key: 'COMPONENTS.PRODUCTS_GROUPS_LIST',
+                link: '/pages/catalogue/products-groups/groups-list',
+                hidden: false
+              }
+            ]
+          },
+
+
+        ]
       },
+      // {
+      //   title: 'COMPONENTS.BRANDS',
+      //   key: 'COMPONENTS.BRANDS',
+      //   hidden: false,
+      //   children: [
+      //     {
+      //       title: 'COMPONENTS.CREATE_BRAND',
+      //       key: 'COMPONENTS.CREATE_BRAND',
+      //       link: '/pages/catalogue/brands/create-brand',
+      //       hidden: false
+      //     },
+      //     {
+      //       title: 'COMPONENTS.BRANDS_LIST',
+      //       key: 'COMPONENTS.BRANDS_LIST',
+      //       link: '/pages/catalogue/brands/brands-list',
+      //       hidden: false
+      //     },
+      //   ],
+      // },
       {
         title: 'COMPONENTS.CATALOGUES',
         key: 'COMPONENTS.CATALOGUES',
         hidden: false,
         children: [
-          {
-            title: 'COMPONENTS.CREATE_CATALOGUE',
-            key: 'COMPONENTS.CREATE_CATALOGUE',
-            link: '/pages/catalogue/catalogues/create-catalogue',
-            hidden: false
-          },
+          // {
+          //   title: 'COMPONENTS.CREATE_CATALOGUE',
+          //   key: 'COMPONENTS.CREATE_CATALOGUE',
+          //   link: '/pages/catalogue/catalogues/create-catalogue',
+          //   hidden: false
+          // },
           {
             title: 'COMPONENTS.CATALOGUES_LIST',
             key: 'COMPONENTS.CATALOGUES_LIST',
@@ -252,67 +318,56 @@ export const MENU_ITEMS: MenuItem[] = [
           },
         ],
       },
-      {
-        title: 'COMPONENTS.PRODUCTS_GROUPS',
-        key: 'COMPONENTS.PRODUCTS_GROUPS',
-        hidden: false,
-        children: [
-          {
-            title: 'COMPONENTS.CREATE_PRODUCTS_GROUPS',
-            key: 'COMPONENTS.CREATE_PRODUCTS_GROUPS',
-            link: '/pages/catalogue/products-groups/create-products-group',
-            hidden: false
-          },
-          {
-            title: 'COMPONENTS.LIST_PRODUCTS_GROUPS',
-            key: 'COMPONENTS.LIST_PRODUCTS_GROUPS',
-            link: '/pages/catalogue/products-groups/products-groups-list',
-            hidden: false
-          },
-          {
-            title: 'COMPONENTS.PRODUCTS_GROUPS_LIST',
-            key: 'COMPONENTS.PRODUCTS_GROUPS_LIST',
-            link: '/pages/catalogue/products-groups/groups-list',
-            hidden: false
-          },
-        ],
-      },
-      {
-        title: 'COMPONENTS.OPTIONS',
-        key: 'COMPONENTS.OPTIONS',
-        hidden: false,
-        children: [
-          {
-            title: 'COMPONENTS.OPTIONS_LIST',
-            key: 'COMPONENTS.OPTIONS_LIST',
-            link: '/pages/catalogue/options/options-list',
-            hidden: false
-          },
-          // {
-          //   title: 'COMPONENTS.CREATE_OPTION',
-          //   key: 'COMPONENTS.CREATE_OPTION',
-          //   link: '/pages/catalogue/options/create-option',
-          //   hidden: false
-          // },
-          {
-            title: 'COMPONENTS.OPTIONS_VALUES_LIST',
-            key: 'COMPONENTS.OPTIONS_VALUES_LIST',
-            link: '/pages/catalogue/options/options-values-list',
-            hidden: false
-          },
-          // {
-          //   title: 'COMPONENTS.CREATE_OPTION_VALUE',
-          //   key: 'COMPONENTS.CREATE_OPTION_VALUE',
-          //   link: '/pages/catalogue/options/create-option-value',
-          //   hidden: false
-          // },
-        ],
-      },
-    ],
+      // {
+      //   title: 'COMPONENTS.PRODUCTS_GROUPS',
+      //   key: 'COMPONENTS.PRODUCTS_GROUPS',
+      //   hidden: false,
+      //   children: [
+      //     {
+      //       title: 'COMPONENTS.CREATE_PRODUCTS_GROUPS',
+      //       key: 'COMPONENTS.CREATE_PRODUCTS_GROUPS',
+      //       link: '/pages/catalogue/products-groups/create-products-group',
+      //       hidden: false
+      //     },
+      //     {
+      //       title: 'COMPONENTS.LIST_PRODUCTS_GROUPS',
+      //       key: 'COMPONENTS.LIST_PRODUCTS_GROUPS',
+      //       link: '/pages/catalogue/products-groups/products-groups-list',
+      //       hidden: false
+      //     },
+      //     {
+      //       title: 'COMPONENTS.PRODUCTS_GROUPS_LIST',
+      //       key: 'COMPONENTS.PRODUCTS_GROUPS_LIST',
+      //       link: '/pages/catalogue/products-groups/groups-list',
+      //       hidden: false
+      //     },
+      //   ],
+      // },
+      // {
+      //   title: 'COMPONENTS.OPTIONS',
+      //   key: 'COMPONENTS.OPTIONS',
+      //   hidden: false,
+      //   children: [
+      //     {
+      //       title: 'COMPONENTS.OPTIONS_LIST',
+      //       key: 'COMPONENTS.OPTIONS_LIST',
+      //       link: '/pages/catalogue/options/options-list',
+      //       hidden: false
+      //     },
+
+      //     {
+      //       title: 'COMPONENTS.OPTIONS_VALUES_LIST',
+      //       key: 'COMPONENTS.OPTIONS_VALUES_LIST',
+      //       link: '/pages/catalogue/options/options-values-list',
+      //       hidden: false
+      //     }
+      //   ]
+      // }
+    ]
   },
   {
-    title: 'COMPONENTS.CONTENT',
-    key: 'COMPONENTS.CONTENT',
+    title: 'COMPONENTS.CONTENT_MANAGEMENT',
+    key: 'COMPONENTS.CONTENT_MANAGEMENT',
     icon: 'edit-2',
     children: [
       {
@@ -330,11 +385,11 @@ export const MENU_ITEMS: MenuItem[] = [
         key: 'COMPONENTS.CONTENT_IMAGES',
         link: '/pages/content/images/list',
       },
-      {
-        title: 'COMPONENTS.CONTENT_FILES',
-        key: 'COMPONENTS.CONTENT_FILES',
-        link: '/pages/content/files/list',
-      },
+      // {
+      //   title: 'COMPONENTS.CONTENT_FILES',
+      //   key: 'COMPONENTS.CONTENT_FILES',
+      //   link: '/pages/content/files/list',
+      // },
       // {
       //   title: 'Promotion',
       //   key: 'sideNav.managecontent',
@@ -344,8 +399,8 @@ export const MENU_ITEMS: MenuItem[] = [
     ],
   },
   {
-    title: 'COMPONENTS.SHIPPING',
-    key: 'COMPONENTS.SHIPPING',
+    title: 'COMPONENTS.SHIPPING_MANAGEMENT',
+    key: 'COMPONENTS.SHIPPING_MANAGEMENT',
     icon: 'car',
     children: [
       {
@@ -381,8 +436,8 @@ export const MENU_ITEMS: MenuItem[] = [
   //   link: '',
   // },
   {
-    title: 'COMPONENTS.CUSTOMERS',
-    key: 'COMPONENTS.CUSTOMERS',
+    title: 'COMPONENTS.CUSTOMER_MANAGEMENT',
+    key: 'COMPONENTS.CUSTOMER_MANAGEMENT',
     icon: 'people',
     children: [
       {
@@ -423,13 +478,20 @@ export const MENU_ITEMS: MenuItem[] = [
   //   link: '',
   // },
   {
-    title: 'COMPONENTS.ORDERS',
-    key: 'COMPONENTS.ORDERS',
+    title: 'COMPONENTS.ORDER_MANAGEMENT',
+    key: 'COMPONENTS.ORDER_MANAGEMENT',
     icon: 'shopping-cart',
-    link: '/pages/orders',
-    pathMatch: 'prefix',
+    // link: '/pages/orders',
+    // pathMatch: 'prefix',
     hidden: false,
-    guards: [IsAccessToOrder]
+    guards: [IsAccessToOrder],
+    children: [
+      {
+        title: 'COMPONENTS.ORDERS',
+        key: 'COMPONENTS.ORDERS',
+        link: '/pages/orders',
+      }
+    ]
   },
   // {
   //   title: 'Manage taxes',

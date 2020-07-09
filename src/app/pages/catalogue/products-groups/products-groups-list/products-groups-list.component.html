@@ -41,7 +41,7 @@
     </ng-template>
   </p-pickList>
 </nb-card> -->
-<nb-card size="small" class="page-card">
+<nb-card class="page-card">
   <div *ngIf="loading" class="loading-block" [nbSpinner]="loading" nbSpinnerSize="large" nbSpinnerStatus="primary">
   </div>
   <nb-card-body *ngIf="!loading" class="productsGroupList">
@@ -60,12 +60,11 @@
       </nb-card-header>
     </div>
     <p-pickList sourceHeader="{{ 'COMMON.AVAILABLE' | translate}}" targetHeader="{{ 'COMMON.SELECTED' | translate}}"
-      dragdrop="true" [responsive]="true" [source]="availableList" [target]="selectedList"
-      sourceFilterPlaceholder="{{ 'COMMON.SEARCH' | translate}}"
-      targetFilterPlaceholder="{{ 'COMMON.SEARCH' | translate}}" [showSourceControls]="false"
-      [showTargetControls]="false" [disabled]="!selectedGroup" (onMoveToTarget)="moveEvent($event, 'toTarget')"
-      (onMoveToSource)="moveEvent($event, 'toSource')" (onMoveAllToTarget)="moveEvent($event, 'allToTarget')"
-      (onMoveAllToSource)="moveEvent($event, 'allToSource')" filterBy="code">
+      dragdrop="true" [responsive]="true" [source]="availableList" [target]="selectedList" sourceFilterPlaceholder="{{ 'COMMON.SEARCH' | translate}}"
+      targetFilterPlaceholder="{{ 'COMMON.SEARCH' | translate}}" [showSourceControls]="false" [showTargetControls]="false"
+      [disabled]="!selectedGroup" (onMoveToTarget)="moveEvent($event, 'toTarget')" (onMoveToSource)="moveEvent($event, 'toSource')"
+      (onMoveAllToTarget)="moveEvent($event, 'allToTarget')" (onMoveAllToSource)="moveEvent($event, 'allToSource')"
+      filterBy="code">
       <ng-template let-item pTemplate="item">
         <div class="ui-helper-clearfix item-picklist">
           <div>{{item?.id}}</div>

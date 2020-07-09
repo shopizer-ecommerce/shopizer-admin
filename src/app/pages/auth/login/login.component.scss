@@ -175,6 +175,7 @@ iframe {
     width: 100%;
     max-width: 35rem;
 }
+
 .titleClass {
     display: flex;
     flex-direction: column;
@@ -192,6 +193,7 @@ iframe {
     font-weight: 700;
     line-height: 3rem;
 }
+
 .login100-form-subtitle {
     color: #222b45;
     font-size: 0.9375rem;
@@ -199,6 +201,7 @@ iframe {
     line-height: 1.25rem;
     margin-bottom: 2rem;
 }
+
 /*------------------------------------------------------------------
 [ Input ]*/
 
@@ -240,21 +243,25 @@ iframe {
     border-style: solid;
     border-width: 1px;
     -webkit-appearance: none;
+
     &::-webkit-input-placeholder {
         /* Chrome/Opera/Safari */
         color: #8e9ab4;
         font-weight: 200;
     }
+
     &::-moz-placeholder {
         /* Firefox 19+ */
         font-weight: 200;
         color: #8e9ab4;
     }
+
     &:-ms-input-placeholder {
         /* IE 10+ */
         font-weight: 200;
         color: #8e9ab4;
     }
+
     &:-moz-placeholder {
         /* Firefox 18- */
         font-weight: 200;
@@ -266,9 +273,11 @@ iframe {
         border-color: #e4e9f2;
     }
 }
+
 input:focus {
     border: 1px solid #e4e9f2 !important;
 }
+
 .contact100-form-checkbox {
     .status-basic {
         .label {
@@ -308,7 +317,7 @@ input:focus {
     transform: scaleX(1.1) scaleY(1.3);
 }
 
-.input100:focus + .focus-input100 {
+.input100:focus+.focus-input100 {
     visibility: visible;
     opacity: 1;
 
@@ -408,7 +417,7 @@ input:focus {
     transform: translateY(-50%);
 }
 
-.input-checkbox100:checked + .label-checkbox100::before {
+.input-checkbox100:checked+.label-checkbox100::before {
     color: #0059b3;
 }
 
@@ -425,30 +434,55 @@ input:focus {
 }
 
 .login100-form-btn {
-    background-color: #36f;
-    border-color: #36f;
-    color: #fff;
-    padding: 0.8125rem 1.125rem;
-    border-style: solid;
-    border-width: 0.0625rem;
-    text-transform: uppercase;
-    transition-duration: 0.15s;
-    transition-property: background-color, border-color, box-shadow, color;
-    transition-timing-function: ease-in;
-    border-radius: 0.17rem;
-    font-size: 1rem;
-    line-height: 1.25rem;
-    cursor: pointer;
-    font-family: Open Sans, sans-serif;
-    font-weight: 700;
     width: 100%;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+    // padding: 0.8125rem 1.125rem;
+    background-color: #36f !important;
+    border-color: #36f !important;
+    color: #fff !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24) !important;
+    text-transform: uppercase !important;
+    font-weight: 600 !important;
+    font-size: 0.875rem !important;
+
+    &:disabled {
+        background-color: #598bff96 !important;
+
+        &:hover {
+            background-color: #598bff96 !important;
+            border-color: #598bff96 !important;
+        }
+    }
 
     &:hover {
-        // background-color: #598bff;
-        // border-color: #598bff;
-        box-shadow: 0px 7px 15px rgba(165, 162, 162, 0.25), 1px 3px 8px rgba(165, 162, 162, 0.25);
+        background-color: #598bff !important;
+        border-color: #598bff !important;
+        box-shadow: 0px 7px 15px rgba(165, 162, 162, 0.25), 1px 3px 8px rgba(165, 162, 162, 0.25) !important;
     }
+
+    // background-color: #36f;
+    // border-color: #36f;
+    // color: #fff;
+    // padding: 0.8125rem 1.125rem;
+    // border-style: solid;
+    // border-width: 0.0625rem;
+    // text-transform: uppercase;
+    // transition-duration: 0.15s;
+    // transition-property: background-color, border-color, box-shadow, color;
+    // transition-timing-function: ease-in;
+    // border-radius: 0.17rem;
+    // font-size: 1rem;
+    // line-height: 1.25rem;
+    // cursor: pointer;
+    // font-family: Open Sans, sans-serif;
+    // font-weight: 700;
+    // width: 100%;
+    // box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+
+    // &:hover {
+    //     // background-color: #598bff;
+    //     // border-color: #598bff;
+    //     box-shadow: 0px 7px 15px rgba(165, 162, 162, 0.25), 1px 3px 8px rgba(165, 162, 162, 0.25);
+    // }
 }
 
 /*------------------------------------------------------------------

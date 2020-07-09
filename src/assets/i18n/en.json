@@ -3,6 +3,13 @@
     "LOGIN": "Login",
     "HOME": "Home",
     "SEARCH": "Search",
+    "USER_MANAGEMENT": "User management",
+    "STORE_MANAGEMENT": "Store management",
+    "CATALOUGE_MANAGEMENT": "Catalogue management",
+    "CONTENT_MANAGEMENT": "Content management",
+    "SHIPPING_MANAGEMENT": "Shipping management",
+    "CUSTOMER_MANAGEMENT": "Customer management",
+    "ORDER_MANAGEMENT": "Order management",
     "USER": "User",
     "USERS": "Users",
     "MY_PROFILE": "My profile",
@@ -334,6 +341,17 @@
     "AMOUNT": "Amount",
     "PRINT_INVOICE": "Print Invoice",
     "ORDER_STATUS": "Order Status"
+  },
+  "CUSTOMERS": {
+    "CUSTOMER_LIST": "Customers List",
+    "CREATE_CUSTOMER": "Create Customer",
+    "UPDATE_CUSTOMER": "Update Customer",
+    "UPDATE": "Update",
+    "USER_NAME": "User Name",
+    "COMPANY": "Company",
+    "DEFAULT_LANGUAGE": "Default language",
+    "SELECT_LANGUAGE": "Select Language",
+    "GROUPS": "Groups"
   },
   "NOT_FOUND": {
     "PAGE_NOT_FOUND": "Page Not Found",
