@@ -16,6 +16,7 @@ import { slugify } from '../../../shared/utils/slugifying';
 })
 export class BrandFormComponent implements OnInit {
   @Input() brand;
+  @Input() title;
   form: FormGroup;
   loader = false;
   languages = [];
@@ -211,6 +212,9 @@ export class BrandFormComponent implements OnInit {
           });
       }
     }
+  }
+  goToback() {
+    this.router.navigate(['pages/catalogue/brands/brands-list']);
   }
 
 }

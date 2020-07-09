@@ -64,8 +64,7 @@
 
         </span>
 
-        <div class="form-group row alert-error" *ngIf="errorMessage !== ''"
-          style="width:100%;line-height: 2.5;color:#ff3d71;font-size: 12px;margin-bottom:10px;">
+        <div class="form-group row alert-error" *ngIf="errorMessage !== ''" style="width:100%;line-height: 2.5;color:#ff3d71;font-size: 12px;margin-bottom:10px;">
           {{errorMessage}}
         </div>
 
@@ -79,8 +78,7 @@
           </div>
         </div>
 
-        <div *ngIf="isSubmitted && formControls.username.errors" class="help-block"
-          style="margin-top:-32px; color:#ff3d71;font-size: 12px;">
+        <div *ngIf="isSubmitted && formControls.username.errors" class="help-block" style="margin-top:-32px; color:#ff3d71;font-size: 12px;">
           <span *ngIf="isSubmitted && formControls.username.errors.required">{{ 'LOGIN.INVALID_EMPTY_USERNAME' |
             translate}}</span>
           <span *ngIf="isSubmitted && formControls.username.errors.email">U{{ 'LOGIN.INVALID_FORMAT_USERNAME' |
@@ -95,13 +93,12 @@
             <span class="btn-show-pass">
               <i [class]="passwordType()==0 ? 'fa fa-eye' : 'fa fa-eye-slash'" (click)="showPassword()"></i>
             </span>
-            <input class="inputLogin" [type]="passwordType()==0 ? 'password' : 'text'" name="password"
-              formControlName='password' placeholder="Password" required>
+            <input class="inputLogin" [type]="passwordType()==0 ? 'password' : 'text'" name="password" formControlName='password'
+              placeholder="Password" required>
           </div>
         </div>
 
-        <div *ngIf="isSubmitted && formControls.password.errors" class="help-block"
-          style="margin-top:-8px; color:#ff3d71;font-size: 12px;">
+        <div *ngIf="isSubmitted && formControls.password.errors" class="help-block" style="margin-top:-8px; color:#ff3d71;font-size: 12px;">
           <span *ngIf="isSubmitted && formControls.password.errors.required">{{ 'LOGIN.INVALID_EMPTY_PASSWORD' |
             translate}}</span>
         </div>
@@ -123,7 +120,7 @@
         </div>
 
         <div class="container-login100-form-btn">
-          <button type="submit" class="login100-form-btn">
+          <button type="submit" nbButton class="login100-form-btn">
             {{ 'COMMON.LOGIN' | translate}}
           </button>
         </div>

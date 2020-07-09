@@ -1,109 +1,94 @@
-<!--<ngx-back-button></ngx-back-button>-->
-<!--
-<nb-card size="small" class="page-card">
-  <nb-card-header>
-    {{ 'STORE.STORE_INFORMATION' | translate}}
-  </nb-card-header>
-  <nb-card-body>
-    <span>
-      {{ 'STORE.INFORMATION_TEXT' | translate}}
-    </span>
-  -->
-<!--
-    <div *ngIf="loading" class="loading-block" [nbSpinner]="loading" nbSpinnerSize="large"
-         nbSpinnerStatus="primary"></div>
-    <div style="margin-top:10px;">
-        <nb-select [(selected)]="selectedItem" outline shape="rectangle" class="right-card-select" style="margin-left: 0px !important;">
-            <nb-option *ngFor="let item of sidemenuLinks" [value]="item.id" (click)="route(item.link)">{{ item.title }}</nb-option>
-         </nb-select>
+<div class="inner_pages store_landing_page">
+
+  <nb-card-header class="main_header">
+    <h1 class="page_title">{{ 'STORE.STORE_INFORMATION' | translate}}</h1>
+
+    <div class="content_spacing">
+      <nb-select [(selected)]="selectedItem" outline shape="rectangle">
+        <nb-option *ngFor="let item of sidemenuLinks" [value]="item.id" (click)="route(item.link)">{{ item.title }}
+        </nb-option>
+      </nb-select>
     </div>
-  -->
-<nb-card size="small" class="page-card">
-  <div *ngIf="loading" class="loading-block" [nbSpinner]="loading" nbSpinnerSize="large" nbSpinnerStatus="primary">
-  </div>
-  <nb-card-body *ngIf="!loading">
-    <div class="inner_pages_legacy">
-      <nb-card-header class="main_header">
-        <h1 class="page_title">{{ 'STORE.STORE_INFORMATION' | translate}}</h1>
-        <div class="content_spacing">
-          <nb-select [(selected)]="selectedItem" outline shape="rectangle">
-            <nb-option *ngFor="let item of sidemenuLinks" [value]="item.id" (click)="route(item.link)">{{ item.title }}
-            </nb-option>
-          </nb-select>
-        </div>
+    <div class="content_spacing">
+      <button type="submit" (click)="save()" [disabled]="!form.valid" nbButton class="success_button">{{'COMMON.SAVE'
+        |
+        translate }}</button>
+    </div>
+  </nb-card-header>
 
-        <div class="content_spacing">
+  <div [nbSpinner]="loading" nbSpinnerSize="large" nbSpinnerStatus="primary">
 
-        </div>
 
-      </nb-card-header>
-
-      <form *ngIf="!loading" [formGroup]='form'>
-        <input type="hidden" class="form-control" id="code" formControlName='code'>
-        <div class="form-group">
-          <label class="col-sm-10 col-form-label">{{ 'COMMON.LANGUAGE' | translate}}</label>
-          <div class="col-sm-12">
-            <nb-select *ngIf="languages.length" placeholder="{{ 'COMMON.SELECT_LANGUAGE' | translate}}"
-              formControlName='selectedLanguage' outline shape="rectangle">
-              <nb-option *ngFor="let language of languages" [value]="language.code">
-                {{ ('LANG.'+language.code) | translate }}</nb-option>
-            </nb-select>
+    <form *ngIf="!loading" [formGroup]='form'>
+      <nb-card class="nb-card inline-form-card">
+        <nb-card-body>
+          <input type="hidden" class="form-control inputText" id="code" formControlName='code'>
+          <div class="form-group">
+            <label class="col-sm-10 label inputLabel">{{ 'COMMON.LANGUAGE' | translate}}</label>
+            <div class="col-sm-12">
+              <nb-select *ngIf="languages.length" placeholder="{{ 'COMMON.SELECT_LANGUAGE' | translate}}"
+                formControlName='selectedLanguage' outline shape="rectangle">
+                <nb-option *ngFor="let language of languages" [value]="language.code">
+                  {{ ('LANG.'+language.code) | translate }}</nb-option>
+              </nb-select>
+            </div>
           </div>
-        </div>
 
-        <hr />
+          <hr />
 
-        <div *ngIf="selectedLanguage.value !== ''" formArrayName='descriptions'>
-          <div *ngFor="let descr of descriptions.controls; let j=index">
-            <div *ngIf="descr.value.language === selectedLanguage.value">
+          <div *ngIf="selectedLanguage.value !== ''" formArrayName='descriptions'>
+            <div *ngFor="let descr of descriptions.controls; let j=index">
+              <div *ngIf="descr.value.language === selectedLanguage.value">
 
-              <div [formGroupName]="j" class="description-block">
+                <div [formGroupName]="j" class="description-block">
 
-                <div class="form-group">
-                  <label for="title" class="col-sm-10 col-form-label">
-                    {{ 'STORE_LANDING.LANDING_PAGE_TITLE' | translate}} *
-                  </label>
-                  <div class="col-sm-12">
-                    <input type="text" class="form-control" id="title" formControlName='name' placeholder="Page title"
-                      required>
-                    <span *ngIf="(descr.get('name').dirty || descr.get('name').touched) && descr.get('name').invalid
-                  && descr.get('name').errors.required" class="err-message">
-                      {{ 'STORE_LANDING.LANDING_PAGE_TITLE' | translate}}
-                    </span>
-                  </div>
-                </div>
-
-                <div class="form-group">
-                  <label class="col-sm-10 col-form-label">{{ 'STORE_LANDING.TAG_DESCRIPTION' | translate}}</label>
-                  <div class="col-sm-12">
-                    <input type="text" class="form-control" id="metaDetails" formControlName='metaDescription'
-                      placeholder="{{ 'STORE_LANDING.TAG_DESCRIPTION' | translate}}">
-                  </div>
-                </div>
-
-                <div class="form-group">
-                  <label class="col-sm-10 col-form-label">{{ 'STORE_LANDING.LANDING_TEXT' | translate}}</label>
-                  <div class="col-sm-12 summernote">
-                    <div formControlName="description" [ngxSummernote]="config">
+                  <div class="form-group">
+                    <label for="title" class="col-sm-10 label inputLabel">
+                      {{ 'STORE_LANDING.LANDING_PAGE_TITLE' | translate}} *
+                    </label>
+                    <div class="col-sm-12">
+                      <input type="text" class="form-control inputText" id="title" formControlName='name' placeholder="Page title"
+                        required>
+                      <span *ngIf="(descr.get('name').dirty || descr.get('name').touched) && descr.get('name').invalid
+                  && descr.get('name').errors.required"
+                        class="err-message">
+                        {{ 'STORE_LANDING.LANDING_PAGE_TITLE' | translate}}
+                      </span>
                     </div>
                   </div>
+
+                  <div class="form-group">
+                    <label class="col-sm-10 label inputLabel">{{ 'STORE_LANDING.TAG_DESCRIPTION' | translate}}</label>
+                    <div class="col-sm-12">
+                      <input type="text" class="form-control inputText" id="metaDetails" formControlName='metaDescription'
+                        placeholder="{{ 'STORE_LANDING.TAG_DESCRIPTION' | translate}}">
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label class="col-sm-10 label inputLabel">{{ 'STORE_LANDING.LANDING_TEXT' | translate}}</label>
+                    <div class="col-sm-12 summernote">
+                      <div formControlName="description" [ngxSummernote]="config">
+                      </div>
+                    </div>
+                  </div>
+
                 </div>
 
               </div>
-
             </div>
           </div>
-        </div>
 
-        <hr />
+          <hr />
 
-        <div class="form-group actions-button">
-          <button type="submit" class="btn btn-primary" (click)="save()" [disabled]="!form.valid"
-            nbButton>{{ 'COMMON.SAVE' | translate}}
-          </button>
-        </div>
+          <!-- <div class="form-group actions-button">
+            <button type="submit" class="btn btn-primary" (click)="save()" [disabled]="!form.valid" nbButton>{{
+              'COMMON.SAVE' | translate}}
+            </button>
+          </div> -->
 
-      </form>
-    </div>
-  </nb-card-body>
-</nb-card>
+        </nb-card-body>
+      </nb-card>
+    </form>
+  </div>
+</div>

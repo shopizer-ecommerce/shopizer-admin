@@ -24,7 +24,7 @@ import { GlobalHttpInterceptorService } from './pages/shared/interceptors/global
 import { ToastrModule } from 'ngx-toastr';
 import { ImageBrowserComponent } from './@theme/components/image-browser/image-browser.component';
 import { GlobalErrorHandler } from './pages/shared/classes/error-handler/global-error-handler';
-import { FileManagerModule } from './ng6-file-man';
+import { FileManagerModule } from 'ng6-file-man';
 @NgModule({
   declarations: [AppComponent, ImageBrowserComponent],
   imports: [

@@ -1,112 +1,53 @@
-<!-- <div *ngIf="catalog">
-  <ngx-back-button></ngx-back-button>
-</div>
-<div class="wrapper">
-  <nb-card size="small" class="page-card">
-    <nb-card-header *ngIf="!catalog">
-      {{ 'COMPONENTS.CREATE_CATALOGUE' | translate}}
-    </nb-card-header>
-    <nb-card-header *ngIf="catalog">
-      {{ 'COMPONENTS.CATALOGUE' | translate}}
-    </nb-card-header>
-    <nb-card-body>
-      <form [formGroup]='form'>
-        <div class="form-group">
-          <label for="code" class="col-sm-10 col-form-label">{{ 'COMMON.CODE' | translate}} *</label>
-          <div class="col-sm-12">
-            <input type="text" class="form-control" id="code" formControlName='code' (change)="checkCode($event)"
-              placeholder="{{ 'COMMON.CODE' | translate}}" [readOnly]="catalog?.id" required>
-            <div class="err-message" *ngIf="(code.dirty || code.touched) && code.invalid && code">
-              <span *ngIf="code.errors.required">
-                {{ 'COMMON.CODE_REQUIRED' | translate}}
-              </span>
-              <span *ngIf="code.errors.pattern">
-                {{ 'COMMON.ALPHA_DECIMAL_RULE' | translate}}
+<div class="inner_pages catalouge_create_page">
+
+  <nb-card-header class="main_header">
+    <h1 class="page_title" *ngIf="!catalog">{{ 'COMPONENTS.CREATE_CATALOGUE' | translate}}</h1>
+    <h1 class="page_title" *ngIf="catalog">{{ 'COMPONENTS.CATALOGUE' | translate}} </h1>
+
+    <div class="content_spacing">
+      <button type="button" nbButton class="success_button" (click)="save()">{{'COMMON.SAVE' | translate }}</button>
+    </div>
+  </nb-card-header>
+
+  <div [nbSpinner]="loader" nbSpinnerSize="large" nbSpinnerStatus="primary">
+
+    <!-- <div malihu-scrollbar [scrollbarOptions]="scrollbarOptions"> -->
+
+    <form [formGroup]='form' class="catalogueForm">
+      <nb-card class="nb-card inline-form-card">
+        <nb-card-body class="nb-card-body">
+
+          <div class="form-group">
+            <label for="code" class="col-sm-10 col-form-label inputLabel">{{ 'COMMON.CODE' | translate}} *</label>
+            <div class="col-sm-12">
+              <input type="text" class="form-control inputText" id="code" formControlName='code' (change)="checkCode($event)"
+                placeholder="{{ 'COMMON.CODE' | translate}}" [readOnly]="catalog?.id" required>
+              <div class="err-message" *ngIf="(code.dirty || code.touched) && code.invalid && code">
+                <span *ngIf="code.errors.required">
+                  {{ 'COMMON.CODE_REQUIRED' | translate}}
+                </span>
+                <span *ngIf="code.errors.pattern">
+                  {{ 'COMMON.ALPHA_DECIMAL_RULE' | translate}}
+                </span>
+              </div>
+              <span *ngIf="!isCodeUnique" class="err-message">
+                {{ 'COMMON.CODE_EXISTS' | translate}}
               </span>
             </div>
-            <span *ngIf="!isCodeUnique" class="err-message">
-              {{ 'COMMON.CODE_EXISTS' | translate}}
-            </span>
           </div>
-        </div>
 
-        <div class="form-group">
-          <div class="col-sm-12 group-block">
-            <nb-checkbox status="success" formControlName='visible'>
-              {{ 'COMMON.VISIBLE' | translate}}
-            </nb-checkbox>
+          <div class="form-group">
+            <div class="col-sm-12 group-block">
+              <nb-checkbox status="success" formControlName='visible'>
+                {{ 'COMMON.VISIBLE' | translate}}
+              </nb-checkbox>
+            </div>
           </div>
-        </div>
-        
-        <hr/>
 
-        <div class="form-group actions-button">
-          <button *ngIf="catalog" type="submit" class="btn btn-danger"
-                  (click)="remove()">{{ 'COMMON.REMOVE' | translate }}</button>
-          <button type="submit" class="btn btn-primary" (click)="save()">{{ 'COMMON.SAVE' | translate }}</button>
-        </div>
-
-      </form>
-    </nb-card-body>
-  </nb-card>
-
-  <div *ngIf="catalog">
-    <div class="side-right-menu border-top-right">
-      <ul>
-        <li>
-          <a [routerLink]="['/pages/catalogue/catalogues/' + catalog.id + '/catalogues-products']"
-            routerLinkActive="active">{{ 'CATALOG.CATALOGUES_PRODUCTS' | translate}}</a>
-        </li>
-      </ul>
-    </div>
-
-  </div>
-</div> -->
-<nb-card size="small" class="page-card">
-  <!-- <div *ngIf="loading" class="loading-block" [nbSpinner]="loading" nbSpinnerSize="large" nbSpinnerStatus="primary"></div> -->
-  <nb-card-body class="cataloguePage">
-    <div class="inner_pages_legacy">
-      <nb-card-header class="main_header" *ngIf="!catalog">
-        <h1 class="page_title">{{ 'COMPONENTS.CREATE_CATALOGUE' | translate}}</h1>
-        <div class="content_spacing" style="height:60px;">
-        </div>
-        <button type="submit" class="btn success_button">Save</button>
-      </nb-card-header>
-      <nb-card-header class="main_header" *ngIf="catalog">
-        <h1 class="page_title"> {{ 'COMPONENTS.CATALOGUE' | translate}}</h1>
-        <div class="content_spacing" style="height:60px;">
-        </div>
-        <button type="submit" class="btn success_button">Save</button>
-      </nb-card-header>
-    </div>
-    <form [formGroup]='form' class="catalogueForm">
-      <div class="form-group">
-        <label for="code" class="col-sm-10 col-form-label inputLabel">{{ 'COMMON.CODE' | translate}} *</label>
-        <div class="col-sm-12">
-          <input type="text" class="form-control inputText" id="code" formControlName='code'
-            (change)="checkCode($event)" placeholder="{{ 'COMMON.CODE' | translate}}" [readOnly]="catalog?.id" required>
-          <div class="err-message" *ngIf="(code.dirty || code.touched) && code.invalid && code">
-            <span *ngIf="code.errors.required">
-              {{ 'COMMON.CODE_REQUIRED' | translate}}
-            </span>
-            <span *ngIf="code.errors.pattern">
-              {{ 'COMMON.ALPHA_DECIMAL_RULE' | translate}}
-            </span>
-          </div>
-          <span *ngIf="!isCodeUnique" class="err-message">
-            {{ 'COMMON.CODE_EXISTS' | translate}}
-          </span>
-        </div>
-      </div>
-
-      <div class="form-group">
-        <div class="col-sm-12 group-block">
-          <nb-checkbox status="success" formControlName='visible'>
-            {{ 'COMMON.VISIBLE' | translate}}
-          </nb-checkbox>
-        </div>
-      </div>
-
+        </nb-card-body>
+      </nb-card>
     </form>
-  </nb-card-body>
-</nb-card>
+
+    <!-- </div> -->
+  </div>
+</div>

@@ -43,7 +43,8 @@
               "node_modules/primeng/resources/themes/nova-light/theme.css",
               "node_modules/primeng/resources/primeng.min.css",
               "node_modules/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.css",
-              "node_modules/ngx-lightbox/lightbox.css"
+              "node_modules/ngx-lightbox/lightbox.css",
+              "node_modules/ngx-toastr/toastr.css"
             ],
             "scripts": [
               "node_modules/pace-js/pace.min.js",
@@ -124,6 +125,7 @@
               "node_modules/socicon/css/socicon.css",
               "node_modules/nebular-icons/scss/nebular-icons.scss",
               "node_modules/pace-js/templates/pace-theme-flash.tmpl.css",
+              "node_modules/ngx-toastr/toastr.css",
               "src/app/@theme/styles/styles.scss"
             ],
             "assets": [
@@ -186,6 +188,6 @@
     }
   },
   "cli": {
-    "analytics": "ae9aa9fe-265c-4b29-acf3-0e1a147c8619"
+    "analytics": "0ec33825-02ea-4f5d-98db-ade2b69c1351"
   }
 }

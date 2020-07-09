@@ -82,14 +82,14 @@ export class CatalogueFormComponent implements OnInit {
   remove() {
     this.dialogService.open(ShowcaseDialogComponent, {})
       .onClose.subscribe(res => {
-      if (res) {
-        this.catalogService.deleteCategory(this.catalog.id)
-          .subscribe(data => {
-            this.toastr.success(this.translate.instant('CATALOG.CATALOG_REMOVED'));
-            this.router.navigate(['pages/catalogue/catalogues/catalogues-list']);
-          });
-      }
-    });
+        if (res) {
+          this.catalogService.deleteCategory(this.catalog.id)
+            .subscribe(data => {
+              this.toastr.success(this.translate.instant('CATALOG.CATALOG_REMOVED'));
+              this.router.navigate(['pages/catalogue/catalogues/catalogues-list']);
+            });
+        }
+      });
   }
 
 }

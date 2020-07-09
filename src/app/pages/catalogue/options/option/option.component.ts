@@ -130,5 +130,7 @@ export class OptionComponent implements OnInit {
       });
     }
   }
-
+  goToback() {
+    this.router.navigate(['pages/catalogue/options/options-list']);
+  }
 }

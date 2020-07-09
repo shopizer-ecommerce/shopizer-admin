@@ -67,18 +67,21 @@ export class OptionsListComponent implements OnInit {
 
   setSettings() {
     this.settings = {
-      mode: 'inline',
-      delete: {
-        deleteButtonContent: '<i class="nb-trash"></i>',
-        confirmDelete: true
-      },
+      // mode: 'inline',
+      // delete: {
+      //   deleteButtonContent: '<i class="nb-trash"></i>',
+      //   confirmDelete: true
+      // },
       actions: {
-        columnTitle: '',
+        columnTitle: 'Action',
         add: false,
         edit: false,
-        delete: true,
+        delete: false,
         position: 'right',
         sort: true,
+        custom: [
+          { name: 'remove', title: '<i class="nb-trash"></i>' }
+        ],
       },
       pager: {
         display: false

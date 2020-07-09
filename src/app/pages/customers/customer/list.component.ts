@@ -1,98 +1,188 @@
 import { Component, OnInit } from '@angular/core';
 import { LocalDataSource } from 'ng2-smart-table';
-import { CrudService } from '../../shared/services/crud.service';
+// import { CrudService } from '../../shared/services/crud.service';
 import { Router } from '@angular/router';
-import { MalihuScrollbarService } from 'ngx-malihu-scrollbar';
-
+// import { MalihuScrollbarService } from 'ngx-malihu-scrollbar';
+import { StorageService } from '../../shared/services/storage.service';
+import { CustomersService } from '../services/customer.service';
+import { StoreService } from '../../store-management/services/store.service';
+import { TranslateService } from '@ngx-translate/core';
 @Component({
   selector: 'ngx-list',
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss']
 })
 export class ListComponent implements OnInit {
-  search_text: string = '';
-  settings = {
-    mode: 'external',
-    hideSubHeader: true,
-    actions: {
-      add: false,
-      edit: false,
-      delete: false,
-      position: 'right',
-      custom: [
-        {
-          name: 'edit',
-          title: '<i class="nb-edit"></i>'
-        },
-        // {
-        //   name: 'delete',
-        //   title: '<i class="nb-trash"></i>'
-        // }
-      ]
-    },
-    columns: {
-      id: {
-        title: 'ID',
-        type: 'number',
-      },
-      firstName: {
-        title: 'First Name',
-        type: 'string',
-      },
-      lastName: {
-        title: 'Last Name',
-        type: 'string',
-      },
-      emailAddress: {
-        title: 'Email',
-        type: 'string',
-      },
-      country: {
-        title: 'Country',
-        type: 'string',
-        valuePrepareFunction: (cell, row) => {
-          return row.billing.country
-        }
-      }
-    },
-  };
-  //public scrollbarOptions = { axis: 'yx', theme: 'minimal-dark' };
   source: any = new LocalDataSource();
-  tempData: Array<any> = [];
+  settings = {};
+  search_text: string = '';
   loadingList = false;
-  constructor(private crudService: CrudService, public router: Router, private mScrollbarService: MalihuScrollbarService) {}
+  perPage = 10;
+  currentPage = 1;
+  totalCount;
+  stores: Array<any> = [];
+  selectedStore: String = '';
+  searchValue: string = '';
+  params = this.loadParams();
+  constructor(
+    private customersService: CustomersService,
+    public router: Router,
+    // private mScrollbarService: MalihuScrollbarService,
+    private storageService: StorageService,
+    private storeService: StoreService,
+    private translate: TranslateService
+  ) {
+    this.getStoreList()
+    this.selectedStore = this.storageService.getMerchant();
+
+    this.translate.onLangChange.subscribe((lang) => {
+      this.params.lang = this.storageService.getLanguage();
+      this.getCustomers();
+    });
+  }
   ngOnInit() {
     this.getCustomers();
   }
-  ngAfterViewInit() {
-    this.mScrollbarService.initScrollbar('.custom_scroll', { axis: 'y', theme: 'minimal-dark', scrollButtons: { enable: true } });
-  }
-  getCustomers() {
-    this.loadingList = true
-    this.crudService.get('/v1/private/customers')
-      .subscribe(data => {
-        console.log(data, '************')
-        this.source = data.customers;
-        this.tempData = data.customers;
-        this.loadingList = false
-      }, error => {
-        this.loadingList = false
+  getStoreList() {
+    this.storeService.getListOfMerchantStoreNames({ 'store': '' })
+      .subscribe(res => {
+        this.stores = res;
       });
   }
-  search() {
-    const val = this.search_text.toLowerCase();
-    const temp = this.tempData.filter(function (d) {
-      return d.firstName.toLowerCase().indexOf(val) !== -1 || !val ||
-        d.lastName.toLowerCase().indexOf(val) !== -1 || !val ||
-        d.emailAddress.toLowerCase().indexOf(val) !== -1 || !val;
-      d.billing.country.toLowerCase().indexOf(val) !== -1 || !val;
-    });
-    this.source = temp;
+  loadParams() {
+
+    return {
+      store: this.storageService.getMerchant(),
+      lang: this.storageService.getLanguage(),
+      count: this.perPage,
+      page: 0
+    };
+  }
+  getCustomers() {
+    this.params.page = this.currentPage;
+
+    this.loadingList = true;
+    this.customersService.getCustomers(this.params)
+      .subscribe(customer => {
+        // console.log(customer)
+        this.loadingList = false;
+        this.source.load(customer.customers);
+        this.totalCount = customer.totalPages;
+      }, error => {
+
+      });
+    this.setSettings();
+  }
+  setSettings() {
+    this.settings = {
+
+      actions: {
+        columnTitle: this.translate.instant('ORDER.ACTIONS'),
+        add: false,
+        edit: false,
+        delete: false,
+        position: 'right',
+        custom: [
+          {
+            name: 'edit',
+            title: '<i class="nb-edit"></i>'
+          },
+          {
+            name: 'delete',
+            title: '<i class="nb-trash"></i>'
+          }
+        ]
+      },
+      pager: {
+        display: false
+      },
+      columns: {
+        id: {
+          title: this.translate.instant('COMMON.ID'),
+          type: 'number',
+          filter: false
+        },
+        storeCode: {
+          title: this.translate.instant('STORE.MERCHANT_STORE'),
+          type: 'string'
+        },
+        firstName: {
+          title: this.translate.instant('ORDER_FORM.FIRST_NAME'),
+          type: 'string',
+          filter: false
+        },
+        lastName: {
+          title: this.translate.instant('ORDER_FORM.LAST_NAME'),
+          type: 'string',
+        },
+        emailAddress: {
+          title: this.translate.instant('USER_FORM.EMAIL_ADDRESS'),
+          type: 'string'
+        },
+        // country: {
+        //   title: 'Country',
+        //   type: 'string',
+        //   valuePrepareFunction: (cell, row) => {
+        //     return row.billing.country
+        //   }
+        // }
+      },
+    };
+  }
+
+  changePage(event) {
+    switch (event.action) {
+      case 'onPage': {
+        this.currentPage = event.data;
+        break;
+      }
+      case 'onPrev': {
+        this.currentPage--;
+        break;
+      }
+      case 'onNext': {
+        this.currentPage++;
+        break;
+      }
+      case 'onFirst': {
+        this.currentPage = 1;
+        break;
+      }
+      case 'onLast': {
+        this.currentPage = event.data;
+        break;
+      }
+    }
+    this.getCustomers()
+  }
+  onSearch(query: string = '') {
+
+    if (query.length == 0) {
+      this.searchValue = null;
+      return;
+    }
+
+    this.params["name"] = query;
+    this.getCustomers();
+    this.searchValue = query;
+
+  }
+  resetSearch() {
+    this.searchValue = null;
+    this.params = this.loadParams();
+    this.getCustomers();
   }
   addCustomer() {
     localStorage.setItem('customerid', '');
     this.router.navigate(['/pages/customer/add']);
   }
+  onSelectStore(value) {
+    this.params["store"] = value;
+    this.getCustomers();
+  }
+  // ngAfterViewInit() {
+  //   this.mScrollbarService.initScrollbar('.custom_scroll', { axis: 'y', theme: 'minimal-dark', scrollButtons: { enable: true } });
+  // }
   onClickAction(event) {
     switch (event.action) {
       case 'edit':

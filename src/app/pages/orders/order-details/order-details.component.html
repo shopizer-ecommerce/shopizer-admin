@@ -1,6 +1,6 @@
 <div class="inner_pages order_details">
 
-  <nb-card-header class="main_header">
+  <nb-card-header class="main_header" *ngIf="orderDetailsData">
     <h1 class="page_title">{{ 'COMPONENTS.ORDERS' | translate}} {{'COMMON.ID' | translate}} {{orderID}} -
       {{orderDetailsData.orderStatus}}</h1>
     <div class="content_spacing">
@@ -33,14 +33,11 @@
         |
         translate }}</button>
     </div>
-    <!-- <div class="content_spacing">
-      <button type="button" nbButton status="warning">{{'ORDER_FORM.NEW_ORDER_STATUS' | translate}}</button>
-    </div> -->
   </nb-card-header>
 
-  <div class="" [nbSpinner]="loadingList" nbSpinnerSize="large" nbSpinnerStatus="primary">
+  <div [nbSpinner]="loadingList" nbSpinnerSize="large" nbSpinnerStatus="primary">
 
-    <div class="custom_scroll" malihu-scrollbar [scrollbarOptions]="scrollbarOptions">
+    <div malihu-scrollbar [scrollbarOptions]="scrollbarOptions">
       <form #orderForm="ngForm" role="form">
         <div class="row">
           <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
@@ -69,7 +66,7 @@
                 <div class="row">
                   <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                     <div class="form-group">
-                      <label class="label inputLabel">{{'ORDER_FORM.SHIPPING_INFO' | translate}}<span>*</span></label>
+                      <label class="label inputLabel">{{'ORDER_FORM.STREET_ADDRESS' | translate}}<span>*</span></label>
                       <input type="text" class="form-control inputText" id="billing_address" placeholder="{{'ORDER_FORM.STREET_ADDRESS' | translate}}"
                         [(ngModel)]="billing.address" name="address" required #address="ngModel">
                     </div>
@@ -86,32 +83,32 @@
                   <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                     <div class="form-group">
                       <label class="label inputLabel">{{'ORDER_FORM.COUNTRY' | translate}}<span>*</span></label>
-                      <p-dropdown *ngIf="billingCountry.length" [options]="billingCountry" [(ngModel)]="billing.country"
+                      <!-- <p-dropdown *ngIf="billingCountry.length" [options]="billingCountry" [(ngModel)]="billing.country"
                         name="country" filter="true" (onChange)="onBillingChange(billing.country, 1)" required>
                         <ng-template let-item pTemplate="selectedItem">{{billing.tempCountry}}</ng-template>
                         <ng-template let-country pTemplate="item">{{country.label}}</ng-template>
-                      </p-dropdown>
-                      <!-- <nb-select *ngIf="billingCountry.length > 0" placeholder="{{'ORDER_FORM.SELECT_COUNTRY' | translate}}"
+                      </p-dropdown> -->
+                      <nb-select *ngIf="billingCountry.length > 0" placeholder="{{'ORDER_FORM.SELECT_COUNTRY' | translate}}"
                         outline shape="rectangle" [(ngModel)]="billing.country" name="country" (selectedChange)="onBillingChange($event, 1)"
-                        required>
+                        class="select_fields" required>
                         <nb-option *ngFor="let country of billingCountry" [value]="country.code">{{ country.name }}
                         </nb-option>
-                      </nb-select> -->
+                      </nb-select>
                     </div>
                   </div>
                   <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                     <div class="form-group" *ngIf="billingStateData.length > 0">
                       <label class="label inputLabel">{{'ORDER_FORM.STATE' | translate}}<span>*</span></label>
-                      <p-dropdown [options]="billingStateData" [(ngModel)]="billing.zone" name="zone" filter="true"
+                      <!-- <p-dropdown [options]="billingStateData" [(ngModel)]="billing.zone" name="zone" filter="true"
                         (onChange)="onChangeStateBilling(billing.zone)">
                         <ng-template let-item pTemplate="selectedItem">{{billing.tempZone}}</ng-template>
                         <ng-template let-state pTemplate="item">{{state.label}}</ng-template>
-                      </p-dropdown>
-                      <!-- <nb-select placeholder="{{'ORDER_FORM.SELECT_STATE' | translate}}" outline shape="rectangle"
-                        [(ngModel)]="billing.zone" name="zone" required>
+                      </p-dropdown> -->
+                      <nb-select placeholder="{{'ORDER_FORM.SELECT_STATE' | translate}}" outline shape="rectangle"
+                        [(ngModel)]="billing.zone" name="zone" class="select_fields" required>
                         <nb-option *ngFor="let state of billingStateData" [value]="state.code">{{ state.name }}
                         </nb-option>
-                      </nb-select> -->
+                      </nb-select>
                     </div>
                     <div class="form-group" *ngIf="billingStateData.length == 0">
                       <label class="label inputLabel">{{'ORDER_FORM.STATE' | translate}}<span>*</span></label>
@@ -208,32 +205,32 @@
                   <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                     <div class="form-group">
                       <label class="label inputLabel">{{'ORDER_FORM.COUNTRY' | translate}}</label>
-                      <!-- <nb-select *ngIf="shippingCountry.length > 0" placeholder="{{'ORDER_FORM.SELECT_COUNTRY' | translate}}"
-                        outline shape="rectangle" (selectedChange)="onShippingChange($event, 1)" [(ngModel)]="shipping.country"
-                        name="shipping.country">
+                      <nb-select *ngIf="shippingCountry.length > 0" placeholder="{{'ORDER_FORM.SELECT_COUNTRY' | translate}}"
+                        outline shape="rectangle" class="select_fields" (selectedChange)="onShippingChange($event, 1)"
+                        [(ngModel)]="shipping.country" name="shipping.country">
                         <nb-option *ngFor="let country of shippingCountry" [value]="country.code">{{
                           country.name }}</nb-option>
-                      </nb-select> -->
-                      <p-dropdown *ngIf="shippingCountry.length" [options]="shippingCountry" [(ngModel)]="shipping.country"
+                      </nb-select>
+                      <!-- <p-dropdown *ngIf="shippingCountry.length" [options]="shippingCountry" [(ngModel)]="shipping.country"
                         name="shipping.country" filter="true" (onChange)="onShippingChange(shipping.country, 1)">
                         <ng-template let-item pTemplate="selectedItem">{{shipping.tempCountry}}</ng-template>
                         <ng-template let-country pTemplate="item">{{country.label}}</ng-template>
-                      </p-dropdown>
+                      </p-dropdown> -->
                     </div>
                   </div>
                   <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                     <div class="form-group" *ngIf="shippingStateData.length > 0">
                       <label class="label inputLabel">{{'ORDER_FORM.STATE' | translate}}</label>
-                      <p-dropdown [options]="shippingStateData" [(ngModel)]="shipping.zone" name="shipping.zone" filter="true"
+                      <!-- <p-dropdown [options]="shippingStateData" [(ngModel)]="shipping.zone" name="shipping.zone" filter="true"
                         (onChange)="onChangeStateShipping(shipping.zone)">
                         <ng-template let-item pTemplate="selectedItem">{{shipping.tempZone}}</ng-template>
                         <ng-template let-state pTemplate="item">{{state.label}}</ng-template>
-                      </p-dropdown>
-                      <!-- <nb-select placeholder="{{'ORDER_FORM.SELECT_STATE' | translate}}" outline shape="rectangle"
-                        [(ngModel)]="shipping.zone" name="shipping.zone">
+                      </p-dropdown> -->
+                      <nb-select placeholder="{{'ORDER_FORM.SELECT_STATE' | translate}}" outline shape="rectangle"
+                        [(ngModel)]="shipping.zone" name="shipping.zone" class="select_fields">
                         <nb-option *ngFor="let state of shippingStateData" [value]="state.code">{{ state.name }}
                         </nb-option>
-                      </nb-select> -->
+                      </nb-select>
                     </div>
                     <div class="form-group" *ngIf="shippingStateData.length == 0">
                       <label class="label inputLabel">{{'ORDER_FORM.STATE' | translate}}</label>
@@ -265,7 +262,7 @@
           </div>
         </div>
       </form>
-      <div class="row">
+      <div class="row" *ngIf="orderDetailsData">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
           <nb-card class="nb-card inline-form-card">
             <div class="containerCenter">

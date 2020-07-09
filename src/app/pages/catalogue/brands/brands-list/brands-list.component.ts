@@ -19,7 +19,7 @@ export class BrandsListComponent implements OnInit {
   source: LocalDataSource = new LocalDataSource();
   loadingList = false;
   settings = {};
-
+  searchValue: string = '';
   // paginator
   perPage = 30;
   currentPage = 1;

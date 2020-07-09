@@ -20,7 +20,10 @@ import { forkJoin } from 'rxjs';
   styleUrls: ['./store-form.component.scss']
 })
 export class StoreFormComponent implements OnInit {
+  @Input() title: string;
   @Input() store: any;
+  @Input() isCancel: string;
+
   @ViewChild('search', { static: false })
   searchElementRef: ElementRef;
   supportedLanguages = [];
@@ -56,7 +59,27 @@ export class StoreFormComponent implements OnInit {
   parentRetailer: any;
   merchant = '';
   parent: any;
-
+  selectedItem = '2';
+  sidemenuLinks = [
+    {
+      id: '0',
+      title: 'Store branding',
+      key: 'COMPONENTS.STORE_BRANDING',
+      link: 'store-branding'
+    },
+    {
+      id: '1',
+      title: 'Store home page',
+      key: 'COMPONENTS.STORE_LANDING',
+      link: 'store-landing'
+    },
+    {
+      id: '2',
+      title: 'Store details',
+      key: 'COMPONENTS.STORE_DETAILS',
+      link: 'store'
+    }
+  ];
   constructor(
     private fb: FormBuilder,
     private configService: ConfigService,
@@ -468,5 +491,11 @@ export class StoreFormComponent implements OnInit {
   canRemove() {
     return this.store.id && ((this.roles.isSuperadmin && this.establishmentType === 'RETAILER')
       || (this.roles.isSuperadmin && this.establishmentType === 'STORE')) && this.store.code !== 'DEFAULT';
+  }
+  onClickRoute(link) {
+    this.router.navigate(['pages/store-management/' + link + "/", this.store.code]);
+  }
+  goToBack() {
+    this.router.navigate(['pages/store-management/stores-list']);
   }
 }

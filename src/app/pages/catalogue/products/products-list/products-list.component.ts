@@ -81,26 +81,21 @@ export class ProductsListComponent implements OnInit {
 
   setSettings() {
     this.settings = {
-      mode: 'inline',
-      edit: {
-        editButtonContent: '<i class="nb-edit"></i>',
-        saveButtonContent: '<i class="fas fa-check"></i>',
-        cancelButtonContent: '<i class="fas fa-times"></i>',
-        confirmSave: true
-      },
-      delete: {
-        deleteButtonContent: '<i class="nb-trash"></i>',
-        confirmDelete: true
-      },
       actions: {
-        columnTitle: '',
+        columnTitle: 'Action',
         add: false,
-        edit: true,
-        delete: true,
+        edit: false,
+        delete: false,
         position: 'right',
         sort: true,
+        custom: [
+          { name: 'edit', title: '<i class="nb-edit"></i>' },
+          { name: 'remove', title: '<i class="nb-trash"></i>' }
+        ],
       },
-      pager: { display: false },
+      pager: {
+        display: false
+      },
       columns: {
         id: {
           title: this.translate.instant('COMMON.ID'),

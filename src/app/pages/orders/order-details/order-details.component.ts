@@ -85,14 +85,14 @@ export class OrderDetailsComponent implements OnInit {
         // console.log(data);
         this.orderDetailsData = data;
         this.onBillingChange(data.billing.country, 0)
-        setTimeout(() => {
-          this.billingCountry.map((a) => {
-            if (a.value == data.billing.country) {
-              this.billing.tempCountry = a.label
-            }
-          });
-          this.onChangeStateBilling(data.billing.zone);
-        }, 1500);
+        // setTimeout(() => {
+        //   this.billingCountry.map((a) => {
+        //     if (a.value == data.billing.country) {
+        //       this.billing.tempCountry = a.label
+        //     }
+        //   });
+        //   this.onChangeStateBilling(data.billing.zone);
+        // }, 1500);
 
         this.info.emailAddress = data.customer.emailAddress;
         this.info.datePurchased = data.datePurchased;
@@ -101,14 +101,14 @@ export class OrderDetailsComponent implements OnInit {
         this.billing = data.billing;
         if (data.delivery) {
           this.onShippingChange(data.delivery.country, 0)
-          setTimeout(() => {
-            this.shippingCountry.map((a) => {
-              if (a.value == data.delivery.country) {
-                this.shipping.tempCountry = a.label
-              }
-            });
-            this.onChangeStateShipping(data.delivery.zone);
-          }, 1500);
+          // setTimeout(() => {
+          //   this.shippingCountry.map((a) => {
+          //     if (a.value == data.delivery.country) {
+          //       this.shipping.tempCountry = a.label
+          //     }
+          //   });
+          //   this.onChangeStateShipping(data.delivery.zone);
+          // }, 1500);
           this.shipping = data.delivery;
         }
 
@@ -155,38 +155,38 @@ export class OrderDetailsComponent implements OnInit {
   getCountry() {
     this.ordersService.getCountry()
       .subscribe(data => {
-        data.map((a) => {
-          this.billingCountry.push({ value: a.code, label: a.name })
-          this.shippingCountry.push({ value: a.code, label: a.name })
-        })
-        // this.shippingCountry = data;
-        // this.billingCountry = data;
+        // data.map((a) => {
+        //   this.billingCountry.push({ value: a.code, label: a.name })
+        //   this.shippingCountry.push({ value: a.code, label: a.name })
+        // })
+        this.shippingCountry = data;
+        this.billingCountry = data;
       }, error => {
 
       });
   }
   onBillingChange(value, flag) {
     // console.log(e);
-    this.billingCountry.map((a) => {
-      if (a.value == value) {
-        this.billing.tempCountry = a.label
-      }
-    });
+    // this.billingCountry.map((a) => {
+    //   if (a.value == value) {
+    //     this.billing.tempCountry = a.label
+    //   }
+    // });
     this.ordersService.getBillingZone(value)
       .subscribe(data => {
         if (data.length > 0) {
-          data.map((b) => {
-            this.billingStateData.push({ value: b.code, label: b.name })
-          });
-          // this.billingStateData = data;
+          // data.map((b) => {
+          //   this.billingStateData.push({ value: b.code, label: b.name })
+          // });
+          this.billingStateData = data;
           if (flag == 1) {
             this.billing.zone = data[0].code;
-            this.billing.tempZone = data[0].name
+            // this.billing.tempZone = data[0].name
           }
         } else {
           this.billingStateData = data;
           this.billing.zone = '';
-          this.billing.tempZone = '';
+          // this.billing.tempZone = '';
         }
       }, error => {
 
@@ -195,46 +195,46 @@ export class OrderDetailsComponent implements OnInit {
   onChangeStateBilling(value) {
     // console.log(value);
     // console.log(this.billingStateData);
-    this.billingStateData.map((a) => {
-      if (a.value == value) {
-        this.billing.tempZone = a.label
-        // console.log(a.label)
-      }
-    });
+    // this.billingStateData.map((a) => {
+    //   if (a.value == value) {
+    //     this.billing.tempZone = a.label
+    //     // console.log(a.label)
+    //   }
+    // });
   }
   onShippingChange(value, flag) {
-    this.shippingCountry.map((a) => {
-      if (a.value == value) {
-        this.shipping.tempCountry = a.label
-      }
-    });
+    // this.shippingCountry.map((a) => {
+    //   if (a.value == value) {
+    //     this.shipping.tempCountry = a.label
+    //   }
+    // });
     this.ordersService.getShippingZone(value)
       .subscribe(data => {
         if (data.length > 0) {
-          data.map((b) => {
-            this.shippingStateData.push({ value: b.code, label: b.name })
-          });
+          // data.map((b) => {
+          //   this.shippingStateData.push({ value: b.code, label: b.name })
+          // });
 
-          // this.shippingStateData = data;
+          this.shippingStateData = data;
           if (flag == 1) {
             this.shipping.zone = data[0].code
-            this.shipping.tempZone = data[0].name
+            //   // this.shipping.tempZone = data[0].name
           }
         } else {
           this.shippingStateData = data;
           this.shipping.zone = '';
-          this.shipping.tempZone = '';
+          // this.shipping.tempZone = '';
         }
       }, error => {
 
       });
   }
   onChangeStateShipping(value) {
-    this.shippingStateData.map((a) => {
-      if (a.value == value) {
-        this.shipping.tempZone = a.label
-      }
-    });
+    // this.shippingStateData.map((a) => {
+    //   if (a.value == value) {
+    //     this.shipping.tempZone = a.label
+    //   }
+    // });
   }
   updateHistory() {
     this.loadingList = true;

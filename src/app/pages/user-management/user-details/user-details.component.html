@@ -1,17 +1,14 @@
-<nb-card size="small" class="page-card">
-  <div *ngIf="loadingInfo" class="loading-block" [nbSpinner]="loadingInfo" nbSpinnerSize="large"
-    nbSpinnerStatus="primary"></div>
-  <nb-card-body *ngIf="!loadingInfo" class="userDetails">
-    <div class="inner_pages_legacy">
-      <nb-card-header class="main_header">
-        <h1 class="page_title">{{ 'COMPONENTS.USER_DETAILS' | translate }}</h1>
-        <div class="content_spacing" style="height:60px;">
-        </div>
-        <button type="submit" class="btn cancel_button">Cancel</button>
-        <button type="submit" class="btn success_button">{{ 'COMMON.SAVE' | translate }}</button>
-      </nb-card-header>
+<!-- <div class="inner_pages userDetails"> -->
+<div>
+  <!-- <nb-card-header class="main_header">
+    <h1 class="page_title">{{ 'COMPONENTS.USER_DETAILS' | translate }}</h1>
+    <div class="content_spacing">
+      <button type="button" nbButton class="cancel_button" (click)="goToback()">{{ 'ORDER_FORM.CANCLE'
+        | translate}}</button>
     </div>
-    <!-- <ngx-back-button></ngx-back-button> -->
-    <ngx-user-form *ngIf="user.id" [user]="user"></ngx-user-form>
-  </nb-card-body>
-</nb-card>
+    <div class="content_spacing">
+      <button type="button" nbButton class="success_button">{{'COMMON.SAVE' | translate }}</button>
+    </div>
+  </nb-card-header> -->
+  <ngx-user-form *ngIf="user.id" [user]="user" title="COMPONENTS.USER_DETAILS"></ngx-user-form>
+</div>
