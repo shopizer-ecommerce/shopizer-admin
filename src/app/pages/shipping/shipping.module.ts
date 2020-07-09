@@ -3,10 +3,12 @@ import { ShippingRoutingModule, routedComponents } from './shipping-routing.modu
 import { SharedModule } from '../shared/shared.module';
 import { TransferBoxModule } from './transferlistbox/transferlistbox.module';
 import { MalihuScrollbarModule } from 'ngx-malihu-scrollbar';
+import { OriginComponent } from './origin/origin.component';
 
 @NgModule({
   declarations: [
-    ...routedComponents
+    ...routedComponents,
+    OriginComponent
   ],
   imports: [
     ShippingRoutingModule,

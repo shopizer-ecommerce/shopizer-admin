@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { ShippingComponent } from './shipping.component';
 import { ConfigurationComponent } from './configuration/configuration.component';
+import { OriginComponent } from './origin/origin.component';
 
 const routes: Routes = [{
   path: '',
@@ -11,6 +12,10 @@ const routes: Routes = [{
     {
       path: 'config',
       component: ConfigurationComponent,
+    },
+    {
+      path: 'origin',
+      component: OriginComponent,
     },
   ],
 }];

@@ -1,103 +1,27 @@
 <div class="inner_pages">
   <form #pagesForm="ngForm" role="form">
     <nb-card-header class="main_header">
-      <h1 class="page_title">Shipping Configuration</h1>
+      <h1 class="page_title">{{ 'SHIPPING.EXPEDITION' | translate}}</h1>
       <div class="content_spacing">
-        <button type="button" nbButton status="warning">Cancle</button>
-      </div>
-      <div class="content_spacing">
-        <button type="button" nbButton class="success_button">Save</button>
+        <button type="button" nbButton status="success" (click)="saveShipToCountries()">Save</button>
       </div>
     </nb-card-header>
     <div class="custom_scroll" malihu-scrollbar [scrollbarOptions]="scrollbarOptions">
+
       <div class="row">
-        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-          <nb-card class="nb-card inline-form-card">
-            <nb-card-header class="nb-card-header">Shipping Detail</nb-card-header>
-            <nb-card-body class="nb-card-body">
-              <div class="row">
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                  <div class="form-group mode">
-                    <label for="inputWebsite" class="label">Shipping mode</label>
-                    <nb-radio status="success" class="shipping-radio">Limited</nb-radio>
-                    <nb-radio status="success" class="shipping-radio">Unlimited</nb-radio>
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                  <div class="form-group mode">
-                    <label for="inputWebsite" class="label">Tax on shipping</label>
-                    <nb-checkbox [(ngModel)]="visible" name="visible" status="success">Yes</nb-checkbox>
-                  </div>
-                  <div class="mode">
-                    <label for="inputWebsite" class="label"><b>Shipping Quotes</b></label>
-                    <nb-radio status="success" class="shipping-radio">Display all shipping quotes</nb-radio>
-                    <nb-radio status="success" class="shipping-radio">Display least expensive shipping quotes</nb-radio>
-                    <nb-radio status="success" class="shipping-radio">Display highest expensive shipping quotes
-                    </nb-radio>
-                  </div>
-                  <br />
-                </div>
-              </div>
-            </nb-card-body>
-          </nb-card>
-        </div>
-        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-          <nb-card class="nb-card inline-form-card">
-            <nb-card-header class="nb-card-header">Box Details</nb-card-header>
-            <nb-card-body class="nb-card-body">
-              <div class="row">
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                  <div class="form-group mode">
-                    <label for="inputWebsite" class="label"><b>Packaging information</b> (Weight units LB , Size units
-                      IN)</label>
-                    <nb-radio status="success" class="shipping-radio">Items will be shipped individually</nb-radio>
-                    <nb-radio status="success" class="shipping-radio">Items will be combined and shipped in a box
-                    </nb-radio>
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                  <div class="form-group">
-                    <label for="inputWebsite" class="label">Box width</label>
-                    <input type="number" name="width" class="form-control" id="width" placeholder="Box width" required>
-                  </div>
-                </div>
-                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                  <div class="form-group">
-                    <label for="inputWebsite" class="label">Box height</label>
-                    <input type="number" name="height" class="form-control" id="heigth" placeholder="Box height"
-                      required>
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                  <div class="form-group">
-                    <label for="inputWebsite" class="label">Box length</label>
-                    <input type="number" name="length" class="form-control" id="length" placeholder="Box length"
-                      required>
-                  </div>
-                </div>
-                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                  <div class="form-group">
-                    <label for="inputWebsite" class="label">Box weight</label>
-                    <input type="number" name="weight" class="form-control" id="weight" placeholder="Box weight"
-                      required>
-                  </div>
-                </div>
-              </div>
-            </nb-card-body>
-          </nb-card>
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+          <div class="form-group mode">
+            <input type="radio" id="domest" name="Domestic" [(ngModel)]="expedition" [value]="false">
+            <label class="custom-control-label" for="domest">Domestic</label>
+            <input type="radio" id="inter" name="International" [(ngModel)]="expedition" [value]="true">
+            <label class="custom-control-label" for="inter">International</label>
+          </div>
         </div>
       </div>
-      <div class="row" *ngIf="leftAreaItems.length > 0">
+      <div class="row" *ngIf="(leftAreaItems.length > 0 && expedition)">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-          <app-transferlistbox [code]="code" [label]="label" [leftAreaList]="leftAreaItems"
-            [rightAreaList]="rightAreaItems" [leftAreaLabel]="leftAreaLabel" [rightAreaLabel]="rightAreaLabel"
-            [leftAreaId]="leftAreaId" [rightAreaId]="rightAreaId"></app-transferlistbox>
+          <app-transferlistbox [code]="code" [label]="label" [leftAreaList]="leftAreaItems" [rightAreaList]="rightAreaItems" [leftAreaLabel]="leftAreaLabel"
+            [rightAreaLabel]="rightAreaLabel" [leftAreaId]="leftAreaId" [rightAreaId]="rightAreaId"></app-transferlistbox>
         </div>
       </div>
     </div>

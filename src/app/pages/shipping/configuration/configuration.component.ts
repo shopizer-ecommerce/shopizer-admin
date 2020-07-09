@@ -3,6 +3,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { LocalDataSource } from 'ng2-smart-table';
 import { CrudService } from '../../shared/services/crud.service';
 import { Router } from '@angular/router';
+import { SharedService } from '../services/shared.service';
 
 @Component({
   selector: 'shipping-config',
@@ -10,7 +11,6 @@ import { Router } from '@angular/router';
   styleUrls: ['./configuration.component.scss'],
 })
 export class ConfigurationComponent {
-  visible: any;
   leftAreaItems = [];
   rightAreaItems = null;
   leftAreaLabel = "Available";
@@ -21,9 +21,10 @@ export class ConfigurationComponent {
   code = "code";
   label = "label";
   loadingList = false;
+  expedition: boolean = false;
   public scrollbarOptions = { axis: 'y', theme: 'minimal-dark' };
   constructor(
-    private crudService: CrudService,
+    private crudService: CrudService, private sharedService: SharedService
   ) {
     this.getCountry()
   }
@@ -57,7 +58,7 @@ export class ConfigurationComponent {
         this.loadingList = false;
         let value = [];
         data.forEach((item) => {
-          value.push({ 'code': item.id, 'label': item.name })
+          value.push({ 'code': item.id, 'label': item.name, 'countryCode': item.code })
         });
         this.leftAreaItems = value
         // this.source = data;
@@ -65,6 +66,10 @@ export class ConfigurationComponent {
         this.loadingList = false;
 
       });
+  }
+
+  saveShipToCountries() {
+    this.sharedService.sendClickEvent();
   }
 
 }

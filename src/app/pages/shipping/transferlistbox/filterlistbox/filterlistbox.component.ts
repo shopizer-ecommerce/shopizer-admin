@@ -9,7 +9,7 @@ import { Component, OnInit, Input, EventEmitter, Output, ElementRef, ViewChild, 
 })
 export class FilterlistboxComponent implements OnInit, AfterViewInit {
     @ViewChildren("option") options: QueryList<ElementRef>;
-    @ViewChild("inputRef", { static: false }) inputRef: ElementRef;
+    @ViewChild("inputRef") inputRef: ElementRef;
     @Input("itemsMap") itemsMap: Map<string, any>;
     @Input("label") label: string;
     @Input("code") code: string;
