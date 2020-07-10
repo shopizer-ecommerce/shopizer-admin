@@ -60,6 +60,25 @@
         font-weight: 700;
     }
 
+    .select_fields {
+        width: 100%;
+        max-width: 39rem !important;
+
+
+        .select-button {
+            height: 35px !important;
+            font-size: 14px !important;
+            font-weight: 600 !important;
+            line-height: 1.5rem;
+            padding: 0 1rem !important;
+
+            .placeholder {
+                color: #8e9ab4 !important;
+                font-weight: 200;
+            }
+        }
+    }
+
     .inputLabel {
         font-size: 0.75rem;
         color: #8f9bb3;

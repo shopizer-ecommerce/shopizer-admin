@@ -67,9 +67,13 @@
         <div class="col-lg-8 col-md-6 col-sm-12 col-xs-12">
           <nb-card class="nb-card inline-form-card">
             <nb-card-header class="nb-card-header">Box content</nb-card-header>
-            <nb-card-body class="nb-card-body ckeditor">
-              <ckeditor [config]="ckeConfig" debounce="500" #ckeditor>
-              </ckeditor>
+            <nb-card-body class="nb-card-body">
+              <div>
+                <div [ngxSummernote]="editorConfig">
+                </div>
+              </div>
+              <!-- <ckeditor [config]="ckeConfig" debounce="500" #ckeditor>
+              </ckeditor> -->
             </nb-card-body>
           </nb-card>
         </div>

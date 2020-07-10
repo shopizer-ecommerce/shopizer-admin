@@ -37,7 +37,7 @@
                   <div class="form-group">
                     <label class="label col-form-label">{{ 'STORE.MERCHANT_STORE' | translate }}</label>
                     <nb-select *ngIf="stores.length" placeholder="{{ 'STORE.MERCHANT_STORE' | translate }}"
-                      formControlName='store' outline shape="rectangle">
+                      formControlName='store' outline shape="rectangle" class="select_fields">
                       <nb-option *ngFor="let store of stores" [value]="store.code">{{ store.code }}</nb-option>
                     </nb-select>
                   </div>
@@ -48,7 +48,7 @@
                   <div class="form-group">
                     <label class="label col-form-label">{{ 'CATEGORY.PARENT' | translate }}</label>
                     <nb-select *ngIf="roots.length" placeholder="{{ 'STORE.MERCHANT_STORE' | translate }}"
-                      formControlName='parent' outline shape="rectangle">
+                      formControlName='parent' outline shape="rectangle" class="select_fields">
                       <nb-option *ngFor="let category of roots" [value]="category.code">{{ category.code }}</nb-option>
                     </nb-select>
                   </div>
@@ -166,7 +166,7 @@
           <nb-card class="nb-card inline-form-card">
             <nb-card-header class="nb-card-header">{{ 'DESCRIPTION_FORM.DESCRIPTION' | translate}}</nb-card-header>
             <nb-card-body class="nb-card-body">
-              <div class="row">
+              <div>
                 <div *ngIf="selectedLanguage.value !== ''" formArrayName='descriptions'>
                   <div *ngFor="let descr of descriptions.controls; let k=index">
                     <div *ngIf="descr.value.language === selectedLanguage.value">

@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-
+import { NbDialogService } from '@nebular/theme';
 import { CategoryService } from '../services/category.service';
 import { ConfigService } from '../../../shared/services/config.service';
 import { ToastrService } from 'ngx-toastr';
@@ -11,7 +11,9 @@ import { StorageService } from '../../../shared/services/storage.service';
 import { validators } from '../../../shared/validation/validators';
 import { slugify } from '../../../shared/utils/slugifying';
 import { environment } from '../../../../../environments/environment';
-
+import { ImageBrowserComponent } from '../../../../@theme/components/image-browser/image-browser.component';
+declare var jquery: any;
+declare var $: any;
 @Component({
   selector: 'ngx-category-form',
   templateUrl: './category-form.component.html',
@@ -38,15 +40,18 @@ export class CategoryFormComponent implements OnInit {
     placeholder: '',
     tabsize: 2,
     height: 300,
-    uploadImagePath: '',
     toolbar: [
       ['misc', ['codeview', 'undo', 'redo']],
       ['style', ['bold', 'italic', 'underline', 'clear']],
       ['font', ['bold', 'italic', 'underline', 'strikethrough', 'superscript', 'subscript', 'clear']],
       ['fontsize', ['fontname', 'fontsize', 'color']],
       ['para', ['style', 'ul', 'ol', 'paragraph', 'height']],
-      ['insert', ['table', 'picture', 'link', 'video', 'hr']]
+      ['insert', ['table', 'picture', 'link', 'video']],
+      ['customButtons', ['testBtn']]
     ],
+    buttons: {
+      'testBtn': this.customButton.bind(this)
+    },
     fontNames: ['Helvetica', 'Arial', 'Arial Black', 'Comic Sans MS', 'Courier New', 'Roboto', 'Times']
   };
   //loader image
@@ -64,7 +69,8 @@ export class CategoryFormComponent implements OnInit {
     private cdr: ChangeDetectorRef,
     private router: Router,
     private toastr: ToastrService,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private dialogService: NbDialogService
   ) {
     this.roles = JSON.parse(localStorage.getItem('roles'));
   }
@@ -327,5 +333,20 @@ export class CategoryFormComponent implements OnInit {
     recursiveFunc(this.form);
     return invalidControls;
   }
+  customButton(context) {
+    const me = this;
+    const ui = $.summernote.ui;
+    const button = ui.button({
+      contents: '<i class="note-icon-picture"></i>',
+      tooltip: 'Gallery',
+      container: '.note-editor',
+      className: 'note-btn',
+      click: function () {
+        console.log(me);
 
+        me.dialogService.open(ImageBrowserComponent, {}).onClose.subscribe(name => name && context.invoke('editor.pasteHTML', '<img src="' + name + '">'));
+      }
+    });
+    return button.render();
+  }
 }
