@@ -3,9 +3,11 @@ import { LocalDataSource } from 'ng2-smart-table';
 import { CrudService } from '../../shared/services/crud.service';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
-declare var CKEDITOR: any;
+import { ImageBrowserComponent } from '../../../@theme/components/image-browser/image-browser.component';
+import { NbDialogService } from '@nebular/theme';
+declare var jquery: any;
+declare var $: any;
 
-CKEDITOR.plugins.addExternal('imagebrowser', '../imagebrowser/', 'plugin.js');
 @Component({
   selector: 'add-page',
   templateUrl: './add-page.component.html',
@@ -21,30 +23,25 @@ export class AddPageComponent {
   titleText: string = 'Create Manage Page';
   language: string = 'en';
   public scrollbarOptions = { axis: 'y', theme: 'minimal-dark' };
-  ckeConfig = {
 
-    uiColor: '#d1d1d1',
-    height: 400,
-    language: "en",
-    allowedContent: true,
-    // ckfinder: {
-    // 	uploadUrl: '/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files&responseType=json',
-    // },
-    filebrowserBrowseUrl: 'http://localhost:4200/#/gallery',
-    // filebrowserUploadUrl: '/ckfinder/core/connector/php/connector.php?command=QuickUpload&type=Files',
+
+  editorConfig = {
+    placeholder: '',
+    tabsize: 2,
+    height: 300,
     toolbar: [
-      { name: 'basicstyles', items: ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'RemoveFormat'] },
-      {
-        name: 'paragraph', items: ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', 'CreateDiv',
-          '-', 'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-', 'BidiLtr', 'BidiRtl']
-      },
-      '/',
-      { name: 'styles', items: ['Styles', 'Format', 'Font', 'FontSize'] },
-      { name: 'colors', items: ['TextColor', 'BGColor'] },
-      { name: 'links', items: ['Link', 'Unlink', 'Anchor'] },
-      { name: "insert", items: ["Image", "Table", "HorizontalRule", "SpecialChar", "Iframe", "imageExplorer"] }
-
-    ]
+      ['misc', ['codeview', 'undo', 'redo']],
+      ['style', ['bold', 'italic', 'underline', 'clear']],
+      ['font', ['bold', 'italic', 'underline', 'strikethrough', 'superscript', 'subscript', 'clear']],
+      ['fontsize', ['fontname', 'fontsize', 'color']],
+      ['para', ['style', 'ul', 'ol', 'paragraph', 'height']],
+      ['insert', ['table', 'picture', 'link', 'video']],
+      ['customButtons', ['testBtn']]
+    ],
+    buttons: {
+      'testBtn': this.customButton.bind(this)
+    },
+    fontNames: ['Helvetica', 'Arial', 'Arial Black', 'Comic Sans MS', 'Courier New', 'Roboto', 'Times']
   };
   en = {
     metaDetails: '',
@@ -64,6 +61,8 @@ export class AddPageComponent {
     private crudService: CrudService,
     public router: Router,
     private toastr: ToastrService,
+
+    private dialogService: NbDialogService
   ) {
     if (localStorage.getItem('contentpageid')) {
       this.buttonText = 'Update';
@@ -149,5 +148,18 @@ export class AddPageComponent {
   goToback() {
     this.router.navigate(['/pages/content/pages/list']);
   }
-
+  customButton(context) {
+    const me = this;
+    const ui = $.summernote.ui;
+    const button = ui.button({
+      contents: '<i class="note-icon-picture"></i>',
+      tooltip: 'Gallery',
+      container: '.note-editor',
+      className: 'note-btn',
+      click: function () {
+        me.dialogService.open(ImageBrowserComponent, {}).onClose.subscribe(name => name && context.invoke('editor.pasteHTML', '<img src="' + name + '">'));
+      }
+    });
+    return button.render();
+  }
 }

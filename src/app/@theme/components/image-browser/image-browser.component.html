@@ -1,5 +1,12 @@
-<div class="inner_pages">
-    <div class="row">
+<div class="inner_pages image_browse">
+
+
+    <span class="titleBar">
+        <span></span>
+        <span class="title_text">Summernote Image Gallery</span>
+        <button class="close" type="button" (click)="cancel()"></button>
+    </span>
+    <div class="row" [nbSpinner]="loadingList" nbSpinnerSize="large" nbSpinnerStatus="primary">
         <div class="col-md-12 col-sm-12 col-xs-12 col-lg-12">
             <ul class="gallery_listing_main">
 
