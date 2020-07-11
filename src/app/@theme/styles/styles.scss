@@ -188,6 +188,7 @@
     display: none !important;
   }
 
+  /**
   .file-manager-left {
     width: 30%;
     max-width: 350px;
@@ -199,6 +200,16 @@
     @include borders;
     @include shadows
   }
+  **/
+
+  .file-manager-left {
+    display:none !important;
+  }
+
+  .image-content .file-preview i {
+    color: #00ABC7 !important;
+   }
+
 
   .file-manager-node {
     user-select: none;
@@ -216,7 +227,6 @@
       }
     }
   }
-
   ///////////////////////
   // new-folder styles //
   ///////////////////////
@@ -563,7 +573,7 @@
 
   .side-view-preview-content {
     position: relative;
-    border-top: 1px solid $main-color;
+    /**border-top: 1px solid $main-color;**/
     border-bottom: 1px solid $main-color;
     min-height: 100%;
     flex-grow: 1;

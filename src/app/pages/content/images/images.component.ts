@@ -1,19 +1,21 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { CrudService } from '../../shared/services/crud.service';
 import { Router } from '@angular/router';
 import { NbDialogService } from '@nebular/theme';
-import { ShowcaseDialogComponent } from '../../shared/components/showcase-dialog/showcase-dialog.component';
+//import { ShowcaseDialogComponent } from '../../shared/components/showcase-dialog/showcase-dialog.component';
 import { Lightbox } from 'ngx-lightbox';
+import {environment} from '../../../../environments/environment';
 import { MalihuScrollbarService } from 'ngx-malihu-scrollbar';
-
 import { TreeModel, NodeInterface, ConfigInterface } from 'ng6-file-man';
+declare var $: any;
 @Component({
   selector: 'images-table',
   templateUrl: './images.component.html',
   styleUrls: ['./images.component.scss'],
 })
-export class ImagesComponent {
+export class ImagesComponent implements OnInit {
+  url = environment.apiUrl;
   uploadedFiles: any[] = [];
   _albums: any[] = [];
   loadingList = false;
@@ -30,9 +32,9 @@ export class ImagesComponent {
     private mScrollbarService: MalihuScrollbarService,
   ) {
     const treeConfig: ConfigInterface = {
-      baseURL: 'http://localhost:8080/',
+      baseURL: this.url,
       api: {
-        listFile: 'api/list',
+        listFile: '/v1/content/list',
         uploadFile: 'api/upload',
         downloadFile: 'api/download',
         deleteFile: 'api/remove',
@@ -46,9 +48,32 @@ export class ImagesComponent {
       }
     };
     this.tree = new TreeModel(treeConfig)
-    // this.node = this.tree.nodes;
-    this.getImages()
+
+    
   }
+
+
+  itemSelected(event: any) {
+    console.log(event);
+  }
+
+  ngOnChanges() {
+    console.log('on change');
+  }
+
+
+
+
+  ngOnInit(){
+    console.log('ngOnInit');
+    //$( ".upload-background:first-child" ).css("display:none !important;");
+    //$( ".buttons" ).css("display:none !important;");
+  }
+
+  ngAfterContentInit() {
+    console.log('Content init');
+  }
+
   getImages() {
     // let action = Action.CONTENT + Action.BOXES;
     this.loadingList = true;
@@ -135,13 +160,14 @@ export class ImagesComponent {
   }
   ngAfterViewInit() {
     this.mScrollbarService.initScrollbar('.gallery_listing_main', { axis: 'y', theme: 'minimal-dark', scrollButtons: { enable: true } });
+
+    //$( ".upload-background:first-child" ).css("display:none !important;");
+    //$( ".buttons" ).css("display:none !important;");
+
   }
 
   files: File[] = [];
 
-  onSelect(event) {
-    console.log(event);
-    //this.files.push(...event.addedFiles);
-  }
+
 
 }
