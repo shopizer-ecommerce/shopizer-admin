@@ -10,7 +10,7 @@ import { UserService } from '../../../shared/services/user.service';
 import { TranslateService } from '@ngx-translate/core';
 import { StorageService } from '../../../shared/services/storage.service';
 import { ToastrService } from 'ngx-toastr';
-
+import { Router } from '@angular/router';
 @Component({
   selector: 'ngx-products-list',
   templateUrl: './products-list.component.html',
@@ -22,7 +22,7 @@ export class ProductsListComponent implements OnInit {
   loadingList = false;
   stores = [];
   isSuperadmin: boolean;
-
+  selectedStore: String = '';
   // paginator
   perPage = 10;
   currentPage = 1;
@@ -45,7 +45,9 @@ export class ProductsListComponent implements OnInit {
     private translate: TranslateService,
     private storageService: StorageService,
     private toastr: ToastrService,
+    private router: Router
   ) {
+    this.selectedStore = this.storageService.getMerchant()
     this.isSuperadmin = this.storageService.getUserRoles().isSuperadmin;
   }
 
@@ -82,7 +84,7 @@ export class ProductsListComponent implements OnInit {
   setSettings() {
     this.settings = {
       actions: {
-        columnTitle: 'Action',
+        columnTitle: this.translate.instant('ORDER.ACTIONS'),
         add: false,
         edit: false,
         delete: false,
@@ -208,5 +210,9 @@ export class ProductsListComponent implements OnInit {
     }
     this.getList();
   }
-
+  route(e) {
+    console.log(e)
+    // localStorage.setItem('orderID', e.data.id);
+    this.router.navigate(['pages/catalogue/products/product/' + e.data.id]);
+  }
 }

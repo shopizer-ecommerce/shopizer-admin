@@ -240,7 +240,7 @@ export class OrderDetailsComponent implements OnInit {
     this.loadingList = true;
     let param = {
       comments: this.statusFields.comments,
-      date: moment().format('YYYY-MM-DD'),
+      date: moment().format('yyyy-MM-DD'),
       status: this.statusFields.status
     }
     this.ordersService.addHistory(this.orderID, param)

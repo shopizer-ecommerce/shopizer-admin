@@ -33,7 +33,7 @@ import { FileManagerModule } from 'ng6-file-man';
     HttpClientModule,
     AppRoutingModule,
     NbDateFnsDateModule.forRoot({
-      format: 'YYYY-MM-DD',
+      format: 'yyyy-MM-DD',
     }),
     NbMomentDateModule,
 

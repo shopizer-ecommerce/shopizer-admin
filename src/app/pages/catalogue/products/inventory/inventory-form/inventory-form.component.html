@@ -1,49 +1,64 @@
-<div *ngIf="loader" [nbSpinner]="loader" nbSpinnerSize="large" nbSpinnerStatus="primary"></div>
-<form [formGroup]='form' *ngIf="!loader">
+<div class="inner_pages inventory_create_page">
 
-  <div class="form-group">
-    <label class="col-sm-10 col-form-label">{{ 'INVENTORY.INVENTORY_STORE' | translate}}</label>
-    <div class="col-sm-12">
-      <p-dropdown *ngIf="stores.length" [options]="stores" formControlName='store' filter="true">
-        <ng-template let-item pTemplate="selectedItem">{{item.label}}</ng-template>
-        <ng-template let-car pTemplate="item">{{car.label}}</ng-template>
-      </p-dropdown>
+  <nb-card-header class="main_header">
+    <h1 class="page_title">{{_title | translate}}</h1>
+
+    <div class="content_spacing back_button">
+      <ngx-back-button></ngx-back-button>
     </div>
-  </div>
-
-  <div class="form-group">
-    <label for="owner" class="col-sm-10 col-form-label">{{ 'INVENTORY.INVENTORY_OWNER' | translate}}</label>
-    <div class="col-sm-12">
-      <input type="text" class="form-control" id="owner" formControlName='owner' placeholder="{{ 'INVENTORY.INVENTORY_OWNER' | translate}}"
-        required>
+    <div class="content_spacing">
+      <button type="submit" nbButton class="success_button" (click)="save()">{{'COMMON.SAVE' | translate }}</button>
     </div>
+  </nb-card-header>
+  <div [nbSpinner]="loader" nbSpinnerSize="large" nbSpinnerStatus="primary">
+    <form [formGroup]='form' *ngIf="!loader">
+      <nb-card class="nb-card inline-form-card">
+        <nb-card-body class="nb-card-body">
+          <div class="form-group">
+            <label class="col-sm-10 col-form-label inputLabel">{{ 'INVENTORY.INVENTORY_STORE' | translate}}</label>
+            <div class="col-sm-12">
+              <p-dropdown *ngIf="stores.length" [options]="stores" formControlName='store' filter="true">
+                <ng-template let-item pTemplate="selectedItem">{{item.label}}</ng-template>
+                <ng-template let-car pTemplate="item">{{car.label}}</ng-template>
+              </p-dropdown>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="owner" class="col-sm-10 col-form-label inputLabel">{{ 'INVENTORY.INVENTORY_OWNER' | translate}}</label>
+            <div class="col-sm-12">
+              <input type="text" class="form-control inputText" id="owner" formControlName='owner' placeholder="{{ 'INVENTORY.INVENTORY_OWNER' | translate}}"
+                required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label for="quantity" class="col-sm-10 col-form-label inputLabel">{{ 'PRODUCT.QUANTITY' | translate}}</label>
+            <div class="col-sm-12">
+              <input type="number" class="form-control inputText" id="quantity" formControlName='quantity'
+                ngxValidateNumber placeholder="{{ 'PRODUCT.QUANTITY' | translate}}" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-sm-10 col-form-label inputLabel">{{ 'PRODUCT.DATE_AVAILABLE' | translate}}</label>
+            <div class="col-sm-12">
+              <input [readOnly]="true" class="form-control inputText has-person-icon" nbInput placeholder="{{ 'PRODUCT.DATE_AVAILABLE' | translate}}"
+                formControlName='dateAvailable' [nbDatepicker]="formpicker">
+              <nb-datepicker #formpicker></nb-datepicker>
+            </div>
+          </div>
+
+          <!-- <hr /> -->
+
+          <!-- <div class="form-group actions-button">
+            <button type="submit" class="btn btn-primary" (click)="save()">{{ 'COMMON.SAVE' | translate }}</button>
+          </div> -->
+        </nb-card-body>
+      </nb-card>
+    </form>
   </div>
-
-  <div class="form-group">
-    <label for="quantity" class="col-sm-10 col-form-label">{{ 'PRODUCT.QUANTITY' | translate}}</label>
-    <div class="col-sm-12">
-      <input type="number" class="form-control" id="quantity" formControlName='quantity' ngxValidateNumber placeholder="{{ 'PRODUCT.QUANTITY' | translate}}"
-        required>
-    </div>
+  <div>
+    <ngx-prices-list *ngIf="inventory && inventory.prices" [prices]="inventory.prices"></ngx-prices-list>
   </div>
-
-  <div class="form-group">
-    <label class="col-sm-10 col-form-label">{{ 'PRODUCT.DATE_AVAILABLE' | translate}}</label>
-    <div class="col-sm-12">
-      <input [readOnly]="true" class="form-control has-person-icon" nbInput placeholder="{{ 'PRODUCT.DATE_AVAILABLE' | translate}}"
-        formControlName='dateAvailable' [nbDatepicker]="formpicker">
-      <nb-datepicker #formpicker></nb-datepicker>
-    </div>
-  </div>
-
-  <hr />
-
-  <div class="form-group actions-button">
-    <button type="submit" class="btn btn-primary" (click)="save()">{{ 'COMMON.SAVE' | translate }}</button>
-  </div>
-
-</form>
-
-<div *ngIf="!loader">
-  <ngx-prices-list *ngIf="inventory && inventory.prices" [prices]="inventory.prices"></ngx-prices-list>
 </div>

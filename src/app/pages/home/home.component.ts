@@ -36,6 +36,7 @@ export class HomeComponent implements OnInit {
     //this.userService.getUser(this.userService.getUserId())
     this.userService.getUserProfile()
       .subscribe(user => {
+        console.log(this.userService.roles);
         this.userService.checkForAccess(user.groups);
         this.canAccessToOrder = this.userService.roles.canAccessToOrder;
       });
@@ -60,19 +61,19 @@ export class HomeComponent implements OnInit {
 
         //require merchant supported language
         //console.log("Supported languages " + JSON.stringify(merchant.supportedLanguages));
-        
-        
-        localStorage.setItem('merchantLanguage',JSON.stringify(merchant.defaultLanguage));
-        localStorage.setItem('supportedLanguages',JSON.stringify(merchant.supportedLanguages));
+
+
+        localStorage.setItem('merchantLanguage', JSON.stringify(merchant.defaultLanguage));
+        localStorage.setItem('supportedLanguages', JSON.stringify(merchant.supportedLanguages));
 
         //require merchant country
-        localStorage.setItem('defaultCountry',merchant.address.country);
+        localStorage.setItem('defaultCountry', merchant.address.country);
 
         this.loading = false;
       });
   }
 
-  country(code : string) {
+  country(code: string) {
     return this._countryArray.filter(c => c.code === code);
   }
 

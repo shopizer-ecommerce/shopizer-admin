@@ -1,8 +1,16 @@
 <div class="inner_pages product_create_page">
 
   <nb-card-header class="main_header">
-    <h1 class="page_title">{{'COMPONENTS.CREATE_PRODUCT' | translate}}</h1>
-
+    <h1 class="page_title">{{_title | translate}}</h1>
+    <div class="content_spacing">
+      <nb-select [(selected)]="selectedItem" outline shape="rectangle">
+        <nb-option *ngFor="let item of sidemenuLinks" [value]="item.id" (click)="route(item.link)">{{ item.title }}</nb-option>
+      </nb-select>
+    </div>
+    <div class="content_spacing">
+      <button type="button" nbButton class="cancel_button" (click)="goToback()">{{ 'ORDER_FORM.CANCLE'
+        | translate}}</button>
+    </div>
     <div class="content_spacing">
       <button type="button" nbButton class="success_button" (click)="save()">{{'COMMON.SAVE' | translate }}</button>
     </div>

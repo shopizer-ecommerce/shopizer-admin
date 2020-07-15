@@ -15,7 +15,7 @@ export const environment = {
     googleApiKey: '',
     mode: 'MARKETPLACE',
     apiUrl: 'http://15.223.64.6:9090/api',
-    //apiUrl: 'http://aws-demo.shopizer.com:8080/api',
+    // apiUrl: 'http://aws-demo.shopizer.com:8080/api',
     //apiUrl: 'http://localhost:8080/api',
     client: {
         language: {

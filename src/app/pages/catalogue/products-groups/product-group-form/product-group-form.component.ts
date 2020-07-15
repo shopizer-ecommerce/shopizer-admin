@@ -49,5 +49,8 @@ export class ProductGroupFormComponent implements OnInit {
       this.router.navigate(['pages/catalogue/products-groups/groups-list']);
     });
   }
+  goToback() {
+    this.router.navigate(['pages/catalogue/products-groups/groups-list']);
+  }
 
 }

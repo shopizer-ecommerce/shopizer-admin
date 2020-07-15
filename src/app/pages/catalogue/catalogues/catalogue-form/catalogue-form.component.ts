@@ -91,5 +91,7 @@ export class CatalogueFormComponent implements OnInit {
         }
       });
   }
-
+  goToback() {
+    this.router.navigate(['pages/catalogue/catalogues/catalogues-list']);
+  }
 }

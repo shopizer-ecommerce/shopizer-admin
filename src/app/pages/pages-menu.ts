@@ -404,20 +404,21 @@ export const MENU_ITEMS: MenuItem[] = [
     icon: 'car',
     children: [
       {
-        title: 'COMPONENTS.CONFIGURATION',
-        key: 'COMPONENTS.CONFIGURATION',
+        title: 'SHIPPING.EXPEDITION',
+        key: 'SHIPPING.EXPEDITION',
         link: '/pages/shipping/config',
+      },
+      {
+        title: 'SHIPPING.ORIGIN',
+        key: 'SHIPPING.ORIGIN',
+        link: '/pages/shipping/origin',
       },
       {
         title: 'COMPONENTS.METHODS',
         key: 'COMPONENTS.METHODS',
         link: '/pages/content/promotion',
       },
-      {
-        title: 'COMPONENTS.ORIGIN',
-        key: 'COMPONENTS.ORIGIN',
-        link: '/pages/shipping/config',
-      },
+
       // {
       //   title: 'Options',
       //   key: 'sideNav.options',

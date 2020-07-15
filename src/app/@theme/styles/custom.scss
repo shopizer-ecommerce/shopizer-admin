@@ -695,6 +695,10 @@ ng2-st-tbody-custom {
 .nb-theme-corporate ng2-smart-table .ng2-smart-actions {
   padding: 0;
   height: auto !important;
+
+  .ng2-smart-title {
+    font-weight: 600;
+  }
 }
 
 .home-table {

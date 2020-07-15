@@ -349,4 +349,7 @@ export class CategoryFormComponent implements OnInit {
     });
     return button.render();
   }
+  goToback() {
+    this.router.navigate(['pages/catalogue/categories/categories-list']);
+  }
 }

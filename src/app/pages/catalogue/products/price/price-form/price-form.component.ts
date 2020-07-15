@@ -161,7 +161,7 @@ export class PriceFormComponent implements OnInit {
 
   save() {
     const priceObject = this.form.value;
-    priceObject.dateAvailable = moment(priceObject.dateAvailable).format('YYYY-MM-DD');
+    priceObject.dateAvailable = moment(priceObject.dateAvailable).format('yyyy-MM-DD');
     // save important values for filling empty field in result object
     const tmpObj = {
       name: '',
@@ -218,7 +218,7 @@ export class PriceFormComponent implements OnInit {
       // save as inventory updating
       this.inventoryService.updateInventory(this.params.productId, this.inventory.id, this.inventory)
         .subscribe((res) => {
-      });
+        });
     }
   }
 

@@ -16,6 +16,7 @@ import * as moment from 'moment';
 })
 export class InventoryFormComponent implements OnInit {
   @Input() inventory;
+  @Input() _title;
   form: FormGroup;
   stores = [];
   loader = false;
@@ -78,7 +79,7 @@ export class InventoryFormComponent implements OnInit {
   save() {
     const inventoryObj = this.form.value;
     inventoryObj.dateAvailable =
-      inventoryObj.dateAvailable ? moment(inventoryObj.dateAvailable).format('YYYY-MM-DD') : '';
+      inventoryObj.dateAvailable ? moment(inventoryObj.dateAvailable).format('yyyy-MM-DD') : '';
     inventoryObj.prices = [...this.prices];
     inventoryObj.productId = this.productId;
     if (this.inventory.id) {

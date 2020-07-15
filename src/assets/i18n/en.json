@@ -283,10 +283,12 @@
   },
   "SHIPPING": {
     "CONFIGURATION": "Configuration",
-    "ORIGIN": "Shipping Origin",
+    "EXPEDITION": "Expedition",
+    "ORIGIN": "Shipping origin",
     "PACKAGING": "Packaging configuration",
     "RULES": "Shipping rules",
-    "METHODS": "Shipping methods"
+    "METHODS": "Shipping methods",
+    "CREATE_ORIGIN": "Create Origin"
   },
   "ORDER": {
     "CUSTOMER_NAME": "Customer Name",

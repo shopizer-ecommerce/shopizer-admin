@@ -1,30 +1,22 @@
-<div class="inner_pages">
+<!-- <div class="inner_pages">
   <div class="row">
     <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
       <nb-card class="nb-card inline-form-card">
         <nb-card-body class="nb-card-body">
           <h1>Shipping Origin</h1>
-          <h6>Shipping origin will help calculate distance between the origin to the destination of the delivery. If the origin
+          <h6>Shipping origin will help calculate distance between the origin to the destination of the delivery. If
+            the origin
             is not set, the system will use the merchant store addresss as the shipping origin.
           </h6>
         </nb-card-body>
       </nb-card>
     </div>
   </div>
-  <!--  -->
   <div class="row">
     <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
       <form #originForm="ngForm" [formGroup]="shipOriginForm" (ngSubmit)="onSubmit()">
         <nb-card class="nb-card inline-form-card">
-          <!-- <nb-card-header class="main_header">
-        
-                <h1>Shipping Origin</h1>
-                <br>
-                <p>Shipping origin will help calculate distance between the origin to the destination of the delivery. If the origin
-                  is not set, the system will use the merchant store addresss as the shipping origin.
-                </p>
-        
-              </nb-card-header> -->
+
           <nb-card-body class="nb-card-body">
             <div class="form-group mode">
               <nb-checkbox [(ngModel)]="visible" name="visible" status="success">Active</nb-checkbox>
@@ -32,16 +24,16 @@
             <div class="form-group mode">
 
               <label>Address</label>
-              <input class="form-control form-control-sm" formControlName="address" id="addressId" type="text" name="address" placeholder="Address"
-                [ngClass]="{ 'is-invalid': isSubmitted && f.address.errors }" />
+              <input class="form-control form-control-sm" formControlName="address" id="addressId" type="text" name="address"
+                placeholder="Address" [ngClass]="{ 'is-invalid': isSubmitted && f.address.errors }" />
               <div *ngIf="isSubmitted && f.address.errors" class="invalid-feedback">
                 <div *ngIf="f.address.errors.required">Address is required</div>
               </div>
             </div>
             <div class="form-group">
               <label>City</label>
-              <input class="form-control form-control-sm" formControlName="cityName" id="cityId" type="text" name="cityName" placeholder="City"
-                [ngClass]="{ 'is-invalid': isSubmitted && f.cityName.errors }" />
+              <input class="form-control form-control-sm" formControlName="cityName" id="cityId" type="text" name="cityName"
+                placeholder="City" [ngClass]="{ 'is-invalid': isSubmitted && f.cityName.errors }" />
               <div *ngIf="isSubmitted && f.cityName.errors" class="invalid-feedback">
                 <div *ngIf="f.cityName.errors.required">City is required</div>
               </div>
@@ -52,7 +44,6 @@
                 <option value="">Choose your country</option>
                 <option *ngFor="let country of countries" [value]="country.countryCode">{{country.label}}</option>
               </select>
-              <!-- error block -->
               <div *ngIf="isSubmitted && f.countryName.errors" class="invalid-feedback">
                 <div *ngIf="f.countryName.errors.required">Country is required</div>
               </div>
@@ -63,41 +54,22 @@
                 <option value="">Choose your state</option>
                 <option *ngFor="let state of states" [value]="state.stateCode">{{state.label}}</option>
               </select>
-              <!-- error block -->
               <div *ngIf="isSubmitted && f.stateName.errors" class="invalid-feedback">
                 <div *ngIf="f.stateName.errors.required">State is required</div>
               </div>
             </div>
             <div class="form-group">
               <label>Postal Code</label>
-              <input class="form-control form-control-sm" formControlName="postalCode" id="postalCodeId" type="text" name="postalCode"
-                placeholder="Postal Code" [ngClass]="{ 'is-invalid': isSubmitted && f.postalCode.errors }" />
+              <input class="form-control form-control-sm" formControlName="postalCode" id="postalCodeId" type="text"
+                name="postalCode" placeholder="Postal Code" [ngClass]="{ 'is-invalid': isSubmitted && f.postalCode.errors }" />
               <div *ngIf="isSubmitted && f.postalCode.errors" class="invalid-feedback">
                 <div *ngIf="f.postalCode.errors.required">Postal Code is required</div>
               </div>
             </div>
-            <!-- Submit Button -->
             <div class="form-group">
               <button type="submit" id="submitId" class="btn btn-danger btn-lg btn-block">Submit</button>
             </div>
 
-            <!-- <div class="row">
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-          <div class="form-group mode">
-            <label for="inputWebsite" class="label">Tax on shipping</label>
-            <nb-checkbox [(ngModel)]="visible" name="visible" status="success">Yes</nb-checkbox>
-          </div>
-          <div class="mode">
-            <label for="inputWebsite" class="label">
-              <b>Shipping Quotes</b>
-            </label>
-            <nb-radio status="success" class="shipping-radio">Display all shipping quotes</nb-radio>
-            <nb-radio status="success" class="shipping-radio">Display least expensive shipping quotes</nb-radio>
-            <nb-radio status="success" class="shipping-radio">Display highest expensive shipping quotes</nb-radio>
-          </div>
-          <br />
-        </div>
-      </div> -->
 
           </nb-card-body>
         </nb-card>
@@ -105,5 +77,98 @@
     </div>
   </div>
 
+
+</div> -->
+
+<div class="inner_pages shipping_origin">
+
+  <nb-card-header class="main_header">
+    <h1 class="page_title">Create Shipping Origin</h1>
+    <div class="content_spacing" *ngIf="isSuperAdmin">
+      <nb-select *ngIf="stores.length" (selectedChange)="onSelectStore($event)" class="select_store" outline shape="rectangle"
+        [selected]="selectedStore">
+        <label class="label">yes<span>*</span></label>
+        <nb-option *ngFor="let store of stores" [value]="store.code">{{store.code}}</nb-option>
+      </nb-select>
+    </div>
+    <div class="content_spacing">
+      <button type="submit" nbButton class="success_button" (click)="onShippingOrigin()" [disabled]="!originForm.form.valid">{{'COMMON.SAVE'
+        | translate }}</button>
+    </div>
+  </nb-card-header>
+
+  <div class="" [nbSpinner]="loadingList" nbSpinnerSize="large" nbSpinnerStatus="primary">
+    <form #originForm="ngForm" role="form">
+
+      <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+          <nb-card class="nb-card inline-form-card">
+            <!-- <nb-card-header class="nb-card-header">{{'ORDER_FORM.BILLING_INFO' | translate}}</nb-card-header> -->
+            <nb-card-body class="nb-card-body">
+
+              <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                  <div class="form-group">
+                    <nb-checkbox [(ngModel)]="visible" name="visible">Active</nb-checkbox>
+                  </div>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                  <div class="form-group">
+                    <label class="label inputLabel">{{'ORDER_FORM.STREET_ADDRESS' | translate}}<span>*</span></label>
+                    <input type="text" class="form-control inputText" placeholder="{{'ORDER_FORM.STREET_ADDRESS' | translate}}"
+                      [(ngModel)]="shipOriginForm.address" name="address" required #address="ngModel">
+                  </div>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                  <div class="form-group">
+                    <label class="label inputLabel">{{'ORDER_FORM.CITY' | translate}}<span>*</span></label>
+                    <input type="text" class="form-control inputText" placeholder="{{'ORDER_FORM.CITY' | translate}}"
+                      [(ngModel)]="shipOriginForm.city" name="city" required #city="ngModel">
+                  </div>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                  <div class="form-group">
+                    <label class="label inputLabel">{{'ORDER_FORM.COUNTRY' | translate}}<span>*</span></label>
+                    <nb-select *ngIf="countries.length > 0" placeholder="{{'ORDER_FORM.SELECT_COUNTRY' | translate}}"
+                      outline shape="rectangle" [(ngModel)]="shipOriginForm.country" name="country" (selectedChange)="onCountryChange($event)"
+                      class="select_fields" required>
+                      <nb-option *ngFor="let country of countries" [value]="country.countryCode">{{ country.label }}
+                      </nb-option>
+                    </nb-select>
+                  </div>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                  <div class="form-group" *ngIf="states.length > 0">
+                    <label class="label inputLabel">{{'ORDER_FORM.STATE' | translate}}<span>*</span></label>
+                    <nb-select placeholder="{{'ORDER_FORM.SELECT_STATE' | translate}}" class="select_fields" outline
+                      shape="rectangle" [(ngModel)]="shipOriginForm.stateProvince" name="stateProvince" required>
+                      <nb-option *ngFor="let state of states" [value]="state.stateCode">{{ state.label }}
+                      </nb-option>
+                    </nb-select>
+                  </div>
+                  <div class="form-group" *ngIf="states.length == 0">
+                    <label class="label inputLabel">{{'ORDER_FORM.STATE' | translate}}<span>*</span></label>
+                    <input type="text" class="form-control inputText" placeholder="{{'ORDER_FORM.ENTER_STATE' | translate}}"
+                      [(ngModel)]="shipOriginForm.stateProvince" name="stateProvince" required>
+                  </div>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                  <div class="form-group">
+                    <label class="label inputLabel">{{'ORDER_FORM.POSTAL_CODE' | translate}}<span>*</span></label>
+                    <input type="text" class="form-control inputText" placeholder="{{'ORDER_FORM.POSTAL_CODE' | translate}}"
+                      [(ngModel)]="shipOriginForm.postalCode" name="postalCode" required #postalCode="ngModel">
+                  </div>
+                </div>
+
+              </div>
+
+            </nb-card-body>
+          </nb-card>
+        </div>
+
+      </div>
+
+    </form>
+  </div>
 
 </div>

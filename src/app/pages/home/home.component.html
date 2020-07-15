@@ -18,18 +18,18 @@
         {{user?.userName}}
       </span>
       <span>
-      <i class="fa fa-calendar-alt"></i>
-      {{ "HOME.LAST_ACCESS" | translate }}: {{user?.lastAccess | date : 'medium'}}
+        <i class="fa fa-calendar-alt"></i>
+        {{ "HOME.LAST_ACCESS" | translate }}: {{user?.lastAccess | date : 'medium'}}
       </span>
     </div>
   </nb-card-body>
 </nb-card>
 
-<nb-card size="small" *ngIf="canAccessToOrder">
+<nb-card *ngIf="canAccessToOrder">
   <nb-card-header>
     {{ "HOME.RECENT_ORDERS" | translate }}
   </nb-card-header>
   <nb-card-body>
-<!--    <ngx-order-list></ngx-order-list>-->
+    <!-- <ngx-order-list></ngx-order-list> -->
   </nb-card-body>
 </nb-card>

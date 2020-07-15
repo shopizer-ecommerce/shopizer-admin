@@ -1,32 +1,34 @@
-<ngx-back-button></ngx-back-button>
-<nb-card size="small" class="page-card">
-  <nb-card-header>
-    {{product?.description.name}}
-  </nb-card-header>
-  <nb-card-body [nbSpinner]="loadingList" nbSpinnerSize="large" nbSpinnerStatus="primary">
+<nb-card class="page-card inner_pages">
+  <nb-card-body [nbSpinner]="loadingList" nbSpinnerSize="large" nbSpinnerStatus="primary" class="product_inventory">
+    <div class="inner_pages_legacy">
+      <nb-card-header class="main_header">
+        <h1 class="page_title">{{product?.description.name}}</h1>
+        <div class="content_spacing_empty"></div>
 
-    <nb-actions size="medium" class="back-button">
-      <nb-action>
-        <i class="fas fa-plus"></i>&nbsp;
-        <a [routerLink]="['/pages/catalogue/products/' + productId +'/inventory-creation']">
-          {{ 'INVENTORY.ADD_TO_INVENTORY' | translate}}
-        </a>
-      </nb-action>
-    </nb-actions>
+      </nb-card-header>
 
-    <ng2-smart-table
-      [settings]="settings"
-      [source]="source"
-      (custom)="route($event)">
-    </ng2-smart-table>
+      <form class="form-inline filter_section">
+        <div class="filter_left_section">
 
-    <ngx-paginator
-      (changePage)="changePage($event)"
-      [pagesToShow]="5"
-      [currentPage]="currentPage"
-      [perPage]="perPage"
-      [count]="totalCount">
-    </ngx-paginator>
+          <ngx-back-button></ngx-back-button>
+        </div>
 
+        <div class="filter_right_section">
+
+          <a class="createBtn " [routerLink]="['/pages/catalogue/products/' + productId +'/inventory-creation']">
+            <img class="pointer sda" src="../../../../assets/img/plus.png" title="{{ 'INVENTORY.ADD_TO_INVENTORY' | translate}}"
+              alt="">
+            <label>{{ 'INVENTORY.ADD_TO_INVENTORY' | translate}}</label></a>
+        </div>
+
+      </form>
+
+      <ng2-smart-table [settings]="settings" [source]="source" (custom)="route($event)" class="home-table">
+      </ng2-smart-table>
+
+      <ngx-paginator (changePage)="changePage($event)" [pagesToShow]="5" [currentPage]="currentPage" [perPage]="perPage"
+        [count]="totalCount">
+      </ngx-paginator>
+    </div>
   </nb-card-body>
 </nb-card>

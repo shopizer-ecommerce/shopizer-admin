@@ -10,9 +10,8 @@
       <form class="form-inline filter_section">
 
         <div class="filter_right_section" *ngIf="isSuperAdmin">
-          <nb-select placeholder="{{'ORDER_FORM.SELECT_STORE' | translate}}" [(ngModel)]="selectedStore"
-            (selectedChange)="onSelectStore($event)" name="selectedStore" class="store_select" outline shape="rectangle"
-            name="store" [selected]="'DEFAULT'">
+          <nb-select *ngIf="stores.length" (selectedChange)="onSelectStore($event)" class="store_select" outline shape="rectangle"
+            [selected]="selectedStore">
             <label class="label">yes<span>*</span></label>
             <nb-option *ngFor="let store of stores" [value]="store.code">{{store.code}}</nb-option>
           </nb-select>

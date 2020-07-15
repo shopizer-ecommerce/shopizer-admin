@@ -10,6 +10,10 @@
       </nb-select>
     </div>
     <div class="content_spacing">
+      <button type="button" nbButton class="cancel_button" (click)="goToback()">{{ 'ORDER_FORM.CANCLE'
+        | translate}}</button>
+    </div>
+    <div class="content_spacing">
       <button type="button" nbButton class="success_button" (click)="save()">{{'COMMON.SAVE' | translate }}</button>
     </div>
   </nb-card-header>

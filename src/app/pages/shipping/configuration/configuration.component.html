@@ -1,48 +1,79 @@
 <div class="inner_pages configur_box">
-    <form #pagesForm="ngForm" role="form">
-      <nb-card-header class="main_header">
-        <h1 class="page_title">{{ 'SHIPPING.EXPEDITION' | translate}}</h1>
-        <div class="content_spacing">
-          <button type="button" nbButton status="primary" (click)="saveShipToCountries()">Save</button>
-        </div>
-      </nb-card-header>
-  
-          
-  <div class="row">
-      <div class="col-md-12">
-        <nb-card class="inline-form-card">
-          <nb-card-header>Shipping type TODO USE translation</nb-card-header>
-          <nb-card-body>
-            <form class="form-inline">
-                
-                <input type="radio" id="domest" name="Domestic" [(ngModel)]="expedition" [value]="false">
-                <label>TODO USE translation Domestic</label>
-  
-                <input type="radio" id="inter" name="International" [(ngModel)]="expedition" [value]="true">
-                <label>TODO use translation International</label>
-  
-                
-            </form>
+  <!-- <form #pagesForm="ngForm" role="form"> -->
+  <nb-card-header class="main_header">
+    <h1 class="page_title">{{ 'SHIPPING.EXPEDITION' | translate}}</h1>
+    <div class="content_spacing" *ngIf="isSuperAdmin">
+      <nb-select *ngIf="stores.length" (selectedChange)="onSelectStore($event)" class="select_store" outline shape="rectangle"
+        [selected]="selectedStore">
+        <label class="label">yes<span>*</span></label>
+        <nb-option *ngFor="let store of stores" [value]="store.code">{{store.code}}</nb-option>
+      </nb-select>
+    </div>
+    <div class="content_spacing">
+      <button type="button" nbButton class="success_button" (click)="saveShipToCountries()">Save</button>
+    </div>
+  </nb-card-header>
+  <form #orderForm="ngForm" role="form">
+    <div class="row">
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <nb-card class="nb-card inline-form-card">
+          <nb-card-header class="nb-card-header">Shipping Type</nb-card-header>
+          <nb-card-body class="nb-card-body">
+
+            <div class="row">
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="form-group">
+                  <nb-radio-group [(ngModel)]="expedition" name="expedition">
+                    <nb-radio class="shipping-radio" [value]="false">Domestic</nb-radio>
+                    <nb-radio class="shipping-radio" [value]="true">International</nb-radio>
+                  </nb-radio-group>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="form-group">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                  <nb-checkbox [(ngModel)]="taxOnShipping" name="taxOnShipping">Apply tax on
+                    shipping</nb-checkbox>
+                </div>
+              </div>
+            </div>
+
+            <!-- <div class="form-group"> -->
+            <!-- <input type="radio" id="domest" name="Domestic" [(ngModel)]="expedition" [value]="false">
+                <label class="inputLabel">Domestic</label> -->
+            <!-- <nb-radio class="shipping-radio" id="type" name="type" [(ngModel)]="expedition" [value]="false">Domestic</nb-radio>
+              <nb-radio class="shipping-radio" id="type" name="type" [(ngModel)]="expedition" [value]="true">International</nb-radio> -->
+            <!-- <input type="radio" id="inter" name="International" [(ngModel)]="expedition" [value]="true">
+                <label class="inputLabel">International</label> -->
+
+            <!-- </div>
+            <div class="form-group">
+              <nb-checkbox [(ngModel)]="visible" name="visible">Apply tax on shipping</nb-checkbox> -->
+            <!-- <label for="inputWebsite" class="label"></label> -->
+
+            <!-- </div> -->
           </nb-card-body>
         </nb-card>
       </div>
     </div>
-  
-    <div class="row" *ngIf="(leftAreaItems.length > 0 && expedition)">
-        <div class="col-md-12">
-          <nb-card class="inline-form-card">
-            <nb-card-header>Select country TODO USE translation</nb-card-header>
-            <nb-card-body>
-                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                      <app-transferlistbox [code]="code" [label]="label" [leftAreaList]="leftAreaItems" [rightAreaList]="rightAreaItems" [leftAreaLabel]="leftAreaLabel"
-                        [rightAreaLabel]="rightAreaLabel" [leftAreaId]="leftAreaId" [rightAreaId]="rightAreaId"></app-transferlistbox>
-                    </div>
-            </nb-card-body>
-          </nb-card>
-        </div>
+
+    <div [ngClass]="expedition ? 'row': 'row disabled-contenct'">
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <nb-card class="nb-card inline-form-card">
+          <nb-card-header class="nb-card-header">Select Country</nb-card-header>
+          <nb-card-body class="nb-card-body">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" *ngIf="leftAreaItems.length > 0">
+              <app-transferlistbox [code]="code" [label]="label" [leftAreaList]="leftAreaItems" [rightAreaList]="rightAreaItems"
+                [leftAreaLabel]="leftAreaLabel" [rightAreaLabel]="rightAreaLabel" [leftAreaId]="leftAreaId"
+                [rightAreaId]="rightAreaId"></app-transferlistbox>
+            </div>
+          </nb-card-body>
+        </nb-card>
       </div>
-  
-  
-  
-    </form>
-  </div>
+    </div>
+  </form>
+
+
+  <!-- </form> -->
+</div>

@@ -60,15 +60,15 @@ export class PricesListComponent implements OnInit {
   setSettings() {
     this.settings = {
       actions: {
-        columnTitle: '',
+        columnTitle: this.translate.instant('ORDER.ACTIONS'),
         add: false,
         edit: false,
         delete: false,
         position: 'right',
         sort: true,
         custom: [
-          { name: 'details', title: `${this.translate.instant('COMMON.EDIT')}` },
-          { name: 'remove', title: this._sanitizer.bypassSecurityTrustHtml('<i class="fas fa-trash-alt"></i>') }
+          { name: 'details', title: '<i class="nb-edit"></i>' },
+          { name: 'remove', title: '<i class="nb-trash"></i>' }
         ],
       },
       pager: { display: false },
@@ -121,10 +121,10 @@ export class PricesListComponent implements OnInit {
       case 'remove':
         this.dialogService.open(ShowcaseDialogComponent, {})
           .onClose.subscribe(res => {
-          if (res) {
-            // todo remove price item from list
-          }
-        });
+            if (res) {
+              // todo remove price item from list
+            }
+          });
     }
   }
 

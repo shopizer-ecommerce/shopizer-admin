@@ -41,6 +41,7 @@ export class OrderListComponent implements OnInit {
   ) {
     this.isSuperAdmin = this.storageService.getUserRoles().isSuperadmin;
     this.getStoreList();
+    this.selectedStore = this.storageService.getMerchant()
   }
   getStoreList() {
     this.storeService.getListOfMerchantStoreNames({ 'store': '' })
@@ -185,11 +186,11 @@ export class OrderListComponent implements OnInit {
           title: this.translate.instant('ORDER.ORDER_DATE'),
           type: 'string',
           filter: false,
-          valuePrepareFunction: (date) => {
-            if (date) {
-              return new DatePipe('en-GB').transform(date, 'YYYY-MM-dd');
-            }
-          }
+          // valuePrepareFunction: (date) => {
+          //   if (date) {
+          //     return new DatePipe('en-GB').transform(date, 'yyyy-MM-dd');
+          //   }
+          // }
         },
         orderStatus: {
           title: this.translate.instant('ORDER.STATUS'),

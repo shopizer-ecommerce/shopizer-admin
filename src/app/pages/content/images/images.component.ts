@@ -5,7 +5,7 @@ import { Router } from '@angular/router';
 import { NbDialogService } from '@nebular/theme';
 //import { ShowcaseDialogComponent } from '../../shared/components/showcase-dialog/showcase-dialog.component';
 import { Lightbox } from 'ngx-lightbox';
-import {environment} from '../../../../environments/environment';
+import { environment } from '../../../../environments/environment';
 import { MalihuScrollbarService } from 'ngx-malihu-scrollbar';
 import { TreeModel, NodeInterface, ConfigInterface } from 'ng6-file-man';
 declare var $: any;
@@ -32,15 +32,22 @@ export class ImagesComponent implements OnInit {
     private mScrollbarService: MalihuScrollbarService,
   ) {
     const treeConfig: ConfigInterface = {
-      baseURL: this.url,
+      baseURL: 'http://localhost:8080/',
       api: {
-        listFile: '/v1/content/list',
+        listFile: 'api/list',
         uploadFile: 'api/upload',
         downloadFile: 'api/download',
         deleteFile: 'api/remove',
         createFolder: 'api/directory',
         renameFile: 'api/rename',
         searchFiles: 'api/search'
+        // listFile: '/v1/content/list',
+        // uploadFile: 'api/upload',
+        // downloadFile: 'api/download',
+        // deleteFile: 'api/remove',
+        // createFolder: '/directory',
+        // renameFile: 'api/rename',
+        // searchFiles: 'api/search'
       },
       options: {
         allowFolderDownload: false,
@@ -49,7 +56,7 @@ export class ImagesComponent implements OnInit {
     };
     this.tree = new TreeModel(treeConfig)
 
-    
+
   }
 
 
@@ -64,7 +71,7 @@ export class ImagesComponent implements OnInit {
 
 
 
-  ngOnInit(){
+  ngOnInit() {
     console.log('ngOnInit');
     //$( ".upload-background:first-child" ).css("display:none !important;");
     //$( ".buttons" ).css("display:none !important;");

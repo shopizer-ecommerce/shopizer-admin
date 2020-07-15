@@ -19,7 +19,7 @@
         </div>
         <div class="filter_right_section">
           <nb-select *ngIf="stores.length" class="store_select" outline shape="rectangle" (selectedChange)="choseStore($event)"
-            [selected]="'DEFAULT'">
+            [selected]="selectedStore">
             <nb-option *ngFor="let store of stores" [value]="store.code">{{ store.code }}</nb-option>
           </nb-select>
           <a class="createBtn " [routerLink]="['/pages/catalogue/products/create-product']">

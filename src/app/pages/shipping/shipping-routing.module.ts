@@ -29,4 +29,5 @@ export class ShippingRoutingModule { }
 export const routedComponents = [
   ShippingComponent,
   ConfigurationComponent,
+  OriginComponent
 ];

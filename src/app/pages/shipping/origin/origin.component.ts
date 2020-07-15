@@ -5,7 +5,7 @@ import { ShippingOriginReq } from '../models/ShippingOriginReq';
 import { ToastrService } from 'ngx-toastr';
 import { StorageService } from './../../shared/services/storage.service';
 import { TranslateService } from '@ngx-translate/core';
-
+import { StoreService } from '../../store-management/services/store.service';
 
 
 
@@ -15,57 +15,66 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./origin.component.scss']
 })
 export class OriginComponent implements OnInit {
-
-  shipOriginForm = new FormGroup({
-    address: new FormControl('', [Validators.required]),
-    cityName: new FormControl('', [Validators.required]),
-    countryName: new FormControl('', [Validators.required]),
-    stateName: new FormControl('', [Validators.required]),
-    postalCode: new FormControl('', [Validators.required])
-  });
-  shippingOriginReq: ShippingOriginReq;
+  shipOriginForm = {
+    address: '',
+    city: '',
+    country: '',
+    stateProvince: '',
+    postalCode: ''
+  }
+  // shipOriginForm = new FormGroup({
+  //   address: new FormControl('', [Validators.required]),
+  //   cityName: new FormControl('', [Validators.required]),
+  //   countryName: new FormControl('', [Validators.required]),
+  //   stateName: new FormControl('', [Validators.required]),
+  //   postalCode: new FormControl('', [Validators.required])
+  // });
+  // shippingOriginReq: ShippingOriginReq;
   isSubmitted: boolean = false;
   countries = [];
   states = [];
-  store: string;
+  // store: string;
+  stores: Array<any> = [];
+  selectedStore: String = '';
+  isSuperAdmin: boolean;
+  constructor(private crudService: CrudService,
+    private toastr: ToastrService,
+    private translate: TranslateService,
 
-  constructor(private crudService: CrudService, private toastr: ToastrService, private translate: TranslateService, private storageService: StorageService) { }
+    private storeService: StoreService,
+    private storageService: StorageService
+  ) {
+    this.isSuperAdmin = this.storageService.getUserRoles().isSuperadmin;
+    this.selectedStore = this.storageService.getMerchant()
+  }
 
   ngOnInit() {
-    this.store = this.storageService.getMerchant();
+    this.storeService.getListOfMerchantStoreNames({ 'store': '' })
+      .subscribe(res => {
+        this.stores = res;
+      });
     this.getShippingOrigin();
 
   }
-  // convenience getter for easy access to form fields
-  get f() { return this.shipOriginForm.controls; }
-  // Choose city using select dropdown
-  changeCountry(e) {
-    console.log(e.value)
-    this.shipOriginForm.get('countryName').setValue(e.target.value);
-    if (this.shipOriginForm.value.countryName != '') {
-
-      this.getState();
-    }
+  onCountryChange(e) {
+    this.getState(1);
   }
 
-  changeState(e) {
-    this.shipOriginForm.get('stateName').setValue(e.target.value);
-  }
 
   onSubmit() {
-    this.isSubmitted = true;
-    if (!this.shipOriginForm.valid) {
-      return false;
-    } else {
-      this.shippingOriginReq = new ShippingOriginReq(this.shipOriginForm.value.address,
-        this.shipOriginForm.value.cityName,
-        this.shipOriginForm.value.countryName,
-        this.shipOriginForm.value.stateName,
-        this.shipOriginForm.value.postalCode);
-      this.crudService.post('/v1/private/origin?store=' + this.store, this.shippingOriginReq).subscribe(res => {
-        this.toastr.success(this.translate.instant('SHIPPING.ORIGIN_UPDATE'));
-      });
-    }
+    // this.isSubmitted = true;
+    // if (!this.shipOriginForm.valid) {
+    //   return false;
+    // } else {
+    //   this.shippingOriginReq = new ShippingOriginReq(this.shipOriginForm.value.address,
+    //     this.shipOriginForm.value.cityName,
+    //     this.shipOriginForm.value.countryName,
+    //     this.shipOriginForm.value.stateName,
+    //     this.shipOriginForm.value.postalCode);
+    //   this.crudService.post('/v1/private/origin?store=' + this.store, this.shippingOriginReq).subscribe(res => {
+    //     this.toastr.success(this.translate.instant('SHIPPING.ORIGIN_UPDATE'));
+    //   });
+    // }
 
   }
 
@@ -78,28 +87,40 @@ export class OriginComponent implements OnInit {
       }, error => {
       });
   }
-  getState() {
-    this.crudService.get('/v1/zones?code=' + this.shipOriginForm.value.countryName)
+  getState(flag) {
+    this.crudService.get('/v1/zones?code=' + this.shipOriginForm.country)
       .subscribe(data => {
-        data.forEach((item) => {
-          this.states.push({ 'code': item.id, 'label': item.name, 'stateCode': item.code })
-        });
+
+        if (data.length > 0) {
+          data.forEach((item) => {
+            this.states.push({ 'code': item.id, 'label': item.name, 'stateCode': item.code })
+          });
+          if (flag == 1) {
+            this.shipOriginForm.stateProvince = data[0].code;
+          }
+        } else {
+          this.states = data;
+          this.shipOriginForm.stateProvince = '';
+        }
       }, error => {
       });
   }
 
   getShippingOrigin() {
-    this.crudService.get('/v1/private/origin?store=' + this.store)
+    this.crudService.get('/v1/private/shipping/origin?store=' + this.selectedStore)
       .subscribe(data => {
-        this.shipOriginForm.get('address').setValue(data.address);
-        this.shipOriginForm.get('cityName').setValue(data.city);
-        this.shipOriginForm.get('countryName').setValue(data.country);
-        this.shipOriginForm.get('stateName').setValue(data.stateProvince);
-        this.shipOriginForm.get('postalCode').setValue(data.postalCode);
-        this.getCountry();
-        this.getState();
+        this.shipOriginForm = data;
+        // this.shipOriginForm.get('address').setValue(data.address);
+        // this.shipOriginForm.get('cityName').setValue(data.city);
+        // this.shipOriginForm.get('countryName').setValue(data.country);
+        // this.shipOriginForm.get('stateName').setValue(data.stateProvince);
+        // this.shipOriginForm.get('postalCode').setValue(data.postalCode);
+        // this.getCountry();
+        // this.getState();
       }, error => {
       });
+    this.getCountry();
+    this.getState(0);
   }
 
 

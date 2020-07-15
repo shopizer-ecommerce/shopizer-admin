@@ -203,13 +203,29 @@
   **/
 
   .file-manager-left {
-    display:none !important;
+    display: none !important;
   }
 
-  .image-content .file-preview i {
-    color: #00ABC7 !important;
-   }
 
+  .new .file-manager-item {
+    &:hover {
+      background: transparent !important
+    }
+  }
+
+  .file-preview .fa-plus {
+    color: #36f !important;
+
+    &:hover {
+      color: #598bff !important
+    }
+  }
+
+  .upload-background {
+    .buttons:nth-of-type(1) {
+      display: none
+    }
+  }
 
   .file-manager-node {
     user-select: none;
@@ -227,6 +243,7 @@
       }
     }
   }
+
   ///////////////////////
   // new-folder styles //
   ///////////////////////

@@ -3,7 +3,10 @@
   <nb-card-header class="main_header">
     <h1 class="page_title" *ngIf="!catalog">{{ 'COMPONENTS.CREATE_CATALOGUE' | translate}}</h1>
     <h1 class="page_title" *ngIf="catalog">{{ 'COMPONENTS.CATALOGUE' | translate}} </h1>
-
+    <div class="content_spacing">
+      <button type="button" nbButton class="cancel_button" (click)="goToback()">{{ 'ORDER_FORM.CANCLE'
+        | translate}}</button>
+    </div>
     <div class="content_spacing">
       <button type="button" nbButton class="success_button" (click)="save()">{{'COMMON.SAVE' | translate }}</button>
     </div>

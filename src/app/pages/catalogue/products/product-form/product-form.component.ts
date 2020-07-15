@@ -20,11 +20,39 @@ import { forkJoin } from 'rxjs';
 })
 export class ProductFormComponent implements OnInit {
   @Input() product;
+  @Input() _title: string;
   form: FormGroup;
   loader = false;
   manufacturers = [];
   languages = [];
   productTypes = [];
+  selectedItem = '0';
+  sidemenuLinks = [
+    {
+      id: '0',
+      title: 'Product details',
+      key: 'COMPONENTS.PRODUCT_DETAILS',
+      link: 'product-details'
+    },
+    {
+      id: '1',
+      title: 'Inventory management',
+      key: 'COMPONENTS.MANAGE_INVENTORY',
+      link: 'inventory-list'
+    },
+    {
+      id: '2',
+      title: 'Product attributes',
+      key: 'PRODUCT_ATTRIBUTES',
+      link: 'product-attributes'
+    },
+    {
+      id: '3',
+      title: 'Product to category',
+      key: 'PRODUCT_TO_CATEGORY',
+      link: 'category-association'
+    }
+  ];
   config = {
     placeholder: '',
     tabsize: 2,
@@ -232,7 +260,7 @@ export class ProductFormComponent implements OnInit {
     }
 
     const productObject = this.form.value;
-    productObject.dateAvailable = moment(productObject.dateAvailable).format('YYYY-MM-DD');
+    productObject.dateAvailable = moment(productObject.dateAvailable).format('yyyy-MM-DD');
     productObject.productSpecifications.manufacturer = productObject.manufacturer;
     // productObject.type = this.productTypes.find((type) => type.code === productObject.type); // TODO
 
@@ -306,5 +334,10 @@ export class ProductFormComponent implements OnInit {
       }
     }
   }
-
+  route(link) {
+    this.router.navigate(['pages/catalogue/products/' + this.product.id + '/' + link]);
+  }
+  goToback() {
+    this.router.navigate(['pages/catalogue/products/products-list'])
+  }
 }

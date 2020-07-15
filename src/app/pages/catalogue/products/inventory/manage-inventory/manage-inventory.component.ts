@@ -77,15 +77,15 @@ export class ManageInventoryComponent implements OnInit {
   setSettings() {
     this.settings = {
       actions: {
-        columnTitle: '',
+        columnTitle: this.translate.instant('ORDER.ACTIONS'),
         add: false,
         edit: false,
         delete: false,
         position: 'right',
         sort: true,
         custom: [
-          { name: 'details', title: `${this.translate.instant('COMMON.EDIT')}` },
-          { name: 'remove', title: this._sanitizer.bypassSecurityTrustHtml('<i class="fas fa-trash-alt"></i>') }
+          { name: 'details', title: '<i class="nb-edit"></i>' },
+          { name: 'remove', title: '<i class="nb-trash"></i>' }
         ],
       },
       pager: { display: false },
@@ -136,14 +136,14 @@ export class ManageInventoryComponent implements OnInit {
       case 'remove':
         this.dialogService.open(ShowcaseDialogComponent, {})
           .onClose.subscribe(res => {
-          if (res) {
-            this.inventoryService.deleteProduct(event.data.id)
-              .subscribe((data) => {
-                this.toastr.success(this.translate.instant('INVENTORY.INVENTORY_REMOVED'));
-                this.getList();
-              });
-          }
-        });
+            if (res) {
+              this.inventoryService.deleteProduct(event.data.id)
+                .subscribe((data) => {
+                  this.toastr.success(this.translate.instant('INVENTORY.INVENTORY_REMOVED'));
+                  this.getList();
+                });
+            }
+          });
     }
   }
 
