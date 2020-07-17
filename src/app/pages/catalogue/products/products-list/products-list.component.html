@@ -18,10 +18,14 @@
 
         </div>
         <div class="filter_right_section">
-          <nb-select *ngIf="stores.length" class="store_select" outline shape="rectangle" (selectedChange)="choseStore($event)"
+          <p-dropdown *ngIf="stores.length> 0" [options]="stores" filter="true" (onChange)="choseStore($event)">
+            <ng-template let-item pTemplate="selectedItem">{{item.label}}</ng-template>
+            <ng-template let-car pTemplate="item">{{car.label}}</ng-template>
+          </p-dropdown>
+          <!-- <nb-select *ngIf="stores.length" class="store_select" outline shape="rectangle" (selectedChange)="choseStore($event)"
             [selected]="selectedStore">
             <nb-option *ngFor="let store of stores" [value]="store.code">{{ store.code }}</nb-option>
-          </nb-select>
+          </nb-select> -->
           <a class="createBtn " [routerLink]="['/pages/catalogue/products/create-product']">
             <img class="pointer sda" src="../../../../assets/img/plus.png" title="{{ 'COMPONENTS.CREATE_PRODUCT' | translate}}"
               alt="">

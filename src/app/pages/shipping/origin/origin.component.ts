@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { CrudService } from '../../shared/services/crud.service';
+// import { CrudService } from '../../shared/services/crud.service';
 import { ShippingOriginReq } from '../models/ShippingOriginReq';
 import { ToastrService } from 'ngx-toastr';
 import { StorageService } from './../../shared/services/storage.service';
 import { TranslateService } from '@ngx-translate/core';
 import { StoreService } from '../../store-management/services/store.service';
-
+import { SharedService } from '../services/shared.service';
 
 
 @Component({
@@ -22,22 +22,15 @@ export class OriginComponent implements OnInit {
     stateProvince: '',
     postalCode: ''
   }
-  // shipOriginForm = new FormGroup({
-  //   address: new FormControl('', [Validators.required]),
-  //   cityName: new FormControl('', [Validators.required]),
-  //   countryName: new FormControl('', [Validators.required]),
-  //   stateName: new FormControl('', [Validators.required]),
-  //   postalCode: new FormControl('', [Validators.required])
-  // });
-  // shippingOriginReq: ShippingOriginReq;
-  isSubmitted: boolean = false;
+  loadingList: boolean = false;
   countries = [];
   states = [];
-  // store: string;
   stores: Array<any> = [];
   selectedStore: String = '';
   isSuperAdmin: boolean;
-  constructor(private crudService: CrudService,
+  constructor(
+    // private crudService: CrudService,
+    private sharedService: SharedService,
     private toastr: ToastrService,
     private translate: TranslateService,
 
@@ -51,7 +44,10 @@ export class OriginComponent implements OnInit {
   ngOnInit() {
     this.storeService.getListOfMerchantStoreNames({ 'store': '' })
       .subscribe(res => {
-        this.stores = res;
+        res.forEach((store) => {
+          this.stores.push({ value: store.code, label: store.code });
+        });
+        // this.stores = res;
       });
     this.getShippingOrigin();
 
@@ -62,24 +58,28 @@ export class OriginComponent implements OnInit {
 
 
   onSubmit() {
-    // this.isSubmitted = true;
-    // if (!this.shipOriginForm.valid) {
-    //   return false;
-    // } else {
-    //   this.shippingOriginReq = new ShippingOriginReq(this.shipOriginForm.value.address,
-    //     this.shipOriginForm.value.cityName,
-    //     this.shipOriginForm.value.countryName,
-    //     this.shipOriginForm.value.stateName,
-    //     this.shipOriginForm.value.postalCode);
-    //   this.crudService.post('/v1/private/origin?store=' + this.store, this.shippingOriginReq).subscribe(res => {
-    //     this.toastr.success(this.translate.instant('SHIPPING.ORIGIN_UPDATE'));
-    //   });
-    // }
+    this.loadingList = true;
+
+    let param = {
+
+      address: this.shipOriginForm.address,
+      city: this.shipOriginForm.city,
+      postalCode: this.shipOriginForm.postalCode,
+      country: this.shipOriginForm.country,
+      stateProvince: this.shipOriginForm.stateProvince
+    };
+    this.sharedService.saveOrigin(this.selectedStore, param)
+      .subscribe(res => {
+        this.loadingList = false;
+        this.toastr.success(this.translate.instant('SHIPPING.ORIGIN_UPDATE'));
+      }, error => {
+        this.loadingList = false;
+      });
 
   }
 
   getCountry() {
-    this.crudService.get('/v1/country')
+    this.sharedService.getCountrys()
       .subscribe(data => {
         data.forEach((item) => {
           this.countries.push({ 'code': item.id, 'label': item.name, 'countryCode': item.code })
@@ -88,7 +88,7 @@ export class OriginComponent implements OnInit {
       });
   }
   getState(flag) {
-    this.crudService.get('/v1/zones?code=' + this.shipOriginForm.country)
+    this.sharedService.getStates(this.shipOriginForm.country)
       .subscribe(data => {
 
         if (data.length > 0) {
@@ -107,21 +107,30 @@ export class OriginComponent implements OnInit {
   }
 
   getShippingOrigin() {
-    this.crudService.get('/v1/private/shipping/origin?store=' + this.selectedStore)
+    this.loadingList = true;
+    this.sharedService.getShippingOrigin(this.selectedStore)
       .subscribe(data => {
+        this.loadingList = false;
         this.shipOriginForm = data;
-        // this.shipOriginForm.get('address').setValue(data.address);
-        // this.shipOriginForm.get('cityName').setValue(data.city);
-        // this.shipOriginForm.get('countryName').setValue(data.country);
-        // this.shipOriginForm.get('stateName').setValue(data.stateProvince);
-        // this.shipOriginForm.get('postalCode').setValue(data.postalCode);
-        // this.getCountry();
-        // this.getState();
+        this.getCountry();
+        this.getState(0);
       }, error => {
+        this.loadingList = false;
+        this.shipOriginForm = {
+          address: '',
+          city: '',
+          country: '',
+          stateProvince: '',
+          postalCode: ''
+        }
+        this.getCountry();
+        this.getState(0);
       });
-    this.getCountry();
-    this.getState(0);
-  }
 
+  }
+  onSelectStore(e) {
+    this.selectedStore = e.value;
+    this.getShippingOrigin()
+  }
 
 }

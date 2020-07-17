@@ -33,8 +33,32 @@ export class SharedService {
   saveExpedition(storeCode, param): Observable<any> {
     return this.crudService.post('/v1/private/shipping/expedition?store=' + storeCode, param);
   }
-  getShippingOrigin(param): Observable<any> {
-    return this.crudService.get('/v1/private/origin', param);
+  getShippingOrigin(selectedStore): Observable<any> {
+    return this.crudService.get('/v1/private/shipping/origin?store=' + selectedStore);
+  }
+  saveOrigin(storeCode, param): Observable<any> {
+    return this.crudService.post('/v1/private/shipping/origin?store=' + storeCode, param);
+  }
+  getCountrys(): Observable<any> {
+    return this.crudService.get('/v1/country');
+  }
+  getStates(countryCode): Observable<any> {
+    return this.crudService.get('/v1/zones?code=' + countryCode);
+  }
+  getPackaging(): Observable<any> {
+    return this.crudService.get('/v1/private/shipping/packages');
+  }
+  getPackagingDetails(code): Observable<any> {
+    return this.crudService.get('/v1/private/shipping/package/' + code);
+  }
+  addPackaging(param): Observable<any> {
+    return this.crudService.post('/v1/private/shipping/package', param);
+  }
+  updatePackaging(code, param): Observable<any> {
+    return this.crudService.post('/v1/private/shipping/package/' + code, param);
+  }
+  deletePackaging(code): Observable<any> {
+    return this.crudService.delete('/v1/private/shipping/package/' + code);
   }
 }
 

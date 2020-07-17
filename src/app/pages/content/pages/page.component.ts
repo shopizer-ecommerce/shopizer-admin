@@ -6,7 +6,7 @@ import { NbDialogService } from '@nebular/theme';
 import { ShowcaseDialogComponent } from '../../shared/components/showcase-dialog/showcase-dialog.component';
 import { ToastrService } from 'ngx-toastr';
 import { MalihuScrollbarService } from 'ngx-malihu-scrollbar';
-
+import { StoreService } from '../../store-management/services/store.service';
 @Component({
   selector: 'page-table',
   templateUrl: './page.component.html',
@@ -14,6 +14,7 @@ import { MalihuScrollbarService } from 'ngx-malihu-scrollbar';
 })
 export class PageComponent {
   search_text: string = '';
+  stores: Array<any> = [];
   settings = {
     mode: 'external',
     hideSubHeader: true,
@@ -65,9 +66,19 @@ export class PageComponent {
     public router: Router,
     private dialogService: NbDialogService,
     private toastr: ToastrService,
-    private mScrollbarService: MalihuScrollbarService
+    private mScrollbarService: MalihuScrollbarService,
+    private storeService: StoreService,
   ) {
+    this.getStoreList()
     this.getPages()
+  }
+  getStoreList() {
+    this.storeService.getListOfMerchantStoreNames({ 'store': '' })
+      .subscribe(res => {
+        res.forEach((store) => {
+          this.stores.push({ value: store.code, label: store.code });
+        });
+      });
   }
   getPages() {
     console.log('Content constructor');

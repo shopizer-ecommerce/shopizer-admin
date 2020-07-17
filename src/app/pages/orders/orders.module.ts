@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { OrdersComponent } from './orders.component';
 import { OrdersRoutingModule } from './orders-routing.module';
 import { SharedModule } from '../shared/shared.module';
+import { OrderListComponent } from './order-list/order-list.component';
 import { OrderDetailsComponent } from './order-details/order-details.component';
 import { OrderInvoiceComponent } from './order-invoice/order-invoice';
 import { OrderHistoryComponent } from './order-history/order-history';
@@ -12,6 +13,7 @@ import { MalihuScrollbarModule } from 'ngx-malihu-scrollbar';
 @NgModule({
   declarations: [
     OrdersComponent,
+    OrderListComponent,
     OrderDetailsComponent,
     OrderInvoiceComponent,
     OrderHistoryComponent,

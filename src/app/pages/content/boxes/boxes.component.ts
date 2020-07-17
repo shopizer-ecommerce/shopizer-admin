@@ -3,13 +3,15 @@ import { LocalDataSource } from 'ng2-smart-table';
 import { CrudService } from '../../shared/services/crud.service';
 import { Router } from '@angular/router';
 import { MalihuScrollbarService } from 'ngx-malihu-scrollbar';
-
+import { StoreService } from '../../store-management/services/store.service';
 @Component({
   selector: 'boxes-table',
   templateUrl: './boxes.component.html',
   styleUrls: ['./boxes.component.scss'],
 })
 export class BoxesComponent {
+  3
+  stores: Array<any> = [];
   settings = {
     mode: 'external',
     hideSubHeader: true,
@@ -54,9 +56,19 @@ export class BoxesComponent {
   constructor(
     private crudService: CrudService,
     public router: Router,
-    private mScrollbarService: MalihuScrollbarService
+    private mScrollbarService: MalihuScrollbarService,
+    private storeService: StoreService,
   ) {
+    this.getStoreList();
     this.getBox()
+  }
+  getStoreList() {
+    this.storeService.getListOfMerchantStoreNames({ 'store': '' })
+      .subscribe(res => {
+        res.forEach((store) => {
+          this.stores.push({ value: store.code, label: store.code });
+        });
+      });
   }
   getBox() {
     // let action = Action.CONTENT + Action.BOXES;

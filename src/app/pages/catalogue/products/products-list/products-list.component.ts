@@ -54,7 +54,10 @@ export class ProductsListComponent implements OnInit {
   ngOnInit() {
     this.storeService.getListOfStores({ start: 0 })
       .subscribe(res => {
-        this.stores = res.data;
+        res.data.forEach((store) => {
+          this.stores.push({ value: store.code, label: store.code });
+        });
+        // this.stores = res.data;
       });
     this.getList();
     this.translate.onLangChange.subscribe((lang) => {
@@ -180,7 +183,7 @@ export class ProductsListComponent implements OnInit {
   }
 
   choseStore(event) {
-    this.params.store = event;
+    this.params.store = event.value;
     this.getList();
   }
 

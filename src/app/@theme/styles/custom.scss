@@ -456,7 +456,7 @@ ng2-st-tbody-custom {
     border: 1px solid #edf1f7;
     border-radius: 5px !important;
     width: 100%;
-    padding: 0.5rem 1.125rem;
+    padding: 1px 0.6rem !important;
 
     &:hover {
       border-color: transparent !important;
@@ -464,6 +464,9 @@ ng2-st-tbody-custom {
 
     .ui-inputtext {
       background: #f7f9fc;
+      background: #f7f9fc;
+      font-size: 14px;
+      font-weight: 600;
     }
 
     .ui-dropdown-trigger {
@@ -472,6 +475,19 @@ ng2-st-tbody-custom {
 
     &:focus {
       border-color: transparent !important;
+    }
+  }
+
+  .orderList,
+  .customerList,
+  .pagesList,
+  .boxsList,
+  .productList {
+    .ui-dropdown {
+      width: 17% !important;
+      text-align: left !important;
+      padding-bottom: 2.8px !important;
+      padding-top: 2.8px !important;
     }
   }
 

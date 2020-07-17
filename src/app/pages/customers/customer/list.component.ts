@@ -46,7 +46,9 @@ export class ListComponent implements OnInit {
   getStoreList() {
     this.storeService.getListOfMerchantStoreNames({ 'store': '' })
       .subscribe(res => {
-        this.stores = res;
+        res.forEach((store) => {
+          this.stores.push({ value: store.code, label: store.code });
+        });
       });
   }
   loadParams() {
@@ -176,8 +178,8 @@ export class ListComponent implements OnInit {
     localStorage.setItem('customerid', '');
     this.router.navigate(['/pages/customer/add']);
   }
-  onSelectStore(value) {
-    this.params["store"] = value;
+  onSelectStore(e) {
+    this.params["store"] = e.value;
     this.getCustomers();
   }
   // ngAfterViewInit() {

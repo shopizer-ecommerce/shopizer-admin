@@ -10,7 +10,7 @@
       <form class="form-inline filter_section">
         <div class="filter_left_section">
           <input #search class="search form-control ng-pristine ng-valid ng-touched" value="{{ searchValue }}" type="text"
-            placeholder="{{ 'COMPONENTS.SEARCH' | translate }}" (keydown.enter)="onSearch(search.value)" style="width:25%">
+            placeholder="{{ 'COMPONENTS.SEARCH' | translate }}" (keydown.enter)="onSearch(search.value)" style="width:45%">
           <img class="pointer" src="../../../../assets/img/magnifying-glass.png" title="{{ 'COMMON.SEARCH' | translate}}"
             (click)="onSearch(search.value)" class="sda">
           <img class="pointer" src="../../../../assets/img/reload.png" title="{{ 'COMMON.RESET' | translate}}" alt=""
@@ -18,6 +18,10 @@
 
         </div>
         <div class="filter_right_section">
+          <p-dropdown *ngIf="stores.length> 0" [options]="stores" filter="true" (onChange)="onSelectStore($event)">
+            <ng-template let-item pTemplate="selectedItem">{{item.label}}</ng-template>
+            <ng-template let-car pTemplate="item">{{car.label}}</ng-template>
+          </p-dropdown>
           <a class="createBtn" (click)="addPages()">
             <img class="pointer sda" src="../../../../assets/img/plus.png" title="{{ 'COMPONENTS.CREATE_OPTION' | translate}}"
               alt="">

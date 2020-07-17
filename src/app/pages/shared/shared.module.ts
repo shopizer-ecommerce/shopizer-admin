@@ -4,7 +4,7 @@ import { RouterModule } from '@angular/router';
 
 import { ThemeModule } from '../../@theme/theme.module';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
-import { OrderListComponent } from '../orders/order-list/order-list.component';
+// import { OrderListComponent } from '../orders/order-list/order-list.component';
 import { NbSpinnerModule, NbTreeGridComponent, NbTreeGridModule } from '@nebular/theme';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { TranslateModule } from '@ngx-translate/core';
@@ -22,7 +22,7 @@ import { PasswordPromptComponent } from './components/password-prompt/password-p
 
 @NgModule({
   declarations: [
-    OrderListComponent,
+    // OrderListComponent,
     RightSidemenuComponent,
     NotFoundComponent,
     ImageUploadingComponent,
@@ -50,7 +50,7 @@ import { PasswordPromptComponent } from './components/password-prompt/password-p
     TranslateModule,
     TreeTableModule,
 
-    OrderListComponent,
+    // OrderListComponent,
     RightSidemenuComponent,
     NotFoundComponent,
     ImageUploadingComponent,

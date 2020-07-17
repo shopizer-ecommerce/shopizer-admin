@@ -285,10 +285,12 @@
     "CONFIGURATION": "Configuration",
     "EXPEDITION": "Expedition",
     "ORIGIN": "Shipping origin",
-    "PACKAGING": "Packaging configuration",
+    "PACKAGING": "Packaging",
     "RULES": "Shipping rules",
     "METHODS": "Shipping methods",
-    "CREATE_ORIGIN": "Create Origin"
+    "CREATE_ORIGIN": "Create Origin",
+    "ORIGIN_UPDATE": "Origin has been updated",
+    "SHIP_TO_COUNTRIES": "Expedition has been updated"
   },
   "ORDER": {
     "CUSTOMER_NAME": "Customer Name",

@@ -46,7 +46,10 @@ export class OrderListComponent implements OnInit {
   getStoreList() {
     this.storeService.getListOfMerchantStoreNames({ 'store': '' })
       .subscribe(res => {
-        this.stores = res;
+
+        res.forEach((store) => {
+          this.stores.push({ value: store.code, label: store.code });
+        });
       });
   }
   ngOnInit() {
@@ -227,30 +230,12 @@ export class OrderListComponent implements OnInit {
     }
     this.getOrderList()
   }
-  // onSearch(query: string = '') {
 
-  //   if (query.length == 0) {
-  //     this.searchValue = null;
-  //     return;
-  //   }
-
-  //   this.params["name"] = query;
-  //   this.getOrderList();
-  //   this.searchValue = query;
-
-  // }
-  onSelectStore(value) {
-    this.params["store"] = value;
+  onSelectStore(e) {
+    this.params["store"] = e.value;
     this.getOrderList();
   }
-  // resetSearch() {
-  //   this.searchValue = null;
-  //   this.params = this.loadParams();
-  //   this.getOrderList();
-  // }
-  // ngAfterViewInit() {
-  //   this.mScrollbarService.initScrollbar('.custom_scroll', { axis: 'y', theme: 'minimal-dark', scrollButtons: { enable: true } });
-  // }
+
   route(e) {
     localStorage.setItem('orderID', e.data.id);
     this.router.navigate(['pages/orders/order-details']);

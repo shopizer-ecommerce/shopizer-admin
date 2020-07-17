@@ -63,7 +63,10 @@ export class ConfigurationComponent {
   getStoreList() {
     this.storeService.getListOfMerchantStoreNames({ 'store': '' })
       .subscribe(res => {
-        this.stores = res;
+        res.forEach((store) => {
+          this.stores.push({ value: store.code, label: store.code });
+        });
+        // this.stores = res;
       });
   }
   getCountry() {
@@ -86,8 +89,8 @@ export class ConfigurationComponent {
     // console.log(this.expedition);
     this.sharedService.sendClickEvent();
   }
-  onSelectStore(value) {
-    console.log(value)
-    this.sharedService.selectStore(value)
+  onSelectStore(e) {
+    // console.log(value)
+    this.sharedService.selectStore(e.value)
   }
 }

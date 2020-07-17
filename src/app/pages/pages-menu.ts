@@ -414,6 +414,11 @@ export const MENU_ITEMS: MenuItem[] = [
         link: '/pages/shipping/origin',
       },
       {
+        title: 'SHIPPING.PACKAGING',
+        key: 'SHIPPING.PACKAGING',
+        link: '/pages/shipping/packaging',
+      },
+      {
         title: 'COMPONENTS.METHODS',
         key: 'COMPONENTS.METHODS',
         link: '/pages/content/promotion',

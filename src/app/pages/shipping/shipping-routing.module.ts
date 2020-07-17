@@ -4,6 +4,8 @@ import { Routes, RouterModule } from '@angular/router';
 import { ShippingComponent } from './shipping.component';
 import { ConfigurationComponent } from './configuration/configuration.component';
 import { OriginComponent } from './origin/origin.component';
+import { PackagesListComponent } from './packages/packages-list.component';
+import { PackagesAddComponent } from './packages/packages-add.component';
 
 const routes: Routes = [{
   path: '',
@@ -17,6 +19,14 @@ const routes: Routes = [{
       path: 'origin',
       component: OriginComponent,
     },
+    {
+      path: 'packaging',
+      component: PackagesListComponent,
+    },
+    {
+      path: 'packaging/add',
+      component: PackagesAddComponent,
+    },
   ],
 }];
 
@@ -29,5 +39,7 @@ export class ShippingRoutingModule { }
 export const routedComponents = [
   ShippingComponent,
   ConfigurationComponent,
-  OriginComponent
+  OriginComponent,
+  PackagesListComponent,
+  PackagesAddComponent
 ];

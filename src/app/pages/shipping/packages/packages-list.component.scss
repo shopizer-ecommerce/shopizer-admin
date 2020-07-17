@@ -10,7 +10,7 @@
     background: transparent;
     border: none;
 
-    .customerList {
+    .packagingList {
         .main_header {
             padding: 0px 30px 10px 0px;
 
@@ -35,7 +35,7 @@
     }
 }
 
-:host ::ng-deep .customerList {
+:host ::ng-deep .packagingList {
     .filter_section {
         .filter_right_section {
             button {

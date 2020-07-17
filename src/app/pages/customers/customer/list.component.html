@@ -18,12 +18,16 @@
 
         </div>
         <div class="filter_right_section">
-          <nb-select placeholder="{{'ORDER_FORM.SELECT_STORE' | translate}}" [(ngModel)]="selectedStore"
+          <p-dropdown *ngIf="stores.length> 0" [options]="stores" filter="true" (onChange)="onSelectStore($event)">
+            <ng-template let-item pTemplate="selectedItem">{{item.label}}</ng-template>
+            <ng-template let-car pTemplate="item">{{car.label}}</ng-template>
+          </p-dropdown>
+          <!-- <nb-select placeholder="{{'ORDER_FORM.SELECT_STORE' | translate}}" [(ngModel)]="selectedStore"
             (selectedChange)="onSelectStore($event)" name="selectedStore" class="store_select" outline shape="rectangle"
             name="store" [selected]="'DEFAULT'">
             <label class="label">yes<span>*</span></label>
             <nb-option *ngFor="let store of stores" [value]="store.code">{{store.code}}</nb-option>
-          </nb-select>
+          </nb-select> -->
           <a class="createBtn" (click)="addCustomer()">
             <img class="pointer sda" src="../../../../assets/img/plus.png" title="create_customer">
             <label>{{ 'CUSTOMERS.CREATE_CUSTOMER' | translate}}</label>
