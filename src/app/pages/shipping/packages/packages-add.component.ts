@@ -20,6 +20,7 @@ export class PackagesAddComponent implements OnInit {
   }
   loadingList: boolean = false;
   codeExits: boolean = false;
+  isUpdated: boolean = false;
   constructor(
     private sharedService: SharedService,
     private toastr: ToastrService,
@@ -29,14 +30,17 @@ export class PackagesAddComponent implements OnInit {
   }
   ngOnInit() {
     if (localStorage.getItem('packagesID')) {
-      this.packages.code = localStorage.getItem('packagesID')
+      this.isUpdated = true
+      // this.packages.code = localStorage.getItem('packagesID')
       this.getPackagesDetails();
     }
   }
   getPackagesDetails() {
-    this.sharedService.getPackagingDetails(this.packages.code)
+    this.sharedService.getPackagingDetails(localStorage.getItem('packagesID'))
       .subscribe(res => {
         console.log(res);
+        this.packages = res;
+        res.type === 'BOX' ? this.packages.type = true : this.packages.type = false
         this.loadingList = false;
       }, error => {
         this.loadingList = false;

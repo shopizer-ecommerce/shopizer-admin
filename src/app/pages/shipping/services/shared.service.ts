@@ -55,10 +55,16 @@ export class SharedService {
     return this.crudService.post('/v1/private/shipping/package', param);
   }
   updatePackaging(code, param): Observable<any> {
-    return this.crudService.post('/v1/private/shipping/package/' + code, param);
+    return this.crudService.put('/v1/private/shipping/package/' + code, param);
   }
   deletePackaging(code): Observable<any> {
     return this.crudService.delete('/v1/private/shipping/package/' + code);
+  }
+  getRulesCondition(): Observable<any> {
+    return this.crudService.getShipping('/v2/shipping/rules/conditions');
+  }
+  getRulesResult(): Observable<any> {
+    return this.crudService.getShipping('/v2/shipping/rules/results');
   }
 }
 

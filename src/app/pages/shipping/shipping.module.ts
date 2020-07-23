@@ -4,7 +4,7 @@ import { SharedModule } from '../shared/shared.module';
 import { TransferBoxModule } from './transferlistbox/transferlistbox.module';
 import { MalihuScrollbarModule } from 'ngx-malihu-scrollbar';
 // import { OriginComponent } from './origin/origin.component';
-
+import { QueryBuilderModule } from "angular2-query-builder";
 @NgModule({
   declarations: [
     ...routedComponents,
@@ -14,9 +14,9 @@ import { MalihuScrollbarModule } from 'ngx-malihu-scrollbar';
     ShippingRoutingModule,
     SharedModule,
     TransferBoxModule,
-    MalihuScrollbarModule.forRoot()
+    MalihuScrollbarModule.forRoot(),
     // ngfModule,
-    // QueryBuilderModule
+    QueryBuilderModule
   ],
   exports: []
 })

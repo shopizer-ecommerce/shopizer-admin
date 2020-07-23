@@ -75,9 +75,11 @@
 
     }
   }
+
   .m-b-15 {
     margin-bottom: 15px;
   }
+
   .labelTxt {
     .blackDark {
       color: #000;
@@ -131,6 +133,10 @@
     border-style: solid;
     border-width: 1px;
     -webkit-appearance: none;
+
+    &:disabled {
+      background-color: #e9ecef !important;
+    }
 
     &::-webkit-input-placeholder {
       /* Chrome/Opera/Safari */

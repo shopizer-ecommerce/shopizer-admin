@@ -1,0 +1,106 @@
+<div class="inner_pages rules_page">
+  <div class="" [nbSpinner]="loadingList" nbSpinnerSize="large" nbSpinnerStatus="primary">
+    <nb-card-header class="main_header">
+      <h1 class="page_title">Rules</h1>
+
+      <div class="content_spacing">
+        <button type="button" nbButton class="success_button">Submit</button>
+      </div>
+    </nb-card-header>
+    <form #pagesForm="ngForm" role="form">
+      <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+          <nb-card class="nb-card inline-form-card">
+            <!-- <nb-card-header class="nb-card-header">Promotion Detail</nb-card-header> -->
+            <nb-card-body class="nb-card-body">
+              <!-- <div class="row">
+              <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                <div class="form-group">
+                  <label for="inputWebsite" class="label inputLabel">Promotion name</label>
+                  <input type="text" class="form-control inputText" placeholder="Promotion name" required>
+                </div>
+              </div>
+              <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                <div class="form-group">
+                  <label for="inputWebsite" class="label inputLabel">Store id</label>
+                  <input type="text" class="form-control inputText" placeholder="Store id" required>
+                </div>
+              </div>
+              <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+                <div class="form-group">
+                  <label for="inputWebsite" class="label inputLabel">Award details - discount value, points</label>
+                  <input type="text" class="form-control inputText" placeholder="" required>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                <div class="form-group">
+                  <nb-checkbox status="success">Priority</nb-checkbox>
+                </div>
+              </div>
+              <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                <div class="form-group">
+                  <label for="inputWebsite" class="label inputLabel">Time</label>
+                  <div class="form-group">
+                    <nb-radio status="success">Limited</nb-radio>
+                    <nb-radio status="success">Unlimited</nb-radio>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                <div class="form-group">
+                  <label for="inputWebsite" class="label inputLabel">Channel </label>
+                  <div class="form-group">
+                    <nb-checkbox status="success">Web</nb-checkbox>
+                    <nb-checkbox status="success">Mobile</nb-checkbox>
+                  </div>
+                </div>
+              </div>
+              <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+                <div class="form-group">
+                  <label for="inputWebsite" class="label inputLabel">Customer Group</label>
+                  <div class="form-group">
+                    <nb-checkbox status="success">Regular</nb-checkbox>
+                    <nb-checkbox status="success">Golden Shopper</nb-checkbox>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                <div class="form-group">
+                  <label for="inputWebsite" class="label inputLabel">Promotion Type</label>
+                  <nb-select placeholder="Please select type" outline shape="rectangle">
+                    <nb-option value="1">Option 1</nb-option>
+                    <nb-option value="2">Option 2</nb-option>
+                  </nb-select>
+                </div>
+              </div>
+              <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                <div class="form-group">
+                  <label for="inputWebsite" class="label inputLabel">Promotion awards</label>
+                  <nb-select placeholder="Please select rules" outline shape="rectangle">
+                    <nb-option value="1">Option 1</nb-option>
+                    <nb-option value="2">Option 2</nb-option>
+                  </nb-select>
+                </div>
+              </div>
+            </div> -->
+
+              <div class="row">
+                <div class="col-lg-12">
+                  <div class="form-group">
+                    <label for="inputWebsite" class="label inputLabel">Rules condition expression builder</label>
+                    <query-builder [(ngModel)]='query' [config]='config' name="config"></query-builder>
+                  </div>
+                </div>
+              </div>
+
+            </nb-card-body>
+          </nb-card>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

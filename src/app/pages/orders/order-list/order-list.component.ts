@@ -198,6 +198,18 @@ export class OrderListComponent implements OnInit {
         orderStatus: {
           title: this.translate.instant('ORDER.STATUS'),
           type: 'string',
+          filter: {
+            type: 'list',
+            config: {
+              selectText: 'Show All',
+              list: [
+                { value: 'processed', title: 'PROCESSED' },
+                { value: 'DELIVERED', title: 'DELIVERED' },
+                { value: 'ORDERED', title: 'ORDERED' },
+                { value: 'REFUNDED', title: 'REFUNDED' },
+              ]
+            }
+          }
         }
       },
 

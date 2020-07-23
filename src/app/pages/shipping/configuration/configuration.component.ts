@@ -13,7 +13,7 @@ import { StorageService } from '../../shared/services/storage.service';
 })
 export class ConfigurationComponent {
   leftAreaItems = [];
-  rightAreaItems = null;
+  rightAreaItems = [];
   leftAreaLabel = "Available";
   rightAreaLabel = "Selected";
 
@@ -23,9 +23,11 @@ export class ConfigurationComponent {
   label = "label";
   loadingList = false;
   expedition: boolean = false;
+  taxOnShipping: boolean = false;
   stores: Array<any> = [];
   selectedStore: String = '';
   isSuperAdmin: boolean;
+
   public scrollbarOptions = { axis: 'y', theme: 'minimal-dark' };
   constructor(
     private sharedService: SharedService,
@@ -38,28 +40,21 @@ export class ConfigurationComponent {
     this.selectedStore = this.storageService.getMerchant()
   }
 
-  // source: LocalDataSource = new LocalDataSource();
-  settings = {
-    mode: 'external',
-    hideSubHeader: true,
-    selectMode: 'multi',
-    actions: {
-      add: false,
-      edit: false,
-      delete: false,
-      select: true
-    },
-    columns: {
-      code: {
-        title: 'Code',
-        type: 'string',
-      },
-      name: {
-        title: 'Name',
-        type: 'string'
-      }
-    },
-  };
+
+  fetchShipToCountries() {
+    this.loadingList = true;
+    this.sharedService.getExpedition(this.selectedStore)
+      .subscribe(data => {
+        this.expedition = data.iternationalShipping
+        this.taxOnShipping = data.taxOnShipping
+        this.rightAreaItems = data.shipToCountry;
+        this.loadingList = false;
+      }, error => {
+        this.loadingList = false;
+
+      });
+
+  }
   getStoreList() {
     this.storeService.getListOfMerchantStoreNames({ 'store': '' })
       .subscribe(res => {
@@ -68,19 +63,20 @@ export class ConfigurationComponent {
         });
         // this.stores = res;
       });
+    this.fetchShipToCountries()
   }
   getCountry() {
-    this.loadingList = true;
+    // this.loadingList = true;
     this.sharedService.getCountry()
       .subscribe(data => {
-        this.loadingList = false;
+        // this.loadingList = false;
         let value = [];
         data.forEach((item) => {
           value.push({ 'code': item.id, 'label': item.name, 'countryCode': item.code })
         });
         this.leftAreaItems = value;
       }, error => {
-        this.loadingList = false;
+        // this.loadingList = false;
 
       });
   }
@@ -91,6 +87,11 @@ export class ConfigurationComponent {
   }
   onSelectStore(e) {
     // console.log(value)
-    this.sharedService.selectStore(e.value)
+    this.selectedStore = e.value;
+    this.fetchShipToCountries();
+    setTimeout(() => {
+      this.sharedService.selectStore(e.value)
+    }, 1000);
+
   }
 }

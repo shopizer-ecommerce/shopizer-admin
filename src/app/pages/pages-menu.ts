@@ -419,9 +419,9 @@ export const MENU_ITEMS: MenuItem[] = [
         link: '/pages/shipping/packaging',
       },
       {
-        title: 'COMPONENTS.METHODS',
-        key: 'COMPONENTS.METHODS',
-        link: '/pages/content/promotion',
+        title: 'COMPONENTS.RULES',
+        key: 'COMPONENTS.RULES',
+        link: '/pages/shipping/rules',
       },
 
       // {

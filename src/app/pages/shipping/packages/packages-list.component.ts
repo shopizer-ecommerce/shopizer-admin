@@ -147,6 +147,7 @@ export class PackagesListComponent implements OnInit {
       .subscribe(res => {
         this.loadingList = false;
         this.toastr.success("Packages has been deleted successfully");
+        this.getPackagesList()
       }, error => {
         this.loadingList = false;
 

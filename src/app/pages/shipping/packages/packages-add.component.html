@@ -1,14 +1,15 @@
 <div class="inner_pages packages_add_box">
-  <nb-card-header class="main_header">
-    <h1 class="page_title">Add Packages</h1>
-    <div class="content_spacing">
-      <button type="button" class="cancel_button" (click)="goBack()">Cancel</button>
-    </div>
-    <div class="content_spacing">
-      <button type="submit" class="success_button" (click)="save()" [disabled]="!packagesForm.form.valid">Save</button>
-    </div>
-  </nb-card-header>
   <div class="" [nbSpinner]="loadingList" nbSpinnerSize="large" nbSpinnerStatus="primary">
+    <nb-card-header class="main_header">
+      <h1 class="page_title">Add Packages</h1>
+      <div class="content_spacing">
+        <button type="button" class="cancel_button" (click)="goBack()">Cancel</button>
+      </div>
+      <div class="content_spacing">
+        <button type="submit" class="success_button" (click)="save()" [disabled]="!packagesForm.form.valid">Save</button>
+      </div>
+    </nb-card-header>
+
     <form #packagesForm="ngForm" role="form">
       <div class="row">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -19,9 +20,8 @@
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                   <div class="form-group">
                     <nb-radio-group [(ngModel)]="packages.type" name="type">
-                      <nb-radio class="shipping-radio" [value]="false">Items will be shipped individually</nb-radio>
-                      <nb-radio class="shipping-radio" [value]="true">Items will be combined and shipped in a box
-                      </nb-radio>
+                      <nb-radio class="shipping-radio" [value]="false">Item Packaging</nb-radio>
+                      <nb-radio class="shipping-radio" [value]="true">Box Packaging</nb-radio>
                     </nb-radio-group>
                   </div>
                 </div>
@@ -38,8 +38,8 @@
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                   <div class="form-group">
                     <label class="label inputLabel">Code<span>*</span></label>
-                    <input type="text" class="form-control inputText" placeholder="Code" [(ngModel)]="packages.code"
-                      name="code" required>
+                    <input type="text" class="form-control inputText" [disabled]="isUpdated" placeholder="Code"
+                      [(ngModel)]="packages.code" name="code" required>
                     <span *ngIf="codeExits" class="err-message">Code is already exist</span>
                   </div>
                 </div>
@@ -47,28 +47,28 @@
                   <div class="form-group">
                     <label class="label inputLabel">Box width<span>*</span></label>
                     <input type="number" class="form-control inputText" placeholder="Box width" [(ngModel)]="packages.shippingWidth"
-                      name="shippingWidth" required>
+                      name="shippingWidth" [required]="packages.type">
                   </div>
                 </div>
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                   <div class="form-group">
                     <label class="number inputLabel">Box height<span>*</span></label>
                     <input type="text" class="form-control inputText" placeholder="Box height" [(ngModel)]="packages.shippingHeight"
-                      name="shippingHeight" required>
+                      name="shippingHeight" [required]="packages.type">
                   </div>
                 </div>
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                   <div class="form-group">
                     <label class="label inputLabel">Box length<span>*</span></label>
                     <input type="number" class="form-control inputText" placeholder="Box length" [(ngModel)]="packages.shippingLength"
-                      name="shippingLength" required>
+                      name="shippingLength" [required]="packages.type">
                   </div>
                 </div>
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                   <div class="form-group">
                     <label class="label inputLabel">Box weight<span>*</span></label>
                     <input type="number" class="form-control inputText" placeholder="Box weight" [(ngModel)]="packages.shippingWeight"
-                      name="shippingWeight" required>
+                      name="shippingWeight" [required]="packages.type ">
                   </div>
                 </div>
               </div>

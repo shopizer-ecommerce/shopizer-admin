@@ -48,10 +48,10 @@ export class TransferlistboxComponent implements OnInit {
     this.clickEventsubscription = this.sharedService.getClickEvent().subscribe(() => {
       this.saveShipToCountries();
     })
+
     this.clickEventsubscription = this.sharedService.getStoreEvent().subscribe(data => {
-      console.log(data)
       this.store = data;
-      this.fetchShipToCountries();
+      this.generateLocalData();
     })
   }
 
@@ -60,25 +60,26 @@ export class TransferlistboxComponent implements OnInit {
    */
   ngOnInit() {
     this.store = this.storageService.getMerchant();
-    this.fetchShipToCountries();
-    //this.generateLocalData();
+    this.generateLocalData();
+    // this.fetchShipToCountries();
+
 
 
   }
   // Method to fetch selected shipToCountries
-  fetchShipToCountries() {
-    this.sharedService.getExpedition(this.store)
-      .subscribe(data => {
-        console.log(data)
-        this.shipToCountries = data.shipToCountry;
-        // console.log(this.shipToCountries);
-        this.generateLocalData();
-      }, error => {
-        // this.loadingList = false;
+  // fetchShipToCountries() {
+  //   this.sharedService.getExpedition(this.store)
+  //     .subscribe(data => {
+  //       console.log(data)
+  //       this.shipToCountries = data.shipToCountry;
+  //       // console.log(this.shipToCountries);
+  //       this.generateLocalData();
+  //     }, error => {
+  //       // this.loadingList = false;
 
-      });
+  //     });
 
-  }
+  // }
   //save shipToCountries
   saveShipToCountries() {
     let selectedCountries = Array.from(this.rightAreaMap.values());
@@ -111,7 +112,10 @@ export class TransferlistboxComponent implements OnInit {
     this.leftAreaMap = new Map<string, any>();
     this.rightAreaMap = new Map<string, any>();
     // if (this.shipToCountries.length > 0) {
+
     let availableCountries: any[] = this.leftAreaList;
+    this.shipToCountries = this.rightAreaList;
+
 
     let leftAreaListData = availableCountries.filter(o => !this.shipToCountries.find((countryCode) => o.countryCode === countryCode));
     let rightAreaListData = availableCountries.filter(o => this.shipToCountries.some((countryCode) => o.countryCode === countryCode));
@@ -125,7 +129,7 @@ export class TransferlistboxComponent implements OnInit {
     });
     // console.log(this.leftAreaList);
     // console.log(this.rightAreaList);
-    this.shipToCountries = [];
+    // this.shipToCountries = [];
     // } else {
     //   this.leftAreaList.forEach((item) => {
     //     item.selected = false;
