@@ -32,22 +32,15 @@ export class ImagesComponent implements OnInit {
     private mScrollbarService: MalihuScrollbarService,
   ) {
     const treeConfig: ConfigInterface = {
-      baseURL: 'http://localhost:8080/',
+      baseURL: this.url,
       api: {
-        listFile: 'api/list',
+        listFile: '/v1/content/list',
         uploadFile: 'api/upload',
         downloadFile: 'api/download',
         deleteFile: 'api/remove',
         createFolder: 'api/directory',
         renameFile: 'api/rename',
         searchFiles: 'api/search'
-        // listFile: '/v1/content/list',
-        // uploadFile: 'api/upload',
-        // downloadFile: 'api/download',
-        // deleteFile: 'api/remove',
-        // createFolder: '/directory',
-        // renameFile: 'api/rename',
-        // searchFiles: 'api/search'
       },
       options: {
         allowFolderDownload: false,

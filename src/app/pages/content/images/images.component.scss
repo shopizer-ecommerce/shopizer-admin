@@ -113,6 +113,33 @@ tbody {
 }
 
 
+.item-holder {
+  line-height: 0;
+   
+  -webkit-column-count: 5;
+  -webkit-column-gap:   0px;
+  -moz-column-count:    5;
+  -moz-column-gap:      0px;
+  column-count:         5;
+  column-gap:           0px;  
+}
+
+.file-manager-item {
+
+  width: 100% !important;
+  max-width: 260px !important;
+  height: auto !important;
+  
+  /**
+  width: 260px !important;
+  height:260px !important;
+  line-height:260px;
+  overflow:hidden;
+  **/
+}
+
+
+
 
 // .gallery_listing_main {
 //   margin-left: -15px;
