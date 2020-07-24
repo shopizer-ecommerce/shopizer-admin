@@ -303,7 +303,13 @@
     "SHIPPING_MODULE": "Shipping Module",
     "PAYMENT_MODULE": "Payment Module",
     "PAYMENT_TYPE": "Payment Type",
-    "ACTIONS": "Actions"
+    "ACTIONS": "Actions",
+    "ORDERED": "Ordered",
+    "PROCESSED": "Processed",
+    "DELIVERED": "Delivered",
+    "REFUNDED": "Refunded",
+    "CANCELED": "Canceled",
+    "SHOWALL": "Show All"
   },
   "ORDER_FORM": {
     "MORE_OPTIONS": "More Actions",

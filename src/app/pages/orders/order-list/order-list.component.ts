@@ -198,15 +198,19 @@ export class OrderListComponent implements OnInit {
         orderStatus: {
           title: this.translate.instant('ORDER.STATUS'),
           type: 'string',
+          filterFunction(cell: any, search?: string): boolean {
+            return true;
+          },
           filter: {
             type: 'list',
             config: {
-              selectText: 'Show All',
+              selectText: this.translate.instant('ORDER.SHOWALL'),
               list: [
-                { value: 'processed', title: 'PROCESSED' },
-                { value: 'DELIVERED', title: 'DELIVERED' },
-                { value: 'ORDERED', title: 'ORDERED' },
-                { value: 'REFUNDED', title: 'REFUNDED' },
+                { value: 'ORDERED', title: this.translate.instant('ORDER.ORDERED') },
+                { value: 'PROCESSED', title: this.translate.instant('ORDER.PROCESSED') },
+                { value: 'DELIVERED', title: this.translate.instant('ORDER.DELIVERED') },
+                { value: 'REFUNDED', title: this.translate.instant('ORDER.REFUNDED') },
+                { value: 'CANCELED', title: this.translate.instant('ORDER.CANCELED') },
               ]
             }
           }

@@ -11,88 +11,164 @@
       <div class="row">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
           <nb-card class="nb-card inline-form-card">
-            <!-- <nb-card-header class="nb-card-header">Promotion Detail</nb-card-header> -->
+            <nb-card-header class="nb-card-header">Shipping rule metadata</nb-card-header>
             <nb-card-body class="nb-card-body">
-              <!-- <div class="row">
-              <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                <div class="form-group">
-                  <label for="inputWebsite" class="label inputLabel">Promotion name</label>
-                  <input type="text" class="form-control inputText" placeholder="Promotion name" required>
-                </div>
-              </div>
-              <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                <div class="form-group">
-                  <label for="inputWebsite" class="label inputLabel">Store id</label>
-                  <input type="text" class="form-control inputText" placeholder="Store id" required>
-                </div>
-              </div>
-              <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
-                <div class="form-group">
-                  <label for="inputWebsite" class="label inputLabel">Award details - discount value, points</label>
-                  <input type="text" class="form-control inputText" placeholder="" required>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                <div class="form-group">
-                  <nb-checkbox status="success">Priority</nb-checkbox>
-                </div>
-              </div>
-              <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                <div class="form-group">
-                  <label for="inputWebsite" class="label inputLabel">Time</label>
-                  <div class="form-group">
-                    <nb-radio status="success">Limited</nb-radio>
-                    <nb-radio status="success">Unlimited</nb-radio>
-                  </div>
-                </div>
-              </div>
-              <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                <div class="form-group">
-                  <label for="inputWebsite" class="label inputLabel">Channel </label>
-                  <div class="form-group">
-                    <nb-checkbox status="success">Web</nb-checkbox>
-                    <nb-checkbox status="success">Mobile</nb-checkbox>
-                  </div>
-                </div>
-              </div>
-              <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                <div class="form-group">
-                  <label for="inputWebsite" class="label inputLabel">Customer Group</label>
-                  <div class="form-group">
-                    <nb-checkbox status="success">Regular</nb-checkbox>
-                    <nb-checkbox status="success">Golden Shopper</nb-checkbox>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                <div class="form-group">
-                  <label for="inputWebsite" class="label inputLabel">Promotion Type</label>
-                  <nb-select placeholder="Please select type" outline shape="rectangle">
-                    <nb-option value="1">Option 1</nb-option>
-                    <nb-option value="2">Option 2</nb-option>
-                  </nb-select>
-                </div>
-              </div>
-              <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                <div class="form-group">
-                  <label for="inputWebsite" class="label inputLabel">Promotion awards</label>
-                  <nb-select placeholder="Please select rules" outline shape="rectangle">
-                    <nb-option value="1">Option 1</nb-option>
-                    <nb-option value="2">Option 2</nb-option>
-                  </nb-select>
-                </div>
-              </div>
-            </div> -->
 
               <div class="row">
-                <div class="col-lg-12">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                   <div class="form-group">
-                    <label for="inputWebsite" class="label inputLabel">Rules condition expression builder</label>
+                    <label class="label inputLabel">Rules unique code</label>
+                    <input type="text" class="form-control inputText" placeholder="Rules unique code" name="rules_code">
+                  </div>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                  <div class="form-group">
+                    <label class="label inputLabel">Rules name</label>
+                    <input type="text" class="form-control inputText" placeholder="Rules name" name="rules_name">
+                  </div>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                  <div class="form-group">
+                    <nb-radio-group [(ngModel)]="rules_time" name="rule_time">
+                      <nb-radio class="shipping-radio" [value]="false">Time unlimited</nb-radio>
+                      <nb-radio class="shipping-radio" [value]="true">Time based</nb-radio>
+                    </nb-radio-group>
+                  </div>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12" *ngIf="rules_time">
+                  <div class="form-group">
+                    <input class="form-control has-person-icon inputText" placeholder="Start date" [readOnly]="true"
+                      [nbDatepicker]="datepicker1">
+                    <nb-datepicker #datepicker1></nb-datepicker>
+                  </div>
+                </div>
+                <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12" *ngIf="rules_time">
+                  <div class="form-group">
+                    <input class="form-control has-person-icon inputText" placeholder="End date" [readOnly]="true"
+                      [nbDatepicker]="datepicker">
+                    <nb-datepicker #datepicker></nb-datepicker>
+                  </div>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                  <div class="form-group">
+                    <label class="label inputLabel">Order</label>
+                    <input type="number" class="form-control inputText" placeholder="Order" name="rules_code">
+                  </div>
+                </div>
+              </div>
+
+            </nb-card-body>
+          </nb-card>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+          <nb-card class="nb-card inline-form-card">
+            <nb-card-header class="nb-card-header">Rules condition</nb-card-header>
+            <nb-card-body class="nb-card-body">
+
+              <div class="row">
+
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                  <div class="form-group" *ngIf="this.config">
+                    <!-- <label for="inputWebsite" class="label inputLabel">Rules condition</label> -->
                     <query-builder [(ngModel)]='query' [config]='config' name="config"></query-builder>
+                  </div>
+                </div>
+              </div>
+
+            </nb-card-body>
+          </nb-card>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+          <nb-card class="nb-card inline-form-card">
+            <nb-card-header class="nb-card-header">Shipping results</nb-card-header>
+            <nb-card-body class="nb-card-body">
+
+              <div class="row">
+                <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
+                  <div style="text-align: center">
+                    <nb-select placeholder="Select configuration" outline shape="rectangle" class="select_fields"
+                      [(ngModel)]="selected_result" name="selected_result">
+                      <nb-option *ngFor="let result of shippingResult" [value]="result">{{result.name}}</nb-option>
+                    </nb-select>
+                    <!-- <div> -->
+                    <button type="button" nbButton class="configure_button" [disabled]="!selected_result" (click)="onClickConfigure()">Configure</button>
+                    <!-- </div> -->
+                  </div>
+
+                  <div class="configure_area">
+                    <label class="configure_area_label">Results configuration area</label>
+                    <div *ngIf="selectedResult">
+                      <label class="label inputLabel">Result name</label>
+                      <div class="form-group" *ngIf="selectedResult.format == 'STRING' && selectedResult.selectOptions.length == 0">
+                        <input type="text" class="form-control inputText" placeholder="Result name" name="result_name">
+                      </div>
+                      <div class="form_group" *ngIf="selectedResult.format == 'STRING' && selectedResult.selectOptions.length > 0">
+                        <!-- <label class="label inputLabel">Result name</label> -->
+                        <nb-select placeholder="Select Methods" outline shape="rectangle" class="select_methods">
+                          <nb-option *ngFor="let methods of selectedResult.selectOptions" [value]="methods.code">{{methods.name}}</nb-option>
+                        </nb-select>
+                      </div>
+                      <div class="form_group" *ngIf="selectedResult.format == 'DECIMAL' || selectedResult.format == 'NUMERIC'">
+                        <!-- <label class="label inputLabel">Result name</label> -->
+                        <input type="number" class="form-control inputText" placeholder="Result name" name="result_name">
+                      </div>
+                      <div class="form-group" *ngIf="selectedResult.format == 'BOOLEAN'">
+                        <!-- <label class="label inputLabel">Result name</label> -->
+                        <nb-radio-group name="result_name">
+                          <nb-radio class="shipping-radio" [value]="true">Yes</nb-radio>
+                          <nb-radio class="shipping-radio" [value]="false">No</nb-radio>
+                        </nb-radio-group>
+                      </div>
+                      <div style="margin-top:20px;">
+                        <button type="button" nbButton class="configure_cancel_button">Cancle</button>
+                        <button type="button" nbButton class="configure_button">Save</button>
+                      </div>
+                    </div>
+
+
+                  </div>
+                </div>
+                <div class="col-lg-7 col-md-7 col-sm-12 col-xs-12">
+                  <div class="containerCenter">
+                    <div class="centerSec">
+                      <div class="tabelSec">
+                        <table border="1">
+                          <thead>
+                            <tr>
+                              <th>Result name</th>
+                              <th>Value</th>
+                              <th>Action</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td>Apply tax on shipping</td>
+                              <td>true</td>
+                              <td>Delete</td>
+                            </tr>
+                            <tr>
+                              <td>Apply tax on shipping</td>
+                              <td>true</td>
+                              <td>Delete</td>
+                            </tr>
+                            <tr>
+                              <td>Apply tax on shipping</td>
+                              <td>true</td>
+                              <td>Delete</td>
+                            </tr>
+                            <tr>
+                              <td>Apply tax on shipping</td>
+                              <td>true</td>
+                              <td>Delete</td>
+                            </tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>

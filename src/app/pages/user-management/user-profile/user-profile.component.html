@@ -6,5 +6,5 @@
       <button type="button" nbButton class="success_button">{{'COMMON.SAVE' | translate }}</button>
     </div>
   </nb-card-header> -->
-  <ngx-user-form [user]="user" title="COMPONENTS.PROFILE"></ngx-user-form>
+  <ngx-user-form *ngIf="user.id" [user]="user" title="COMPONENTS.PROFILE"></ngx-user-form>
 </div>
