@@ -12,11 +12,15 @@
 
 
       <ng-template let-timeoutMessage #loadingOverlayTemplate></ng-template>
+      
       <ng-template let-node #folderContentTemplate>
 
+         <div class="file-name">
+              {{node.name}}
+         </div>
+          <img src="{{node.id}}" alt="Sample photo" style="max-width: 100%;box-shadow: 2px 2px 6px 0px  rgba(0,0,0,0.3);border: 1px solid #ccc;">
 
-
-
+        <!--
         <div class="ng-star-inserted">
           <div class="file-manager-item ng-star-inserted">
             <div class="file-name">
@@ -27,9 +31,13 @@
             </div>
           </div>
         </div>
+      -->
 
         
       </ng-template>
+
+
+
       <ng-template let-node #folderContentBackTemplate>
         <div class="item" style="font-weight: bold; padding: 5px;  margin: 15px; border-radius: 5px; width: 100px; height: 100px; cursor: pointer;">
           <i class="fas fa-arrow-left" style="padding: 0 5px;line-height: 2;font-size: 3em;"></i>

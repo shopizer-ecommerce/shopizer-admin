@@ -859,3 +859,15 @@ ng2-st-tbody-custom {
 .pointer {
   cursor: pointer;
 }
+
+/** image grid file manager **/
+.item-holder { 
+  display: grid !important;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)) !important;
+  grid-gap: 20px !important;
+  align-items: center !important;
+}
+
+.file-name {
+ width: auto !important;
+}
