@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { QueryBuilderConfig } from 'angular2-query-builder';
 
 import { SharedService } from '../services/shared.service';
+import { error } from '@angular/compiler/src/util';
 @Component({
     selector: 'ngx-rules',
     templateUrl: './rules.component.html',
@@ -14,62 +15,12 @@ export class RulesComponent implements OnInit {
 
         ]
     };
-    config: QueryBuilderConfig = {
-        fields: {
-            shippingCountry: {
-                "name": "Delivery country",
-                "type": "category",
-                "operators": ["=", "in"],
-                "options": [{
-                    "name": "Canada",
-                    "value": "CA"
-                }, {
-                    "name": "United states",
-                    "value": "US"
-                }]
-            },
-            shippingProvince: {
-                "name": "Delivery province",
-                "type": "string",
-                "operators": ["in"],
-                "options": []
-            },
-            categoryCode: {
-                "name": "Order contains category code",
-                "type": "string",
-                "operators": ["in", "not"],
-                "options": []
-            },
-            sku: {
-                "name": "Order contains category code",
-                "type": "string",
-                "operators": ["in", "not"],
-                "defaultValue": "ABCXYZ100",
-                "options": []
-            },
-            orderTotal: {
-                "name": "Order total",
-                "type": "number",
-                "operators": ["=", ">=", ">"],
-                "options": []
-            },
-            quantity: {
-                "name": "Quantity of items in order",
-                "type": "number",
-                "operators": ["=", ">=", ">"],
-                "options": []
-            },
-            shippingDistance: {
-                "name": "Shipping distance",
-                "type": "number",
-                "operators": ["=", ">=", ">"],
-                "options": []
-            }
-        }
-    }
+    config: QueryBuilderConfig;
+    rules_time: boolean = false;
     loadingList: boolean = false
-
-
+    shippingResult: Array<any> = [];
+    selectedResult: any;
+    selected_result: any;
     constructor(
         private sharedService: SharedService
     ) {
@@ -80,14 +31,46 @@ export class RulesComponent implements OnInit {
     }
     getShippingCondition() {
         this.loadingList = true;
+        let fields = {}
         this.sharedService.getRulesCondition()
             .subscribe(data => {
-                console.log(data)
+                // console.log(data)
+
+                data.map((value) => {
+                    fields[value.code] = {
+                        "name": value.name,
+                        "type": value.options.length > 0 ? 'category' : value.format == 'DECIMAL' || value.format == 'NUMERIC' ? 'number' : value.format.toLowerCase(),
+                        "operators": value.operators,
+                        "options": []
+                    }
+                    value.options.map((opt) => {
+                        fields[value.code].options.push({ name: opt.name, value: opt.value })
+                    })
+
+                });
+                // config: QueryBuilderConfig = { fields: {} }
+                // console.log(fields);
+                this.config = { fields };
                 this.loadingList = false;
 
                 // this.source.load(data);
             }, error => {
                 this.loadingList = false;
             });
+        this.getShippingResult();
+    }
+    getShippingResult() {
+
+        this.sharedService.getRulesResult()
+            .subscribe(data => {
+                // console.log(data);
+                this.shippingResult = data;
+            }, error => {
+
+            });
+    }
+    onClickConfigure() {
+        // console.log(this.selected_result);
+        this.selectedResult = this.selected_result
     }
 }

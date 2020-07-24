@@ -208,7 +208,7 @@ export class StoreFormComponent implements OnInit {
       email: ['', [Validators.required, Validators.pattern(validators.emailPattern)]],
       address: this.fb.group({
         searchControl: [''],
-        stateProvince: [{ value: '', disabled: true }],
+        stateProvince: [{ value: '', disabled: false }],
         country: ['', [Validators.required]],
         address: ['', [Validators.required]],
         postalCode: ['', [Validators.required]],
@@ -423,12 +423,12 @@ export class StoreFormComponent implements OnInit {
 
   countryIsSelected(code) {
     this.provinces = [];
-    this.stateProvince.disable();
+    // this.stateProvince.disable();
     this.configService.getListOfZonesProvincesByCountry(code)
       .subscribe(provinces => {
         this.provinces = [...provinces];
         if (this.provinces.length > 0) {
-          this.stateProvince.enable();
+          // this.stateProvince.enable();
         }
       }, error1 => {
         this.toastr.success(this.translate.instant('STORE_FORM.ERROR_STATE_PROVINCE'));

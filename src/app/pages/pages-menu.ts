@@ -167,7 +167,6 @@ export const MENU_ITEMS: MenuItem[] = [
             guards: [isCategoryManagementVisible],
             hidden: false,
           },
-          /**
           {
             title: 'COMPONENTS.CREATE_CATEGORY',
             key: 'COMPONENTS.CREATE_CATEGORY',
@@ -175,7 +174,6 @@ export const MENU_ITEMS: MenuItem[] = [
             hidden: false,
             guards: [isCategoryManagementVisible],
           },
-          **/
           {
             title: 'COMPONENTS.CATEGORIES_HIERARCHY',
             key: 'COMPONENTS.CATEGORIES_HIERARCHY',
@@ -185,6 +183,12 @@ export const MENU_ITEMS: MenuItem[] = [
           },
         ],
       },
+      // {
+      //   title: 'COMPONENTS.PRODUCTS',
+      //   key: 'COMPONENTS.PRODUCTS',
+      //   hidden: false,
+      //   guards: [IsSuperadmin, IsAdmin, IsAdminRetail, IsAdminCatalogue],
+      //   children: [
       {
         title: 'COMPONENTS.PRODUCTS',
         key: 'COMPONENTS.PRODUCTS',
@@ -192,177 +196,116 @@ export const MENU_ITEMS: MenuItem[] = [
         guards: [IsSuperadmin, IsAdmin, IsAdminRetail, IsAdminCatalogue],
         children: [
           {
-            title: 'COMPONENTS.PRODUCTS',
-            key: 'COMPONENTS.PRODUCTS',
-            hidden: false,
-            guards: [IsSuperadmin, IsAdmin, IsAdminRetail, IsAdminCatalogue],
-            children: [
-              {
-                title: 'COMPONENTS.PRODUCTS_LIST',
-                key: 'COMPONENTS.PRODUCTS_LIST',
-                link: '/pages/catalogue/products/products-list',
-                hidden: false
-              },
-              // {
-              //   title: 'COMPONENTS.CREATE_PRODUCT',
-              //   key: 'COMPONENTS.CREATE_PRODUCT',
-              //   link: '/pages/catalogue/products/create-product',
-              //   hidden: false
-              // }
-
-            ],
+            title: 'COMPONENTS.PRODUCTS_LIST',
+            key: 'COMPONENTS.PRODUCTS_LIST',
+            link: '/pages/catalogue/products/products-list',
+            hidden: false
           },
           {
-            title: 'COMPONENTS.OPTIONS',
-            key: 'COMPONENTS.OPTIONS',
-            hidden: false,
-            children: [
-              {
-                title: 'COMPONENTS.OPTIONS_LIST',
-                key: 'COMPONENTS.OPTIONS_LIST',
-                link: '/pages/catalogue/options/options-list',
-                hidden: false
-              },
+            title: 'COMPONENTS.CREATE_PRODUCT',
+            key: 'COMPONENTS.CREATE_PRODUCT',
+            link: '/pages/catalogue/products/create-product',
+            hidden: false
+          }
 
-              {
-                title: 'COMPONENTS.OPTIONS_VALUES_LIST',
-                key: 'COMPONENTS.OPTIONS_VALUES_LIST',
-                link: '/pages/catalogue/options/options-values-list',
-                hidden: false
-              }
-            ]
-          },
+        ],
+      },
+      {
+        title: 'COMPONENTS.OPTIONS',
+        key: 'COMPONENTS.OPTIONS',
+        hidden: false,
+        children: [
           {
-            title: 'COMPONENTS.BRANDS',
-            key: 'COMPONENTS.BRANDS',
-            hidden: false,
-            children: [
-              // {
-              //   title: 'COMPONENTS.CREATE_BRAND',
-              //   key: 'COMPONENTS.CREATE_BRAND',
-              //   link: '/pages/catalogue/brands/create-brand',
-              //   hidden: false
-              // },
-              {
-                title: 'COMPONENTS.BRANDS_LIST',
-                key: 'COMPONENTS.BRANDS_LIST',
-                link: '/pages/catalogue/brands/brands-list',
-                hidden: false
-              }
-            ]
+            title: 'COMPONENTS.OPTIONS_LIST',
+            key: 'COMPONENTS.OPTIONS_LIST',
+            link: '/pages/catalogue/options/options-list',
+            hidden: false
           },
+
           {
-            title: 'COMPONENTS.PRODUCTS_GROUPS',
-            key: 'COMPONENTS.PRODUCTS_GROUPS',
-            hidden: false,
-            children: [
-              // {
-              //   title: 'COMPONENTS.CREATE_PRODUCTS_GROUPS',
-              //   key: 'COMPONENTS.CREATE_PRODUCTS_GROUPS',
-              //   link: '/pages/catalogue/products-groups/create-products-group',
-              //   hidden: false
-              // },
-              {
-                title: 'COMPONENTS.LIST_PRODUCTS_GROUPS',
-                key: 'COMPONENTS.LIST_PRODUCTS_GROUPS',
-                link: '/pages/catalogue/products-groups/products-groups-list',
-                hidden: false
-              },
-              {
-                title: 'COMPONENTS.PRODUCTS_GROUPS_LIST',
-                key: 'COMPONENTS.PRODUCTS_GROUPS_LIST',
-                link: '/pages/catalogue/products-groups/groups-list',
-                hidden: false
-              }
-            ]
+            title: 'COMPONENTS.OPTIONS_VALUES_LIST',
+            key: 'COMPONENTS.OPTIONS_VALUES_LIST',
+            link: '/pages/catalogue/options/options-values-list',
+            hidden: false
           },
 
-
+          {
+            title: 'COMPONENTS.OPTION_SET_LIST',
+            key: 'COMPONENTS.OPTION_SET_LIST',
+            link: '',
+            hidden: false
+          }
         ]
       },
-      // {
-      //   title: 'COMPONENTS.BRANDS',
-      //   key: 'COMPONENTS.BRANDS',
-      //   hidden: false,
-      //   children: [
-      //     {
-      //       title: 'COMPONENTS.CREATE_BRAND',
-      //       key: 'COMPONENTS.CREATE_BRAND',
-      //       link: '/pages/catalogue/brands/create-brand',
-      //       hidden: false
-      //     },
-      //     {
-      //       title: 'COMPONENTS.BRANDS_LIST',
-      //       key: 'COMPONENTS.BRANDS_LIST',
-      //       link: '/pages/catalogue/brands/brands-list',
-      //       hidden: false
-      //     },
-      //   ],
-      // },
+      {
+        title: 'COMPONENTS.BRANDS',
+        key: 'COMPONENTS.BRANDS',
+        hidden: false,
+        children: [
+
+          {
+            title: 'COMPONENTS.BRANDS_LIST',
+            key: 'COMPONENTS.BRANDS_LIST',
+            link: '/pages/catalogue/brands/brands-list',
+            hidden: false
+          },
+          {
+            title: 'COMPONENTS.CREATE_BRAND',
+            key: 'COMPONENTS.CREATE_BRAND',
+            link: '/pages/catalogue/brands/create-brand',
+            hidden: false
+          }
+        ]
+      },
+      {
+        title: 'COMPONENTS.PRODUCTS_GROUPS',
+        key: 'COMPONENTS.PRODUCTS_GROUPS',
+        hidden: false,
+        children: [
+
+          // {
+          //   title: 'COMPONENTS.LIST_PRODUCTS_GROUPS',
+          //   key: 'COMPONENTS.LIST_PRODUCTS_GROUPS',
+          //   link: '/pages/catalogue/products-groups/products-groups-list',
+          //   hidden: false
+          // },
+          {
+            title: 'COMPONENTS.PRODUCTS_GROUPS_LIST',
+            key: 'COMPONENTS.PRODUCTS_GROUPS_LIST',
+            link: '/pages/catalogue/products-groups/groups-list',
+            hidden: false
+          },
+          {
+            title: 'COMPONENTS.CREATE_PRODUCTS_GROUPS',
+            key: 'COMPONENTS.CREATE_PRODUCTS_GROUPS',
+            link: '/pages/catalogue/products-groups/create-products-group',
+            hidden: false
+          }
+        ]
+      },
+
+
       {
         title: 'COMPONENTS.CATALOGUES',
         key: 'COMPONENTS.CATALOGUES',
         hidden: false,
         children: [
-          // {
-          //   title: 'COMPONENTS.CREATE_CATALOGUE',
-          //   key: 'COMPONENTS.CREATE_CATALOGUE',
-          //   link: '/pages/catalogue/catalogues/create-catalogue',
-          //   hidden: false
-          // },
+
           {
             title: 'COMPONENTS.CATALOGUES_LIST',
             key: 'COMPONENTS.CATALOGUES_LIST',
             link: '/pages/catalogue/catalogues/catalogues-list',
             hidden: false
           },
+          {
+            title: 'COMPONENTS.CREATE_CATALOGUE',
+            key: 'COMPONENTS.CREATE_CATALOGUE',
+            link: '/pages/catalogue/catalogues/create-catalogue',
+            hidden: false
+          }
         ],
       },
-      // {
-      //   title: 'COMPONENTS.PRODUCTS_GROUPS',
-      //   key: 'COMPONENTS.PRODUCTS_GROUPS',
-      //   hidden: false,
-      //   children: [
-      //     {
-      //       title: 'COMPONENTS.CREATE_PRODUCTS_GROUPS',
-      //       key: 'COMPONENTS.CREATE_PRODUCTS_GROUPS',
-      //       link: '/pages/catalogue/products-groups/create-products-group',
-      //       hidden: false
-      //     },
-      //     {
-      //       title: 'COMPONENTS.LIST_PRODUCTS_GROUPS',
-      //       key: 'COMPONENTS.LIST_PRODUCTS_GROUPS',
-      //       link: '/pages/catalogue/products-groups/products-groups-list',
-      //       hidden: false
-      //     },
-      //     {
-      //       title: 'COMPONENTS.PRODUCTS_GROUPS_LIST',
-      //       key: 'COMPONENTS.PRODUCTS_GROUPS_LIST',
-      //       link: '/pages/catalogue/products-groups/groups-list',
-      //       hidden: false
-      //     },
-      //   ],
-      // },
-      // {
-      //   title: 'COMPONENTS.OPTIONS',
-      //   key: 'COMPONENTS.OPTIONS',
-      //   hidden: false,
-      //   children: [
-      //     {
-      //       title: 'COMPONENTS.OPTIONS_LIST',
-      //       key: 'COMPONENTS.OPTIONS_LIST',
-      //       link: '/pages/catalogue/options/options-list',
-      //       hidden: false
-      //     },
 
-      //     {
-      //       title: 'COMPONENTS.OPTIONS_VALUES_LIST',
-      //       key: 'COMPONENTS.OPTIONS_VALUES_LIST',
-      //       link: '/pages/catalogue/options/options-values-list',
-      //       hidden: false
-      //     }
-      //   ]
-      // }
     ]
   },
   {

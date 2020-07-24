@@ -52,11 +52,11 @@ export class PackagesAddComponent implements OnInit {
     let param = {
       type: this.packages.type ? "BOX" : "ITEM",
       code: this.packages.code,
-      shippingHeight: this.packages.shippingHeight,
-      shippingLength: this.packages.shippingLength,
+      shippingHeight: this.packages.type ? this.packages.shippingHeight : 0,
+      shippingLength: this.packages.type ? this.packages.shippingLength : 0,
       shippingMaxWeight: 0,
-      shippingWeight: this.packages.shippingWeight,
-      shippingWidth: this.packages.shippingWidth,
+      shippingWeight: this.packages.type ? this.packages.shippingWeight : 0,
+      shippingWidth: this.packages.type ? this.packages.shippingWidth : 0,
       treshold: 0,
 
     };

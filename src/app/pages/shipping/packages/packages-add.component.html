@@ -43,32 +43,32 @@
                     <span *ngIf="codeExits" class="err-message">Code is already exist</span>
                   </div>
                 </div>
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" *ngIf="packages.type">
                   <div class="form-group">
                     <label class="label inputLabel">Box width<span>*</span></label>
                     <input type="number" class="form-control inputText" placeholder="Box width" [(ngModel)]="packages.shippingWidth"
-                      name="shippingWidth" [required]="packages.type">
+                      name="shippingWidth" required>
                   </div>
                 </div>
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" *ngIf="packages.type">
                   <div class="form-group">
                     <label class="number inputLabel">Box height<span>*</span></label>
                     <input type="text" class="form-control inputText" placeholder="Box height" [(ngModel)]="packages.shippingHeight"
-                      name="shippingHeight" [required]="packages.type">
+                      name="shippingHeight" required>
                   </div>
                 </div>
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" *ngIf="packages.type">
                   <div class="form-group">
                     <label class="label inputLabel">Box length<span>*</span></label>
                     <input type="number" class="form-control inputText" placeholder="Box length" [(ngModel)]="packages.shippingLength"
-                      name="shippingLength" [required]="packages.type">
+                      name="shippingLength" required>
                   </div>
                 </div>
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" *ngIf="packages.type">
                   <div class="form-group">
                     <label class="label inputLabel">Box weight<span>*</span></label>
                     <input type="number" class="form-control inputText" placeholder="Box weight" [(ngModel)]="packages.shippingWeight"
-                      name="shippingWeight" [required]="packages.type ">
+                      name="shippingWeight" required>
                   </div>
                 </div>
               </div>

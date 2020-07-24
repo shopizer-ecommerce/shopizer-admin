@@ -61,7 +61,8 @@ export class OriginComponent implements OnInit {
     this.loadingList = true;
 
     let param = {
-
+      active: true,
+      _active: 'on',
       address: this.shipOriginForm.address,
       city: this.shipOriginForm.city,
       postalCode: this.shipOriginForm.postalCode,
