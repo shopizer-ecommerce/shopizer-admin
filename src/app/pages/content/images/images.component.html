@@ -8,10 +8,28 @@
       </nb-card-header>
       <!-- <div class="custom_scroll" malihu-scrollbar [scrollbarOptions]="scrollbarOptions"> -->
       <fm-file-manager [tree]="tree" [language]="appLanguage" [isPopup]="isPopup" [folderContentBackTemplate]="folderContentBackTemplate"
-      [loadingOverlayTemplate]="loadingOverlayTemplate"></fm-file-manager>
+      [loadingOverlayTemplate]="loadingOverlayTemplate" [folderContentTemplate]="folderContentTemplate"></fm-file-manager>
 
 
       <ng-template let-timeoutMessage #loadingOverlayTemplate></ng-template>
+      <ng-template let-node #folderContentTemplate>
+
+
+
+
+        <div class="ng-star-inserted">
+          <div class="file-manager-item ng-star-inserted">
+            <div class="file-name">
+                  {{node.name}}
+            </div>
+            <div class="file-preview">
+                <img src="{{node.id}}"/>
+            </div>
+          </div>
+        </div>
+
+        
+      </ng-template>
       <ng-template let-node #folderContentBackTemplate>
         <div class="item" style="font-weight: bold; padding: 5px;  margin: 15px; border-radius: 5px; width: 100px; height: 100px; cursor: pointer;">
           <i class="fas fa-arrow-left" style="padding: 0 5px;line-height: 2;font-size: 3em;"></i>
