@@ -102,6 +102,7 @@
     "tslib": "^1.10.0",
     "typeface-exo": "0.0.22",
     "web-animations-js": "^2.3.2",
+    "xhook": "^1.4.9",
     "zone.js": "~0.10.2"
   },
   "devDependencies": {
