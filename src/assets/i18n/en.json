@@ -361,7 +361,7 @@
     "DELIVERED": "Delivered",
     "REFUNDED": "Refunded",
     "CANCELED": "Canceled",
-    "SHOWALL": "Show All"
+    "SHOWALL": "All"
   },
   "ORDER_FORM": {
     "MORE_OPTIONS": "More Actions",

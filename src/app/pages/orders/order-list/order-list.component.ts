@@ -19,9 +19,8 @@ export class OrderListComponent implements OnInit {
   settings = {};
   stores: Array<any> = [];
   selectedStore: String = '';
-  // perPage = 10;
   // paginator
-  perPage = 10;
+  perPage = 20;
   currentPage = 1;
   totalCount;
   roles;

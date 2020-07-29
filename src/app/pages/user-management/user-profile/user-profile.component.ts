@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-
 import { UserService } from '../../shared/services/user.service';
 import { User } from '../../shared/models/user';
 
@@ -21,9 +19,7 @@ export class UserProfileComponent implements OnInit {
   }
 
   ngOnInit() {
-    //const id = this.userService.getUserId();
     this.loading = true;
-    //this.userService.getUser(this.userService.getUserId())
     this.userService.getUserProfile()
       .subscribe(user => {
         this.user = user;
