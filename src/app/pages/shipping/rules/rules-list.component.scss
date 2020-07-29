@@ -1,4 +1,4 @@
-@import "../../../../@theme/styles/styles.scss";
+@import "../../../@theme/styles/themes";
 
 @include nb-install-component() {
     nb-card {
@@ -10,7 +10,7 @@
     background: transparent;
     border: none;
 
-    .category_hierarcy {
+    .rulesList {
         .main_header {
             padding: 0px 30px 10px 0px;
 
@@ -35,7 +35,7 @@
     }
 }
 
-:host ::ng-deep .category_hierarcy {
+:host ::ng-deep .rulesList {
     .filter_section {
         .filter_right_section {
             button {
@@ -82,7 +82,7 @@
     width: 100%;
 
     .filter_left_section {
-        width: 84%;
+        width: 50%;
 
         .sda {
             height: 18px;
@@ -93,7 +93,7 @@
     }
 
     .filter_right_section {
-        width: 16%;
+        width: 50%;
         text-align: right;
 
         .createBtn {
@@ -105,6 +105,7 @@
             margin-left: 20px;
 
             label {
+                display: inline-block;
                 font-weight: 600 !important;
                 font-size: 14px !important;
             }
@@ -115,6 +116,10 @@
                 margin-left: 0 !important;
             }
         }
+
+        // .store_select {
+        //     width: 29% !important
+        // }
     }
 }
 

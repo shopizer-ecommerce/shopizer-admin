@@ -7,6 +7,7 @@ import { OriginComponent } from './origin/origin.component';
 import { PackagesListComponent } from './packages/packages-list.component';
 import { PackagesAddComponent } from './packages/packages-add.component';
 import { RulesComponent } from './rules/rules.component';
+import { RulesListComponent } from './rules/rules-list.component';
 
 const routes: Routes = [{
   path: '',
@@ -29,8 +30,12 @@ const routes: Routes = [{
       component: PackagesAddComponent,
     },
     {
-      path: 'rules',
+      path: 'rules/add',
       component: RulesComponent,
+    },
+    {
+      path: 'rules',
+      component: RulesListComponent,
     },
   ],
 }];
@@ -47,5 +52,6 @@ export const routedComponents = [
   OriginComponent,
   PackagesListComponent,
   PackagesAddComponent,
-  RulesComponent
+  RulesComponent,
+  RulesListComponent
 ];

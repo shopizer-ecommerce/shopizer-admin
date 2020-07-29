@@ -1,7 +1,7 @@
 <div class="inner_pages rules_page">
   <div class="" [nbSpinner]="loadingList" nbSpinnerSize="large" nbSpinnerStatus="primary">
     <nb-card-header class="main_header">
-      <h1 class="page_title">Rules</h1>
+      <h1 class="page_title">{{'RULES.ADD_RULES' | translate}}</h1>
 
       <div class="content_spacing">
         <button type="button" nbButton class="success_button">Submit</button>
@@ -11,48 +11,51 @@
       <div class="row">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
           <nb-card class="nb-card inline-form-card">
-            <nb-card-header class="nb-card-header">Shipping rule metadata</nb-card-header>
+            <nb-card-header class="nb-card-header">{{'RULES.RULES_METADATA' | translate}}</nb-card-header>
             <nb-card-body class="nb-card-body">
 
               <div class="row">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                   <div class="form-group">
-                    <label class="label inputLabel">Rules unique code</label>
-                    <input type="text" class="form-control inputText" placeholder="Rules unique code" name="rules_code">
+                    <label class="label inputLabel">{{'RULES.RULES_UNIQUE_CODE' | translate}}</label>
+                    <input type="text" class="form-control inputText" placeholder="{{'RULES.RULES_UNIQUE_CODE' | translate}}"
+                      [(ngModel)]="rules.code" name="code">
                   </div>
                 </div>
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                   <div class="form-group">
-                    <label class="label inputLabel">Rules name</label>
-                    <input type="text" class="form-control inputText" placeholder="Rules name" name="rules_name">
+                    <label class="label inputLabel">{{'RULES.RULES_NAME' | translate}}</label>
+                    <input type="text" class="form-control inputText" placeholder="{{'RULES.RULES_NAME' | translate}}"
+                      name="name" [(ngModel)]="rules.name">
                   </div>
                 </div>
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                   <div class="form-group">
-                    <nb-radio-group [(ngModel)]="rules_time" name="rule_time">
-                      <nb-radio class="shipping-radio" [value]="false">Time unlimited</nb-radio>
-                      <nb-radio class="shipping-radio" [value]="true">Time based</nb-radio>
+                    <nb-radio-group [(ngModel)]="rules.timeBased" name="timeBased">
+                      <nb-radio class="shipping-radio" [value]="false">{{'RULES.TIME_UNLIMITED' | translate}}</nb-radio>
+                      <nb-radio class="shipping-radio" [value]="true">{{'RULES.TIME_BASED' | translate}}</nb-radio>
                     </nb-radio-group>
                   </div>
                 </div>
-                <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12" *ngIf="rules_time">
+                <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12" *ngIf="rules.timeBased">
                   <div class="form-group">
-                    <input class="form-control has-person-icon inputText" placeholder="Start date" [readOnly]="true"
-                      [nbDatepicker]="datepicker1">
-                    <nb-datepicker #datepicker1></nb-datepicker>
+                    <input class="form-control has-person-icon inputText" placeholder="{{'RULES.START_DATE' | translate}}"
+                      [readOnly]="true" [nbDatepicker]="datepicker" [(ngModel)]="rules.startDate" name="startDate">
+                    <nb-datepicker #datepicker></nb-datepicker>
                   </div>
                 </div>
-                <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12" *ngIf="rules_time">
+                <div class="col-lg-3 col-md-3 col-sm-12 col-xs-12" *ngIf="rules.timeBased">
                   <div class="form-group">
-                    <input class="form-control has-person-icon inputText" placeholder="End date" [readOnly]="true"
-                      [nbDatepicker]="datepicker">
+                    <input class="form-control has-person-icon inputText" placeholder="{{'RULES.END_DATE' | translate}}"
+                      [readOnly]="true" [nbDatepicker]="datepicker" [(ngModel)]="rules.endDate" name="endDate">
                     <nb-datepicker #datepicker></nb-datepicker>
                   </div>
                 </div>
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                   <div class="form-group">
-                    <label class="label inputLabel">Order</label>
-                    <input type="number" class="form-control inputText" placeholder="Order" name="rules_code">
+                    <label class="label inputLabel">{{'RULES.ORDER' | translate}}</label>
+                    <input type="number" class="form-control inputText" placeholder="{{'RULES.ORDER' | translate}}"
+                      [(ngModel)]="rules.order" name="order">
                   </div>
                 </div>
               </div>
@@ -64,7 +67,7 @@
       <div class="row">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
           <nb-card class="nb-card inline-form-card">
-            <nb-card-header class="nb-card-header">Rules condition</nb-card-header>
+            <nb-card-header class="nb-card-header"> {{'RULES.RULES_CONDITION' | translate}}</nb-card-header>
             <nb-card-body class="nb-card-body">
 
               <div class="row">
@@ -72,7 +75,7 @@
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                   <div class="form-group" *ngIf="this.config">
                     <!-- <label for="inputWebsite" class="label inputLabel">Rules condition</label> -->
-                    <query-builder [(ngModel)]='query' [config]='config' name="config"></query-builder>
+                    <query-builder [(ngModel)]='query' [config]='config' name="query"></query-builder>
                   </div>
                 </div>
               </div>
@@ -84,48 +87,51 @@
       <div class="row">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
           <nb-card class="nb-card inline-form-card">
-            <nb-card-header class="nb-card-header">Shipping results</nb-card-header>
+            <nb-card-header class="nb-card-header">{{'RULES.SHIPPING_RESULTS' | translate}}</nb-card-header>
             <nb-card-body class="nb-card-body">
 
               <div class="row">
                 <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
                   <div style="text-align: center">
-                    <nb-select placeholder="Select configuration" outline shape="rectangle" class="select_fields"
-                      [(ngModel)]="selected_result" name="selected_result">
+                    <nb-select placeholder="{{'RULES.SELECT_CONFIGURATION' | translate}}" outline shape="rectangle"
+                      class="select_fields" [(ngModel)]="rules.selected_result" name="selected_result">
                       <nb-option *ngFor="let result of shippingResult" [value]="result">{{result.name}}</nb-option>
                     </nb-select>
                     <!-- <div> -->
-                    <button type="button" nbButton class="configure_button" [disabled]="!selected_result" (click)="onClickConfigure()">Configure</button>
+                    <button type="button" nbButton class="configure_button" [disabled]="!rules.selected_result" (click)="onClickConfigure()">{{'RULES.CONFIGURE'
+                      | translate}}</button>
                     <!-- </div> -->
                   </div>
 
                   <div class="configure_area">
-                    <label class="configure_area_label">Results configuration area</label>
+                    <label class="configure_area_label">{{'RULES.CONFIGURE_AREA' | translate}}</label>
                     <div *ngIf="selectedResult">
-                      <label class="label inputLabel">Result name</label>
+                      <label class="label inputLabel">{{'RULES.RESULT_NAME' | translate}}</label>
                       <div class="form-group" *ngIf="selectedResult.format == 'STRING' && selectedResult.selectOptions.length == 0">
-                        <input type="text" class="form-control inputText" placeholder="Result name" name="result_name">
+                        <input type="text" class="form-control inputText" placeholder="{{'RULES.RESULT_NAME' | translate}}"
+                          name="result_name">
                       </div>
                       <div class="form_group" *ngIf="selectedResult.format == 'STRING' && selectedResult.selectOptions.length > 0">
                         <!-- <label class="label inputLabel">Result name</label> -->
-                        <nb-select placeholder="Select Methods" outline shape="rectangle" class="select_methods">
+                        <nb-select placeholder="{{'RULES.SELECT_METHODS' | translate}}" outline shape="rectangle" class="select_methods">
                           <nb-option *ngFor="let methods of selectedResult.selectOptions" [value]="methods.code">{{methods.name}}</nb-option>
                         </nb-select>
                       </div>
                       <div class="form_group" *ngIf="selectedResult.format == 'DECIMAL' || selectedResult.format == 'NUMERIC'">
                         <!-- <label class="label inputLabel">Result name</label> -->
-                        <input type="number" class="form-control inputText" placeholder="Result name" name="result_name">
+                        <input type="number" class="form-control inputText" placeholder="{{'RULES.RESULT_NAME' | translate}}"
+                          name="result_name">
                       </div>
                       <div class="form-group" *ngIf="selectedResult.format == 'BOOLEAN'">
                         <!-- <label class="label inputLabel">Result name</label> -->
                         <nb-radio-group name="result_name">
-                          <nb-radio class="shipping-radio" [value]="true">Yes</nb-radio>
-                          <nb-radio class="shipping-radio" [value]="false">No</nb-radio>
+                          <nb-radio class="shipping-radio" [value]="true">{{'RULES.YES' | translate}}</nb-radio>
+                          <nb-radio class="shipping-radio" [value]="false">{{'RULES.NO' | translate}}</nb-radio>
                         </nb-radio-group>
                       </div>
                       <div style="margin-top:20px;">
-                        <button type="button" nbButton class="configure_cancel_button">Cancle</button>
-                        <button type="button" nbButton class="configure_button">Save</button>
+                        <button type="button" nbButton class="configure_cancel_button">{{'COMMON.CANCEL' | translate }}</button>
+                        <button type="button" nbButton class="configure_button">{{'COMMON.SAVE' | translate}}</button>
                       </div>
                     </div>
 
@@ -139,31 +145,16 @@
                         <table border="1">
                           <thead>
                             <tr>
-                              <th>Result name</th>
-                              <th>Value</th>
-                              <th>Action</th>
+                              <th>{{'RULES.RESULT_NAME' | translate}}</th>
+                              <th>{{'RULES.VALUE' | translate}}</th>
+                              <th>{{'COMMON.ACTIONS' | translate}}</th>
                             </tr>
                           </thead>
                           <tbody>
-                            <tr>
-                              <td>Apply tax on shipping</td>
-                              <td>true</td>
-                              <td>Delete</td>
-                            </tr>
-                            <tr>
-                              <td>Apply tax on shipping</td>
-                              <td>true</td>
-                              <td>Delete</td>
-                            </tr>
-                            <tr>
-                              <td>Apply tax on shipping</td>
-                              <td>true</td>
-                              <td>Delete</td>
-                            </tr>
-                            <tr>
-                              <td>Apply tax on shipping</td>
-                              <td>true</td>
-                              <td>Delete</td>
+                            <tr *ngFor="let result of resultData">
+                              <td>{{result.code}}</td>
+                              <td>{{result.value}}</td>
+                              <td><i class="nb-trash"></i></td>
                             </tr>
                           </tbody>
                         </table>

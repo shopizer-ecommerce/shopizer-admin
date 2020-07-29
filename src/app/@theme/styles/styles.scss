@@ -227,6 +227,7 @@
     }
   }
 
+
   .file-manager-node {
     user-select: none;
 
@@ -596,6 +597,12 @@
     flex-grow: 1;
     margin-bottom: 10px;
     padding: 5px;
+  }
+
+  .side-view-buttons {
+    .button:nth-of-type(1) {
+      display: none
+    }
   }
 
   ////////////

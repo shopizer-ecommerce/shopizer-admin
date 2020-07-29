@@ -294,6 +294,57 @@
     "ORIGIN_UPDATE": "Origin has been updated",
     "SHIP_TO_COUNTRIES": "Expedition has been updated"
   },
+  "EXPEDITION": {
+    "SHIPPING_TYPE": "Shipping Type",
+    "DOMESTIC": "Domestic",
+    "INTERNATIONAL": "International",
+    "TAX_ON_SHIPPING": "Apply tax on shipping",
+    "SELECT_COUNTRY": "Select country"
+  },
+  "PACKAGING": {
+    "ADD_PACKAGING": "Add Packaging",
+    "CODE": "Code",
+    "WIDTH": "Width",
+    "HEIGHT": "Height",
+    "LENGTH": "Length",
+    "WEIGHT": "Weight",
+    "TYPE": "Type",
+    "ADD_PACKAGES": "Add Packages",
+    "ITEM_PACKAGING": "Item Packaging",
+    "BOX_PACKAGING": "Box Packaging",
+    "WEIGHT_UNITS": "Weight units",
+    "LB": "LB",
+    "SIZE_UNITS": "Size units",
+    "IN": "IN",
+    "CODE_EXITS": "Code is already exits",
+    "BOX_WIDTH": "Box width",
+    "BOX_HEIGHT": "Box height",
+    "BOX_LENGHT": "Box lenght",
+    "BOX_WEIGHT": "Box weight"
+  },
+  "RULES": {
+    "CREATE_RULES": "Create Rules",
+    "NAME": "Name",
+    "ADD_RULES": "Add Rules",
+    "RULES_METADATA": "Shipping rule metadata",
+    "RULES_UNIQUE_CODE": "Rules unique code",
+    "RULES_NAME": "Rules name",
+    "TIME_UNLIMITED": "Time unlimited",
+    "TIME_BASED": "Time based",
+    "START_DATE": "Start date",
+    "END_DATE": "End date",
+    "ORDER": "Order",
+    "RULES_CONDITION": "Rules condition",
+    "SHIPPING_RESULTS": "Shipping results",
+    "SELECT_CONFIGURATION": "Select configuration",
+    "CONFIGURE": "Configure",
+    "CONFIGURE_AREA": "Results configuration area",
+    "RESULT_NAME": "Result name",
+    "SELECT_METHODS": "Select Methods",
+    "YES": "Yes",
+    "NO": "No",
+    "VALUE": "Value"
+  },
   "ORDER": {
     "CUSTOMER_NAME": "Customer Name",
     "CUSTOMER_PHONE": "Customer Phone",
@@ -421,7 +472,8 @@
     "UNSAVED_DATA": "You have unsaved data. Are you sure you want to leave this page?",
     "ONLY_TEN_IMAGES": "You can upload max 10 images",
     "NO_ITEMS": "No items to show",
-    "VALUE_REQUIRED": "Value is required"
+    "VALUE_REQUIRED": "Value is required",
+    "ACTIONS": "Actions"
   },
   "DESCRIPTION_FORM": {
     "NAME": "Name",

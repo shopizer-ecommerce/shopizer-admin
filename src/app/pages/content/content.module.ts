@@ -4,7 +4,6 @@ import { SharedModule } from '../shared/shared.module';
 import { ngfModule } from 'angular-file';
 import { QueryBuilderModule } from "angular2-query-builder";
 import { NbDialogModule } from '@nebular/theme';
-// import { CKEditorModule } from 'ng2-ckeditor';
 import { NgxDropzoneModule } from 'ngx-dropzone';
 import { LightboxModule } from 'ngx-lightbox';
 import { MalihuScrollbarModule } from 'ngx-malihu-scrollbar';
@@ -22,7 +21,6 @@ import { NgxSummernoteModule } from 'ngx-summernote';
     QueryBuilderModule,
     NbDialogModule.forChild(),
     NgxSummernoteModule,
-    // CKEditorModule,
     NgxDropzoneModule,
     LightboxModule,
     MalihuScrollbarModule.forRoot()

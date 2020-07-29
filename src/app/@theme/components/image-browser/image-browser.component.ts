@@ -34,7 +34,5 @@ export class ImageBrowserComponent implements OnInit {
   }
   openImage(value) {
     this.ref.close(value.path + value.name);
-    // window.close();
-    // window.opener.CKEDITOR.tools.callFunction(1, value.path + value.name);
   }
 }

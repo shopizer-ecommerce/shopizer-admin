@@ -31,7 +31,6 @@ export class PackagesAddComponent implements OnInit {
   ngOnInit() {
     if (localStorage.getItem('packagesID')) {
       this.isUpdated = true
-      // this.packages.code = localStorage.getItem('packagesID')
       this.getPackagesDetails();
     }
   }

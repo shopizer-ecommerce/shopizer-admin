@@ -1,49 +1,61 @@
 import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
 import { DatePipe } from '@angular/common';
-// import { StorageService } from '../../shared/services/storage.service';
-// import { StoreService } from '../../store-management/services/store.service';
+import { StorageService } from '../../shared/services/storage.service';
+import { StoreService } from '../../store-management/services/store.service';
 import { LocalDataSource } from 'ng2-smart-table';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { SharedService } from '../services/shared.service';
 import { error } from '@angular/compiler/src/util';
 import { ToastrService } from 'ngx-toastr';
+
 @Component({
-  selector: 'ngx-packages-list',
-  templateUrl: './packages-list.component.html',
-  styleUrls: ['./packages-list.component.scss']
+  selector: 'ngx-rules-list',
+  templateUrl: './rules-list.component.html',
+  styleUrls: ['./rules-list.component.scss']
 })
-export class PackagesListComponent implements OnInit {
-  @ViewChild('item', { static: false }) accordion;
+export class RulesListComponent implements OnInit {
+
   source: LocalDataSource = new LocalDataSource();
   loadingList = false;
   settings = {};
-  // stores: Array<any> = [];
-  // selectedStore: String = '';
-  // perPage = 10;
-  // paginator
   perPage = 10;
   currentPage = 1;
   totalCount;
-
+  stores: Array<any> = [];
+  selectedStore: String = '';
+  isSuperAdmin: boolean;
   constructor(
     private router: Router,
     private translate: TranslateService,
     private sharedService: SharedService,
     private toastr: ToastrService,
+    private storeService: StoreService,
+    private storageService: StorageService,
   ) {
-    this.getPackagesList();
+    this.getShippingRulesList();
+    this.isSuperAdmin = this.storageService.getUserRoles().isSuperadmin;
+    this.selectedStore = this.storageService.getMerchant()
   }
 
   ngOnInit() {
     this.translate.onLangChange.subscribe((lang) => {
-      this.getPackagesList();
+      this.getShippingRulesList();
     });
+    this.getStoreList();
   }
-
-  getPackagesList() {
+  getStoreList() {
+    this.storeService.getListOfMerchantStoreNames({ 'store': '' })
+      .subscribe(res => {
+        res.forEach((store) => {
+          this.stores.push({ value: store.code, label: store.code });
+        });
+        // this.stores = res;
+      });
+  }
+  getShippingRulesList() {
     this.loadingList = true;
-    this.sharedService.getPackaging()
+    this.sharedService.getShippingRules(this.selectedStore)
       .subscribe(data => {
         this.loadingList = false;
         this.source.load(data);
@@ -59,7 +71,7 @@ export class PackagesListComponent implements OnInit {
 
       hideSubHeader: true,
       actions: {
-        columnTitle: this.translate.instant('ORDER.ACTIONS'),
+        columnTitle: this.translate.instant('COMMON.ACTIONS'),
         add: false,
         edit: false,
         delete: false,
@@ -79,40 +91,30 @@ export class PackagesListComponent implements OnInit {
         display: false
       },
       columns: {
+        id: {
+          title: this.translate.instant('COMMON.ID'),
+          type: 'string',
+          filter: false
+        },
         code: {
           title: this.translate.instant('PACKAGING.CODE'),
           type: 'string',
           filter: false
         },
-        shippingWidth: {
-          title: this.translate.instant('PACKAGING.WIDTH'),
-          type: 'double',
-          filter: false
-        },
-        shippingHeight: {
-          title: this.translate.instant('PACKAGING.HEIGHT'),
-          type: 'double',
-          filter: false
-        },
-        shippingLength: {
-          title: this.translate.instant('PACKAGING.LENGTH'),
-          type: 'double',
-          filter: false
-        },
-        shippingWeight: {
-          title: this.translate.instant('PACKAGING.WEIGHT'),
-          type: 'double',
-          filter: false
-        },
-
-        type: {
-          title: this.translate.instant('PACKAGING.TYPE'),
+        name: {
+          title: this.translate.instant('RULES.NAME'),
           type: 'string',
           filter: false
         }
       },
 
     };
+
+  }
+  onSelectStore(e) {
+    // console.log(value)
+    this.selectedStore = e.value;
+    this.getShippingRulesList();
 
   }
   // paginator
@@ -141,28 +143,28 @@ export class PackagesListComponent implements OnInit {
   //   }
 
   // }
-  delete(e) {
-    this.loadingList = true;
-    this.sharedService.deletePackaging(e.data.code)
-      .subscribe(res => {
-        this.loadingList = false;
-        this.toastr.success("Packages has been deleted successfully");
-        this.getPackagesList()
-      }, error => {
-        this.loadingList = false;
+  // delete(e) {
+  //   this.loadingList = true;
+  //   this.sharedService.deletePackaging(e.data.code)
+  //     .subscribe(res => {
+  //       this.loadingList = false;
+  //       this.toastr.success("Packages has been deleted successfully");
+  //       this.getShippingRulesList()
+  //     }, error => {
+  //       this.loadingList = false;
 
-      });
-  }
-  route(e) {
+  //     });
+  // }
+  onClickAction(e) {
     if (e.action == 'delete') {
-      this.delete(e);
+      // this.delete(e);
     } if (e.action == 'edit') {
-      localStorage.setItem('packagesID', e.data.code);
-      this.router.navigate(['pages/shipping/packaging/add']);
+      localStorage.setItem('rulesCode', e.data.code);
+      this.router.navigate(['pages/shipping/rules/add']);
     }
   }
-  addPackages() {
-    localStorage.setItem('packagesID', '');
-    this.router.navigate(['pages/shipping/packaging/add']);
+  createRules() {
+    localStorage.setItem('rulesCode', '');
+    this.router.navigate(['pages/shipping/rules/add']);
   }
 }

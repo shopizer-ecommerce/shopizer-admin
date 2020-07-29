@@ -15,20 +15,30 @@ export class RulesComponent implements OnInit {
 
         ]
     };
+    rules = {
+        code: '',
+        name: '',
+        timeBased: '',
+        startDate: new Date(),
+        endDate: new Date(),
+        order: '',
+        selected_result: '',
+    }
+
     config: QueryBuilderConfig;
     rules_time: boolean = false;
     loadingList: boolean = false
     shippingResult: Array<any> = [];
+    resultData: Array<any> = [];
     selectedResult: any;
-    selected_result: any;
     constructor(
         private sharedService: SharedService
     ) {
         this.getShippingCondition()
     }
     ngOnInit() {
-
     }
+
     getShippingCondition() {
         this.loadingList = true;
         let fields = {}
@@ -68,9 +78,26 @@ export class RulesComponent implements OnInit {
             }, error => {
 
             });
+        this.getShippingRulesDetails()
+    }
+    getShippingRulesDetails() {
+        if (localStorage.getItem('rulesCode')) {
+            this.sharedService.getShippingRulesDetails(localStorage.getItem('rulesCode'))
+                .subscribe(data => {
+                    console.log(data)
+                    this.rules = data;
+                    this.rules.startDate = new Date(data.startDate)
+                    this.rules.endDate = new Date(data.endDate)
+                    this.resultData = data.results;
+                    this.query = data.conditions[0]
+                }, error => {
+
+                });
+        }
+
     }
     onClickConfigure() {
         // console.log(this.selected_result);
-        this.selectedResult = this.selected_result
+        this.selectedResult = this.rules.selected_result
     }
 }

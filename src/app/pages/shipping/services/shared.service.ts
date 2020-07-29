@@ -66,5 +66,11 @@ export class SharedService {
   getRulesResult(): Observable<any> {
     return this.crudService.getShipping('/v2/shipping/rules/results');
   }
+  getShippingRules(storeCode): Observable<any> {
+    return this.crudService.getShipping('/v2/shipping/rules/?store=' + storeCode);
+  }
+  getShippingRulesDetails(code): Observable<any> {
+    return this.crudService.getShipping('/v2/shipping/rules/' + code);
+  }
 }
 

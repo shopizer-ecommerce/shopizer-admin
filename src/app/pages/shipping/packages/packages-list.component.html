@@ -2,7 +2,7 @@
   <nb-card-body [nbSpinner]="loadingList" nbSpinnerSize="large" nbSpinnerStatus="primary" class="packagingList">
     <div class="inner_pages_legacy">
       <nb-card-header class="main_header">
-        <h1 class="page_title">Packaging</h1>
+        <h1 class="page_title">{{'SHIPPING.PACKAGING' | translate}}</h1>
         <div class="content_spacing_empty"></div>
 
       </nb-card-header>
@@ -17,7 +17,7 @@
           </p-dropdown> -->
           <a class="createBtn" (click)="addPackages()">
             <img class="pointer sda" src="../../../../assets/img/plus.png" title="create_customer">
-            <label>Add Packaging</label>
+            <label>{{'PACKAGING.ADD_PACKAGING' | translate}}</label>
           </a>
         </div>
       </form>

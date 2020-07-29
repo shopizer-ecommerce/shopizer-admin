@@ -482,7 +482,8 @@ ng2-st-tbody-custom {
   .customerList,
   .pagesList,
   .boxsList,
-  .productList {
+  .productList,
+  .rulesList {
     .ui-dropdown {
       width: 17% !important;
       text-align: left !important;
@@ -580,45 +581,45 @@ ng2-st-tbody-custom {
       }
     }
 
-    .ckeditor {
-      padding: 0px !important;
+    // .ckeditor {
+  //   padding: 0px !important;
 
-      .cke_chrome {
-        border: 0px !important;
+  //   .cke_chrome {
+  //     border: 0px !important;
 
-        .cke_inner {
-          .cke_top {
-            padding: 10px 10px 6px 10px;
-            background-color: transparent;
-            border-bottom: 1px solid #edf1f7;
+  //     .cke_inner {
+  //       .cke_top {
+  //         padding: 10px 10px 6px 10px;
+  //         background-color: transparent;
+  //         border-bottom: 1px solid #edf1f7;
 
-            .cke_toolbox {
-              .cke_toolbar {
-                span {
-                  a {
-                    background-color: transparent !important;
-                    border-color: transparent !important;
+  //         .cke_toolbox {
+  //           .cke_toolbar {
+  //             span {
+  //               a {
+  //                 background-color: transparent !important;
+  //                 border-color: transparent !important;
 
-                    &:hover {
-                      background-color: #e6f3ff !important;
-                      border-color: transparent !important;
-                    }
-                  }
-                }
-              }
-            }
-          }
+  //                 &:hover {
+  //                   background-color: #e6f3ff !important;
+  //                   border-color: transparent !important;
+  //                 }
+  //               }
+  //             }
+  //           }
+  //         }
+  //       }
 
-          .cke_contents {
-            height: 205px !important;
-          }
+  //       .cke_contents {
+  //         height: 205px !important;
+  //       }
 
-          .cke_bottom {
-            display: none !important;
-          }
-        }
-      }
-    }
+  //       .cke_bottom {
+  //         display: none !important;
+  //       }
+  //     }
+  //   }
+  // }
   }
 
   .form-control {
@@ -861,7 +862,7 @@ ng2-st-tbody-custom {
 }
 
 /** image grid file manager **/
-.item-holder { 
+.item-holder {
   display: grid !important;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)) !important;
   grid-gap: 20px !important;
@@ -869,5 +870,5 @@ ng2-st-tbody-custom {
 }
 
 .file-name {
- width: auto !important;
+  width: auto !important;
 }

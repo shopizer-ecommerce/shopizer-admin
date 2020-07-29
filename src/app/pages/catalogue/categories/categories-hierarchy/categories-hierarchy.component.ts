@@ -13,18 +13,21 @@ export class CategoriesHierarchyComponent implements OnInit {
   @ViewChild('tree', { static: false }) tree;
   nodes = [];
   options = {
-    allowDrag: (node) => {
-      return node.data.parent;
-    },
-    allowDrop: (element, { parent, index }) => {
-      if (parent.data.hasOwnProperty('virtual')) {
-        return !parent.data.virtual;
-      } else {
-        return !parent.isRoot;
+    allowDrag: true
+  }
+  // options = {
+  //   allowDrag: (node) => {
+  //     return node.data.parent;
+  //   },
+  //   allowDrop: (element, { parent, index }) => {
+  //     if (parent.data.hasOwnProperty('virtual')) {
+  //       return !parent.data.virtual;
+  //     } else {
+  //       return !parent.isRoot;
 
-      }
-    },
-  };
+  //     }
+  //   },
+  // };
 
   loader = false;
 
@@ -69,6 +72,7 @@ export class CategoriesHierarchyComponent implements OnInit {
   }
 
   onMoveNode(event) {
+    console.log(event);
     const someNode = this.tree.treeModel.getNodeById(event.to.parent.id);
     someNode.expand();
 

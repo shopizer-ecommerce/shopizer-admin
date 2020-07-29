@@ -13,7 +13,9 @@
 
       </div>
       <div class="content_spacing">
-        <button type="button" nbButton class="success_button" (click)="saveShipToCountries()">Save</button>
+        <button type="button" nbButton class="success_button" (click)="saveShipToCountries()">{{'COMMON.SAVE'
+          |
+          translate }}</button>
       </div>
     </nb-card-header>
 
@@ -21,15 +23,15 @@
       <div class="row">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
           <nb-card class="nb-card inline-form-card">
-            <nb-card-header class="nb-card-header">Shipping Type</nb-card-header>
+            <nb-card-header class="nb-card-header">{{ 'EXPEDITION.SHIPPING_TYPE' | translate}}</nb-card-header>
             <nb-card-body class="nb-card-body">
 
               <div class="row">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                   <div class="form-group">
                     <nb-radio-group [(ngModel)]="expedition" name="expedition">
-                      <nb-radio class="shipping-radio" [value]="false">Domestic</nb-radio>
-                      <nb-radio class="shipping-radio" [value]="true">International</nb-radio>
+                      <nb-radio class="shipping-radio" [value]="false">{{ 'EXPEDITION.DOMESTIC' | translate}}</nb-radio>
+                      <nb-radio class="shipping-radio" [value]="true">{{ 'EXPEDITION.INTERNATIONAL' | translate}}</nb-radio>
                     </nb-radio-group>
                   </div>
                 </div>
@@ -37,8 +39,8 @@
               <div class="row">
                 <div class="form-group">
                   <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                    <nb-checkbox [(ngModel)]="taxOnShipping" name="taxOnShipping">Apply tax on
-                      shipping</nb-checkbox>
+                    <nb-checkbox [(ngModel)]="taxOnShipping" name="taxOnShipping">{{ 'EXPEDITION.TAX_ON_SHIPPING' |
+                      translate}}</nb-checkbox>
                   </div>
                 </div>
               </div>
@@ -52,7 +54,7 @@
       <div [ngClass]="expedition ? 'row': 'row disabled-contenct'">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
           <nb-card class="nb-card inline-form-card">
-            <nb-card-header class="nb-card-header">Select Country</nb-card-header>
+            <nb-card-header class="nb-card-header">{{ 'EXPEDITION.SELECT_COUNTRY' | translate}}</nb-card-header>
             <nb-card-body class="nb-card-body">
               <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" *ngIf="leftAreaItems.length > 0">
                 <app-transferlistbox [code]="code" [label]="label" [leftAreaList]="leftAreaItems" [rightAreaList]="rightAreaItems"
