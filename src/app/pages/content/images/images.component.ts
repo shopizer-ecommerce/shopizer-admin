@@ -8,7 +8,7 @@ import { Lightbox } from 'ngx-lightbox';
 import { environment } from '../../../../environments/environment';
 import { MalihuScrollbarService } from 'ngx-malihu-scrollbar';
 import { TokenService } from '../../auth/services/token.service';
-import { TreeModel, NodeInterface, ConfigInterface } from 'ng6-file-man';
+import { TreeModel, DownloadModeEnum, ConfigInterface } from 'ng6-file-man';
 import xhook from 'xhook';
 @Component({
   selector: 'images-table',
@@ -44,7 +44,7 @@ export class ImagesComponent implements OnInit {
         searchFiles: 'api/search'//not supported
       },
       options: {
-        allowFolderDownload: false,
+        allowFolderDownload: DownloadModeEnum.DOWNLOAD_DISABLED,
         showFilesInsideTree: true
       }
     };
