@@ -10,11 +10,16 @@ import { MalihuScrollbarService } from 'ngx-malihu-scrollbar';
 import { TokenService } from '../../auth/services/token.service';
 import { TreeModel, NodeInterface, ConfigInterface } from 'ng6-file-man';
 import xhook from 'xhook';
+export enum DownloadModeEnum {
+  DOWNLOAD_DISABLED
+}
+
 @Component({
   selector: 'images-table',
   templateUrl: './images.component.html',
   styleUrls: ['./images.component.scss'],
 })
+
 export class ImagesComponent implements OnInit {
   url = environment.apiUrl;
   uploadedFiles: any[] = [];
@@ -27,8 +32,8 @@ export class ImagesComponent implements OnInit {
     private tokenService: TokenService,
     //private crudService: CrudService,
     public router: Router,
-   // private sanitization: DomSanitizer,
-   // private dialogService: NbDialogService,
+    // private sanitization: DomSanitizer,
+    // private dialogService: NbDialogService,
     //private _lightbox: Lightbox,
     private mScrollbarService: MalihuScrollbarService,
   ) {
@@ -44,7 +49,7 @@ export class ImagesComponent implements OnInit {
         searchFiles: 'api/search'//not supported
       },
       options: {
-        allowFolderDownload: false,
+        allowFolderDownload: DownloadModeEnum.DOWNLOAD_DISABLED,
         showFilesInsideTree: true
       }
     };
@@ -59,7 +64,7 @@ export class ImagesComponent implements OnInit {
     const token: string = this.tokenService.getToken();
 
     if (token) {
-      xhook.before(function(request) {
+      xhook.before(function (request) {
         request.headers['Authorization'] = 'Bearer ' + token;
       });
     }
