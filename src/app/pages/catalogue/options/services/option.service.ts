@@ -33,7 +33,7 @@ export class OptionService {
     const params = {
       lang: '_all'
     };
-    return this.crudService.get(`/v1/private/product/option/${ id }`, params);
+    return this.crudService.get(`/v1/private/product/option/${id}`, params);
   }
 
   checkOptionCode(code): Observable<any> {
@@ -41,5 +41,27 @@ export class OptionService {
       'code': code,
     };
     return this.crudService.get(`/v1/private/product/option/unique`, params);
+  }
+
+  // Set option API
+  getListOfOptionsSet(): Observable<any> {
+    return this.crudService.get('/v1/private/product/option/set');
+  }
+
+  deleteOptioSet(id): Observable<any> {
+    return this.crudService.delete(`/v1/private/product/option/set/${id}`);
+  }
+  checkOptionSetCode(code): Observable<any> {
+    return this.crudService.get('/v1/private/product/option/set/unique?code=' + code);
+  }
+  createSetOption(param): Observable<any> {
+    return this.crudService.post('/v1/private/product/option/set', param);
+  }
+  getOptionSetById(id, params): Observable<any> {
+
+    return this.crudService.get(`/v1/private/product/option/set/${id}`, params);
+  }
+  updateSetOption(id, param): Observable<any> {
+    return this.crudService.put(`/v1/private/product/option/set/${id}`, param);
   }
 }

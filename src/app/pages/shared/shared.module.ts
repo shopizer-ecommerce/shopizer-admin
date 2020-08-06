@@ -13,6 +13,7 @@ import { ImageUploadingComponent } from './components/image-uploading/image-uplo
 import { ShowcaseDialogComponent } from './components/showcase-dialog/showcase-dialog.component';
 import { PaginatorComponent } from './components/paginator/paginator.component';
 import { PickListModule } from 'primeng/picklist';
+import { MultiSelectModule } from 'primeng/multiselect';
 import { DropdownModule } from 'primeng/dropdown';
 import { BackButtonComponent } from './components/back-button/back-button.component';
 import { TreeTableModule } from 'primeng/treetable';
@@ -62,6 +63,7 @@ import { PasswordPromptComponent } from './components/password-prompt/password-p
     NbTreeGridComponent,
     PickListModule,
     DropdownModule,
+    MultiSelectModule,
     ValidateNumberDirective
   ],
   providers: [CurrencyPipe],

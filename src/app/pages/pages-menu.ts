@@ -232,7 +232,7 @@ export const MENU_ITEMS: MenuItem[] = [
           {
             title: 'COMPONENTS.OPTION_SET_LIST',
             key: 'COMPONENTS.OPTION_SET_LIST',
-            link: '',
+            link: '/pages/catalogue/options/options-set-list',
             hidden: false
           }
         ]

@@ -66,6 +66,7 @@
     "OPTIONS_VALUES_LIST": "List of product options values",
     "CREATE_OPTION_VALUE": "Create option value",
     "OPTION_SET_LIST": "List of product options set",
+    "SET_OPTION": "Create options set",
     "CONTENT": "Content",
     "CONTENT_PAGES": "Pages",
     "CONTENT_BOXES": "Boxes",
@@ -276,7 +277,10 @@
   "OPTION": {
     "OPTION_UPDATED": "Option updated.",
     "OPTION_CREATED": "Option created.",
-    "OPTION_REMOVED": "Option removed."
+    "OPTION_REMOVED": "Option removed.",
+    "SET_OPTION_REMOVED": "Option set has been removed.",
+    "SET_OPTION_CREATED": "Option set has been created.",
+    "SET_OPTION_UPDATED": "Option set has been updated."
   },
   "OPTION_VALUE": {
     "OPTION_VALUE_UPDATED": "Option value updated.",
@@ -460,6 +464,7 @@
     "ALPHA_DECIMAL_RULE": "Only letters and numbers are allowed.",
     "ORDER": "Order",
     "SEARCH": "Search",
+    "SEARCH_BY_NAME": "Search by name",
     "AVAILABLE": "Available",
     "SELECTED": "Selected",
     "VISIBLE": "Visible",

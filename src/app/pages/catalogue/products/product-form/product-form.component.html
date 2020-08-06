@@ -1,26 +1,32 @@
 <div class="inner_pages product_create_page">
+  <form [formGroup]='form' *ngIf="!loader">
+    <nb-card-header class="main_header">
+      <h1 class="page_title">{{_title | translate}}</h1>
+      <div class="content_spacing">
+        <nb-select [(selected)]="selectedItem" outline shape="rectangle">
+          <nb-option *ngFor="let item of sidemenuLinks" [value]="item.id" (click)="route(item.link)">{{ item.title }}</nb-option>
+        </nb-select>
+      </div>
+      <div class="content_spacing">
+        <nb-select *ngIf="languages.length" placeholder="{{ 'COMMON.LANGUAGE' | translate }}" outline shape="rectangle"
+          formControlName='selectedLanguage' class="fullWidth">
+          <nb-option *ngFor="let language of languages" [value]="language.code">{{ language.code }}</nb-option>
+        </nb-select>
+      </div>
+      <div class="content_spacing">
+        <button type="button" nbButton class="cancel_button" (click)="goToback()">{{ 'ORDER_FORM.CANCLE'
+          | translate}}</button>
+      </div>
+      <div class="content_spacing">
+        <button type="button" nbButton class="success_button" (click)="save()">{{'COMMON.SAVE' | translate }}</button>
+      </div>
+    </nb-card-header>
 
-  <nb-card-header class="main_header">
-    <h1 class="page_title">{{_title | translate}}</h1>
-    <div class="content_spacing">
-      <nb-select [(selected)]="selectedItem" outline shape="rectangle">
-        <nb-option *ngFor="let item of sidemenuLinks" [value]="item.id" (click)="route(item.link)">{{ item.title }}</nb-option>
-      </nb-select>
-    </div>
-    <div class="content_spacing">
-      <button type="button" nbButton class="cancel_button" (click)="goToback()">{{ 'ORDER_FORM.CANCLE'
-        | translate}}</button>
-    </div>
-    <div class="content_spacing">
-      <button type="button" nbButton class="success_button" (click)="save()">{{'COMMON.SAVE' | translate }}</button>
-    </div>
-  </nb-card-header>
+    <div [nbSpinner]="loader" nbSpinnerSize="large" nbSpinnerStatus="primary">
 
-  <div [nbSpinner]="loader" nbSpinnerSize="large" nbSpinnerStatus="primary">
+      <!-- <div malihu-scrollbar [scrollbarOptions]="scrollbarOptions"> -->
 
-    <!-- <div malihu-scrollbar [scrollbarOptions]="scrollbarOptions"> -->
 
-    <form [formGroup]='form' *ngIf="!loader">
 
       <div class="row">
         <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
@@ -577,10 +583,11 @@
           </div>
         </nb-card-body>
       </nb-card> -->
-    </form>
 
 
 
-    <!-- </div> -->
-  </div>
+
+      <!-- </div> -->
+    </div>
+  </form>
 </div>
