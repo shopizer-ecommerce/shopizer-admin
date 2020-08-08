@@ -5,7 +5,7 @@
     <div class="content_spacing">
       <nb-select *ngIf="languages.length" placeholder="{{ 'COMMON.LANGUAGE' | translate}}" outline shape="rectangle"
         name='selectedLanguage' [selected]="defaultLanguage">
-        <nb-option *ngFor="let language of languages" [value]="language.code">{{ ('LANG.'+language.code) |
+        <nb-option (click)="selectLanguage(language.code)" *ngFor="let language of languages" [value]="language.code">{{ ('LANG.'+language.code) |
           translate }}</nb-option>
       </nb-select>
     </div>
