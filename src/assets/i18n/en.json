@@ -532,7 +532,9 @@
     "yes_delete_this": "Yes, delete this",
     "you_are_trying_to_delete_following": "You are trying to delete following",
     "file": "file",
-    "folder": "folder",
-    "open_file_manager": "open in popup"
+    "folder": "folder"
+  },
+  "SYSTEM": {
+    "DELETE_CACHE" : "Delete Cache"
   }
 }
