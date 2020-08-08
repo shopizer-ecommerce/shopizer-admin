@@ -1,0 +1,67 @@
+<div class="inner_pages option_create_page">
+
+  <nb-card-header class="main_header">
+    <h1 class="page_title">{{ 'COMPONENTS.SET_OPTION' | translate}}</h1>
+
+    <div class="content_spacing">
+      <button type="button" nbButton class="cancel_button" (click)="goToback()">{{ 'ORDER_FORM.CANCLE'
+        | translate}}</button>
+    </div>
+
+    <div class="content_spacing">
+      <button nbButton type="button" class="success_button" (click)="save()" [disabled]="!optionSetForm.form.valid || options.optionValues.length == 0 || isCodeUnique">{{'COMMON.SAVE'
+        | translate }}</button>
+    </div>
+  </nb-card-header>
+
+  <div [nbSpinner]="loading" nbSpinnerSize="large" nbSpinnerStatus="primary">
+
+
+    <form #optionSetForm="ngForm" role="form">
+
+      <nb-card class="nb-card inline-form-card">
+        <nb-card-body class="nb-card-body">
+          <div class="form-group">
+            <label class="col-form-label inputLabel"></label>
+            <nb-checkbox [(ngModel)]="options.readOnly" name="readOnly">
+              Read only
+            </nb-checkbox>
+          </div>
+          <div class="form-group">
+            <label class="col-form-label inputLabel">{{ 'COMMON.CODE' | translate}} *</label>
+
+            <input type="text" class="form-control inputText" [(ngModel)]="options.code" name="code" (change)="checkCode($event)"
+              [disabled]="options.id !== ''" placeholder="{{ 'COMMON.CODE' | translate}}" required>
+
+            <span *ngIf="isCodeUnique" class="err-message">
+              {{ 'COMMON.CODE_EXISTS' | translate}}
+            </span>
+
+          </div>
+          <div class="form-group">
+            <label class="col-form-label inputLabel">Select option</label>
+
+            <nb-select placeholder="Select option" outline shape="rectangle" [(ngModel)]="options.option" name="options.option"
+              class="fullWidth" required>
+              <nb-option *ngFor="let option of productOption" [value]="option.id">{{option.name}}</nb-option>
+            </nb-select>
+
+          </div>
+
+          <div class="form-group">
+            <label class="col-form-label inputLabel">Select option value</label>
+
+            <nb-select multiple placeholder="Select option value" (selectedChange)="setSelected($event)" outline shape="rectangle"
+              [(selected)]="options.optionValues" class="fullWidth">
+              <nb-option *ngFor="let optionValue of productOptionValue" [value]="optionValue.id">{{optionValue.name}}</nb-option>
+
+            </nb-select>
+
+          </div>
+        </nb-card-body>
+      </nb-card>
+    </form>
+
+  </div>
+
+</div>

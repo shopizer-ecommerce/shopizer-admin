@@ -13,7 +13,8 @@
           | translate}}</button>
       </div>
       <div class="content_spacing">
-        <button type="submit" nbButton class="success_button" (click)="save()">{{'COMMON.SAVE' | translate }}</button>
+        <button type="submit" nbButton class="success_button" (click)="save()" [disabled]="!form.valid">{{'COMMON.SAVE'
+          | translate }}</button>
       </div>
     </nb-card-header>
 
@@ -30,11 +31,11 @@
             <div class="col-sm-12">
               <input type="text" class="form-control inputText" id="code" formControlName='code' (change)="checkCode($event)"
                 [readOnly]="optionValue.id" placeholder="{{ 'COMMON.CODE' | translate}}" required>
-              <div class="err-message" *ngIf="(code.dirty || code.touched) && code.invalid && code">
-                <span *ngIf="code.errors.required">
+              <div *ngIf="(code.dirty || code.touched) && code.invalid && code">
+                <span *ngIf="code.errors.required" class="err-message">
                   {{ 'COMMON.CODE_REQUIRED' | translate}}
                 </span>
-                <span *ngIf="code.errors.pattern">
+                <span *ngIf="code.errors.pattern" class="err-message">
                   {{ 'COMMON.ALPHA_DECIMAL_RULE' | translate}}
                 </span>
               </div>

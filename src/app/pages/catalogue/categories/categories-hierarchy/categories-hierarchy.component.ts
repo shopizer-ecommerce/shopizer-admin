@@ -45,25 +45,27 @@ export class CategoriesHierarchyComponent implements OnInit {
 
   getList() {
     // TODO need possibility to get all items at once
-    this.categoryService.getListOfCategories().subscribe(res => {
-      this.categoryService.getListOfCategories({ count: res.totalPages })
-        .subscribe(categories => {
-          categories.categories.forEach((el) => {
-            this.transformList(el);
-          });
-          const rootObject = {
-            id: 0,
-            name: 'root',
-            children: [...categories.categories]
-          };
-          this.nodes.push(rootObject);
-          this.loader = false;
+    this.categoryService.getListOfCategories()
+      .subscribe(res => {
+        // this.categoryService.getListOfCategories({ count: res.totalPages })
+        //   .subscribe(categories => {
+        res.categories.forEach((el) => {
+          this.transformList(el);
         });
-    });
+        // const rootObject = {
+        //   ...res.categories,
+        //   children: [...res.categories]
+        // };
+        this.nodes = res.categories
+        this.loader = false;
+        // });
+      });
   }
 
   transformList(node) {
     node.name = node.description.name;
+    node.title = node.description.title;
+    node.description = node.description.description;
     if (node.children && node.children.length !== 0) {
       node.children.forEach((el) => {
         this.transformList(el);
@@ -73,8 +75,8 @@ export class CategoriesHierarchyComponent implements OnInit {
 
   onMoveNode(event) {
     console.log(event);
-    const someNode = this.tree.treeModel.getNodeById(event.to.parent.id);
-    someNode.expand();
+    // const someNode = this.tree.treeModel.getNodeById(event.to.parent.id);
+    // someNode.expand();
 
     this.categoryService.updateHierarchy(event.node.id, event.to.parent.id)
       .subscribe(res => {

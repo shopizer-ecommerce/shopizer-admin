@@ -22,6 +22,7 @@ export class OriginComponent implements OnInit {
     stateProvince: '',
     postalCode: ''
   }
+  visible: any;
   loadingList: boolean = false;
   countries = [];
   states = [];
@@ -61,8 +62,6 @@ export class OriginComponent implements OnInit {
     this.loadingList = true;
 
     let param = {
-      active: true,
-      _active: 'on',
       address: this.shipOriginForm.address,
       city: this.shipOriginForm.city,
       postalCode: this.shipOriginForm.postalCode,
@@ -71,6 +70,7 @@ export class OriginComponent implements OnInit {
     };
     this.sharedService.saveOrigin(this.selectedStore, param)
       .subscribe(res => {
+        localStorage.setItem('originActive', this.visible)
         this.loadingList = false;
         this.toastr.success(this.translate.instant('SHIPPING.ORIGIN_UPDATE'));
       }, error => {
@@ -108,11 +108,14 @@ export class OriginComponent implements OnInit {
   }
 
   getShippingOrigin() {
+
     this.loadingList = true;
     this.sharedService.getShippingOrigin(this.selectedStore)
       .subscribe(data => {
         this.loadingList = false;
         this.shipOriginForm = data;
+        // console.log(localStorage.getItem('originActive'));
+        this.visible = localStorage.getItem('originActive') == 'true' ? true : false
         this.getCountry();
         this.getState(0);
       }, error => {

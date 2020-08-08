@@ -10,6 +10,7 @@ import { ProductService } from '../services/product.service';
 import { ProductImageService } from '../services/product-image.service';
 import { TranslateService } from '@ngx-translate/core';
 import { validators } from '../../../shared/validation/validators';
+import { environment } from '../../../../../environments/environment';
 import { slugify } from '../../../shared/utils/slugifying';
 import { forkJoin } from 'rxjs';
 
@@ -27,6 +28,7 @@ export class ProductFormComponent implements OnInit {
   languages = [];
   productTypes = [];
   selectedItem = '0';
+  defaultLanguage = environment.client.language.default;
   sidemenuLinks = [
     {
       id: '0',
@@ -146,6 +148,16 @@ export class ProductFormComponent implements OnInit {
     });
   }
 
+  /**
+   *   fillEmptyForm() {
+    this.form.patchValue({
+      store: this.merchant,
+      sortOrder: 0,
+      selectedLanguage: this.defaultLanguage,
+      descriptions: [],
+    });
+   */
+
   fillForm() {
     this.form.patchValue({
       sku: this.product.sku,
@@ -160,7 +172,7 @@ export class ProductFormComponent implements OnInit {
       productShipeable: this.product.productShipeable,
       // placementOrder: [0, [Validators.required]],  // ???
       // taxClass: [0, [Validators.required]], // ???
-      selectedLanguage: 'en',
+      selectedLanguage: this.defaultLanguage,
       descriptions: [],
     });
     this.fillFormArray();
@@ -202,6 +214,13 @@ export class ProductFormComponent implements OnInit {
 
   get descriptions(): FormArray {
     return <FormArray>this.form.get('descriptions');
+  }
+
+  selectLanguage(lang) {
+    this.form.patchValue({
+      selectedLanguage: lang,
+    });
+    this.fillFormArray();
   }
 
   changeName(event, index) {

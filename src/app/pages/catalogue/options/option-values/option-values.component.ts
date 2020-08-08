@@ -67,7 +67,7 @@ export class OptionValuesComponent implements OnInit {
   private createForm() {
     this.form = this.fb.group({
       code: ['', [Validators.required, Validators.pattern(validators.alphanumeric)]],
-      selectedLanguage: [''],
+      selectedLanguage: ['en'],
       descriptions: this.fb.array([])
     });
     this.addFormArray();
@@ -78,8 +78,8 @@ export class OptionValuesComponent implements OnInit {
     this.languages.forEach(lang => {
       control.push(
         this.fb.group({
-          language: [lang.code, [Validators.required]],
-          name: ['', [Validators.required]]
+          language: [lang.code, []],
+          name: ['', []]
         })
       );
     });

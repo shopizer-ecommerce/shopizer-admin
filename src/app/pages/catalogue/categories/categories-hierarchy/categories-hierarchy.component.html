@@ -7,11 +7,24 @@
 
       </nb-card-header>
       <div *ngIf="nodes.length !== 0">
-        <tree-root #tree [nodes]="nodes" [options]="options" (moveNode)="onMoveNode($event)">
-        </tree-root>
+
+                        <tree-root #tree [nodes]="nodes" [options]="options" (moveNode)="onMoveNode($event)">
+                          <ng-template #treeNodeTemplate let-node let-index="index">
+
+
+                            
+                            <div>{{ node.data.name }}</div>
+                            <!--
+                            <div>{{ node.data.id }}</div>
+                            <div>{{ node.data.title }}</div>
+                            <div><i class="nb-trash"></i></div>
+                            -->
+
+
+                          </ng-template>
+                        </tree-root>
+
       </div>
-
-
-    </div>
+      </div>
   </nb-card-body>
 </nb-card>

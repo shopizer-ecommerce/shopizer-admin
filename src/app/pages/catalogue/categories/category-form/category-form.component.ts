@@ -99,8 +99,7 @@ export class CategoryFormComponent implements OnInit {
         this.roots = [...res.categories];
       });
     this.loader = true;
-    //console.log('Language value ' + this.selectedLanguage);
-
+ 
     //determines how many languages should be supported
     this.configService.getListOfSupportedLanguages()
       .subscribe(res => {
@@ -132,7 +131,7 @@ export class CategoryFormComponent implements OnInit {
 
   addFormArray() {
     const control = <FormArray>this.form.controls.descriptions;
-    console.log("Languages size " + this.languages.length);
+    //console.log("Languages size " + this.languages.length);
     this.languages.forEach(lang => {
       control.push(
         this.fb.group({
@@ -211,11 +210,19 @@ export class CategoryFormComponent implements OnInit {
     return <FormArray>this.form.get('names');
   }
 
+  selectLanguage(lang) {
+    this.form.patchValue({
+      selectedLanguage: lang,
+    });
+    this.fillFormArray();
+  }
+
   changeName(event, index) {
+    
     (<FormArray>this.form.get('descriptions')).at(index).patchValue({
       friendlyUrl: slugify(event)
     });
-    (<any>this.form.get('friendlyUrl')).nativeElement.focus();
+
   }
 
   //determines if category code is unique
