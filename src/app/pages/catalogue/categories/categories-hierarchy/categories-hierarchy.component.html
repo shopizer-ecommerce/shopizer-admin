@@ -6,20 +6,17 @@
         <div class="content_spacing_empty"></div>
 
       </nb-card-header>
+      <div class="content_spacing_empty">
+        <p>
+          {{ 'CATEGORY_HIERARCHY.DETAILS' | translate}}
+        </p>
+      </div>
       <div *ngIf="nodes.length !== 0">
 
                         <tree-root #tree [nodes]="nodes" [options]="options" (moveNode)="onMoveNode($event)">
                           <ng-template #treeNodeTemplate let-node let-index="index">
-
-
                             
                             <div>{{ node.data.name }}</div>
-                            <!--
-                            <div>{{ node.data.id }}</div>
-                            <div>{{ node.data.title }}</div>
-                            <div><i class="nb-trash"></i></div>
-                            -->
-
 
                           </ng-template>
                         </tree-root>

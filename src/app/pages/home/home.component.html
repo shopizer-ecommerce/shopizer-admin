@@ -45,14 +45,30 @@
     </div>
 </div>
 
-
-
+<div class="row">
+    <!--
+    <div class="col-xxl-6">
+            <ngx-profit-card></ngx-profit-card>
+    </div>
+    <div class="col-xxl-6">
+      TEST2
+    </div>
+    -->
+    <div class="col-xxl-12">
+      <!--<ngx-traffic-reveal-card></ngx-traffic-reveal-card>-->
+      <ngx-ecommerce-charts></ngx-ecommerce-charts>
+    </div>
+</div>
 
 <nb-card *ngIf="canAccessToOrder">
+  <div class="row">
+  <div class="col-xxl-12">
   <nb-card-header>
     {{ "HOME.RECENT_ORDERS" | translate }}
   </nb-card-header>
   <nb-card-body>
 
   </nb-card-body>
+  </div>
+  </div>
 </nb-card>

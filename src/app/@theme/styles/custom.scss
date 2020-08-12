@@ -1,7 +1,3 @@
-// @import './custom/overrided-styles';
-// @import './custom/errors';
-// @import url('https://fonts.googleapis.com/css?family=Saira+Semi+Condensed:400,500&display=swap');
-
 .cdk-global-scrollblock {
   overflow-y: hidden;
 }
@@ -17,14 +13,10 @@ p,
 a,
 button,
 table,
-nb-action,
-.form-control {
-  // font-family: 'Saira Semi Condensed', sans-serif !important;
-}
+nb-action
 
 :host ::ng-deep .window-mode {
   .layout {
-    // background-color: #f5f8fc;
     background-color: black !important;
     background: black !important;
   }
@@ -112,11 +104,6 @@ nb-layout-footer {
     -ms-shadow: 0 0.5rem 1rem 0 rgba(44, 51, 73, 0.1);
     -o-shadow: 0 0.5rem 1rem 0 rgba(44, 51, 73, 0.1);
 
-    // display: block;
-    // margin-top: auto;
-    // position: fixed;
-    // bottom: 0;
-    // width: calc(100% - 256px);
     ngx-footer {
       justify-content: center !important;
     }
@@ -134,15 +121,10 @@ nb-layout-footer {
   flex-direction: row;
 }
 
-.page-card {
-  // border-top: 3px solid grey !important;
-}
-
 .page-body {
   width: 100%;
 }
 
-// form styles
 .actions-button {
   display: flex;
   flex-direction: row;
@@ -160,7 +142,7 @@ nb-layout-footer {
   height: 100px;
 }
 
-// back to list button
+
 .back-button {
   cursor: pointer;
 }
@@ -171,51 +153,6 @@ ng2-st-tbody-custom {
   flex-direction: row;
 }
 
-// .nb-theme-corporate nb-menu .menu-item .menu-icon {
-//   font-size: 16px !important;
-//   width: auto;
-//   margin-left: 0px;
-//   margin-right: 15px !important;
-//   font-weight: 600;
-// }
-
-// .nb-theme-corporate nb-menu .menu-items>.menu-item {
-//   border-bottom: 1px solid #edf1f7;
-// }
-
-// .nb-theme-corporate nb-menu .menu-item>.menu-items>.menu-item a {
-//   border: 0 !important;
-//   background-color: #d1e9ff;
-// }
-
-// .nb-theme-corporate nb-menu .menu-item a:hover,
-// .nb-theme-corporate nb-menu .menu-item a.active {
-//   background-color: #e6f3ff;
-//   font-weight: 500 !important;
-// }
-
-// .nb-theme-corporate nb-menu .menu-item>.menu-items>.menu-item:first-child,
-// .nb-theme-corporate nb-menu .menu-item>.menu-items>.menu-item:last-child {
-//   margin: 0;
-// }
-
-// .nb-theme-corporate nb-menu .menu-item>.menu-items>.menu-item a.active {
-//   background-color: #b5dcff;
-// }
-
-// .nb-theme-corporate nb-menu .menu-item>.menu-items,
-// .nb-theme-corporate nb-menu .menu-item>.menu-items>.menu-item,
-// .nb-theme-corporate nb-menu .menu-item>.menu-items>.menu-item a:hover {
-//   background-color: #e6f3ff;
-// }
-
-// .nb-theme-corporate nb-menu .menu-item a {
-//   padding: 12px 15px !important;
-
-//   &.active {
-//     font-weight: 500 !important;
-//   }
-// }
 .nb-theme-corporate nb-checkbox .customised-control-indicator {
   position: relative;
   top: -1px;

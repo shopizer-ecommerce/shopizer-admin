@@ -77,8 +77,16 @@ export class CategoriesHierarchyComponent implements OnInit {
     console.log(event);
     // const someNode = this.tree.treeModel.getNodeById(event.to.parent.id);
     // someNode.expand();
+    var parentId = event.to.parent.id;
 
-    this.categoryService.updateHierarchy(event.node.id, event.to.parent.id)
+
+
+    if(event.to.parent.name === undefined) {
+      parentId = -1;
+    } 
+
+
+    this.categoryService.updateHierarchy(event.node.id, parentId)
       .subscribe(res => {
         this.toastr.success(this.translate.instant('CATEGORY.HIERARCHY_UPDATED'));
       });

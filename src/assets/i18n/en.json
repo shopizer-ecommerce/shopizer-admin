@@ -215,6 +215,9 @@
     "CATEGORY_CREATED": "Category created.",
     "CATEGORY_REMOVED": "Category removed."
   },
+  "CATEGORY_HIERARCHY": {
+    "DETAILS": "Drag and drop categories to re-organize placement"
+  },
   "CATALOG": {
     "CATALOGUES_PRODUCTS": "Catalogues products",
     "CATALOG_UPDATED": "Catalogue updated.",
@@ -403,7 +406,6 @@
     "COMMENT": "Comment",
     "STATUS_COMMENT": "Status Comment",
     "UPDATE_STATUS": "Update Status",
-    "HISTORY_LIST": "History List",
     "DATE": "Date",
     "AMOUNT": "Amount",
     "PRINT_INVOICE": "Print Invoice",
