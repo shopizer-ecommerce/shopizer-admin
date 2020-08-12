@@ -33,6 +33,7 @@ export class UserFormComponent implements OnInit {
   groups = [];
   canRemove = true;
   canEdit = true;
+  canChangePassword = false;
   selfEdit = false;
   pwdPattern = '^(?=[^A-Z]*[A-Z])(?=[^a-z]*[a-z])(?=[^0-9]*[0-9]).{6,12}$';
   emailPattern = '^([a-zA-Z0-9_\\-\\.]+)@([a-zA-Z0-9_\\-\\.]+)\\.([a-zA-Z]{2,5})$';
@@ -44,6 +45,11 @@ export class UserFormComponent implements OnInit {
   // user's roles
   roles;
   // rules for user's group
+  /**
+   * super admin
+   * admin
+   * can change other users password
+   */
   rules = {
     'ADMIN_RETAIL': {
       rules: [
@@ -78,13 +84,17 @@ export class UserFormComponent implements OnInit {
 
   ngOnInit() {
 
-    //remove user
+    //if not user self remove user
     this._user && this._user.id === +this.userService.getUserId() ? this.canRemove = false : this.canRemove = true
     this.selfEdit = this._user && this._user.id === +this.userService.getUserId();
 
     //don't show remove when creating a new user
     if (!this._user) {
       this.canRemove = false;
+    }
+
+    if(this.roles.isSuperadmin || this.roles.isAdmin || this.roles.isRetailAdmin ) {//current user can change password if one of the following
+      this.canChangePassword = true;
     }
 
     if (this._user) {
@@ -110,8 +120,15 @@ export class UserFormComponent implements OnInit {
 
       //current store
       //console.log('Current store -> ' + this.store);
+      /**
+       * Admin and superadmin can create users
+       * Only superadmin can create admins. Usually superadmin creates a store and the
+       * a user as store administration. Admin user can then create users for that store
+       * with lower privileges
+       */
       //*br1* only superadmin and retailer admin can see all stores
       //*br2* if store has child, can view childs also when not superadmin
+      //*br3* only superadmin can create an admin.
 
       // fill stores
       this.stores = [...stores];
@@ -128,10 +145,10 @@ export class UserFormComponent implements OnInit {
 
       //console.log(this.roles);
 
-      (this.roles.isSuperadmin || this.roles.isAdminRetail) ?
+      (this.roles.isSuperadmin || this.roles.isAdminRetail || this.roles.isAdmin) ?
         this.form.controls['store'].enable() : this.form.controls['store'].disable();
 
-      console.log('User is admin retail ' + this.securityService.isRetailAdmin());
+      //console.log('User is admin retail ' + this.securityService.isRetailAdmin());
 
 
       // fill groups
@@ -146,8 +163,8 @@ export class UserFormComponent implements OnInit {
             el.disabled = true;
           }
         }
-        if (el.name === 'ADMIN') {
-          if (this.securityService.hasAdminRole()) {
+        if (el.name === 'ADMIN') {//br3
+          if (!this.securityService.isSuperAdmin()) {
             el.disabled = true;
           }
         }
@@ -164,7 +181,6 @@ export class UserFormComponent implements OnInit {
         }
         this._user.groups.forEach((uGroup) => {
           this.groups.forEach((group) => {
-            //console.log('Looking at group ' + group.name);
             if (group.name === 'SUPERADMIN') {
               group.disabled = true;
             }
@@ -333,7 +349,7 @@ export class UserFormComponent implements OnInit {
   }
 
   checkRules(role) {
-    console.log('Role name ' + role);
+    //console.log('Role name ' + role);
     if (this.rules[role].rules.length !== 0) {
       this.rules[role].rules.forEach((el) => {
         this.groups.forEach((group) => {

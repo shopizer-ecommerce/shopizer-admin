@@ -70,7 +70,7 @@
             </div>
           </div>
 
-          <div class="form-group" *ngIf="!user?.id">
+          <div class="form-group" *ngIf="!user?.id || canChangePassword">
             <label for="password" class="col-sm-3 col-form-label inputLabel">{{ 'COMMON.PASSWORD' | translate }} *</label>
             <div class="col-sm-12">
               <input type="password" class="form-control inputText" id="password" formControlName='password'
