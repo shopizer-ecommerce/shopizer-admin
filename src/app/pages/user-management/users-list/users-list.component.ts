@@ -12,6 +12,7 @@ import { SecurityService } from '../../shared/services/security.service';
 import { ToastrService } from 'ngx-toastr';
 import { ButtonRenderUserComponent } from './button-render-user.component'
 import { ShowcaseDialogComponent } from '../../shared/components/showcase-dialog/showcase-dialog.component';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'ngx-users-list',
@@ -23,10 +24,15 @@ export class UsersListComponent implements OnInit {
   loadingList = false;
 
   // paginator
-  perPage = 10;
+  perPage = 15;
   currentPage = 1;
   totalCount;
   totalPages;
+
+
+  filterChange = false;
+  filterResetable = false;
+  filterString = '';
 
   searchValue: string = '';
 
@@ -39,7 +45,6 @@ export class UsersListComponent implements OnInit {
     private userService: UserService,
     private router: Router,
     private translate: TranslateService,
-    private _sanitizer: DomSanitizer,
     private storageService: StorageService,
     private securityService: SecurityService,
     private dialogService: NbDialogService,
@@ -58,7 +63,6 @@ export class UsersListComponent implements OnInit {
   }
 
   getList() {
-    console.log('Getting list');
     this.params.page = this.currentPage - 1;
     this.loadingList = true;
     this.userService.getUsersList(this.storageService.getMerchant(), this.params)
@@ -86,7 +90,106 @@ export class UsersListComponent implements OnInit {
     });
   }
 
-  ngOnInit() { }
+  ngOnInit() { 
+
+
+    this.source.onChanged().subscribe((change) => {
+
+
+      //if (change.action === 'filter' && !this.loadingList) {
+      if (!this.loadingList) {
+
+
+        console.log('event ' + this.filterChange + ' ' + this.filterString);
+
+        var params = this.filter(change);
+        var self = this;
+        var filterValues = '';
+
+        //if empty array and filer values reset list
+        if (params.length != 0) {
+          //console.log('Parameters are ' + JSON.stringify(params));
+          params.forEach(function (entry) {
+            //console.log('Field ' + entry.field);
+            //console.log('Value ' + entry.value);
+            self.params[entry.field] = entry.value;
+            self.params['page'] = 0;
+            filterValues = filterValues + entry.value;
+          });
+
+          if(this.filterString != filterValues) {
+            this.filterChange = true; //block reload
+            this.filterString = filterValues;
+          }
+
+          console.log('Filter change A ? ' + this.filterChange);
+          if(this.filterChange) {
+            //console.log('Filter search ' + JSON.stringify(this.params));
+            this.getList();//load with filters
+            //reset filters
+            this.filterChange = false;
+            this.filterResetable = true;
+            //console.log('Filter change B ? ' + this.filterChange);
+          }
+  
+        } else {
+
+          console.log('event ' + this.filterChange + ' ' + this.filterString);
+          //reset
+          this.filterString = '';
+          this.params = this.loadParams();
+          //console.log('Parameters reset ' + JSON.stringify(this.params));
+          //this.getList();
+          if(this.filterResetable) {
+            //reset filters
+            this.filterResetable = false;
+            this.filterChange = false;
+            this.getList();//load with filters
+            console.log('event ' + this.filterChange + ' ' + this.filterString);
+          }
+        }
+      }
+
+    });
+
+
+  }
+
+  /**
+   * 
+   * @param change returns parameters and values
+   */
+  filter(change) {
+    let filters = change.filter;
+    
+    if(filters != null) {
+      let requestParam = null;
+      let params = [];
+      
+      var self = this;
+      filters.filters.forEach(function (filter) {
+
+        if(!self.isNullOrWhiteSpace(filter.search)) {
+          console.log('name ' + filter.field);
+          console.log('value ' + filter.search);
+          params.push({
+            field: filter.field, 
+            value:  filter.search
+          });
+          
+        } 
+
+      });
+
+     return params;
+
+    }
+  }
+
+
+  isNullOrWhiteSpace(value) {
+    return (!value || value.length === 0 || /^\s*$/.test(value)) 
+  }
 
   setSettings() {
 
@@ -203,9 +306,13 @@ export class UsersListComponent implements OnInit {
         break;
       }
     }
+    this.filterChange = false;
     this.getList();
   }
 
+
+
+  //TO BE REMOVED
   resetSearch() {
     this.searchValue = null;
     this.params = this.loadParams();
