@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { DomSanitizer } from '@angular/platform-browser';
 import * as _ from 'lodash';
 
 import { UserService } from '../../shared/services/user.service';
@@ -12,7 +11,8 @@ import { SecurityService } from '../../shared/services/security.service';
 import { ToastrService } from 'ngx-toastr';
 import { ButtonRenderUserComponent } from './button-render-user.component'
 import { ShowcaseDialogComponent } from '../../shared/components/showcase-dialog/showcase-dialog.component';
-import { filter } from 'rxjs/operators';
+import { ListingService } from '../../shared/services/listing.service';
+
 
 @Component({
   selector: 'ngx-users-list',
@@ -21,6 +21,7 @@ import { filter } from 'rxjs/operators';
 })
 export class UsersListComponent implements OnInit {
   source: LocalDataSource = new LocalDataSource();
+  listingService: ListingService;
   loadingList = false;
 
   // paginator
@@ -28,11 +29,6 @@ export class UsersListComponent implements OnInit {
   currentPage = 1;
   totalCount;
   totalPages;
-
-
-  filterChange = false;
-  filterResetable = false;
-  filterString = '';
 
   searchValue: string = '';
 
@@ -48,11 +44,13 @@ export class UsersListComponent implements OnInit {
     private storageService: StorageService,
     private securityService: SecurityService,
     private dialogService: NbDialogService,
-    private toastr: ToastrService,
+    private toastr: ToastrService
   ) {
+    this.listingService = new ListingService()
     this.getList();
   }
 
+  //object
   loadParams() {
     return {
       lang: this.storageService.getLanguage(),
@@ -71,11 +69,6 @@ export class UsersListComponent implements OnInit {
         this.totalCount = res.recordsTotal;
         this.totalPages = res.totalPages;
 
-        // remove current user from list
-        // const index = usersArray.findIndex(el => el.id === +this.userService.getUserId());
-        // usersArray.splice(index, 1);
-
-        // creating 'name' property for displaying in the table
         usersArray.map(user => {
           user.name = user.firstName + ' ' + user.lastName;
           return user;
@@ -90,106 +83,34 @@ export class UsersListComponent implements OnInit {
     });
   }
 
+  /** callback methods for table list*/
+  private loadList(newParams:any) {
+    //console.log('CallBack loadList');
+    //console.log(JSON.stringify(newParams));
+    this.currentPage = 1; //back to page 1
+    this.params = newParams;
+    this.getList();
+  }
+
+  private resetList() {
+    //console.log('CallBack resetList');
+    this.currentPage = 1;//back to page 1
+    this.params = this.loadParams();
+    this.getList();
+  }
+
   ngOnInit() { 
 
-
+    //ng2-smart-table server side filter
     this.source.onChanged().subscribe((change) => {
 
-
-      //if (change.action === 'filter' && !this.loadingList) {
-      if (!this.loadingList) {
-
-
-        console.log('event ' + this.filterChange + ' ' + this.filterString);
-
-        var params = this.filter(change);
-        var self = this;
-        var filterValues = '';
-
-        //if empty array and filer values reset list
-        if (params.length != 0) {
-          //console.log('Parameters are ' + JSON.stringify(params));
-          params.forEach(function (entry) {
-            //console.log('Field ' + entry.field);
-            //console.log('Value ' + entry.value);
-            self.params[entry.field] = entry.value;
-            self.params['page'] = 0;
-            filterValues = filterValues + entry.value;
-          });
-
-          if(this.filterString != filterValues) {
-            this.filterChange = true; //block reload
-            this.filterString = filterValues;
-          }
-
-          console.log('Filter change A ? ' + this.filterChange);
-          if(this.filterChange) {
-            //console.log('Filter search ' + JSON.stringify(this.params));
-            this.getList();//load with filters
-            //reset filters
-            this.filterChange = false;
-            this.filterResetable = true;
-            //console.log('Filter change B ? ' + this.filterChange);
-          }
-  
-        } else {
-
-          console.log('event ' + this.filterChange + ' ' + this.filterString);
-          //reset
-          this.filterString = '';
-          this.params = this.loadParams();
-          //console.log('Parameters reset ' + JSON.stringify(this.params));
-          //this.getList();
-          if(this.filterResetable) {
-            //reset filters
-            this.filterResetable = false;
-            this.filterChange = false;
-            this.getList();//load with filters
-            console.log('event ' + this.filterChange + ' ' + this.filterString);
-          }
-        }
+      if (!this.loadingList) {//listing service
+        this.listingService.filterDetect(this.params,change,this.loadList.bind(this),this.resetList.bind(this));
       }
 
     });
-
-
   }
 
-  /**
-   * 
-   * @param change returns parameters and values
-   */
-  filter(change) {
-    let filters = change.filter;
-    
-    if(filters != null) {
-      let requestParam = null;
-      let params = [];
-      
-      var self = this;
-      filters.filters.forEach(function (filter) {
-
-        if(!self.isNullOrWhiteSpace(filter.search)) {
-          console.log('name ' + filter.field);
-          console.log('value ' + filter.search);
-          params.push({
-            field: filter.field, 
-            value:  filter.search
-          });
-          
-        } 
-
-      });
-
-     return params;
-
-    }
-  }
-
-
-  isNullOrWhiteSpace(value) {
-    return (!value || value.length === 0 || /^\s*$/.test(value)) 
-  }
 
   setSettings() {
 
@@ -306,45 +227,10 @@ export class UsersListComponent implements OnInit {
         break;
       }
     }
-    this.filterChange = false;
     this.getList();
   }
 
 
 
-  //TO BE REMOVED
-  resetSearch() {
-    this.searchValue = null;
-    this.params = this.loadParams();
-    this.getList();
-  }
-
-  onSearch(query: string = '') {
-
-    if (query.length == 0) {
-      this.searchValue = null;
-      return;
-    }
-
-    //server side search
-    this.params["emailAddress"] = query;
-    this.getList();
-
-    /**
-    this.source.setFilter([
-      {
-        field: 'name',
-        search: query
-      },
-      {
-        field: 'emailAddress',
-        search: query
-      }
-    ], false); 
-    **/
-
-    this.searchValue = query;
-
-  }
 
 }
