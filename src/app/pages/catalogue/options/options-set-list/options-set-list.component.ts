@@ -15,27 +15,16 @@ import { ToastrService } from 'ngx-toastr';
 export class OptionsSetListComponent implements OnInit {
   source: LocalDataSource = new LocalDataSource();
   loadingList = false;
-  // options = [];
   settings = {};
 
-  // paginator
-  // perPage = 10;
-  // currentPage = 1;
-  // totalCount;
-  // searchValue: string = '';
-  // stores: Array<any> = [];
-  // selectedStore: String = '';
-  // params = this.loadParams();
   constructor(
     private optionService: OptionService,
     private translate: TranslateService,
     private router: Router,
     private dialogService: NbDialogService,
     private toastr: ToastrService,
-    // private storageService: StorageService,
-    // private storeService: StoreService,
+
   ) {
-    // this.getStoreList()
   }
 
   ngOnInit() {
