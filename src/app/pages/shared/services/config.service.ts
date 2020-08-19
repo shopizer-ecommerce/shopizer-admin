@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../../../environments/environment';
 import { CrudService } from './crud.service';
-import { Language } from '../models/language';
+import { Language } from '../models/Language';
 import { TranslateService } from '@ngx-translate/core';
 
 
