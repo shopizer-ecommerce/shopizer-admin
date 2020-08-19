@@ -6,6 +6,8 @@
         <div class="content_spacing_empty"></div>
 
       </nb-card-header>
+
+      <!--
       <form class="form-inline filter_section">
         <div class="filter_left_section">
           <input #search class="search form-control ng-pristine ng-valid ng-touched" value="{{ searchValue }}" type="text"
@@ -14,17 +16,9 @@
             (click)="onSearch(search.value)" class="sda">
           <img class="pointer" src="../../../../assets/img/reload.png" title="{{ 'COMMON.RESET' | translate}}" alt=""
             (click)="resetSearch()" class="sda">
-
         </div>
-        <!-- <div class="filter_right_section">
-          <a class="createBtn" (click)="createNew()">
-            <img class="pointer sda" src="../../../../assets/img/plus.png" title="{{ 'COMPONENTS.CREATE_CATEGORY' | translate}}"
-              alt="">
-            <label>{{ 'COMPONENTS.CREATE_CATEGORY' | translate}}</label>
-          </a>
-        </div> -->
-
       </form>
+      -->
 
       <ng2-smart-table [settings]="settings" [source]="source" (custom)="route($event)" class="home-table">
       </ng2-smart-table>

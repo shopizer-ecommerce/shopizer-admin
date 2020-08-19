@@ -7,9 +7,6 @@ import { TranslateService } from '@ngx-translate/core';
 import { ShowcaseDialogComponent } from '../../../shared/components/showcase-dialog/showcase-dialog.component';
 import { NbDialogService } from '@nebular/theme';
 import { ToastrService } from 'ngx-toastr';
-// import { StorageService } from '../../../shared/services/storage.service';
-// import { StoreService } from '../../../store-management/services/store.service';
-
 @Component({
   selector: 'ngx-options-set-list',
   templateUrl: './options-set-list.component.html',
@@ -44,29 +41,11 @@ export class OptionsSetListComponent implements OnInit {
   ngOnInit() {
     this.getList();
   }
-  // loadParams() {
-  //   return {
-  //     store: this.storageService.getMerchant(),
-  //     // lang: this.storageService.getLanguage(),
-  //     count: this.perPage,
-  //     page: 0
-  //   };
-  // }
-  // getStoreList() {
-  //   this.storeService.getListOfMerchantStoreNames({ 'store': '' })
-  //     .subscribe(res => {
-  //       res.forEach((store) => {
-  //         this.stores.push({ value: store.code, label: store.code });
-  //       });
-  //     });
-  // }
+
   getList() {
-    // this.params.page = this.currentPage - 1;
 
     this.loadingList = true;
     this.optionService.getListOfOptionsSet().subscribe((res) => {
-      // console.log(res);
-      // this.totalCount = res.recordsTotal;
 
       this.source.load(res);
       this.loadingList = false;
@@ -110,10 +89,9 @@ export class OptionsSetListComponent implements OnInit {
         option: {
           title: 'Option',
           type: 'string',
-          filter: false,
+          filter: true,
           valuePrepareFunction: (value) => {
-            // console.log(value)
-            return value.name
+            return value.name;
           }
         },
         values: {
@@ -121,37 +99,12 @@ export class OptionsSetListComponent implements OnInit {
           type: 'string',
           filter: false,
           valuePrepareFunction: (data) => {
-            // console.log(value)
-            let value = data.map(a => a.name).join(", ");;
-            return value
+            if(data != null) {
+              let value = data.map(a => a.name).join(", ");
+              return value;
+            }
           }
         }
-        // descriptions: {
-        //   title: this.translate.instant('COMMON.NAME'),
-        //   type: 'html',
-        //   editable: false,
-        //   filter: false,
-        //   valuePrepareFunction: (descriptions) => {
-        //     // parent_id for link
-        //     let parent_id = -1;
-        //     // find element with certain language
-        //     const description = descriptions.find(el => {
-        //       // set parent_id
-        //       if (parent_id === -1 && el) {
-        //         parent_id = el.parent_id;
-        //       }
-        //       return el.language === this.storageService.getLanguage();
-        //     });
-        //     const name = description && description.name ? description.name : '';
-        //     // return `<a href="#/pages/catalogue/options/option/${parent_id}">${name}</a>`;
-        //     return name;
-        //   }
-        // },
-        // type: {
-        //   title: "Type",
-        //   type: 'string',
-        //   filter: false
-        // }
       },
     };
   }
@@ -173,46 +126,7 @@ export class OptionsSetListComponent implements OnInit {
       });
   }
 
-  // paginator
-  // changePage(event) {
-  //   switch (event.action) {
-  //     case 'onPage': {
-  //       this.currentPage = event.data;
-  //       break;
-  //     }
-  //     case 'onPrev': {
-  //       this.currentPage--;
-  //       break;
-  //     }
-  //     case 'onNext': {
-  //       this.currentPage++;
-  //       break;
-  //     }
-  //     case 'onFirst': {
-  //       this.currentPage = 1;
-  //       break;
-  //     }
-  //     case 'onLast': {
-  //       this.currentPage = event.data;
-  //       break;
-  //     }
-  //   }
-  //   this.getList();
-  // }
-  // onSearch(value) {
-  //   this.params["name"] = value;
-  //   this.searchValue = value;
-  //   this.getList()
-  // }
-  // resetSearch() {
-  //   this.params = this.loadParams();
-  //   this.searchValue = null;
-  //   this.getList();
-  // }
-  // onSelectStore(e) {
-  //   this.params["store"] = e.value;
-  //   this.getList();
-  // }
+
   onClickAction(event) {
     switch (event.action) {
       case 'edit':

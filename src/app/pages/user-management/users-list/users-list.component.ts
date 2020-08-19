@@ -30,8 +30,6 @@ export class UsersListComponent implements OnInit {
   totalCount;
   totalPages;
 
-  searchValue: string = '';
-
   // server params
   params = this.loadParams();
 

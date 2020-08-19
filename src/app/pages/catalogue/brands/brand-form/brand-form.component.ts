@@ -50,7 +50,7 @@ export class BrandFormComponent implements OnInit {
   ngOnInit() {
     this.createForm();
     this.loader = true;
-    this.configService.getListOfSupportedLanguages()
+    this.configService.getListOfSupportedLanguages(localStorage.getItem('merchant'))
       .subscribe(res => {
         this.languages = [...res];
         this.createForm();

@@ -90,7 +90,7 @@ export class ProductFormComponent implements OnInit {
     this.loader = true;
     const manufacture$ = this.manufactureService.getManufacturers();
     const product$ = this.productService.getProductTypes();
-    const config$ = this.configService.getListOfSupportedLanguages();
+    const config$ = this.configService.getListOfSupportedLanguages(localStorage.getItem('merchant'));
     forkJoin(manufacture$, product$, config$)
       .subscribe(([manufacturers, productTypes, languages]) => {
         this.manufacturers = [...manufacturers.manufacturers];

@@ -11,7 +11,7 @@ import { Country } from '../models/country';
 })
 export class CrudService {
   url = environment.apiUrl;
-  shippingUrl = environment.shippingapi;
+  shippingUrl = environment.shippingApi;
 
   constructor(private http: HttpClient) { }
 

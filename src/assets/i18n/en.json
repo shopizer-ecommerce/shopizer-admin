@@ -278,6 +278,7 @@
     "SELECT_PRODUCT_GROUP": "Select group"
   },
   "OPTION": {
+    "OPTION_NAME": "Option name",
     "OPTION_UPDATED": "Option updated.",
     "OPTION_CREATED": "Option created.",
     "OPTION_REMOVED": "Option removed.",
@@ -286,9 +287,15 @@
     "SET_OPTION_UPDATED": "Option set has been updated."
   },
   "OPTION_VALUE": {
+    "OPTION_VALUE": "Option value",
+    "OPTION_VALUE_NAME": "Option value name",
     "OPTION_VALUE_UPDATED": "Option value updated.",
     "OPTION_VALUE_CREATED": "Option value created.",
     "OPTION_VALUE_REMOVED": "Option value removed."
+  },
+  "OPTION_SET": {
+    "SELECT_OPTION_NAME": "Select option name",
+    "ADD_OPTION_VALUE": "Add option values"
   },
   "SHIPPING": {
     "CONFIGURATION": "Configuration",
@@ -480,7 +487,8 @@
     "ONLY_TEN_IMAGES": "You can upload max 10 images",
     "NO_ITEMS": "No items to show",
     "VALUE_REQUIRED": "Value is required",
-    "ACTIONS": "Actions"
+    "ACTIONS": "Actions",
+    "READ_ONLY": "Read only"
   },
   "DESCRIPTION_FORM": {
     "NAME": "Name",
@@ -498,7 +506,8 @@
   "LANG": {
     "en": "English",
     "fr": "French",
-    "ru": "Russian"
+    "ru": "Russian",
+    "es": "Spanish"
   },
   "filemanager": {
     "cancel": "Cancel",

@@ -11,6 +11,9 @@ import { TranslateService } from '@ngx-translate/core';
 import { StorageService } from '../../../shared/services/storage.service';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
+import { ListingService } from '../../../shared/services/listing.service';
+
+
 @Component({
   selector: 'ngx-products-list',
   templateUrl: './products-list.component.html',
@@ -19,6 +22,7 @@ import { Router } from '@angular/router';
 export class ProductsListComponent implements OnInit {
   products = [];
   source: LocalDataSource = new LocalDataSource();
+  listingService: ListingService;
   loadingList = false;
   stores = [];
   isSuperadmin: boolean;
@@ -29,12 +33,7 @@ export class ProductsListComponent implements OnInit {
   totalCount;
 
   // server params
-  params = {
-    store: this.storageService.getMerchant(),
-    lang: this.storageService.getLanguage(),
-    count: this.perPage,
-    start: 0
-  };
+  params = this.loadParams();
   settings = {};
 
   constructor(
@@ -49,6 +48,16 @@ export class ProductsListComponent implements OnInit {
   ) {
     this.selectedStore = this.storageService.getMerchant()
     this.isSuperadmin = this.storageService.getUserRoles().isSuperadmin;
+    this.listingService = new ListingService();
+  }
+
+  loadParams() {
+    return {
+      store: this.storageService.getMerchant(),
+      lang: this.storageService.getLanguage(),
+      count: this.perPage,
+      start: 0
+    };
   }
 
   ngOnInit() {
@@ -64,7 +73,31 @@ export class ProductsListComponent implements OnInit {
       this.params.lang = this.storageService.getLanguage();
       this.getList();
     });
+
+
+    //ng2-smart-table server side filter
+    this.source.onChanged().subscribe((change) => {
+      if (!this.loadingList) {//listing service
+          this.listingService.filterDetect(this.params,change,this.loadList.bind(this),this.resetList.bind(this));
+      }
+    });
   }
+
+      /** callback methods for table list*/
+      private loadList(newParams:any) {
+        //console.log('CallBack loadList');
+        //console.log(JSON.stringify(newParams));
+        this.currentPage = 1; //back to page 1
+        this.params = newParams;
+        this.getList();
+      }
+    
+      private resetList() {
+        //console.log('CallBack resetList');
+        this.currentPage = 1;//back to page 1
+        this.params = this.loadParams();
+        this.getList();
+      }
 
   getList() {
     const startFrom = (this.currentPage - 1) * this.perPage;
@@ -105,16 +138,19 @@ export class ProductsListComponent implements OnInit {
         id: {
           title: this.translate.instant('COMMON.ID'),
           type: 'number',
-          editable: false
+          editable: false,
+          filter: false
         },
         sku: {
           title: this.translate.instant('PRODUCT.SKU'),
           type: 'string',
-          editable: false
+          editable: false,
+          filter: true
         },
         name: {
           title: this.translate.instant('PRODUCT.PRODUCT_NAME'),
           type: 'html',
+          filter: true,
           editable: false,
           valuePrepareFunction: (name) => {
             const id = this.products.find(el => el.name === name).id;
@@ -124,7 +160,8 @@ export class ProductsListComponent implements OnInit {
         quantity: {
           title: this.translate.instant('PRODUCT.QTY'),
           type: 'number',
-          editable: true
+          editable: true,
+          filter: false
         },
         available: {
           filter: false,
@@ -140,12 +177,14 @@ export class ProductsListComponent implements OnInit {
         price: {
           title: this.translate.instant('PRODUCT.PRICE'),
           type: 'string',
-          editable: true
+          editable: true,
+          filter: false
         },
         creationDate: {
           title: this.translate.instant('PRODUCT.CREATION_DATE'),
           type: 'string',
-          editable: false
+          editable: false,
+          filter: false
         },
       },
     };

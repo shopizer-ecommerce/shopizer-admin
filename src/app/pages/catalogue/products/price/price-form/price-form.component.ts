@@ -62,7 +62,7 @@ export class PriceFormComponent implements OnInit {
     this.inventoryService.getInventoryById(this.params.productId, this.params.inventoryId)
       .subscribe(res => {
         this.inventory = res;
-        this.configService.getListOfSupportedLanguages()
+        this.configService.getListOfSupportedLanguages(localStorage.getItem('merchant'))
           .subscribe(ln => {
             this.languages = [...ln];
             this.addFormArray();

@@ -46,7 +46,7 @@ export class InventoryFormComponent implements OnInit {
         });
       });
     this.loader = true;
-    this.configService.getListOfSupportedLanguages()
+    this.configService.getListOfSupportedLanguages(localStorage.getItem('merchant'))
       .subscribe(res => {
         this.languages = [...res];
         this.createForm();

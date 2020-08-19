@@ -47,7 +47,7 @@ export class OptionsListComponent implements OnInit {
   loadParams() {
     return {
       store: this.storageService.getMerchant(),
-      // lang: this.storageService.getLanguage(),
+      lang: this.storageService.getLanguage(),
       count: this.perPage,
       page: 0
     };

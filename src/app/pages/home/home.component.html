@@ -1,11 +1,11 @@
-
+<div [nbSpinner]="loadingList" nbSpinnerSize="large" nbSpinnerStatus="primary">
 <div class="inner_pages home_page">
   <nb-card-header class="main_header">
       <h1 class="page_title"> {{ "HOME.STORE_INFORMATION" | translate }}</h1>
       <div class="main_spacer">
           &nbsp;
       </div>
-    </nb-card-header>
+  </nb-card-header>
 </div>
 
 <div class="row">
@@ -33,7 +33,9 @@
           </nb-card-body>
         </nb-card>
     </div>
+    
     <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+        <nb-card [nbSpinner]="loading" nbSpinnerSize="large" nbSpinnerStatus="primary">
         <nb-card class="nb-card inline-form-card">
           <nb-card-header class="nb-card-header">System management</nb-card-header>
           <nb-card-body class="nb-card-body">
@@ -42,8 +44,12 @@
               </div>
           </nb-card-body>
         </nb-card>
+      </nb-card>
     </div>
+    
 </div>
+
+
 
 <div class="row">
     <!--
@@ -72,3 +78,5 @@
   </div>
   </div>
 </nb-card>
+</div>
+

@@ -103,13 +103,13 @@ export class StoreFormComponent implements OnInit {
       this.configService.getListOfSupportedCurrency(),
       this.configService.getWeightAndSizes(),
       this.storeService.getListOfStores({ start: 0, length: 1500, retailers: true, store: this.merchant }),
-      this.configService.getListOfSupportedLanguages())
+      this.configService.getListOfSupportedLanguages(localStorage.getItem('merchant')))
       .subscribe(([countries, currencies, measures, stores, languages]) => {
         this.countries = [...countries];
         this.supportedCurrency = [...currencies];
         this.weightList = [...measures.weights];
         this.sizeList = [...measures.measures];
-        this.supportedLanguages = [...languages];
+        this.supportedLanguages = this.configService.getListOfGlobalLanguages();
         // use method for getting only retailer store
         //list of retailers
 
@@ -134,8 +134,8 @@ export class StoreFormComponent implements OnInit {
           }
         });
 
-        console.log('Retailer size ' + this.retailerArray.length);
-        console.log('Is retailer ' + this.isRetailer);
+        //console.log('Retailer size ' + this.retailerArray.length);
+        //console.log('Is retailer ' + this.isRetailer);
 
         this.adjustForm();
 
@@ -232,8 +232,8 @@ export class StoreFormComponent implements OnInit {
       this.form.controls['retailerStore'].disable();
     }
 
-    console.log('Creating form 3 ');
-    console.log('Store id' + this.store.id);
+    //console.log('Creating form 3 ');
+    //console.log('Store id' + this.store.id);
     if (this.store && this.store.id > 0) {
       this.fillForm();
     }
@@ -277,13 +277,10 @@ export class StoreFormComponent implements OnInit {
   fillForm() {
 
     this.isRetailer = this.store.retailer;
-    console.log('Fill form store ' + JSON.stringify(this.store));
+    //console.log('Fill form store ' + JSON.stringify(this.store));
     if (this.store.parent && this.store.parent != null) {
       this.parentRetailer = this.store.parent;
     }
-
-    console.log('No parents');
-
     //console.log('Parent code ' + this.parentRetailer.code);
 
     this.store.supportedLanguages.forEach(lang => {
@@ -388,8 +385,6 @@ export class StoreFormComponent implements OnInit {
 
 
     storeObj.supportedLanguages = this.supportedLanguagesSelected;
-    //console.log(storeObj);
-    //return;
 
     if (this.store.id) {
       this.storeService.updateStore(storeObj)

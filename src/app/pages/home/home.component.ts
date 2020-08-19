@@ -78,4 +78,12 @@ export class HomeComponent implements OnInit {
     return this._countryArray.filter(c => c.code === code);
   }
 
+  deleteCache() {
+    //start loading
+    this.loading = true;
+    //invoke backend
+    //return status
+    //stop loading
+  }
+
 }

@@ -111,7 +111,8 @@ export class UserFormComponent implements OnInit {
     this.createForm();
 
     this.store = this.storageService.getMerchant();
-    const languages = this.configService.getMerchantListOfSupportedLanguages();
+    //const languages = this.configService.getMerchantListOfSupportedLanguages();
+    const languages = this.configService.getListOfGlobalLanguages();
     const groups$ = this.configService.getListOfGroups();
     const stores$ = this.storeService.getListOfMerchantStoreNames({ 'store': this.store });
     forkJoin(groups$, stores$).subscribe(([groups, stores]) => {
@@ -294,7 +295,7 @@ export class UserFormComponent implements OnInit {
           this.toastr.success(this.translate.instant('USER_FORM.USER_UPDATED'));
         });
     } else {
-      console.log(this.form.value);
+      //console.log(this.form.value);
       this.userService.createUser(this.form.value, store)
         .subscribe(res => {
           this.toastr.success(this.translate.instant('USER_FORM.USER_CREATED'));

@@ -11,6 +11,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { ProductService } from '../../products/services/product.service';
 import { StorageService } from '../../../shared/services/storage.service';
 import { ToastrService } from 'ngx-toastr';
+import { ListingService } from '../../../shared/services/listing.service';
 
 @Component({
   selector: 'ngx-categories-list',
@@ -19,6 +20,7 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class CategoriesListComponent implements OnInit {
   source: LocalDataSource = new LocalDataSource();
+  listingService: ListingService;
   loadingList = false;
   categories = [];
   settings = {};
@@ -48,6 +50,7 @@ export class CategoriesListComponent implements OnInit {
 
   ) {
     this.roles = JSON.parse(localStorage.getItem('roles'));
+    this.listingService = new ListingService();
   }
 
   loadParams() {
@@ -58,6 +61,22 @@ export class CategoriesListComponent implements OnInit {
     };
   }
 
+    /** callback methods for table list*/
+    private loadList(newParams:any) {
+      //console.log('CallBack loadList');
+      //console.log(JSON.stringify(newParams));
+      this.currentPage = 1; //back to page 1
+      this.params = newParams;
+      this.getList();
+    }
+  
+    private resetList() {
+      //console.log('CallBack resetList');
+      this.currentPage = 1;//back to page 1
+      this.params = this.loadParams();
+      this.getList();
+    }
+
   ngOnInit() {
     this.getList();
     this.productService.getListOfProducts({})
@@ -65,10 +84,21 @@ export class CategoriesListComponent implements OnInit {
         this.availableList = [...res.products];
         this.selectedList = [];
       });
+
+
+    //TODO
     this.translate.onLangChange.subscribe((lang) => {
       this.params.lang = this.storageService.getLanguage();
       this.getList();
     });
+
+    //ng2-smart-table server side filter
+    this.source.onChanged().subscribe((change) => {
+      if (!this.loadingList) {//listing service
+        this.listingService.filterDetect(this.params,change,this.loadList.bind(this),this.resetList.bind(this));
+      }
+    });
+
   }
 
   // creating array of categories include children
@@ -128,15 +158,15 @@ export class CategoriesListComponent implements OnInit {
         store: {
           title: this.translate.instant('STORE.MERCHANT_STORE'),
           type: 'string',
-          filterFunction(cell: any, search?: string): boolean {
-            console.log('Cell ' + cell);
-            console.log('Search ' + search);
-            return true;
-          }
+          filter: false,
+          //filterFunction(cell: any, search?: string): boolean {
+          //  return true;
+          //}
         },
         description: {
           title: this.translate.instant('CATEGORY.CATEGORY_NAME'),
           type: 'string',
+          filter: true,
           valuePrepareFunction: (description) => {
             if (description) {
               return description.name;
@@ -146,6 +176,7 @@ export class CategoriesListComponent implements OnInit {
         code: {
           title: this.translate.instant('COMMON.CODE'),
           type: 'string',
+          filter: false,
         },
         parent: {
           title: this.translate.instant('CATEGORY.PARENT'),

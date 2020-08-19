@@ -1,6 +1,10 @@
 import { Injectable } from '@angular/core';
-
+import { environment } from '../../../../environments/environment';
 import { CrudService } from './crud.service';
+import { Language } from '../models/language';
+import { TranslateService } from '@ngx-translate/core';
+
+
 
 @Injectable({
   providedIn: 'root'
@@ -9,14 +13,57 @@ export class ConfigService {
   languages = [];
 
   constructor(
-    private crudService: CrudService
+    private crudService: CrudService,
+    private translate: TranslateService,
   ) {
   }
 
-  getListOfSupportedLanguages() {
+  getListOfSupportedLanguages(store: string) {
+    const params = {
+      'store': store
+    };
 
-    return this.crudService.get(`/v1/store/languages`);
+    return this.crudService.get(`/v1/store/languages`, params)
+
+
+    /**
+    return this.crudService.get(`/v1/store/languages`, params)
+    .map(function(languages) {
+      //console.log('Filtering languages ' + JSON.stringify(language));
+      languages.forEach(lang => {
+        console.log('Filtering language ' + JSON.stringify(lang));
+        console.log('Filtering languages ' + JSON.stringify(langs));
+        if(langs.indexOf(lang.code) > -1) {
+          console.log('Found ' + JSON.stringify(lang.code));
+          return lang;
+        }
+      });
+    })
+    **/
+    
+
+   /**
+    return this.crudService.get(`/v1/store/languages`, params)
+      .pipe(
+        map(function(languages) {
+          //console.log('Filtering languages ' + JSON.stringify(language));
+          languages.forEach(lang => {
+            console.log('Filtering language ' + JSON.stringify(lang));
+            console.log('Filtering languages ' + JSON.stringify(langs));
+            if(langs.indexOf(lang.code) > -1) {
+              console.log('Found ' + JSON.stringify(lang.code));
+              return lang;
+            }
+          });
+        })
+      );
+ **/
+      
+
+    //console.log('Return langs ' + JSON.stringify(supportedLangs));
+    //return supportedLangs;
   }
+
 
   //getListOfSupportedLanguages(store: string) {
   //  const params = {
@@ -25,14 +72,26 @@ export class ConfigService {
   //  return this.crudService.get(`/v1/store/languages`, params );
   //}
 
-  getMerchantListOfSupportedLanguages() {
-    return JSON.parse(localStorage.getItem('supportedLanguages'));
-  }
+  //getMerchantListOfSupportedLanguages() {
+  //  return JSON.parse(localStorage.getItem('supportedLanguages'));
+  //}
 
   getListOfSupportedLanguages1() {
     return this.crudService.get(`/v1/languages`).subscribe((languages) => {
       this.languages = [...languages];
     });
+  }
+
+  getListOfGlobalLanguages(): Language[] {
+      let langs:string[] = environment.client.language.array
+      let languages: Language[] = [];
+      langs.forEach(lang => {
+        var l = new Language(0,lang,this.translate.instant('LANG.' + lang));
+        languages.push(l);
+      });
+
+      //console.log('Global languages -> ' + JSON.stringify(languages));
+      return languages;
   }
 
   getListOfGroups() {

@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { CrudService } from '../../../shared/services/crud.service';
 import { Observable } from 'rxjs';
+import { StorageService } from '../../../shared/services/storage.service';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +10,8 @@ import { Observable } from 'rxjs';
 export class OptionService {
 
   constructor(
-    private crudService: CrudService
+    private crudService: CrudService,
+    private storageService: StorageService
   ) {
   }
 
@@ -45,7 +47,11 @@ export class OptionService {
 
   // Set option API
   getListOfOptionsSet(): Observable<any> {
-    return this.crudService.get('/v1/private/product/option/set');
+    const params = {
+      store: this.storageService.getMerchant(),
+      lang: this.storageService.getLanguage()
+    };
+    return this.crudService.get('/v1/private/product/option/set',params);
   }
 
   deleteOptioSet(id): Observable<any> {
@@ -55,13 +61,21 @@ export class OptionService {
     return this.crudService.get('/v1/private/product/option/set/unique?code=' + code);
   }
   createSetOption(param): Observable<any> {
-    return this.crudService.post('/v1/private/product/option/set', param);
+    const reqparams = {
+      store: this.storageService.getMerchant(),
+      lang: this.storageService.getLanguage()
+    };
+    return this.crudService.post('/v1/private/product/option/set', param, reqparams);
   }
-  getOptionSetById(id, params): Observable<any> {
 
+  getOptionSetById(id, params): Observable<any> {
     return this.crudService.get(`/v1/private/product/option/set/${id}`, params);
   }
   updateSetOption(id, param): Observable<any> {
-    return this.crudService.put(`/v1/private/product/option/set/${id}`, param);
+    const reqparams = {
+      store: this.storageService.getMerchant(),
+      lang: this.storageService.getLanguage()
+    };
+    return this.crudService.put(`/v1/private/product/option/set/${id}`, param, reqparams);
   }
 }

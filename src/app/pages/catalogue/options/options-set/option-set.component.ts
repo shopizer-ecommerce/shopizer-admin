@@ -1,14 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-// import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-
-// import { ConfigService } from '../../../shared/services/config.service';
-// import { Option } from '../models/option';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { OptionService } from '../services/option.service';
 import { OptionValuesService } from '../services/option-values.service';
 import { ToastrService } from 'ngx-toastr';
 import { TranslateService } from '@ngx-translate/core';
-// import { validators } from '../../../shared/validation/validators';
+import { validators } from '../../../shared/validation/validators';
 import { StorageService } from '../../../shared/services/storage.service';
 import { error } from '@angular/compiler/src/util';
 @Component({
@@ -17,8 +14,13 @@ import { error } from '@angular/compiler/src/util';
   styleUrls: ['./option-set.component.scss']
 })
 export class OptionSetComponent implements OnInit {
-  isCodeUnique = false;
-  options = {
+  isCodeExist = false;
+  isReadonlyCode = false;
+
+  isValidCode = true;
+  isValidOption = true;
+
+  option = {
     id: '',
     code: '',
     option: '',
@@ -26,9 +28,11 @@ export class OptionSetComponent implements OnInit {
     readOnly: false
   }
   loading: boolean = false;
+  form: FormGroup;
   productOption: Array<any> = [];
   productOptionValue: Array<any> = [];
   constructor(
+    private fb: FormBuilder,
     private router: Router,
     private optionService: OptionService,
     private optionValuesService: OptionValuesService,
@@ -40,38 +44,69 @@ export class OptionSetComponent implements OnInit {
     this.getOption()
   }
   ngOnInit() {
-    // console.log(this.activatedRoute);
+    this.createForm();
     const optionId = this.activatedRoute.snapshot.paramMap.get('optionId');
-    // console.log(optionId);
     if (optionId) {
-      // console.log('optionId')
       let param = {
-        lang: this.storageService.getLanguage()
+        lang: this.storageService.getLanguage(),
+        store: this.storageService.getMerchant()
       }
       this.optionService.getOptionSetById(optionId, param)
         .subscribe((res) => {
-          // console.log(res)
-          this.options.id = res.id;
-          this.options.code = res.code;
-          this.options.option = res.option.id;
-          this.options.readOnly = res.readOnly;
+
+          console.log(JSON.stringify(res));
+
+          this.option.id = res.id;
+          this.option.code = res.code;
+          this.option.option = res.option.id;
+          this.option.readOnly = res.readOnly;
           let value = []
-          // setTimeout(() => {
-          res.values.map((optionValue) => {
-            value.push(optionValue.id)
-          });
-          this.options.optionValues = value
-          // console.log(this.options.optionValues);
-          // }, 2000);
+          if(res.values) {
+            res.values.map((optionValue) => {
+              value.push(optionValue.id)
+            });
+          }
+          this.option.optionValues = value;
+          this.adjustForm();
 
         }, error => {
           this.loading = false;
         });
+
+        
     }
     this.translate.onLangChange.subscribe((lang) => {
       this.getOption();
     });
+    
   }
+
+  private adjustForm() {
+    console.log('In adjust ' + JSON.stringify(this.option));
+    this.form.patchValue({
+      readOnly: this.option.readOnly,
+      code: this.option.code,
+      option: this.option.option,
+      optionValues: this.option.optionValues
+    });
+
+    if (this.option.id) {
+      this.form.controls['code'].disable();
+    }
+
+  }
+
+
+  private createForm() {
+    this.form = this.fb.group({
+      readOnly: [false],
+      code: [{ value: '', disabled: false }, [Validators.required, Validators.pattern(validators.alphanumeric)]],
+      option: ['',[Validators.required]],
+      optionValues: this.fb.array([])
+    });
+  }
+ 
+
   getOption() {
     this.productOption = []
     this.loading = true
@@ -107,36 +142,72 @@ export class OptionSetComponent implements OnInit {
       });
   }
 
+  get code() {
+    return this.form.get('code');
+  }
+
+  get opt() {
+    return this.form.get('option');
+  }
+
+
   checkCode(event) {
+    this.isValidCode = true;
     const code = event.target.value.trim();
-    this.optionService.checkOptionSetCode(this.options.code)
+    this.optionService.checkOptionSetCode(this.option.code)
       .subscribe(res => {
-        // console.log(res)
-        this.isCodeUnique = res.exists;
+        //console.log(res)
+        this.isCodeExist = res.exists;
       });
   }
+
+  clickOption() {
+    this.isValidOption = true;
+  }
+
   save() {
     this.loading = true;
-    console.log(this.options)
-    let param = {
-      code: this.options.code,
-      option: this.options.option,
-      optionValues: this.options.optionValues,
-      readOnly: this.options.readOnly,
-    }
-    if (this.options.id) {
+    //console.log(this.options)
 
-      this.optionService.updateSetOption(this.options.id, param)
+    this.isValidCode = true;
+    this.isValidOption = true;
+
+    let param = {
+      code: this.option.code,
+      option: this.option.option,
+      optionValues: this.option.optionValues,
+      readOnly: this.option.readOnly,
+    }
+
+    let optionObj = this.form.value;
+    optionObj.optionValues = this.option.optionValues;
+
+    console.log('From object values ' + JSON.stringify(optionObj));
+
+    if(this.form.invalid) {
+      if(this.code.invalid) {
+        this.isValidCode = false;
+      }
+      if(this.opt.invalid) {
+        this.isValidOption = false;
+      }
+      this.loading = false;
+      return;
+    }
+
+    if (this.option.id) {
+      
+      this.optionService.updateSetOption(this.option.id, optionObj)
         .subscribe((res) => {
           this.toastr.success(this.translate.instant('OPTION.SET_OPTION_UPDATED'));
-          // this.goToback();
           this.loading = false;
         }, error => {
           this.loading = false;
         });
+     
     }
     else {
-      this.optionService.createSetOption(param)
+      this.optionService.createSetOption(optionObj)
         .subscribe((res) => {
           this.toastr.success(this.translate.instant('OPTION.SET_OPTION_CREATED'));
           this.goToback();
@@ -145,12 +216,25 @@ export class OptionSetComponent implements OnInit {
           this.loading = false;
         });
     }
+    
   }
   goToback() {
     this.router.navigate(['pages/catalogue/options/options-set-list']);
   }
   setSelected(e) {
     console.log(e)
-    this.options.optionValues = e;
+    this.option.optionValues = e;
+  }
+
+  public findInvalidControls() {
+    const invalid = [];
+    const controls = this.form.controls;
+    for (const name in controls) {
+      if (controls[name].invalid) {
+        invalid.push(name);
+      }
+    }
+    //console.log('Invalid fields ' + invalid);
+    //console.log('Form invalid ' + this.form.invalid);
   }
 }

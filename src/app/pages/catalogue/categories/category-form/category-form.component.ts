@@ -101,7 +101,7 @@ export class CategoryFormComponent implements OnInit {
     this.loader = true;
  
     //determines how many languages should be supported
-    this.configService.getListOfSupportedLanguages()
+    this.configService.getListOfSupportedLanguages(localStorage.getItem('merchant'))
       .subscribe(res => {
         this.languages = [...res];
         this.createForm();
