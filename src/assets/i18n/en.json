@@ -488,7 +488,11 @@
     "NO_ITEMS": "No items to show",
     "VALUE_REQUIRED": "Value is required",
     "ACTIONS": "Actions",
-    "READ_ONLY": "Read only"
+    "READ_ONLY": "Read only",
+    "radio": "Radio",
+    "checkbox": "Checkbox",
+    "select": "Select",
+    "text": "Text"
   },
   "DESCRIPTION_FORM": {
     "NAME": "Name",

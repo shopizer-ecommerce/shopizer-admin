@@ -3,6 +3,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { CategoryService } from '../services/category.service';
 import { ToastrService } from 'ngx-toastr';
 import { TranslateService } from '@ngx-translate/core';
+import { StorageService } from '../../../shared/services/storage.service';
 
 @Component({
   selector: 'ngx-categories-hierarchy',
@@ -15,27 +16,23 @@ export class CategoriesHierarchyComponent implements OnInit {
   options = {
     allowDrag: true
   }
-  // options = {
-  //   allowDrag: (node) => {
-  //     return node.data.parent;
-  //   },
-  //   allowDrop: (element, { parent, index }) => {
-  //     if (parent.data.hasOwnProperty('virtual')) {
-  //       return !parent.data.virtual;
-  //     } else {
-  //       return !parent.isRoot;
-
-  //     }
-  //   },
-  // };
-
   loader = false;
+  params = this.loadParams();
 
   constructor(
     private categoryService: CategoryService,
     private toastr: ToastrService,
     private translate: TranslateService,
+    private storageService: StorageService,
   ) {
+  }
+
+  loadParams() {
+    return {
+      lang: this.storageService.getLanguage(),
+      store: this.storageService.getMerchant(),
+      page: 0
+    };
   }
 
   ngOnInit() {
@@ -45,20 +42,13 @@ export class CategoriesHierarchyComponent implements OnInit {
 
   getList() {
     // TODO need possibility to get all items at once
-    this.categoryService.getListOfCategories()
+    this.categoryService.getListOfCategories(this.params)
       .subscribe(res => {
-        // this.categoryService.getListOfCategories({ count: res.totalPages })
-        //   .subscribe(categories => {
         res.categories.forEach((el) => {
           this.transformList(el);
         });
-        // const rootObject = {
-        //   ...res.categories,
-        //   children: [...res.categories]
-        // };
         this.nodes = res.categories
         this.loader = false;
-        // });
       });
   }
 

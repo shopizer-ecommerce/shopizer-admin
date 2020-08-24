@@ -20,7 +20,7 @@ export class OptionsValuesListComponent implements OnInit {
   loadingList = false;
 
   // paginator
-  perPage = 10;
+  perPage = 15;
   currentPage = 1;
   totalCount;
   params = this.loadParams();
@@ -43,7 +43,7 @@ export class OptionsValuesListComponent implements OnInit {
   loadParams() {
     return {
       store: this.storageService.getMerchant(),
-      // lang: this.storageService.getLanguage(),
+      lang: this.storageService.getLanguage(),
       count: this.perPage,
       page: 0
     };
@@ -83,7 +83,7 @@ export class OptionsValuesListComponent implements OnInit {
 
   setSettings() {
     this.settings = {
-      hideSubHeader: true,
+      hideSubHeader: false,
       actions: {
         columnTitle: '',
         add: false,
@@ -113,7 +113,7 @@ export class OptionsValuesListComponent implements OnInit {
         descriptions: {
           title: this.translate.instant('COMMON.NAME'),
           type: 'html',
-          filter: false,
+          filter: true,
           valuePrepareFunction: (descriptions) => {
             // parent_id for link
             let parent_id = -1;
@@ -127,7 +127,6 @@ export class OptionsValuesListComponent implements OnInit {
             });
             const name = description && description.name ? description.name : '';
             return name;
-            // return `<a href="#/pages/catalogue/options/option-value/${parent_id}">${name}</a>`;
           }
         }
       },

@@ -8,20 +8,12 @@
       </nb-card-header>
       <form class="form-inline filter_section">
         <div class="filter_left_section">
-          <input #search class="search form-control ng-pristine ng-valid ng-touched" value="{{ searchValue }}" type="text"
-            placeholder="{{ 'COMMON.SEARCH_BY_NAME' | translate }}" (keydown.enter)="onSearch(search.value)" style="width:45%">
-          <img class="pointer sda" src="../../../../assets/img/magnifying-glass.png" title="{{ 'COMMON.SEARCH' | translate}}"
-            (click)="onSearch(search.value)">
-          <img class="pointer sda" src="../../../../assets/img/reload.png" title="{{ 'COMMON.RESET' | translate}}" alt=""
-            (click)="resetSearch()">
-
-        </div>
-        <div class="filter_right_section">
-
           <p-dropdown *ngIf="stores.length> 0" [options]="stores" filter="true" (onChange)="onSelectStore($event)">
             <ng-template let-item pTemplate="selectedItem">{{item.label}}</ng-template>
             <ng-template let-car pTemplate="item">{{car.label}}</ng-template>
           </p-dropdown>
+        </div>
+        <div class="filter_right_section">
           <a class="createBtn" [routerLink]="['/pages/catalogue/options/create-option-value']">
             <img class="pointer sda" src="../../../../assets/img/plus.png" title="{{ 'COMPONENTS.CREATE_OPTION_VALUE' | translate}}"
               alt="">

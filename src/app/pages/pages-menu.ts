@@ -18,7 +18,6 @@ const IsSuperadmin = () => {
 };
 
 const IsAdmin = () => {
-  //return (JSON.parse(localStorage.getItem('roles'))).isAdmin;
   if (
     (JSON.parse(localStorage.getItem('roles'))).isSuperadmin ||
     (JSON.parse(localStorage.getItem('roles'))).isAdmin ||
@@ -75,6 +74,19 @@ const IsAdminRetail = () => {
   }
 };
 
+const IsOrderManagementVisible = () => {
+  if (
+    (JSON.parse(localStorage.getItem('roles'))).isSuperadmin ||
+    (JSON.parse(localStorage.getItem('roles'))).isAdminRetail ||
+    (JSON.parse(localStorage.getItem('roles'))).isAdminOrder ||
+    (JSON.parse(localStorage.getItem('roles'))).isAdmin
+  ) {
+      return true;
+    } else {
+      return false;
+    }
+};
+
 export const MENU_ITEMS: MenuItem[] = [
   {
     title: 'COMPONENTS.HOME',
@@ -94,12 +106,6 @@ export const MENU_ITEMS: MenuItem[] = [
         link: '/pages/user-management/profile',
         hidden: false
       },
-      // {
-      //   title: 'COMPONENTS.CHANGE_PASSWORD',
-      //   key: 'COMPONENTS.CHANGE_PASSWORD',
-      //   link: '/pages/user-management/change-password',
-      //   hidden: false
-      // },
       {
         title: 'COMPONENTS.CREATE_USER',
         key: 'COMPONENTS.CREATE_USER',
@@ -183,12 +189,6 @@ export const MENU_ITEMS: MenuItem[] = [
           },
         ],
       },
-      // {
-      //   title: 'COMPONENTS.PRODUCTS',
-      //   key: 'COMPONENTS.PRODUCTS',
-      //   hidden: false,
-      //   guards: [IsSuperadmin, IsAdmin, IsAdminRetail, IsAdminCatalogue],
-      //   children: [
       {
         title: 'COMPONENTS.PRODUCTS',
         key: 'COMPONENTS.PRODUCTS',
@@ -199,13 +199,15 @@ export const MENU_ITEMS: MenuItem[] = [
             title: 'COMPONENTS.PRODUCTS_LIST',
             key: 'COMPONENTS.PRODUCTS_LIST',
             link: '/pages/catalogue/products/products-list',
-            hidden: false
+            hidden: false,
+            guards: [IsAdminRetail]
           },
           {
             title: 'COMPONENTS.CREATE_PRODUCT',
             key: 'COMPONENTS.CREATE_PRODUCT',
             link: '/pages/catalogue/products/create-product',
-            hidden: false
+            hidden: false,
+            guards: [IsAdminRetail]
           }
 
         ],
@@ -214,26 +216,30 @@ export const MENU_ITEMS: MenuItem[] = [
         title: 'COMPONENTS.OPTIONS',
         key: 'COMPONENTS.OPTIONS',
         hidden: false,
+        guards: [IsAdminRetail],
         children: [
           {
             title: 'COMPONENTS.OPTIONS_LIST',
             key: 'COMPONENTS.OPTIONS_LIST',
             link: '/pages/catalogue/options/options-list',
-            hidden: false
+            hidden: false,
+            guards: [IsAdminRetail]
           },
 
           {
             title: 'COMPONENTS.OPTIONS_VALUES_LIST',
             key: 'COMPONENTS.OPTIONS_VALUES_LIST',
             link: '/pages/catalogue/options/options-values-list',
-            hidden: false
+            hidden: false,
+            guards: [IsAdminRetail]
           },
 
           {
             title: 'COMPONENTS.OPTION_SET_LIST',
             key: 'COMPONENTS.OPTION_SET_LIST',
             link: '/pages/catalogue/options/options-set-list',
-            hidden: false
+            hidden: false,
+            guards: [IsAdminRetail]
           }
         ]
       },
@@ -263,12 +269,6 @@ export const MENU_ITEMS: MenuItem[] = [
         hidden: false,
         children: [
 
-          // {
-          //   title: 'COMPONENTS.LIST_PRODUCTS_GROUPS',
-          //   key: 'COMPONENTS.LIST_PRODUCTS_GROUPS',
-          //   link: '/pages/catalogue/products-groups/products-groups-list',
-          //   hidden: false
-          // },
           {
             title: 'COMPONENTS.PRODUCTS_GROUPS_LIST',
             key: 'COMPONENTS.PRODUCTS_GROUPS_LIST',
@@ -433,12 +433,13 @@ export const MENU_ITEMS: MenuItem[] = [
     // link: '/pages/orders',
     // pathMatch: 'prefix',
     hidden: false,
-    guards: [IsAccessToOrder],
+    guards: [IsOrderManagementVisible],
     children: [
       {
         title: 'COMPONENTS.ORDERS',
         key: 'COMPONENTS.ORDERS',
         link: '/pages/orders',
+        guards: [IsOrderManagementVisible]
       }
     ]
   },

@@ -4,13 +4,15 @@ import { CrudService } from '../../shared/services/crud.service';
 import { Router } from '@angular/router';
 import { MalihuScrollbarService } from 'ngx-malihu-scrollbar';
 import { StoreService } from '../../store-management/services/store.service';
+import { StorageService } from '../../shared/services/storage.service';
+
 @Component({
   selector: 'boxes-table',
   templateUrl: './boxes.component.html',
   styleUrls: ['./boxes.component.scss'],
 })
 export class BoxesComponent {
-  3
+  perPage = 15;
   stores: Array<any> = [];
   settings = {
     mode: 'external',
@@ -51,6 +53,14 @@ export class BoxesComponent {
     },
   };
 
+  // request params
+  params = {
+      lang: this.storageService.getLanguage(),
+      store: this.storageService.getMerchant(),
+      count: this.perPage,
+      page: 0
+  };
+
   source: LocalDataSource = new LocalDataSource();
 
   constructor(
@@ -58,6 +68,7 @@ export class BoxesComponent {
     public router: Router,
     private mScrollbarService: MalihuScrollbarService,
     private storeService: StoreService,
+    private storageService: StorageService
   ) {
     this.getStoreList();
     this.getBox()
@@ -73,7 +84,7 @@ export class BoxesComponent {
   getBox() {
     // let action = Action.CONTENT + Action.BOXES;
 
-    this.crudService.get('/v1/content/boxes')
+    this.crudService.get('/v1/private/content/boxes', { 'store': this.storageService.getMerchant()})
       .subscribe(data => {
         this.source = data;
       }, error => {

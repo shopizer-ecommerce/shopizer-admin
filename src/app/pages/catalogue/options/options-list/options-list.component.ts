@@ -22,7 +22,7 @@ export class OptionsListComponent implements OnInit {
   settings = {};
 
   // paginator
-  perPage = 10;
+  perPage = 15;
   currentPage = 1;
   totalCount;
   searchValue: string = '';
@@ -62,17 +62,10 @@ export class OptionsListComponent implements OnInit {
   }
   getList() {
     this.params.page = this.currentPage - 1;
-
     this.loadingList = true;
     this.optionService.getListOfOptions(this.params).subscribe((res) => {
       this.totalCount = res.recordsTotal;
       this.options = [...res.options];
-      // this.options.forEach(element => {
-      //   element.descriptions.forEach(description => {
-      //     console.log(description.parent_id);
-      //     description.parent_id = element.id;
-      //   });
-      // });
       this.source.load(this.options);
       this.loadingList = false;
     });
@@ -84,7 +77,7 @@ export class OptionsListComponent implements OnInit {
 
   setSettings() {
     this.settings = {
-      hideSubHeader: true,
+      //hideSubHeader: true,
       actions: {
         columnTitle: 'Action',
         add: false,
@@ -107,16 +100,11 @@ export class OptionsListComponent implements OnInit {
           filter: false,
 
         },
-        // code: {
-        //   title: this.translate.instant('COMMON.CODE'),
-        //   type: 'string',
-        //   editable: false
-        // },
         descriptions: {
           title: this.translate.instant('COMMON.NAME'),
           type: 'html',
           editable: false,
-          filter: false,
+          filter: true,
           valuePrepareFunction: (descriptions) => {
             // parent_id for link
             let parent_id = -1;
@@ -129,14 +117,16 @@ export class OptionsListComponent implements OnInit {
               return el.language === this.storageService.getLanguage();
             });
             const name = description && description.name ? description.name : '';
-            // return `<a href="#/pages/catalogue/options/option/${parent_id}">${name}</a>`;
             return name;
           }
         },
         type: {
           title: "Type",
           type: 'string',
-          filter: false
+          filter: false,
+          valuePrepareFunction: (type) => {
+              return this.translate.instant('COMMON.' + type);
+          }
         }
       },
     };

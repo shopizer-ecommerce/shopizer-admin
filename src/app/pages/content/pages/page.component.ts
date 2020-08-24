@@ -7,6 +7,8 @@ import { ShowcaseDialogComponent } from '../../shared/components/showcase-dialog
 import { ToastrService } from 'ngx-toastr';
 import { MalihuScrollbarService } from 'ngx-malihu-scrollbar';
 import { StoreService } from '../../store-management/services/store.service';
+import { StorageService } from '../../shared/services/storage.service';
+
 @Component({
   selector: 'page-table',
   templateUrl: './page.component.html',
@@ -15,6 +17,7 @@ import { StoreService } from '../../store-management/services/store.service';
 export class PageComponent {
   search_text: string = '';
   stores: Array<any> = [];
+  perPage = 15;
   settings = {
     mode: 'external',
     hideSubHeader: true,
@@ -32,10 +35,6 @@ export class PageComponent {
           name: 'delete',
           title: '<i class="nb-trash"></i>'
         }
-        // {
-        //   name: 'delete',
-        //   title: '<i class="nb-info"></i>'
-        // }
       ]
     },
     columns: {
@@ -58,6 +57,14 @@ export class PageComponent {
     },
   };
 
+  // request params
+  params = {
+      lang: this.storageService.getLanguage(),
+      store: this.storageService.getMerchant(),
+      count: this.perPage,
+      page: 0
+  };
+
   source: any = new LocalDataSource();
   tempData: Array<any> = [];
   loadingList = false;
@@ -68,6 +75,7 @@ export class PageComponent {
     private toastr: ToastrService,
     private mScrollbarService: MalihuScrollbarService,
     private storeService: StoreService,
+    private storageService: StorageService,
   ) {
     this.getStoreList()
     this.getPages()
@@ -81,11 +89,9 @@ export class PageComponent {
       });
   }
   getPages() {
-    console.log('Content constructor');
     this.loadingList = true;
-    this.crudService.get('/v1/content/pages')
+    this.crudService.get('/v1/private/content/pages', {store:this.params.store})
       .subscribe(data => {
-        console.log(data, '************')
         this.source = data;
         this.tempData = data;
         this.loadingList = false;

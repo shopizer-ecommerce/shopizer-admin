@@ -35,9 +35,6 @@ export class CategoriesListComponent implements OnInit {
   // request params
   params = this.loadParams();
 
-  availableList: any[];
-  selectedList: any[];
-
   constructor(
     private categoryService: CategoryService,
     private router: Router,
@@ -56,6 +53,7 @@ export class CategoriesListComponent implements OnInit {
   loadParams() {
     return {
       lang: this.storageService.getLanguage(),
+      store: this.storageService.getMerchant(),
       count: this.perPage,
       page: 0
     };
@@ -63,15 +61,12 @@ export class CategoriesListComponent implements OnInit {
 
     /** callback methods for table list*/
     private loadList(newParams:any) {
-      //console.log('CallBack loadList');
-      //console.log(JSON.stringify(newParams));
       this.currentPage = 1; //back to page 1
       this.params = newParams;
       this.getList();
     }
   
     private resetList() {
-      //console.log('CallBack resetList');
       this.currentPage = 1;//back to page 1
       this.params = this.loadParams();
       this.getList();
@@ -79,12 +74,6 @@ export class CategoriesListComponent implements OnInit {
 
   ngOnInit() {
     this.getList();
-    this.productService.getListOfProducts({})
-      .subscribe(res => {
-        this.availableList = [...res.products];
-        this.selectedList = [];
-      });
-
 
     //TODO
     this.translate.onLangChange.subscribe((lang) => {

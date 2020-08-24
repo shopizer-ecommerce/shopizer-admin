@@ -20,7 +20,7 @@ export class OptionComponent implements OnInit {
   option = new Option();
   languages = [];
   types = [
-    'Select', 'Radio', 'Checkbox', 'Text'
+    'select', 'radio', 'checkbox', 'text'
   ];
   isCodeUnique = true;
 

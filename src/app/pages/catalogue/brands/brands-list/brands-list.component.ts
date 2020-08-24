@@ -28,6 +28,7 @@ export class BrandsListComponent implements OnInit {
   // request params
   params = {
     lang: this.storageService.getLanguage(),
+    store: this.storageService.getMerchant(),
     count: this.perPage,
     page: 0
   };
