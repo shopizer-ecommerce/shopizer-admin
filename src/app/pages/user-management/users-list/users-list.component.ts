@@ -8,6 +8,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { NbDialogService } from '@nebular/theme';
 import { StorageService } from '../../shared/services/storage.service';
 import { SecurityService } from '../../shared/services/security.service';
+import { StoreService } from '../../store-management/services/store.service';
 import { ToastrService } from 'ngx-toastr';
 import { ButtonRenderUserComponent } from './button-render-user.component'
 import { ShowcaseDialogComponent } from '../../shared/components/showcase-dialog/showcase-dialog.component';
@@ -23,6 +24,7 @@ export class UsersListComponent implements OnInit {
   source: LocalDataSource = new LocalDataSource();
   listingService: ListingService;
   loadingList = false;
+  isSuperadmin: boolean;
 
   // paginator
   perPage = 15;
@@ -34,6 +36,7 @@ export class UsersListComponent implements OnInit {
   params = this.loadParams();
 
   settings = {};
+  stores = [];
 
   constructor(
     private userService: UserService,
@@ -42,6 +45,7 @@ export class UsersListComponent implements OnInit {
     private storageService: StorageService,
     private securityService: SecurityService,
     private dialogService: NbDialogService,
+    private storeService: StoreService,
     private toastr: ToastrService
   ) {
     this.listingService = new ListingService()
@@ -90,6 +94,11 @@ export class UsersListComponent implements OnInit {
     this.getList();
   }
 
+  choseStore(event) {
+    this.params.store = event.value;
+    this.getList();
+  }
+
   private resetList() {
     //console.log('CallBack resetList');
     this.currentPage = 1;//back to page 1
@@ -98,6 +107,13 @@ export class UsersListComponent implements OnInit {
   }
 
   ngOnInit() { 
+    this.isSuperadmin = this.securityService.isSuperAdmin();
+    this.storeService.getListOfStores({ start: 0 })
+    .subscribe(res => {
+      res.data.forEach((store) => {
+        this.stores.push({ value: store.code, label: store.code });
+      });
+    });
 
     //ng2-smart-table server side filter
     this.source.onChanged().subscribe((change) => {

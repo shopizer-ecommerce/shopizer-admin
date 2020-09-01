@@ -283,6 +283,20 @@ export const MENU_ITEMS: MenuItem[] = [
           }
         ]
       },
+      {
+        title: 'COMPONENTS.PRODUCT_TYPES',
+        key: 'COMPONENTS.PRODUCT_TYPES',
+        hidden: false,
+        children: [
+
+          {
+            title: 'PRODUCT_TYPE.PRODUCT_TYPE_LIST',
+            key: 'PRODUCT_TYPE.PRODUCT_TYPE_LIST',
+            link: '/pages/catalogue/brands/brands-list',
+            hidden: false
+          }
+        ]
+      },
 
 
       {

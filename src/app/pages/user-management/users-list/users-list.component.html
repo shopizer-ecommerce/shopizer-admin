@@ -4,8 +4,19 @@
       <nb-card-header class="main_header">
         <h1 class="page_title">{{ 'COMPONENTS.USERS' | translate }}</h1>
         <div class="content_spacing_empty"></div>
-
       </nb-card-header>
+
+      <form class="form-inline filter_section" *ngIf="isSuperadmin" style="width: 25% !important">
+        <div class="filter_left_section">
+          <p-dropdown *ngIf="stores.length> 0" [options]="stores" filter="true" (onChange)="choseStore($event)">
+            <ng-template let-item pTemplate="selectedItem">{{item.label}}</ng-template>
+            <ng-template let-car pTemplate="item">{{car.label}}</ng-template>
+          </p-dropdown>
+        </div>
+        <div class="filter_right_section">
+          &nbsp;
+        </div>
+      </form>
 
       <ng2-smart-table [settings]="settings" [source]="source" (custom)="route($event)" class="home-table"></ng2-smart-table>
 

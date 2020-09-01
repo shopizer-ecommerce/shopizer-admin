@@ -67,6 +67,7 @@
     "CREATE_OPTION_VALUE": "Create option value",
     "OPTION_SET_LIST": "List of product options set",
     "SET_OPTION": "Create options set",
+    "PRODUCT_TYPES": "Product types",
     "CONTENT": "Content",
     "CONTENT_PAGES": "Pages",
     "CONTENT_BOXES": "Boxes",
@@ -266,6 +267,10 @@
     "INVENTORY_UPDATED": "Inventory updated.",
     "INVENTORY_CREATED": "Inventory created.",
     "INVENTORY_REMOVED": "Inventory removed."
+  },
+  "PRODUCT_TYPE": {
+    "PRODUCT_TYPE_LIST": "List of product types",
+    "PRODUCT_TYPE_CREATE": "Create product type"
   },
   "PRICE": {
     "FINAL_PRICE": "Final price",
