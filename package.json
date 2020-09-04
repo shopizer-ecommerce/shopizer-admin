@@ -100,7 +100,7 @@
     "summernote": "^0.8.18",
     "tinymce": "4.5.7",
     "tslib": "^1.10.0",
-    "typeface-exo": "0.0.22",
+    "typeface-exo": "0.0.61",
     "web-animations-js": "^2.3.2",
     "zone.js": "~0.10.2"
   },
