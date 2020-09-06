@@ -33,6 +33,10 @@ const routes: Routes = [{
       path: 'options',
       loadChildren: 'app/pages/catalogue/options/options.module#OptionsModule'
     },
+    {
+      path: 'types',
+      loadChildren: 'app/pages/catalogue/types/types.module#TypesModule'
+    },
   ]
 }];
 

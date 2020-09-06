@@ -216,14 +216,14 @@ export const MENU_ITEMS: MenuItem[] = [
         title: 'COMPONENTS.OPTIONS',
         key: 'COMPONENTS.OPTIONS',
         hidden: false,
-        guards: [IsAdminRetail],
+        guards: [IsSuperadmin, IsAdmin, IsAdminRetail, IsAdminCatalogue],
         children: [
           {
             title: 'COMPONENTS.OPTIONS_LIST',
             key: 'COMPONENTS.OPTIONS_LIST',
             link: '/pages/catalogue/options/options-list',
             hidden: false,
-            guards: [IsAdminRetail]
+            guards: [IsSuperadmin, IsAdmin, IsAdminRetail, IsAdminCatalogue],
           },
 
           {
@@ -231,7 +231,7 @@ export const MENU_ITEMS: MenuItem[] = [
             key: 'COMPONENTS.OPTIONS_VALUES_LIST',
             link: '/pages/catalogue/options/options-values-list',
             hidden: false,
-            guards: [IsAdminRetail]
+            guards: [IsSuperadmin, IsAdmin, IsAdminRetail, IsAdminCatalogue],
           },
 
           {
@@ -239,7 +239,7 @@ export const MENU_ITEMS: MenuItem[] = [
             key: 'COMPONENTS.OPTION_SET_LIST',
             link: '/pages/catalogue/options/options-set-list',
             hidden: false,
-            guards: [IsAdminRetail]
+            guards: [IsSuperadmin, IsAdmin, IsAdminRetail, IsAdminCatalogue],
           }
         ]
       },
@@ -247,19 +247,22 @@ export const MENU_ITEMS: MenuItem[] = [
         title: 'COMPONENTS.BRANDS',
         key: 'COMPONENTS.BRANDS',
         hidden: false,
+        guards: [IsSuperadmin, IsAdmin, IsAdminRetail, IsAdminCatalogue],
         children: [
 
           {
             title: 'COMPONENTS.BRANDS_LIST',
             key: 'COMPONENTS.BRANDS_LIST',
             link: '/pages/catalogue/brands/brands-list',
-            hidden: false
+            hidden: false,
+            guards: [IsSuperadmin, IsAdmin, IsAdminRetail, IsAdminCatalogue],
           },
           {
             title: 'COMPONENTS.CREATE_BRAND',
             key: 'COMPONENTS.CREATE_BRAND',
             link: '/pages/catalogue/brands/create-brand',
-            hidden: false
+            hidden: false,
+            guards: [IsSuperadmin, IsAdmin, IsAdminRetail, IsAdminCatalogue],
           }
         ]
       },
@@ -267,19 +270,22 @@ export const MENU_ITEMS: MenuItem[] = [
         title: 'COMPONENTS.PRODUCTS_GROUPS',
         key: 'COMPONENTS.PRODUCTS_GROUPS',
         hidden: false,
+        guards: [IsSuperadmin, IsAdmin, IsAdminRetail, IsAdminCatalogue],
         children: [
 
           {
             title: 'COMPONENTS.PRODUCTS_GROUPS_LIST',
             key: 'COMPONENTS.PRODUCTS_GROUPS_LIST',
             link: '/pages/catalogue/products-groups/groups-list',
-            hidden: false
+            hidden: false,
+            guards: [IsSuperadmin, IsAdmin, IsAdminRetail, IsAdminCatalogue],
           },
           {
             title: 'COMPONENTS.CREATE_PRODUCTS_GROUPS',
             key: 'COMPONENTS.CREATE_PRODUCTS_GROUPS',
             link: '/pages/catalogue/products-groups/create-products-group',
-            hidden: false
+            hidden: false,
+            guards: [IsSuperadmin, IsAdmin, IsAdminRetail, IsAdminCatalogue],
           }
         ]
       },
@@ -287,13 +293,15 @@ export const MENU_ITEMS: MenuItem[] = [
         title: 'COMPONENTS.PRODUCT_TYPES',
         key: 'COMPONENTS.PRODUCT_TYPES',
         hidden: false,
+        guards: [IsSuperadmin, IsAdmin, IsAdminRetail, IsAdminCatalogue],
         children: [
 
           {
             title: 'PRODUCT_TYPE.PRODUCT_TYPE_LIST',
             key: 'PRODUCT_TYPE.PRODUCT_TYPE_LIST',
-            link: '/pages/catalogue/brands/brands-list',
-            hidden: false
+            link: '/pages/catalogue/types/types-list',
+            hidden: false,
+            guards: [IsSuperadmin, IsAdmin, IsAdminRetail, IsAdminCatalogue],
           }
         ]
       },

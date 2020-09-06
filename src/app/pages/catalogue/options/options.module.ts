@@ -23,7 +23,6 @@ import { OptionSetComponent } from './options-set/option-set.component';
   ],
   imports: [
     OptionsRoutingModule,
-
     SharedModule,
   ]
 })
