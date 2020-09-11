@@ -31,7 +31,7 @@ export class CrudService {
     return this.http.post(`${this.url}${path}`, body, options);
   }
 
-  postWithStorParam(path, body: any | null, storeCode, options?: any): Observable<any> {
+  postWithStoreParam(path, body: any | null, storeCode, options?: any): Observable<any> {
     if (storeCode) {
       path = path + '?store=' + storeCode;
     }

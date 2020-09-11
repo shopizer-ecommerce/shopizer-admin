@@ -66,7 +66,7 @@ export class StoreService {
 
   createPageContent(content: any, storeCode: string) : Observable<any> {
 
-    return this.crudService.postWithStorParam(`/v1/private/content`, content, storeCode);
+    return this.crudService.postWithStoreParam(`/v1/private/content`, content, storeCode);
   }
 
   // end PAGE CONTENT

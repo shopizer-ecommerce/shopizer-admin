@@ -225,7 +225,7 @@ export class StoreFormComponent implements OnInit {
       retailer: [false],
       retailerStore: '',
     });
-    if (!this.store.id && this.roles.isAdminRetail) {
+    if (this.store && (!this.store.id && this.roles.isAdminRetail)) {
       this.form.patchValue({ retailer: false });
       this.form.patchValue({ retailerStore: this.merchant });
       this.form.controls['retailer'].disable();
@@ -372,21 +372,21 @@ export class StoreFormComponent implements OnInit {
     const storeObj = this.form.value;
 
     //creating a child
-    if (!this.store.id) {
+    if (this.store && !this.store.id) {
       if (!this.roles.isSuperadmin && this.isRetailer) {
         storeObj.retailer = false;
         storeObj.retailerStore = this.merchant;
       }
     }
 
-    if (this.store.id && this.isRetailer) {
+    if (this.store && (this.store.id && this.isRetailer)) {
       storeObj.retailer = true;
     }
 
 
     storeObj.supportedLanguages = this.supportedLanguagesSelected;
 
-    if (this.store.id) {
+    if (this.store && this.store.id) {
       this.storeService.updateStore(storeObj)
         .subscribe(store => {
           this.toastr.success(this.translate.instant('STORE_FORM.' + this.establishmentType + '_UPDATED'));

@@ -7,6 +7,7 @@ import { Ng2SmartTableModule } from 'ng2-smart-table';
 // import { OrderListComponent } from '../orders/order-list/order-list.component';
 import { NbSpinnerModule, NbTreeGridComponent, NbTreeGridModule } from '@nebular/theme';
 import { NotFoundComponent } from './components/not-found/not-found.component';
+import { FiveHundredComponent } from './components/five-hundred/five-hundred.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { RightSidemenuComponent } from './components/right-sidemenu/right-sidemenu.component';
 import { ImageUploadingComponent } from './components/image-uploading/image-uploading.component';
@@ -26,6 +27,7 @@ import { PasswordPromptComponent } from './components/password-prompt/password-p
     // OrderListComponent,
     RightSidemenuComponent,
     NotFoundComponent,
+    FiveHundredComponent,
     ImageUploadingComponent,
     ShowcaseDialogComponent,
     PasswordPromptComponent,
@@ -54,6 +56,7 @@ import { PasswordPromptComponent } from './components/password-prompt/password-p
     // OrderListComponent,
     RightSidemenuComponent,
     NotFoundComponent,
+    FiveHundredComponent,
     ImageUploadingComponent,
     ShowcaseDialogComponent,
     PaginatorComponent,

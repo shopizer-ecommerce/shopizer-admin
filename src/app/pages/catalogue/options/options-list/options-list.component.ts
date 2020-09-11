@@ -133,7 +133,6 @@ export class OptionsListComponent implements OnInit {
   }
 
   deleteRecord(event) {
-    console.log(event);
     this.dialogService.open(ShowcaseDialogComponent, {})
       .onClose.subscribe(res => {
         if (res) {

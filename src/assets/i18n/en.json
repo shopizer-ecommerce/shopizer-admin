@@ -439,6 +439,10 @@
     "PAGE_NOT_FOUND_TEXT": "The page you were looking for doesn't exist",
     "BACK": "Take me home"
   },
+  "ERROR": {
+    "SYSTEM_ERROR": "System Error",
+    "SYSTEM_ERROR_TEXT": "An error occured with this request"
+  },
   "COMMON": {
     "LANGUAGE": "Language",
     "LANGUAGES": "Languages",
