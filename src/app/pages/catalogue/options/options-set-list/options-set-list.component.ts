@@ -104,12 +104,13 @@ export class OptionsSetListComponent implements OnInit {
       .onClose.subscribe(res => {
         if (res) {
           // event.confirm.resolve();
-          this.optionService.deleteOptioSet(event.data.id)
+          this.optionService.deleteOptionSet(event.data.id)
             .subscribe(result => {
               this.toastr.success(this.translate.instant('OPTION.SET_OPTION_REMOVED'));
               this.getList();
             });
         } else {
+          //TODO generic error page
           // event.confirm.reject();
         }
       });

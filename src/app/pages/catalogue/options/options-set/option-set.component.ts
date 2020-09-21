@@ -54,7 +54,7 @@ export class OptionSetComponent implements OnInit {
       this.optionService.getOptionSetById(optionId, param)
         .subscribe((res) => {
 
-          console.log(JSON.stringify(res));
+          //console.log(JSON.stringify(res));
 
           this.option.id = res.id;
           this.option.code = res.code;
@@ -82,7 +82,6 @@ export class OptionSetComponent implements OnInit {
   }
 
   private adjustForm() {
-    console.log('In adjust ' + JSON.stringify(this.option));
     this.form.patchValue({
       readOnly: this.option.readOnly,
       code: this.option.code,
@@ -93,7 +92,6 @@ export class OptionSetComponent implements OnInit {
     if (this.option.id) {
       this.form.controls['code'].disable();
     }
-
   }
 
 
@@ -172,17 +170,10 @@ export class OptionSetComponent implements OnInit {
     this.isValidCode = true;
     this.isValidOption = true;
 
-    let param = {
-      code: this.option.code,
-      option: this.option.option,
-      optionValues: this.option.optionValues,
-      readOnly: this.option.readOnly,
-    }
-
     let optionObj = this.form.value;
     optionObj.optionValues = this.option.optionValues;
 
-    console.log('From object values ' + JSON.stringify(optionObj));
+    //console.log('From object values ' + JSON.stringify(optionObj));
 
     if(this.form.invalid) {
       if(this.code.invalid) {
@@ -216,13 +207,12 @@ export class OptionSetComponent implements OnInit {
           this.loading = false;
         });
     }
-    
   }
   goToback() {
     this.router.navigate(['pages/catalogue/options/options-set-list']);
   }
   setSelected(e) {
-    console.log(e)
+    //console.log(e)
     this.option.optionValues = e;
   }
 

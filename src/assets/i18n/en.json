@@ -270,7 +270,12 @@
   },
   "PRODUCT_TYPE": {
     "PRODUCT_TYPE_LIST": "List of product types",
-    "PRODUCT_TYPE_CREATE": "Create product type"
+    "PRODUCT_TYPE_CREATE": "Create product type",
+    "PRODUCT_TYPE_DETAILS": "Product type details",
+    "ALLOW_ADD_TO_CART": "Allow add to cart",
+    "PRODUCT_TYPE_UPDATED": "Product type updated",
+    "PRODUCT_TYPE_DELETED": "Product type deleted",
+    "PRODUCT_TYPE_CREATED": "Product type created"
   },
   "PRICE": {
     "FINAL_PRICE": "Final price",

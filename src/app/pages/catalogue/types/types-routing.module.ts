@@ -1,14 +1,20 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import { TypesComponent } from './types/types.component';
+import { TypeDetailsComponent } from './type-details/type-details.component';
 import { TypesListComponent } from './types-list/types-list.component';
+import { TypesComponent } from './types.component';
 
 
 const routes: Routes = [
   {
     path: '',
-    component: TypesListComponent,
+    component: TypesComponent,
     children: [
+      {
+        path: 'create-type',
+        component: TypeDetailsComponent,
+        // canActivate: [StoreGuard]
+      },
       {
         path: 'types-list',
         component: TypesListComponent,
@@ -16,7 +22,7 @@ const routes: Routes = [
       },
       {
         path: 'type',
-        component: TypesComponent,
+        component: TypeDetailsComponent,
         // canActivate: [StoreGuard]
       },
     ],

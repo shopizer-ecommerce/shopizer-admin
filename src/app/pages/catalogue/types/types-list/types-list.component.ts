@@ -18,8 +18,8 @@ import { LocalDataSource } from 'ng2-smart-table';
 export class TypesListComponent implements OnInit {
 
   source: LocalDataSource = new LocalDataSource();
-  perPage:0
-  totalCount:0
+  perPage = 15;
+  totalCount = 0;
   loadingList = false;
   settings = {};
   stores: Array<any> = [];
@@ -150,14 +150,14 @@ export class TypesListComponent implements OnInit {
         .onClose.subscribe(res => {
           if (res) {
 
-            /**
-            this.optionService.deleteOption(event.data.id)
+            this.typesService.deleteType(event.data.id)
               .subscribe(result => {
                 this.toastr.success(this.translate.instant('OPTION.OPTION_REMOVED'));
                 this.getList();
               });
-              **/
+
           } else {
+            // TODO navigate generic error
             // event.confirm.reject();
           }
         });
