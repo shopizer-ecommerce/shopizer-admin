@@ -26,7 +26,7 @@ export class TypeDetailsComponent implements OnInit {
   type = {
     id: '',
     code: '',
-    name: '',
+    //name: '',
     allowAddToCart: false
   }
 
@@ -46,22 +46,22 @@ export class TypeDetailsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const typeCode = this.activatedRoute.snapshot.paramMap.get('typCode');
+    const typeId = this.activatedRoute.snapshot.paramMap.get('id');
     this.createForm();
-    if (typeCode) {
+    if (typeId) {
       this.loading = true;
       let param = {
         lang: this.storageService.getLanguage(),
         store: this.storageService.getMerchant()
       }
-      this.typesService.getType(typeCode, param)
+      this.typesService.getType(typeId, param)
         .subscribe((res) => {
 
-          console.log(JSON.stringify(res));
+          //console.log(JSON.stringify(res));
 
           this.type.id = res.id;
           this.type.code = res.code;
-          this.type.name = res.name;
+          //this.type.name = res.name;
           this.type.allowAddToCart = res.allowAddToCart;
           this.isReadonlyCode = true;
 
@@ -79,7 +79,7 @@ export class TypeDetailsComponent implements OnInit {
     this.form = this.fb.group({
       allowAddToCart: [true],
       code: [{ value: '', disabled: false }, [Validators.required, Validators.pattern(validators.alphanumeric)]],
-      name: ['',[Validators.required]],
+      //name: ['',[Validators.required]],
     });
   }
 
@@ -87,7 +87,7 @@ export class TypeDetailsComponent implements OnInit {
     this.form.patchValue({
       allowAddToCart: this.type.allowAddToCart,
       code: this.type.code,
-      name: this.type.name,
+      //name: this.type.name,
     });
 
     if (this.type.id) {
@@ -143,12 +143,12 @@ export class TypeDetailsComponent implements OnInit {
 
   checkCode(event) {
     const code = event.target.value.trim();
-    console.log('Entering checkCode ' + code);
+    //console.log('Entering checkCode ' + code);
     this.isValidCode = true;
     
     this.typesService.checkCode(code)
       .subscribe(res => {
-        console.log(res)
+        //console.log(res)
         this.isCodeExist = res.exists;
       });
   }

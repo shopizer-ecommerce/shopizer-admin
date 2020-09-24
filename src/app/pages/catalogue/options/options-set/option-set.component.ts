@@ -7,6 +7,7 @@ import { ToastrService } from 'ngx-toastr';
 import { TranslateService } from '@ngx-translate/core';
 import { validators } from '../../../shared/validation/validators';
 import { StorageService } from '../../../shared/services/storage.service';
+import { TypesService } from '../../types/services/types.service';
 import { error } from '@angular/compiler/src/util';
 @Component({
   selector: 'ngx-option-set',
@@ -20,17 +21,22 @@ export class OptionSetComponent implements OnInit {
   isValidCode = true;
   isValidOption = true;
 
+  defaultParam = {
+  }
+
   option = {
     id: '',
     code: '',
     option: '',
     optionValues: [],
+    productTypes: [],
     readOnly: false
   }
   loading: boolean = false;
   form: FormGroup;
   productOption: Array<any> = [];
   productOptionValue: Array<any> = [];
+  productTypes: Array<any> = [];
   constructor(
     private fb: FormBuilder,
     private router: Router,
@@ -38,12 +44,21 @@ export class OptionSetComponent implements OnInit {
     private optionValuesService: OptionValuesService,
     private storageService: StorageService,
     private translate: TranslateService,
+    private typesService: TypesService,
     private toastr: ToastrService,
     private activatedRoute: ActivatedRoute,
   ) {
     this.getOption()
   }
+
+  loadDefaultParam() {
+    this.defaultParam = {
+      "lang":this.storageService.getLanguage,
+      "store":this.storageService.getMerchant 
+    }
+  }
   ngOnInit() {
+    this.loadDefaultParam();
     this.createForm();
     const optionId = this.activatedRoute.snapshot.paramMap.get('optionId');
     if (optionId) {
@@ -61,12 +76,19 @@ export class OptionSetComponent implements OnInit {
           this.option.option = res.option.id;
           this.option.readOnly = res.readOnly;
           let value = []
+          let types = []
           if(res.values) {
             res.values.map((optionValue) => {
               value.push(optionValue.id)
             });
           }
+          if(res.productTypes) {
+            res.productTypes.map((productType) => {
+              types.push(productType.id)
+            });
+          }
           this.option.optionValues = value;
+          this.option.productTypes = types;
           this.adjustForm();
 
         }, error => {
@@ -100,7 +122,8 @@ export class OptionSetComponent implements OnInit {
       readOnly: [false],
       code: [{ value: '', disabled: false }, [Validators.required, Validators.pattern(validators.alphanumeric)]],
       option: ['',[Validators.required]],
-      optionValues: this.fb.array([])
+      optionValues: this.fb.array([]),
+      productTypes: this.fb.array([])
     });
   }
  
@@ -118,9 +141,12 @@ export class OptionSetComponent implements OnInit {
           this.productOption.push({ id: value.id, code: value.code, name: name })
         })
       }, error => {
+        //TODO error
         this.loading = false;
       });
-    this.getOptionValue()
+    this.getOptionValue();
+    this.getProductTypes();
+    this.loading = false;
   }
   getOptionValue() {
     this.productOptionValue = []
@@ -134,10 +160,26 @@ export class OptionSetComponent implements OnInit {
           const name = description && description.name ? description.name : '';
           this.productOptionValue.push({ id: value.id, code: value.code, name: name })
         })
-        this.loading = false;
       }, error => {
+        //TODO error
         this.loading = false;
       });
+  }
+
+  getProductTypes() {
+
+    this.productTypes = [];
+    this.typesService.getListOfTypes(this.defaultParam)
+      .subscribe(res => {
+        console.log(JSON.stringify(res));
+        //this.productTypes = [...res];
+        res.list.map((value) => {
+          this.productTypes.push({ id: value.id, code: value.code});
+        })
+    }, error => {
+      //TODO error
+      this.loading = false;
+    });
   }
 
   get code() {
@@ -172,6 +214,7 @@ export class OptionSetComponent implements OnInit {
 
     let optionObj = this.form.value;
     optionObj.optionValues = this.option.optionValues;
+    optionObj.productTypes = this.option.productTypes;
 
     //console.log('From object values ' + JSON.stringify(optionObj));
 
@@ -214,6 +257,10 @@ export class OptionSetComponent implements OnInit {
   setSelected(e) {
     //console.log(e)
     this.option.optionValues = e;
+  }
+
+  setProductTypeSelected(e) {
+    this.option.productTypes = e;
   }
 
   public findInvalidControls() {

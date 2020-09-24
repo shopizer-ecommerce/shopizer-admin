@@ -75,7 +75,7 @@ export class TypesListComponent implements OnInit {
         position: 'right',
         sort: true,
         custom: [
-          { name: 'details', title: '<i class="nb-edit"></i>' },
+          { name: 'edit', title: '<i class="nb-edit"></i>' },
           { name: 'remove', title: this._sanitizer.bypassSecurityTrustHtml('<i class="nb-trash"></i>') }
         ],
       },
@@ -181,7 +181,7 @@ export class TypesListComponent implements OnInit {
       }
     }
     onEdit(event) {
-      this.router.navigate(['/pages/catalogue/types/types/' + event.data.id]);
+      this.router.navigate(['/pages/catalogue/types/type/' + event.data.id]);
     }
 
 }

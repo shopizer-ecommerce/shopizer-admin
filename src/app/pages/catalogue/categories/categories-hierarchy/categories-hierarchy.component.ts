@@ -20,6 +20,7 @@ export class CategoriesHierarchyComponent implements OnInit {
   params = this.loadParams();
 
   constructor(
+    //http://angular-ui-tree.github.io/angular-ui-tree/#/basic-example
     private categoryService: CategoryService,
     private toastr: ToastrService,
     private translate: TranslateService,

@@ -76,7 +76,7 @@ export class OptionsSetListComponent implements OnInit {
           filter: false,
         },
         option: {
-          title: 'Option',
+          title: this.translate.instant('PRODUCT_ATTRIBUTES.OPTION_NAME'),
           type: 'string',
           filter: true,
           valuePrepareFunction: (value) => {
@@ -84,7 +84,18 @@ export class OptionsSetListComponent implements OnInit {
           }
         },
         values: {
-          title: 'Value',
+          title: this.translate.instant('COMPONENTS.OPTIONS_VALUE'),
+          type: 'string',
+          filter: false,
+          valuePrepareFunction: (data) => {
+            if(data != null) {
+              let value = data.map(a => a.name).join(", ");
+              return value;
+            }
+          }
+        },
+        productTypes: {
+          title: this.translate.instant('COMPONENTS.PRODUCT_TYPES'),
           type: 'string',
           filter: false,
           valuePrepareFunction: (data) => {
@@ -99,7 +110,7 @@ export class OptionsSetListComponent implements OnInit {
   }
 
   deleteRecord(event) {
-    console.log(event);
+    //console.log(event);
     this.dialogService.open(ShowcaseDialogComponent, {})
       .onClose.subscribe(res => {
         if (res) {

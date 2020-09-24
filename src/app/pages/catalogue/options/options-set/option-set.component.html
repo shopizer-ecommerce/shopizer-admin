@@ -68,6 +68,18 @@
             </nb-select>
 
           </div>
+
+          <!-- ProductType -->
+          <div class="form-group">
+              <label class="col-form-label inputLabel">{{ 'PRODUCT_TYPE.PRODUCT_TYPE' | translate}}</label>
+  
+              <nb-select  multiple placeholder="{{ 'PRODUCT_TYPE.PRODUCT_TYPE_ADD' | translate}}" (selectedChange)="setProductTypeSelected($event)" outline shape="rectangle"
+                [(selected)]="option.productTypes" class="fullWidth">
+                <nb-option  *ngFor="let productType of productTypes" [value]="productType.id">{{productType.code}}</nb-option>
+              </nb-select>
+  
+            </div>
+
         </nb-card-body>
       </nb-card>
     </form>

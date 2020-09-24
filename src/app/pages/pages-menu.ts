@@ -311,19 +311,15 @@ export const MENU_ITEMS: MenuItem[] = [
         title: 'COMPONENTS.CATALOGUES',
         key: 'COMPONENTS.CATALOGUES',
         hidden: false,
+        guards: [IsSuperadmin, IsAdmin, IsAdminRetail, IsAdminCatalogue],
         children: [
 
           {
             title: 'COMPONENTS.CATALOGUES_LIST',
             key: 'COMPONENTS.CATALOGUES_LIST',
             link: '/pages/catalogue/catalogues/catalogues-list',
-            hidden: false
-          },
-          {
-            title: 'COMPONENTS.CREATE_CATALOGUE',
-            key: 'COMPONENTS.CREATE_CATALOGUE',
-            link: '/pages/catalogue/catalogues/create-catalogue',
-            hidden: false
+            hidden: false,
+            guards: [IsSuperadmin, IsAdmin, IsAdminRetail, IsAdminCatalogue],
           }
         ],
       },

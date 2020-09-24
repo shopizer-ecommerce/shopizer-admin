@@ -20,6 +20,7 @@ export class CatalogueFormComponent implements OnInit {
   catalog;
 
   constructor(
+    //https://github.com/khan4019/tree-grid-directive
     private activatedRoute: ActivatedRoute,
     private fb: FormBuilder,
     private catalogService: CatalogService,
@@ -69,7 +70,7 @@ export class CatalogueFormComponent implements OnInit {
 
   save() {
     if (this.catalog) {
-      this.catalogService.updateCategory(this.catalog.id, this.form.value).subscribe(res => {
+      this.catalogService.updateCatalog(this.catalog.id, this.form.value).subscribe(res => {
         this.toastr.success(this.translate.instant('CATALOG.CATALOG_UPDATED'));
       });
     } else {
@@ -83,7 +84,7 @@ export class CatalogueFormComponent implements OnInit {
     this.dialogService.open(ShowcaseDialogComponent, {})
       .onClose.subscribe(res => {
         if (res) {
-          this.catalogService.deleteCategory(this.catalog.id)
+          this.catalogService.deleteCatalog(this.catalog.id)
             .subscribe(data => {
               this.toastr.success(this.translate.instant('CATALOG.CATALOG_REMOVED'));
               this.router.navigate(['pages/catalogue/catalogues/catalogues-list']);

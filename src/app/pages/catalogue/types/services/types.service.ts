@@ -19,8 +19,8 @@ export class TypesService {
     return this.crudService.get(`/v1/private/products/types`, params);
   }
 
-  getType(code, params): Observable<any> {
-    return this.crudService.get(`/v1/private/products/types/${code}`, params);
+  getType(id, params): Observable<any> {
+    return this.crudService.get(`/v1/private/products/type/${id}`, params);
   }
 
   createType(req): Observable<any> {

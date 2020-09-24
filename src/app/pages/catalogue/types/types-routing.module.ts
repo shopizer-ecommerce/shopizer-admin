@@ -21,7 +21,7 @@ const routes: Routes = [
         // canActivate: [StoreGuard]
       },
       {
-        path: 'type',
+        path: 'type/:id',
         component: TypeDetailsComponent,
         // canActivate: [StoreGuard]
       },
