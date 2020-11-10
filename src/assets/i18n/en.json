@@ -223,7 +223,8 @@
     "CATALOGUES_PRODUCTS": "Catalogues products",
     "CATALOG_UPDATED": "Catalogue updated.",
     "CATALOG_CREATED": "Catalogue created.",
-    "CATALOG_REMOVED": "Catalogue removed."
+    "CATALOG_REMOVED": "Catalogue removed.",
+    "CATALOG_CONTENT": "Catalogue content"
   },
   "PRODUCT": {
     "SKU": "Sku",

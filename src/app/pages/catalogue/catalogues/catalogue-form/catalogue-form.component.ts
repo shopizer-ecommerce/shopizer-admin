@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
@@ -8,6 +8,7 @@ import { ShowcaseDialogComponent } from '../../../shared/components/showcase-dia
 import { NbDialogService } from '@nebular/theme';
 import { ToastrService } from 'ngx-toastr';
 import { TranslateService } from '@ngx-translate/core';
+import { Description } from '../../../shared/models/description';
 
 @Component({
   selector: 'ngx-catalogue-form',
@@ -15,9 +16,22 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./catalogue-form.component.scss']
 })
 export class CatalogueFormComponent implements OnInit {
+  @ViewChild('tree', { static: false }) tree;
   form: FormGroup;
   isCodeUnique = true;
+  nodes = [];
+  category = [];
   catalog;
+  options = {
+    allowDrag: true,
+    levelPadding: 10,
+    useVirtualScroll: true,
+    animateExpand: true,
+    scrollOnActivate: true,
+    animateSpeed: 30,
+    animateAcceleration: 1.2,
+   //displayField: 'description.name'
+  } 
 
   constructor(
     //https://github.com/khan4019/tree-grid-directive
@@ -37,9 +51,30 @@ export class CatalogueFormComponent implements OnInit {
     if (catalogId) {
       this.catalogService.getCatalogById(catalogId).subscribe(res => {
         this.catalog = res;
+        this.nodes = res.category;
+        //filter entry
+        this.filterEntry();
         this.fillForm();
       });
     }
+  }
+
+  filterEntry(){
+    let productsArray = [];
+    let categoryArray = [];
+    if(this.nodes.length > 0) {
+      this.nodes.forEach(function(entry) {
+        console.log(JSON.stringify(entry));
+        //if(entry.category != null) {
+        //  categoryArray.push(entry.category)
+        //}
+      })
+    }
+
+    //console.log('ProductsArray => ' + JSON.stringify(productsArray));
+    this.category = categoryArray;
+
+
   }
 
   get code() {

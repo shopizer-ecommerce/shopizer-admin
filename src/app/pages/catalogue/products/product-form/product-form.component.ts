@@ -60,6 +60,7 @@ export class ProductFormComponent implements OnInit {
     tabsize: 2,
     height: 300,
     uploadImagePath: '',
+    //edit toolbar
     toolbar: [
       ['misc', ['codeview', 'undo', 'redo']],
       ['style', ['bold', 'italic', 'underline', 'clear']],
@@ -87,6 +88,7 @@ export class ProductFormComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log('Lang ' + this.defaultLanguage);
     this.loader = true;
     const manufacture$ = this.manufactureService.getManufacturers();
     const product$ = this.productService.getProductTypes();
@@ -94,7 +96,7 @@ export class ProductFormComponent implements OnInit {
     forkJoin(manufacture$, product$, config$)
       .subscribe(([manufacturers, productTypes, languages]) => {
         this.manufacturers = [...manufacturers.manufacturers];
-        this.productTypes = [...productTypes];
+        this.productTypes = [...productTypes.list];
         this.languages = [...languages];
         this.createForm();
         this.addFormArray();
@@ -111,6 +113,7 @@ export class ProductFormComponent implements OnInit {
       available: [false],
       preOrder: [false],
       dateAvailable: [new Date()],
+      //TODO
       manufacturer: ['DEFAULT'],
       type: ['GENERAL'],
       price: [''],
@@ -148,15 +151,6 @@ export class ProductFormComponent implements OnInit {
     });
   }
 
-  /**
-   *   fillEmptyForm() {
-    this.form.patchValue({
-      store: this.merchant,
-      sortOrder: 0,
-      selectedLanguage: this.defaultLanguage,
-      descriptions: [],
-    });
-   */
 
   fillForm() {
     this.form.patchValue({

@@ -14,8 +14,6 @@
 
   <div [nbSpinner]="loader" nbSpinnerSize="large" nbSpinnerStatus="primary">
 
-    <!-- <div malihu-scrollbar [scrollbarOptions]="scrollbarOptions"> -->
-
     <form [formGroup]='form' class="catalogueForm">
       <nb-card class="nb-card inline-form-card">
         <nb-card-body class="nb-card-body">
@@ -46,11 +44,30 @@
               </nb-checkbox>
             </div>
           </div>
-
         </nb-card-body>
       </nb-card>
-    </form>
 
-    <!-- </div> -->
+      <nb-card class="nb-card inline-form-card" *ngIf="nodes.length !== 0">
+          <nb-card-body class="nb-card-body">
+              <p>{{ 'CATALOG.CATALOG_CONTENT' | translate}}</p>
+              <!--
+              <tree-root #tree [nodes]="category" [options]="options" (moveNode)="onMoveNode($event)">
+                  <ng-template #treeNodeTemplate let-node let-index="index">              
+                      <div>{{ node.description.name }}</div>
+                  </ng-template>
+              </tree-root>
+            -->
+          </nb-card-body>
+      </nb-card>
+
+
+
+    </form>
   </div>
+
+
+
+
+
+  
 </div>

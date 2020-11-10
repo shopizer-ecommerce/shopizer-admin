@@ -8,6 +8,7 @@ import { ToastrService } from 'ngx-toastr';
 import { TranslateService } from '@ngx-translate/core';
 import { StoreService } from '../../../store-management/services/store.service';
 import { StorageService } from '../../../shared/services/storage.service';
+import { SecurityService } from '../../../shared/services/security.service';
 import { validators } from '../../../shared/validation/validators';
 import { slugify } from '../../../shared/utils/slugifying';
 import { environment } from '../../../../../environments/environment';
@@ -31,7 +32,8 @@ export class CategoryFormComponent implements OnInit {
   //select store
   stores = [];
   isSuperAdmin = false;
-  roles;
+  isRetailAdmin = false;
+  //roles;
   //current user associated merchant
   merchant;
 
@@ -66,18 +68,20 @@ export class CategoryFormComponent implements OnInit {
     private configService: ConfigService,
     private storeService: StoreService,
     private storageService: StorageService,
+    private securityService: SecurityService,
     private cdr: ChangeDetectorRef,
     private router: Router,
     private toastr: ToastrService,
     private translate: TranslateService,
     private dialogService: NbDialogService
   ) {
-    this.roles = JSON.parse(localStorage.getItem('roles'));
+    //this.roles = JSON.parse(localStorage.getItem('roles'));
   }
 
   ngOnInit() {
 
-    this.isSuperAdmin = this.roles.isSuperadmin;
+    this.isSuperAdmin = this.securityService.isSuperAdmin();
+    this.isRetailAdmin = this.securityService.isRetailAdmin();
     this.merchant = this.storageService.getMerchant();
     //for populating stores dropdown list
     this.storeService.getListOfMerchantStoreNames({ 'store': '' })
@@ -173,20 +177,22 @@ export class CategoryFormComponent implements OnInit {
   fillFormArray() {
     //each supported language
     this.form.value.descriptions.forEach((desc, index) => {
-      this.category.descriptions.forEach((description) => {
-        if (desc.language === description.language) {
-          //6 fields + language
-          (<FormArray>this.form.get('descriptions')).at(index).patchValue({
-            language: description.language,
-            name: description.name,
-            highlights: description.highlights,
-            friendlyUrl: description.friendlyUrl,
-            description: description.description,
-            title: description.title,
-            metaDescription: description.metaDescription,
-          });
-        }
-      });
+      if(this.category != null && this.category.descriptions) {
+        this.category.descriptions.forEach((description) => {
+          if (desc.language === description.language) {
+            //6 fields + language
+            (<FormArray>this.form.get('descriptions')).at(index).patchValue({
+              language: description.language,
+              name: description.name,
+              highlights: description.highlights,
+              friendlyUrl: description.friendlyUrl,
+              description: description.description,
+              title: description.title,
+              metaDescription: description.metaDescription,
+            });
+          }
+        });
+      }
     });
   }
 

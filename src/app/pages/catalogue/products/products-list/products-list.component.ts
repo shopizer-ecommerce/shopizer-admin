@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-
 import { ProductService } from '../services/product.service';
 import { LocalDataSource } from 'ng2-smart-table';
 import { AvailableButtonComponent } from './available-button.component';
@@ -31,6 +30,7 @@ export class ProductsListComponent implements OnInit {
   perPage = 10;
   currentPage = 1;
   totalCount;
+  merchant;
 
   // server params
   params = this.loadParams();
@@ -222,6 +222,7 @@ export class ProductsListComponent implements OnInit {
   }
 
   choseStore(event) {
+    console.log("Choosing store " + event.value);
     this.params.store = event.value;
     this.getList();
   }

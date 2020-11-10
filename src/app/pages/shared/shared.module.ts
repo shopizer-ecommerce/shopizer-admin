@@ -4,7 +4,6 @@ import { RouterModule } from '@angular/router';
 
 import { ThemeModule } from '../../@theme/theme.module';
 import { Ng2SmartTableModule } from 'ng2-smart-table';
-// import { OrderListComponent } from '../orders/order-list/order-list.component';
 import { NbSpinnerModule, NbTreeGridComponent, NbTreeGridModule } from '@nebular/theme';
 import { NotFoundComponent } from './components/not-found/not-found.component';
 import { FiveHundredComponent } from './components/five-hundred/five-hundred.component';
@@ -16,6 +15,7 @@ import { PaginatorComponent } from './components/paginator/paginator.component';
 import { PickListModule } from 'primeng/picklist';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { DropdownModule } from 'primeng/dropdown';
+import {AutoCompleteModule} from 'primeng/autocomplete';
 import { BackButtonComponent } from './components/back-button/back-button.component';
 import { TreeTableModule } from 'primeng/treetable';
 import { ValidateNumberDirective } from './validation/validate-number.directive';
@@ -24,7 +24,6 @@ import { PasswordPromptComponent } from './components/password-prompt/password-p
 
 @NgModule({
   declarations: [
-    // OrderListComponent,
     RightSidemenuComponent,
     NotFoundComponent,
     FiveHundredComponent,
@@ -38,7 +37,6 @@ import { PasswordPromptComponent } from './components/password-prompt/password-p
   imports: [
     CommonModule,
     RouterModule,
-
     NbTreeGridModule,
     Ng2SmartTableModule,
     ThemeModule,
@@ -52,8 +50,6 @@ import { PasswordPromptComponent } from './components/password-prompt/password-p
     NbSpinnerModule,
     TranslateModule,
     TreeTableModule,
-
-    // OrderListComponent,
     RightSidemenuComponent,
     NotFoundComponent,
     FiveHundredComponent,
@@ -61,11 +57,11 @@ import { PasswordPromptComponent } from './components/password-prompt/password-p
     ShowcaseDialogComponent,
     PaginatorComponent,
     BackButtonComponent,
-
     NbTreeGridModule,
     NbTreeGridComponent,
     PickListModule,
     DropdownModule,
+    AutoCompleteModule,
     MultiSelectModule,
     ValidateNumberDirective
   ],
