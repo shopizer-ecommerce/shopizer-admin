@@ -61,13 +61,7 @@ export class ProductsListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.storeService.getListOfStores({ start: 0 })
-      .subscribe(res => {
-        res.data.forEach((store) => {
-          this.stores.push({ value: store.code, label: store.code });
-        });
-        // this.stores = res.data;
-      });
+    this.getStore();
     this.getList();
     this.translate.onLangChange.subscribe((lang) => {
       this.params.lang = this.storageService.getLanguage();
@@ -78,27 +72,36 @@ export class ProductsListComponent implements OnInit {
     //ng2-smart-table server side filter
     this.source.onChanged().subscribe((change) => {
       if (!this.loadingList) {//listing service
-          this.listingService.filterDetect(this.params,change,this.loadList.bind(this),this.resetList.bind(this));
+        this.listingService.filterDetect(this.params, change, this.loadList.bind(this), this.resetList.bind(this));
       }
     });
   }
 
-      /** callback methods for table list*/
-      private loadList(newParams:any) {
-        //console.log('CallBack loadList');
-        //console.log(JSON.stringify(newParams));
-        this.currentPage = 1; //back to page 1
-        this.params = newParams;
-        this.getList();
-      }
-    
-      private resetList() {
-        //console.log('CallBack resetList');
-        this.currentPage = 1;//back to page 1
-        this.params = this.loadParams();
-        this.getList();
-      }
+  /** callback methods for table list*/
+  private loadList(newParams: any) {
+    //console.log('CallBack loadList');
+    //console.log(JSON.stringify(newParams));
+    this.currentPage = 1; //back to page 1
+    this.params = newParams;
+    this.getList();
+  }
 
+  private resetList() {
+    //console.log('CallBack resetList');
+    this.currentPage = 1;//back to page 1
+    this.params = this.loadParams();
+    this.getList();
+  }
+  getStore() {
+    this.storeService.getListOfStores({ code: 'DEFAULT' })
+      .subscribe(res => {
+        let storeData = []
+        res.data.forEach((store) => {
+          storeData.push(store.code);
+        });
+        this.stores = storeData;
+      });
+  }
   getList() {
     const startFrom = (this.currentPage - 1) * this.perPage;
     this.params.start = startFrom;
@@ -222,9 +225,10 @@ export class ProductsListComponent implements OnInit {
   }
 
   choseStore(event) {
-    console.log("Choosing store " + event.value);
-    this.params.store = event.value;
-    this.getList();
+    console.log("Choosing store " + event);
+    // this.params.store = event.value;
+    // this.getList();
+
   }
 
   // paginator
