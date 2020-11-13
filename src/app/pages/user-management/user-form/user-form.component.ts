@@ -35,8 +35,8 @@ export class UserFormComponent implements OnInit {
   canEdit = true;
   canChangePassword = false;
   selfEdit = false;
-  pwdPattern = '^(?=[^A-Z]*[A-Z])(?=[^a-z]*[a-z])(?=[^0-9]*[0-9]).{6,12}$';
-  emailPattern = '^([a-zA-Z0-9_\\-\\.]+)@([a-zA-Z0-9_\\-\\.]+)\\.([a-zA-Z]{2,5})$';
+  pwdPattern = '^(?=[^A-Z]*[A-Z])(?=[^a-z]*[a-z])(?=[^0-9]*[0-9]).{6,12}$';//TODO env variable
+  emailPattern = '^([a-zA-Z0-9_\\-\\.]+)@([a-zA-Z0-9_\\-\\.]+)\\.([a-zA-Z]{2,5})$';//TODO env variable
   stores = [];
   tree: UrlTree;
   store = null;
@@ -44,12 +44,19 @@ export class UserFormComponent implements OnInit {
 
   // user's roles
   roles;
+  /**
+   * RULES
+   */
   // rules for user's group
   /**
    * super admin
    * admin
    * can change other users password
    */
+
+   /**
+    * Can't change self store even if super admin
+    */
   rules = {
     'ADMIN_RETAIL': {
       rules: [
