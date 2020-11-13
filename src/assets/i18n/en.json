@@ -10,6 +10,8 @@
     "SHIPPING_MANAGEMENT": "Shipping management",
     "CUSTOMER_MANAGEMENT": "Customer management",
     "ORDER_MANAGEMENT": "Order management",
+    "TAX_MANAGEMENT": "Tax management",
+    "TAX_CLASS": "Tax Classes",
     "USER": "User",
     "USERS": "Users",
     "MY_PROFILE": "My profile",
@@ -567,6 +569,12 @@
     "folder": "folder"
   },
   "SYSTEM": {
-    "DELETE_CACHE" : "Delete Cache"
+    "DELETE_CACHE": "Delete Cache"
+  },
+  "TAX": {
+    "CREATE_TAX_CLASS": "Create Tax Classes",
+    "ADD_TAX_CLASS": "Add Tax Classes",
+    "TAX_CLASS_CODE": "Tax class code",
+    "TAX_CLASS_NAME": "Tax class name"
   }
 }

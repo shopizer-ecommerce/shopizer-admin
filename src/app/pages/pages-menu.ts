@@ -81,10 +81,10 @@ const IsOrderManagementVisible = () => {
     (JSON.parse(localStorage.getItem('roles'))).isAdminOrder ||
     (JSON.parse(localStorage.getItem('roles'))).isAdmin
   ) {
-      return true;
-    } else {
-      return false;
-    }
+    return true;
+  } else {
+    return false;
+  }
 };
 
 export const MENU_ITEMS: MenuItem[] = [
@@ -395,6 +395,18 @@ export const MENU_ITEMS: MenuItem[] = [
       //   key: 'sideNav.packaging',
       //   link: '/pages/shipping/config',
       // }
+    ]
+  },
+  {
+    title: 'COMPONENTS.TAX_MANAGEMENT',
+    key: 'COMPONENTS.TAX_MANAGEMENT',
+    icon: 'car',
+    children: [
+      {
+        title: 'COMPONENTS.TAX_CLASS',
+        key: 'COMPONENTS.TAX_CLASS',
+        link: '/pages/tax-management/classes-list',
+      }
     ]
   },
   // {
