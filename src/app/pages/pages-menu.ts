@@ -405,7 +405,12 @@ export const MENU_ITEMS: MenuItem[] = [
       {
         title: 'COMPONENTS.TAX_CLASS',
         key: 'COMPONENTS.TAX_CLASS',
-        link: '/pages/tax-management/classes-list',
+        link: '/pages/tax-management/classes-list'
+      },
+      {
+        title: 'COMPONENTS.TAX_RATE',
+        key: 'COMPONENTS.TAX_RATE',
+        link: '/pages/tax-management/rate-list'
       }
     ]
   },

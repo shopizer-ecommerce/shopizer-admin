@@ -12,6 +12,7 @@
     "ORDER_MANAGEMENT": "Order management",
     "TAX_MANAGEMENT": "Tax management",
     "TAX_CLASS": "Tax Classes",
+    "TAX_RATE": "Tax Rate",
     "USER": "User",
     "USERS": "Users",
     "MY_PROFILE": "My profile",
@@ -574,7 +575,16 @@
   "TAX": {
     "CREATE_TAX_CLASS": "Create Tax Classes",
     "ADD_TAX_CLASS": "Add Tax Classes",
+    "UPDATE_TAX_CLASS": "Update Tax Classes",
     "TAX_CLASS_CODE": "Tax class code",
-    "TAX_CLASS_NAME": "Tax class name"
+    "TAX_CLASS_NAME": "Tax class name",
+    "ADD_TAX_RATE": "Add Tax Rate",
+    "UPDATE_TAX_RATE": "Update Tax Rate",
+    "TAX_RATE_NAME": "Tax Rate Name",
+    "TAX_RATE_CODE": "Tax Rate Code",
+    "TAX_RATE": "Tax Rate",
+    "ORDER": "Order",
+    "SELECT_CLASS_NAME": "Select Tax Class Name",
+    "COMPOUND": "COMPOUND"
   }
 }

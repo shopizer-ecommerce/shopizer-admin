@@ -6,17 +6,20 @@ import { TaxService } from '../services/tax.service';
 
 @Component({
   selector: 'ngx-tax-class-add',
-  templateUrl: './tax-class-add.component.html',
-  styleUrls: ['./tax-class-add.component.scss'],
+  templateUrl: './add.component.html',
+  styleUrls: ['./add.component.scss'],
 })
 export class TaxClassAddComponent implements OnInit {
   tax = {
+    id: '',
     code: '',
     name: ''
   }
   loadingList: boolean = false;
   codeExits: boolean = false;
   isUpdated: boolean = false;
+  taxClassID: any;
+  isUpdate: boolean = false;
   constructor(
     // private sharedService: SharedService,
     private toastr: ToastrService,
@@ -26,10 +29,22 @@ export class TaxClassAddComponent implements OnInit {
 
   }
   ngOnInit() {
-    // if (localStorage.getItem('packagesID')) {
-    //   this.isUpdated = true
-    //   this.getPackagesDetails();
-    // }
+    if (localStorage.getItem('classId')) {
+      this.taxClassID = localStorage.getItem('classId')
+      this.getTaxClassDetail();
+      this.isUpdate = true;
+    }
+  }
+  getTaxClassDetail() {
+    this.loadingList = true;
+    this.taxService.getTaxClassesDetails(this.taxClassID)
+      .subscribe(data => {
+        this.loadingList = false;
+        console.log(data)
+        this.tax = data;
+      }, error => {
+        this.loadingList = false;
+      });
   }
   focusOutFunction() {
     this.taxService.getUniqueTax(this.tax.code)
@@ -61,28 +76,6 @@ export class TaxClassAddComponent implements OnInit {
       code: this.tax.code,
       name: this.tax.name
     }
-    //   type: this.packages.type ? "BOX" : "ITEM",
-    //   code: this.packages.code,
-    //   shippingHeight: this.packages.type ? this.packages.shippingHeight : 0,
-    //   shippingLength: this.packages.type ? this.packages.shippingLength : 0,
-    //   shippingMaxWeight: 0,
-    //   shippingWeight: this.packages.type ? this.packages.shippingWeight : 0,
-    //   shippingWidth: this.packages.type ? this.packages.shippingWidth : 0,
-    //   treshold: 0,
-
-    // };
-    // if (localStorage.getItem('packagesID')) {
-    //   this.sharedService.updatePackaging(this.packages.code, param)
-    //     .subscribe(res => {
-    //       this.loadingList = false;
-    //       this.toastr.success("Packages has been updated successfully");
-    //       // this.router.navigate(['pages/shipping/packaging']);
-    //     }, error => {
-    //       this.loadingList = false;
-    //       this.codeExits = true
-
-    //     });
-    // } else {
     this.taxService.addTaxClasses(param)
       .subscribe(res => {
         this.loadingList = false;
@@ -92,7 +85,23 @@ export class TaxClassAddComponent implements OnInit {
         this.loadingList = false;
 
       });
-    // }
+  }
+  update() {
+    this.loadingList = true;
+
+    let param = {
+      code: this.tax.code,
+      name: this.tax.name
+    }
+    this.taxService.updateTaxClasses(this.tax.id, param)
+      .subscribe(res => {
+        this.loadingList = false;
+        this.toastr.success("Tax classes has been updated successfully");
+        this.router.navigate(['pages/tax-management/classes-list']);
+      }, error => {
+        this.loadingList = false;
+        this.toastr.success("Tax classes has been updated fail");
+      });
   }
   goBack() {
     this.router.navigate(['pages/tax-management/classes-list']);

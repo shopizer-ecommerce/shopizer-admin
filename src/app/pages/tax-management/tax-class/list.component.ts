@@ -1,5 +1,5 @@
 import { ChangeDetectorRef, Component, OnInit, ViewChild } from '@angular/core';
-import { DatePipe } from '@angular/common';
+
 import { StorageService } from '../../shared/services/storage.service';
 import { StoreService } from '../../store-management/services/store.service';
 import { TaxService } from '../services/tax.service';
@@ -13,8 +13,8 @@ import { NbDialogService } from '@nebular/theme';
 import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'ngx-tax-class-list',
-  templateUrl: './tax-class-list.component.html',
-  styleUrls: ['./tax-class-list.component.scss']
+  templateUrl: './list.component.html',
+  styleUrls: ['./list.component.scss']
 })
 export class TaxClassListComponent implements OnInit {
   @ViewChild('item', { static: false }) accordion;
@@ -31,7 +31,6 @@ export class TaxClassListComponent implements OnInit {
   searchValue: string = '';
   isSuperAdmin: boolean;
 
-  timeoutHandler: any;
   params = this.loadParams();
 
   constructor(
@@ -173,6 +172,7 @@ export class TaxClassListComponent implements OnInit {
     console.log(event)
     switch (event.action) {
       case 'edit':
+        this.editTaxClass(event);
         // this.onEdit(event);
         break;
       case 'delete':
@@ -202,7 +202,11 @@ export class TaxClassListComponent implements OnInit {
       });
   }
   createTaxClass(e) {
-    // localStorage.setItem('orderID', e.data.id);
+    localStorage.setItem('classId', '');
+    this.router.navigate(['pages/tax-management/classes-add']);
+  }
+  editTaxClass(event) {
+    localStorage.setItem('classId', event.data.code);
     this.router.navigate(['pages/tax-management/classes-add']);
   }
 
