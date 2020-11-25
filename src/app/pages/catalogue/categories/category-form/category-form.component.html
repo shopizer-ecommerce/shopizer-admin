@@ -5,7 +5,8 @@
     <div class="content_spacing">
       <nb-select *ngIf="languages.length" placeholder="{{ 'COMMON.LANGUAGE' | translate}}" outline shape="rectangle"
         name='selectedLanguage' [selected]="defaultLanguage">
-        <nb-option (click)="selectLanguage(language.code)" *ngFor="let language of languages" [value]="language.code">{{ ('LANG.'+language.code) |translate }}</nb-option>
+        <nb-option (click)="selectLanguage(language.code)" *ngFor="let language of languages" [value]="language.code">{{
+          ('LANG.'+language.code) |translate }}</nb-option>
       </nb-select>
     </div>
     <div class="content_spacing">
@@ -21,7 +22,7 @@
 
     <form [formGroup]='form' *ngIf="!loader">
       <div class="row">
-        <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
+        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
           <nb-card class="nb-card inline-form-card">
             <nb-card-header class="nb-card-header">Basic Details - TRANSLATE</nb-card-header>
             <nb-card-body class="nb-card-body">
@@ -35,7 +36,7 @@
                 </div>
               </div>
               <div class="row" *ngIf="isSuperAdmin || isRetailAdmin">
-                <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                   <div class="form-group">
                     <label class="label col-form-label">{{ 'STORE.MERCHANT_STORE' | translate }}</label>
                     <nb-select *ngIf="stores.length" placeholder="{{ 'STORE.MERCHANT_STORE' | translate }}"
@@ -46,7 +47,7 @@
                 </div>
               </div>
               <div class="row">
-                <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                   <div class="form-group">
                     <label class="label col-form-label">{{ 'CATEGORY.PARENT' | translate }}</label>
                     <nb-select *ngIf="roots.length" placeholder="{{ 'STORE.MERCHANT_STORE' | translate }}"
@@ -58,7 +59,7 @@
               </div>
 
               <div class="row">
-                <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                   <div class="form-group">
                     <label for="code" class="label col-form-label">Code *</label>
                     <input type="text" class="form-control inputText" id="code" formControlName='code' [readOnly]="category.id"
@@ -78,7 +79,7 @@
                 </div>
               </div>
               <div class="row">
-                <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                   <div class="form-group">
                     <label for="order" class="label col-form-label">{{ 'COMMON.ORDER' | translate}}</label>
                     <input type="text" class="form-control inputText" id="order" formControlName='sortOrder'
@@ -90,7 +91,7 @@
           </nb-card>
         </div>
 
-        <div class="col-lg-7 col-md-7 col-sm-12 col-xs-12">
+        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
           <nb-card class="nb-card inline-form-card">
             <nb-card-header class="nb-card-header">-- SEO Details - TRANSLATE</nb-card-header>
             <nb-card-body class="nb-card-body">

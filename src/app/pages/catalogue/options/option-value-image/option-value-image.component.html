@@ -5,7 +5,7 @@
   </div>
 </div>
 
-<input type="file" name="file" id="imageInput" #imageInput (change)='onSelectFile($event)' accept="image/jpeg,image/gif,image/png,image/jpg,"/>
-<div  class="image-actions">
-  <button nbButton size="small" outline status="success" (click)='imageInput.click()'>{{ 'COMMON.ADD_IMAGE' | translate }}</button>
+<input type="file" name="file" id="imageInput" #imageInput (change)='onSelectFile($event)' accept="image/jpeg,image/gif,image/png,image/jpg," />
+<div class="image-actions">
+  <button nbButton size="small" outline (click)='imageInput.click()'>{{ 'COMMON.ADD_IMAGE' | translate }}</button>
 </div>

@@ -128,7 +128,7 @@ export class ProductFormComponent implements OnInit {
       }),
       // placementOrder: [0, [Validators.required]],  // ???
       // taxClass: [0, [Validators.required]], // ???
-      selectedLanguage: ['', [Validators.required]],
+      selectedLanguage: [this.defaultLanguage, [Validators.required]],
       descriptions: this.fb.array([]),
     });
   }

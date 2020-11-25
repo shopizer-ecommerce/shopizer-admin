@@ -465,6 +465,7 @@
     "REMOVE": "Remove",
     "EDIT": "Edit",
     "OK": "Ok",
+    "SUBMIT": "Submit",
     "CANCEL": "Cancel",
     "REMOVE_QUESTION": "Do you really want to remove this entity?",
     "REMOVE_GEN_QUESTION": "Do you really want to remove",

@@ -36,8 +36,8 @@ export class TypesListComponent implements OnInit {
     private storageService: StorageService,
     private storeService: StoreService,
     private typesService: TypesService,
-  ) { 
-    
+  ) {
+
   }
 
   loadParams() {
@@ -117,71 +117,71 @@ export class TypesListComponent implements OnInit {
     });
   }
 
-    // paginator
-    changePage(event) {
-      switch (event.action) {
-        case 'onPage': {
-          this.currentPage = event.data;
-          break;
-        }
-        case 'onPrev': {
-          this.currentPage--;
-          break;
-        }
-        case 'onNext': {
-          this.currentPage++;
-          break;
-        }
-        case 'onFirst': {
-          this.currentPage = 1;
-          break;
-        }
-        case 'onLast': {
-          this.currentPage = event.data;
-          break;
-        }
+  // paginator
+  changePage(event) {
+    switch (event.action) {
+      case 'onPage': {
+        this.currentPage = event.data;
+        break;
       }
-      this.getList();
-    }
-
-
-    deleteRecord(event) {
-      this.dialogService.open(ShowcaseDialogComponent, {})
-        .onClose.subscribe(res => {
-          if (res) {
-
-            this.typesService.deleteType(event.data.id)
-              .subscribe(result => {
-                this.toastr.success(this.translate.instant('OPTION.OPTION_REMOVED'));
-                this.getList();
-              });
-
-          } else {
-            // TODO navigate generic error
-            // event.confirm.reject();
-          }
-        });
-    }
-
-
-    onSelectStore(e) {
-      this.params["store"] = e.value;
-      this.getList();
-    }
-
-
-    onClickAction(event) {
-      switch (event.action) {
-        case 'edit':
-          this.onEdit(event);
-          break;
-        case 'remove':
-          this.deleteRecord(event)
-          break
+      case 'onPrev': {
+        this.currentPage--;
+        break;
+      }
+      case 'onNext': {
+        this.currentPage++;
+        break;
+      }
+      case 'onFirst': {
+        this.currentPage = 1;
+        break;
+      }
+      case 'onLast': {
+        this.currentPage = event.data;
+        break;
       }
     }
-    onEdit(event) {
-      this.router.navigate(['/pages/catalogue/types/type/' + event.data.id]);
+    this.getList();
+  }
+
+
+  deleteRecord(event) {
+    this.dialogService.open(ShowcaseDialogComponent, {})
+      .onClose.subscribe(res => {
+        if (res) {
+
+          this.typesService.deleteType(event.data.id)
+            .subscribe(result => {
+              this.toastr.success(this.translate.instant('OPTION.OPTION_REMOVED'));
+              this.getList();
+            });
+
+        } else {
+          // TODO navigate generic error
+          // event.confirm.reject();
+        }
+      });
+  }
+
+
+  onSelectStore(e) {
+    this.params["store"] = e;
+    this.getList();
+  }
+
+
+  onClickAction(event) {
+    switch (event.action) {
+      case 'edit':
+        this.onEdit(event);
+        break;
+      case 'remove':
+        this.deleteRecord(event)
+        break
     }
+  }
+  onEdit(event) {
+    this.router.navigate(['/pages/catalogue/types/type/' + event.data.id]);
+  }
 
 }

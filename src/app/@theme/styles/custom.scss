@@ -1081,3 +1081,21 @@ ng2-st-tbody-custom {
     font-size: 12px;
   }
 }
+
+.inventory_create_page {
+  .ui-picklist-filter-container {
+    background-color: #f7f9fc !important;
+  }
+
+  .ui-picklist-filter {
+    border-color: #f7f9fc !important;
+  }
+
+  .ui-picklist-item {
+    border-bottom: 1px solid #c8c8c8 !important;
+  }
+
+  .ui-helper-clearfix {
+    color: #222b45 !important;
+  }
+}

@@ -215,19 +215,20 @@ export class ProductsListComponent implements OnInit {
         if (res) {
           this.productService.deleteProduct(event.data.id)
             .subscribe(result => {
-              event.confirm.resolve();
+              this.toastr.success(this.translate.instant('PRODUCT.PRODUCT_REMOVED'));
               this.getList();
+              // event.confirm.resolve();
             });
         } else {
-          event.confirm.reject();
+          // event.confirm.reject();
         }
       });
   }
 
   choseStore(event) {
     console.log("Choosing store " + event);
-    // this.params.store = event.value;
-    // this.getList();
+    this.params.store = event;
+    this.getList();
 
   }
 
@@ -259,7 +260,11 @@ export class ProductsListComponent implements OnInit {
   }
   route(e) {
     console.log(e)
-    // localStorage.setItem('orderID', e.data.id);
-    this.router.navigate(['pages/catalogue/products/product/' + e.data.id]);
+    if (e.action == 'remove') {
+      this.deleteRecord(e)
+    } else {
+      // localStorage.setItem('orderID', e.data.id);
+      this.router.navigate(['pages/catalogue/products/product/' + e.data.id]);
+    }
   }
 }

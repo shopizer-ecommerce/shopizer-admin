@@ -38,7 +38,7 @@
 </nb-card> -->
 
 
-<nb-card class="page-card inner_pages">
+<!-- <nb-card class="page-card inner_pages">
   <nb-card-body [nbSpinner]="loading" nbSpinnerSize="large" nbSpinnerStatus="primary" class="productToCategory">
     <div class="inner_pages_legacy">
       <nb-card-header class="main_header">
@@ -76,4 +76,41 @@
       </ng-template>
     </p-pickList>
   </nb-card-body>
-</nb-card>
+</nb-card> -->
+
+<div class="inner_pages inventory_create_page">
+
+  <nb-card-header class="main_header">
+    <h1 class="page_title">Category</h1>
+
+    <div class="content_spacing back_button">
+      <ngx-back-button></ngx-back-button>
+    </div>
+    <div class="content_spacing">
+      <nb-select *ngIf="categories.length" placeholder="{{ 'COMPONENTS.CATEGORY' | translate}}" outline shape="rectangle">
+        <nb-option *ngFor="let category of categories" [value]="category.code" (click)="selectGroup(category.id)">
+          {{ category.code }}
+        </nb-option>
+      </nb-select>
+    </div>
+  </nb-card-header>
+  <div [nbSpinner]="loader" nbSpinnerSize="large" nbSpinnerStatus="primary">
+
+    <nb-card class="nb-card inline-form-card">
+      <nb-card-body class="nb-card-body">
+        <p-pickList sourceHeader="Available" targetHeader="Selected" dragdrop="true" [responsive]="true" [source]="availableList"
+          [target]="selectedList" sourceFilterPlaceholder="Search" targetFilterPlaceholder="Search"
+          [showSourceControls]="false" [showTargetControls]="false" [disabled]="!selectedCategory" (onMoveToTarget)="moveEvent($event, 'toTarget')"
+          (onMoveToSource)="moveEvent($event, 'toSource')" (onMoveAllToTarget)="moveEvent($event, 'allToTarget')"
+          (onMoveAllToSource)="moveEvent($event, 'allToSource')" filterBy="code">
+          <ng-template let-item pTemplate="item">
+            <div class="ui-helper-clearfix item-picklist">
+              <div>{{item.id}}</div>
+              <div>{{item.description.name}}</div>
+            </div>
+          </ng-template>
+        </p-pickList>
+      </nb-card-body>
+    </nb-card>
+  </div>
+</div>

@@ -186,7 +186,7 @@ export class OptionsValuesListComponent implements OnInit {
     this.getList();
   }
   onSelectStore(e) {
-    this.params["store"] = e.value;
+    this.params["store"] = e;
     this.getList();
   }
   onClickAction(event) {

@@ -23,6 +23,7 @@ import { ProductsRoutingModule } from './routing/products-routing.module';
 import { PriceRoutingModule } from './routing/price-routing.module';
 import { InventoryRoutingModule } from './routing/inventory-routing.module';
 import { CustomModule } from '../../custome-component/custom.module';
+import { ActiveButtonComponent } from './attribute/product-attributes/active-button.component';
 @NgModule({
   declarations: [
     ProductsComponent,
@@ -44,6 +45,7 @@ import { CustomModule } from '../../custome-component/custom.module';
 
     ProductAttributesComponent,
     AttributeFormComponent,
+    ActiveButtonComponent
   ],
   imports: [
     ProductsRoutingModule,
@@ -56,7 +58,7 @@ import { CustomModule } from '../../custome-component/custom.module';
     NgxSummernoteModule
 
   ],
-  entryComponents: [AvailableButtonComponent]
+  entryComponents: [AvailableButtonComponent, ActiveButtonComponent]
 })
 
 export class ProductsModule {
