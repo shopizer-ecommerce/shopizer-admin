@@ -5,6 +5,7 @@ import { TransferBoxModule } from './transferlistbox/transferlistbox.module';
 import { MalihuScrollbarModule } from 'ngx-malihu-scrollbar';
 // import { OriginComponent } from './origin/origin.component';
 import { QueryBuilderModule } from "angular2-query-builder";
+import { CustomModule } from '../custome-component/custom.module';
 @NgModule({
   declarations: [
     ...routedComponents,
@@ -16,7 +17,8 @@ import { QueryBuilderModule } from "angular2-query-builder";
     TransferBoxModule,
     MalihuScrollbarModule.forRoot(),
     // ngfModule,
-    QueryBuilderModule
+    QueryBuilderModule,
+    CustomModule
   ],
   exports: []
 })

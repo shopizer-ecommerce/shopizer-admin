@@ -11,6 +11,7 @@
     "CUSTOMER_MANAGEMENT": "Customer management",
     "ORDER_MANAGEMENT": "Order management",
     "TAX_MANAGEMENT": "Tax management",
+    "PAYMENT": "Payment",
     "TAX_CLASS": "Tax Classes",
     "TAX_RATE": "Tax Rate",
     "USER": "User",
@@ -587,5 +588,9 @@
     "ORDER": "Order",
     "SELECT_CLASS_NAME": "Select Tax Class Name",
     "COMPOUND": "COMPOUND"
+  },
+  "PAYMENT": {
+    "PAYMENT_METHODS": "Payment Methods",
+    "PAYMENT_TYPE": "Payment Type"
   }
 }

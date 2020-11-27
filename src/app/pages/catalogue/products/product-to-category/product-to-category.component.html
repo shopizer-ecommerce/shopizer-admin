@@ -98,18 +98,43 @@
 
     <nb-card class="nb-card inline-form-card">
       <nb-card-body class="nb-card-body">
-        <p-pickList sourceHeader="Available" targetHeader="Selected" dragdrop="true" [responsive]="true" [source]="availableList"
+        <!-- <p-pickList sourceHeader="Available" targetHeader="Selected" dragdrop="true" [responsive]="true" [source]="availableList"
           [target]="selectedList" sourceFilterPlaceholder="Search" targetFilterPlaceholder="Search"
           [showSourceControls]="false" [showTargetControls]="false" [disabled]="!selectedCategory" (onMoveToTarget)="moveEvent($event, 'toTarget')"
           (onMoveToSource)="moveEvent($event, 'toSource')" (onMoveAllToTarget)="moveEvent($event, 'allToTarget')"
           (onMoveAllToSource)="moveEvent($event, 'allToSource')" filterBy="code">
           <ng-template let-item pTemplate="item">
             <div class="ui-helper-clearfix item-picklist">
-              <div>{{item.id}}</div>
-              <div>{{item.description.name}}</div>
+              <div>{{item.id}} - {{item.description.name}} </div> -->
+        <!-- <div>{{item.description.name}}</div> -->
+        <!-- </div>
+          </ng-template>
+        </p-pickList> -->
+        <p-pickList [source]="availableList" [target]="selectedList" sourceHeader="Available" targetHeader="Selected"
+          dragdrop="true" [responsive]="true" [sourceStyle]="{'height':'500px'}" [targetStyle]="{'height':'500px'}"
+          filterBy="code" (onMoveToTarget)="moveEvent($event, 'toTarget')" (onMoveToSource)="moveEvent($event, 'toSource')"
+          (onMoveAllToTarget)="moveEvent($event, 'allToTarget')" (onMoveAllToSource)="moveEvent($event, 'allToSource')"
+          sourceFilterPlaceholder="Search" targetFilterPlaceholder="Search" [showSourceControls]="false"
+          [showTargetControls]="false">
+          <ng-template let-item pTemplate="item">
+            <div class="product-item">
+              <div class="image-container">
+                <img src="{{item.image.imageUrl}}" alt="name" class="product-image" />
+              </div>
+              <div class="product-list-detail">
+                <div class="p-mb-2">{{item.description.name}}</div>
+                <!-- <i class="pi pi-tag product-category-icon"></i> -->
+                <span class="product-category" [innerHTML]="item.description.description"></span>
+
+              </div>
+              <div class="product-list-action">
+                <div class="p-mb-3">{{item.finalPrice}}</div>
+                <!-- <span [class]="'product-badge status-' + product.inventoryStatus.toLowerCase()">{{product.inventoryStatus}}</span> -->
+              </div>
             </div>
           </ng-template>
         </p-pickList>
+
       </nb-card-body>
     </nb-card>
   </div>

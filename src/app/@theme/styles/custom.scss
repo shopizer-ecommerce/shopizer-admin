@@ -1083,19 +1083,31 @@ ng2-st-tbody-custom {
 }
 
 .inventory_create_page {
-  .ui-picklist-filter-container {
-    background-color: #f7f9fc !important;
+  .ui-picklist-buttons-cell {
+    margin-left: 33px !important;
   }
 
-  .ui-picklist-filter {
-    border-color: #f7f9fc !important;
+  .ui-button {
+    width: 60% !important;
   }
+
+  //   .ui-picklist-filter-container {
+  //     background-color: #f7f9fc !important;
+  //   }
+
+  //   .ui-picklist-filter {
+  //     border-color: #f7f9fc !important;
+  //   }
 
   .ui-picklist-item {
-    border-bottom: 1px solid #c8c8c8 !important;
+    border-bottom: 1px solid #edf1f7 !important;
+
+    &:focus {
+      border: 0px !important;
+    }
   }
 
-  .ui-helper-clearfix {
-    color: #222b45 !important;
-  }
+  //   .ui-helper-clearfix {
+  //     color: #222b45 !important;
+  //   }
 }

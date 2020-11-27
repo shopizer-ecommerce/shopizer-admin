@@ -55,10 +55,10 @@ export class BoxesComponent {
 
   // request params
   params = {
-      lang: this.storageService.getLanguage(),
-      store: this.storageService.getMerchant(),
-      count: this.perPage,
-      page: 0
+    lang: this.storageService.getLanguage(),
+    store: this.storageService.getMerchant(),
+    count: this.perPage,
+    page: 0
   };
 
   source: LocalDataSource = new LocalDataSource();
@@ -84,7 +84,7 @@ export class BoxesComponent {
   getBox() {
     // let action = Action.CONTENT + Action.BOXES;
 
-    this.crudService.get('/v1/private/content/boxes', { 'store': this.storageService.getMerchant()})
+    this.crudService.get('/v1/private/content/boxes', { 'store': this.storageService.getMerchant() })
       .subscribe(data => {
         this.source = data;
       }, error => {
@@ -94,7 +94,10 @@ export class BoxesComponent {
   addBoxes() {
     this.router.navigate(['/pages/content/boxes/add']);
   }
-
+  onSelectStore(e) {
+    this.params["store"] = e;
+    this.getBox();
+  }
   // onDeleteConfirm(event): void {
   //   if (window.confirm('Are you sure you want to delete?')) {
   //     event.confirm.resolve();

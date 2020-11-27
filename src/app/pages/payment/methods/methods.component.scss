@@ -1,0 +1,275 @@
+@import "../../../@theme/styles/themes";
+
+@include nb-install-component() {
+    nb-card {
+        transform: translate3d(0, 0, 0);
+    }
+}
+
+.payment-card {
+    background: transparent;
+    border: none;
+
+    .orderList {
+        .main_header {
+            padding: 0px 30px 10px 0px;
+
+            .page_title {
+                margin-top: -25px;
+                font-weight: 600;
+            }
+        }
+
+        .grid-body {
+            max-height: 1000px;
+            overflow-y: scroll;
+            scrollbar-width: none;
+            // margin: -5px;
+            // padding: 30px 0;
+
+            .row {
+                margin: 0 -15px;
+            }
+
+            .grid-size-1 {
+                width: 48.6979166667%;
+                height: 380px;
+                padding: 5px;
+            }
+
+            .grid-size-2 {
+                width: 25.6510416667%;
+                height: 380px;
+                padding: 5px;
+            }
+
+            .grid-size-3 {
+                width: 25.6510416667%;
+                height: 760px;
+                padding: 5px;
+            }
+
+            .grid {
+                .grid-filter {
+                    margin-bottom: 35px;
+
+                    li {
+                        padding: 10px 0;
+                        display: inline-block;
+
+                        span {
+                            color: #333;
+                            font-size: 15px;
+                            padding: 0 18px;
+                            text-transform: uppercase;
+                            -webkit-transition: color 0.35s;
+                            -o-transition: color 0.35s;
+                            -moz-transition: color 0.35s;
+                            transition: color 0.35s;
+                            cursor: pointer;
+
+                            &:hover {
+                                color: #e4c7a2;
+                            }
+                        }
+
+                        &:active {
+                            span {
+                                color: #e4c7a2;
+                            }
+                        }
+                    }
+                }
+            }
+
+            .grid-product {
+                text-align: center;
+                padding-bottom: 15px;
+                padding-top: 15px;
+                background-color: #fff;
+                border: 1px solid lightgray;
+                margin: 10px;
+
+                .product-rating {
+                    color: #ffcc66;
+                }
+
+                .image {
+                    width: 100%;
+                    display: -webkit-box;
+                    display: -webkit-flex;
+                    display: -moz-box;
+                    display: -ms-flexbox;
+                    display: flex;
+                    -webkit-box-pack: center;
+                    -webkit-justify-content: center;
+                    -moz-box-pack: center;
+                    -ms-flex-pack: center;
+                    justify-content: center;
+                    -webkit-box-align: center;
+                    -webkit-align-items: center;
+                    -moz-box-align: center;
+                    -ms-flex-align: center;
+                    align-items: center;
+                    height: 100px;
+                    // margin-bottom: 18px;
+                    position: relative;
+                    overflow: hidden;
+                    cursor: pointer;
+
+
+
+                    img {
+                        width: auto;
+                        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+                    }
+
+
+
+                }
+
+                .name {
+                    // text-transform: uppercase;
+                    // color: #666;
+                    -webkit-transition: all 0.35s;
+                    -o-transition: all 0.35s;
+                    -moz-transition: all 0.35s;
+                    transition: all 0.35s;
+                    font-size: 18px;
+                    font-weight: 600;
+                    cursor: pointer;
+
+                    &:hover {
+                        color: #e4c7a2;
+                    }
+                }
+
+                .price {
+                    font-size: 12px;
+                    padding: 12px;
+
+                    .discount-price {
+                        text-decoration: line-through;
+                    }
+                }
+
+                .configure-button {
+                    padding: 20px;
+
+                    .createBtn {
+                        padding: 8px 25px 9.5px 25px;
+                        background-color: #f7f9fc !important;
+                        color: #000 !important;
+                        border: 1px solid #edf1f7 !important;
+                        border-radius: 5px;
+                        margin-left: 20px;
+
+                        label {
+                            display: inline-block;
+                            font-weight: 600 !important;
+                            font-size: 14px !important;
+                        }
+
+                    }
+                }
+            }
+        }
+
+        .pointer {
+            height: 18px;
+            width: 18px;
+            margin-left: 20px;
+            cursor: pointer;
+        }
+
+        .filter_section {
+            background: #fff;
+            padding: 10px 15px;
+            margin: -10px 0 10px 0;
+        }
+    }
+}
+
+:host ::ng-deep .orderList {
+    .filter_section {
+        .filter_right_section {
+            button {
+                font-weight: 600 !important;
+                font-size: 14px !important;
+            }
+        }
+    }
+
+    .home-table {
+        thead {
+            .ng2-smart-titles {
+                th {
+                    a {
+                        font-weight: 600;
+                    }
+                }
+            }
+        }
+
+        tbody {
+            tr {
+                cursor: pointer;
+
+                &:hover,
+                &.selected {
+                    background: #e6f3ff !important;
+                }
+
+                a.ng2-smart-action:not(:last-child) {
+                    padding-right: 0px !important;
+                    margin-right: 0px !important;
+                }
+            }
+        }
+    }
+}
+
+.buttons-row {
+    float: right;
+}
+
+.filter_section {
+    width: 100%;
+
+    .filter_left_section {
+        width: 84%;
+
+        .sda {
+            height: 18px;
+            width: 18px;
+            margin-left: 20px;
+            cursor: pointer;
+        }
+    }
+
+    .filter_right_section {
+
+        width: 100%;
+        text-align: right;
+        display: flex;
+        justify-content: flex-end;
+        padding-left: 0px;
+        padding-right: 0px;
+
+
+    }
+}
+
+thead,
+tbody {
+    display: block;
+}
+
+tbody {
+    height: 100px;
+    /* Just for the demo          */
+    overflow-y: auto;
+    /* Trigger vertical scroll    */
+    overflow-x: hidden;
+    /* Hide the horizontal scroll */
+}

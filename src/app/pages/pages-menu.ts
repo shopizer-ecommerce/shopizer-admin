@@ -398,9 +398,15 @@ export const MENU_ITEMS: MenuItem[] = [
     ]
   },
   {
+    title: 'COMPONENTS.PAYMENT',
+    key: 'COMPONENTS.PAYMENT',
+    icon: 'credit-card',
+    link: '/pages/payment/payment-methods'
+  },
+  {
     title: 'COMPONENTS.TAX_MANAGEMENT',
     key: 'COMPONENTS.TAX_MANAGEMENT',
-    icon: 'car',
+    icon: 'file-text',
     children: [
       {
         title: 'COMPONENTS.TAX_CLASS',

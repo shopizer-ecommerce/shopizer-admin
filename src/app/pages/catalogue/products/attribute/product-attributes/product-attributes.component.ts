@@ -8,9 +8,9 @@ import { Attribute } from '../model/attribute';
 import { ToastrService } from 'ngx-toastr';
 import { TranslateService } from '@ngx-translate/core';
 import { StorageService } from '../../../../shared/services/storage.service';
-import { ActiveButtonComponent } from './active-button.component';
 import { ShowcaseDialogComponent } from '../../../../shared/components/showcase-dialog/showcase-dialog.component';
 import { NbDialogService } from '@nebular/theme';
+import { DomSanitizer } from '@angular/platform-browser';
 export interface TreeNode {
   data?: Attribute;
   children?: TreeNode[];
@@ -41,6 +41,7 @@ export class ProductAttributesComponent implements OnInit {
   totalCount;
 
   params = this.loadParams();
+  public input: string = '<input type="checkbox"></input>';
   constructor(
     private productAttributesService: ProductAttributesService,
     private optionService: OptionService,
@@ -49,7 +50,8 @@ export class ProductAttributesComponent implements OnInit {
     private translate: TranslateService,
     private storageService: StorageService,
     private dialogService: NbDialogService,
-    private router: Router
+    private router: Router,
+    private _sanitizer: DomSanitizer
   ) {
     this.optionService.getListOfOptions({ count: 1000 })
       .subscribe(res => {
@@ -133,16 +135,22 @@ export class ProductAttributesComponent implements OnInit {
             return name.code;
           }
         },
+        // attributeDisplayOnly: {
+        //   filter: false,
+        //   title: this.translate.instant('PRODUCT_ATTRIBUTES.DISPLAY_ONLY'),
+        //   type: 'custom',
+        //   renderComponent: ActiveButtonComponent,
+        //   defaultValue: false,
+        //   editable: true,
+        //   editor: {
+        //     type: 'checkbox'
+        //   }
+        // },
         attributeDisplayOnly: {
-          filter: false,
           title: this.translate.instant('PRODUCT_ATTRIBUTES.DISPLAY_ONLY'),
-          type: 'custom',
-          renderComponent: ActiveButtonComponent,
-          defaultValue: false,
-          editable: true,
-          editor: {
-            type: 'checkbox'
-          }
+          type: 'html',
+          valuePrepareFunction: (value) => { return this._sanitizer.bypassSecurityTrustHtml(this.input) },
+          filter: false
         },
         productAttributePrice: {
           title: this.translate.instant('PRODUCT_ATTRIBUTES.PRICE'),
