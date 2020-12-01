@@ -14,5 +14,7 @@ export class PaymentService {
     private crudService: CrudService
   ) {
   }
-
+  getPaymentModules(): Observable<any> {
+    return this.crudService.get('/v1/private/modules/payment');
+  }
 }

@@ -2,7 +2,7 @@
   <nb-card-body [nbSpinner]="loadingList" nbSpinnerSize="large" nbSpinnerStatus="primary" class="orderList">
     <div class="inner_pages_legacy">
       <nb-card-header class="main_header">
-        <h1 class="page_title">{{ 'PAYMENT.PAYMENT_METHODS' | translate}}</h1>
+        <h1 class="page_title">{{ 'SHIPPING.METHODS' | translate}}</h1>
         <div class="content_spacing_empty"></div>
 
       </nb-card-header>
@@ -21,13 +21,12 @@
       </form>
 
       <div class="grid-body row" data-layout="fitRows">
-        <div class="col-lg-3 col-md-3 col-sm-3 " *ngFor="let result of paymentData; let i = index">
+        <div class="col-lg-3 col-md-3 col-sm-3 " *ngFor="let result of shippingData; let i = index">
           <div class="grid-product">
             <div class="image bg-lightblue">
               <a>
                 <img *ngIf="result.image" src="../../../../assets/img/{{result.image}}" alt="image">
                 <img *ngIf="result.image == null" src="../../../../assets/img/noimg.png" alt="image">
-                <!-- <img [src]="result.image" alt="image"> -->
               </a>
             </div>
             <a class="name">{{ result.code | translate}}</a>

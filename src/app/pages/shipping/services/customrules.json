@@ -9,15 +9,6 @@
         "value": false
     },
     {
-        "type": "checkbox",
-        "label": "Default",
-        "placeholder": "",
-        "name": "default",
-        "isRequired": false,
-        "optionData": [],
-        "value": false
-    },
-    {
         "type": "dropdown",
         "label": "Environment",
         "placeholder": "Please select environment",
@@ -33,15 +24,6 @@
                 "label": "Prod"
             }
         ],
-        "value": ""
-    },
-    {
-        "type": "summernote",
-        "label": "Cheque to be made to this address",
-        "placeholder": "Cheque to be made to this address",
-        "name": "address",
-        "isRequired": false,
-        "optionData": [],
         "value": ""
     }
 ]

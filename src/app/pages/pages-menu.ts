@@ -370,6 +370,11 @@ export const MENU_ITEMS: MenuItem[] = [
         link: '/pages/shipping/config',
       },
       {
+        title: 'COMPONENTS.METHODS',
+        key: 'COMPONENTS.METHODS',
+        link: '/pages/shipping/methods',
+      },
+      {
         title: 'SHIPPING.ORIGIN',
         key: 'SHIPPING.ORIGIN',
         link: '/pages/shipping/origin',
@@ -401,7 +406,7 @@ export const MENU_ITEMS: MenuItem[] = [
     title: 'COMPONENTS.PAYMENT',
     key: 'COMPONENTS.PAYMENT',
     icon: 'credit-card',
-    link: '/pages/payment/payment-methods'
+    link: '/pages/payment/methods'
   },
   {
     title: 'COMPONENTS.TAX_MANAGEMENT',

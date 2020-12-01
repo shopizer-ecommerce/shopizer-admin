@@ -37,27 +37,36 @@
     },
     {
         "type": "text",
-        "label": "PayPal API username",
-        "placeholder": "Enter a username",
-        "name": "username",
+        "label": "Merchant ID",
+        "placeholder": "Enter a merchant id",
+        "name": "merchant_id    ",
         "isRequired": true,
         "optionData": [],
         "value": ""
     },
     {
         "type": "text",
-        "label": "PayPal API password",
-        "placeholder": "Enter a password",
-        "name": "password",
+        "label": "Public key",
+        "placeholder": "Enter a public key",
+        "name": "public_key",
         "isRequired": true,
         "optionData": [],
         "value": ""
     },
     {
         "type": "text",
-        "label": "PayPal API signature",
-        "placeholder": "Enter a signature",
-        "name": "signature",
+        "label": "Private key",
+        "placeholder": "Enter a private key",
+        "name": "private_key",
+        "isRequired": true,
+        "optionData": [],
+        "value": ""
+    },
+    {
+        "type": "text",
+        "label": "Tokenization key",
+        "placeholder": "Enter a tokenization key",
+        "name": "token_key",
         "isRequired": true,
         "optionData": [],
         "value": ""

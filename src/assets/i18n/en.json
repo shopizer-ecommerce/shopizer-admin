@@ -1,4 +1,15 @@
 {
+  "canadapost": "Canada Post",
+  "ups": "UPS",
+  "weightBased": "Weight Based Shipping Price",
+  "customQuotesRules": "Shipping by Fresh Organics",
+  "priceByDistance": "Shipping by Fresh Organics",
+  "storePickUp": "Store Pick UP",
+  "moneyorder": "Money Order",
+  "paypal-express-checkout": "PayPal Express Checkout",
+  "beanstream": "Beanstream",
+  "stripe": "Stripe",
+  "braintree": "Braintree",
   "COMPONENTS": {
     "LOGIN": "Login",
     "HOME": "Home",

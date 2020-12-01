@@ -16,11 +16,11 @@ const routes: Routes = [
         pathMatch: 'full',
       },
       {
-        path: 'payment-methods',
+        path: 'methods',
         component: PaymentMethodsComponent,
       },
       {
-        path: 'payment-configure/:id',
+        path: 'configure/:id',
         component: ConfigureComponent
       },
       // {

@@ -37,27 +37,18 @@
     },
     {
         "type": "text",
-        "label": "PayPal API username",
-        "placeholder": "Enter a username",
-        "name": "username",
+        "label": "Secret key",
+        "placeholder": "Enter a secret key",
+        "name": "secret_key",
         "isRequired": true,
         "optionData": [],
         "value": ""
     },
     {
         "type": "text",
-        "label": "PayPal API password",
-        "placeholder": "Enter a password",
-        "name": "password",
-        "isRequired": true,
-        "optionData": [],
-        "value": ""
-    },
-    {
-        "type": "text",
-        "label": "PayPal API signature",
-        "placeholder": "Enter a signature",
-        "name": "signature",
+        "label": "Publishable key",
+        "placeholder": "Enter a publishable key",
+        "name": "publish_key",
         "isRequired": true,
         "optionData": [],
         "value": ""

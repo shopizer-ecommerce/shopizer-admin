@@ -37,7 +37,16 @@
     },
     {
         "type": "text",
-        "label": "PayPal API username",
+        "label": "Merchant Id",
+        "placeholder": "Enter a merchant id",
+        "name": "merchant_id",
+        "isRequired": true,
+        "optionData": [],
+        "value": ""
+    },
+    {
+        "type": "text",
+        "label": "Username",
         "placeholder": "Enter a username",
         "name": "username",
         "isRequired": true,
@@ -46,18 +55,9 @@
     },
     {
         "type": "text",
-        "label": "PayPal API password",
+        "label": "Password",
         "placeholder": "Enter a password",
         "name": "password",
-        "isRequired": true,
-        "optionData": [],
-        "value": ""
-    },
-    {
-        "type": "text",
-        "label": "PayPal API signature",
-        "placeholder": "Enter a signature",
-        "name": "signature",
         "isRequired": true,
         "optionData": [],
         "value": ""

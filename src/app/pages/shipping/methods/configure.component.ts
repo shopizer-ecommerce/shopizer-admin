@@ -3,31 +3,22 @@ import { ActivatedRoute, Router } from '@angular/router';
 // import { ConfigService } from '../../shared/services/config.service';
 import { ToastrService } from 'ngx-toastr';
 // import { TaxService } from '../services/tax.service';
-let moneyorder = require('../services/moneyorder.json');
-let paypalData = require('../services/paypal.json');
-let beanStreamData = require('../services/beanstream.json');
-let stripeData = require('../services/stripe.json');
-let braintreeData = require('../services/braintree.json');
+let canadapost = require('../services/canadapost.json');
+let upsData = require('../services/ups.json');
+let customRulesData = require('../services/customrules.json');
+let storePickUpData = require('../services/storepickup.json');
+// let braintreeData = require('../services/braintree.json');
 @Component({
-  selector: 'ngx-payment-configure',
+  selector: 'ngx-shipping-configure',
   templateUrl: './configure.component.html',
   styleUrls: ['./configure.component.scss'],
 })
-export class ConfigureComponent implements OnInit {
-  // formValue = {
-  //   country: '',
-  //   zone: '',
-  //   name: '',
-  //   code: '',
-  //   rate: '',
-  //   compound: '',
-  //   priority: 0,
-  //   taxClass: ''
-  // }
+export class ShippingConfigureComponent implements OnInit {
+
   active = '';
   formData: Array<any> = [];
   loadingList: boolean = false;
-  paymentType: any;
+  shippingType: any;
 
   editorConfig = {
     placeholder: '',
@@ -57,22 +48,26 @@ export class ConfigureComponent implements OnInit {
     // this.getLanguages();
   }
   ngOnInit() {
-    let paymenttype = this.activatedRoute.snapshot.paramMap.get('id');
-    if (paymenttype == 'moneyorder') {
-      this.formData = moneyorder;
-      this.paymentType = "Money Order";
-    } else if (paymenttype == 'paypal-express-checkout') {
-      this.formData = paypalData;
-      this.paymentType = "PayPal Express Checkout";
-    } else if (paymenttype == 'beanstream') {
-      this.formData = beanStreamData;
-      this.paymentType = "Beanstream";
-    } else if (paymenttype == 'stripe') {
-      this.formData = stripeData;
-      this.paymentType = "Stripe";
-    } else if (paymenttype == 'braintree') {
-      this.formData = braintreeData;
-      this.paymentType = "Braintree";
+    let type = this.activatedRoute.snapshot.paramMap.get('id');
+    if (type == 'canadapost') {
+      this.formData = canadapost;
+      this.shippingType = "Canada Post";
+    }
+    else if (type == 'ups') {
+      this.formData = upsData;
+      this.shippingType = "UPS";
+    }
+    else if (type == 'customQuotesRules') {
+      this.formData = customRulesData;
+      this.shippingType = 'Shipping by Fresh Organics '
+    }
+    else if (type == 'priceByDistance') {
+      this.formData = customRulesData;
+      this.shippingType = 'Shipping by Fresh Organics'
+    }
+    else if (type == 'storePickUp') {
+      this.formData = storePickUpData;
+      this.shippingType = 'Store Pick Up'
     }
 
   }
@@ -87,6 +82,6 @@ export class ConfigureComponent implements OnInit {
   }
 
   goBack() {
-    this.router.navigate(['pages/payment/methods']);
+    this.router.navigate(['pages/shipping/methods']);
   }
 }

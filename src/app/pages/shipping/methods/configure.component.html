@@ -1,7 +1,7 @@
 <div class="inner_pages packages_add_box">
   <div class="" [nbSpinner]="loadingList" nbSpinnerSize="large" nbSpinnerStatus="primary">
     <nb-card-header class="main_header">
-      <h1 class="page_title">Payment Configure - {{paymentType}}</h1>
+      <h1 class="page_title">Shipping Configure - {{shippingType}}</h1>
       <!-- <div class="content_spacing">
         <nb-select placeholder="Language" outline shape="rectangle" [(ngModel)]="language" (ngModelChange)="getTaxRateDetail()"
           name="language" [selected]="'en'">
@@ -37,14 +37,22 @@
                       <nb-option *ngFor="let value of data.optionData" [value]="value.id">{{value.label}}</nb-option>
                     </nb-select>
                   </div>
-                  <div class="form-group" *ngIf="data.type == 'text'">
+                  <div class="form-group" *ngIf="data.type == 'text' || data.type ==  'number'">
                     <label class="label inputLabel">{{data.label}}<span *ngIf="data.isRequired">*</span></label>
-                    <input type="text" class="form-control inputText" placeholder="{{data.placeholder}}" [(ngModel)]="data.value"
-                      name="{{data.name}}" required="{{data.isRequired}}">
+                    <input type="{{data.type}}" class="form-control inputText" placeholder="{{data.placeholder}}"
+                      [(ngModel)]="data.value" name="{{data.name}}" required="{{data.isRequired}}">
                   </div>
                   <div class="form-group" *ngIf="data.type == 'summernote'">
                     <label class="label inputLabel">{{data.label}}<span *ngIf="data.isRequired">*</span></label>
                     <div [ngxSummernote]="editorConfig" [(ngModel)]="data.value" name="{{data.name}}">
+                    </div>
+                  </div>
+                  <div class="form-group" *ngIf="data.type == 'groupcheckbox'">
+                    <label class="label inputLabel">{{data.label}}<span *ngIf="data.isRequired">*</span></label>
+                    <div *ngFor="let group of data.optionData">
+                      <nb-checkbox [(ngModel)]="group.value" name="{{data.name}}">
+                        {{group.label}}
+                      </nb-checkbox>
                     </div>
                   </div>
                   <div class="form-group" *ngIf="data.type == 'radio'">
@@ -61,8 +69,6 @@
           </nb-card>
         </div>
       </div>
-
-
     </form>
   </div>
 </div>
