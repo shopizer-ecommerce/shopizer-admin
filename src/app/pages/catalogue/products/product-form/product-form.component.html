@@ -2,16 +2,17 @@
   <form [formGroup]='form' *ngIf="!loader">
     <nb-card-header class="main_header">
       <h1 class="page_title">{{_title | translate}}</h1>
-      <div class="content_spacing">
+      <div class="content_spacing" *ngIf="product.id">
         <nb-select [(selected)]="selectedItem" outline shape="rectangle">
           <nb-option *ngFor="let item of sidemenuLinks" [value]="item.id" (click)="route(item.link)">{{ item.title }}</nb-option>
         </nb-select>
       </div>
       <div class="content_spacing">
-          <nb-select *ngIf="languages.length" placeholder="{{ 'COMMON.LANGUAGE' | translate}}" outline shape="rectangle"
-            name='selectedLanguage' [selected]="defaultLanguage">
-            <nb-option (click)="selectLanguage(language.code)" *ngFor="let language of languages" [value]="language.code">{{ ('LANG.'+language.code) |translate }}</nb-option>
-          </nb-select>
+        <nb-select *ngIf="languages.length" placeholder="{{ 'COMMON.LANGUAGE' | translate}}" outline shape="rectangle"
+          name='selectedLanguage' [selected]="defaultLanguage">
+          <nb-option (click)="selectLanguage(language.code)" *ngFor="let language of languages" [value]="language.code">{{
+            ('LANG.'+language.code) |translate }}</nb-option>
+        </nb-select>
       </div>
       <div class="content_spacing">
         <button type="button" nbButton class="cancel_button" (click)="goToback()">{{ 'ORDER_FORM.CANCLE'
@@ -27,10 +28,10 @@
       <div class="row">
         <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
           <nb-card class="nb-card inline-form-card">
-            <nb-card-header class="nb-card-header">-- Product Basic Details -- TRANSLATE</nb-card-header>
+            <nb-card-header class="nb-card-header">Product Basic Details</nb-card-header>
             <nb-card-body class="nb-card-body">
               <div class="row">
-                <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                   <div class="form-group">
                     <label for="sku" class="col-form-label inputLabel">{{ 'PRODUCT.SKU' | translate}} *</label>
                     <div>
@@ -52,7 +53,7 @@
                 </div>
               </div>
               <div class="row">
-                <div class="col-lg-7 col-md-7 col-sm-12 col-xs-12">
+                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                   <div class="form-group">
                     <div>
                       <nb-checkbox formControlName='available'>
@@ -61,7 +62,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="col-lg-7 col-md-7 col-sm-12 col-xs-12">
+                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                   <div class="form-group">
                     <div>
                       <nb-checkbox formControlName='preOrder'>
@@ -104,8 +105,8 @@
                   <div class="form-group">
                     <label class=" col-form-label inputLabel">{{ 'PRODUCT.PRODUCT_TYPE' | translate}}</label>
                     <div>
-                      <nb-select *ngIf="productTypes.length > 0" placeholder="{{ 'PRODUCT.PRODUCT_TYPE' | translate}}"
-                        formControlName='type' outline shape="rectangle" class="select_fields">
+                      <nb-select placeholder="{{ 'PRODUCT.PRODUCT_TYPE' | translate}}" formControlName='type' outline
+                        shape="rectangle" class="select_fields">
                         <nb-option *ngFor="let type of productTypes" [value]="type.code">{{ type.code }}</nb-option>
                       </nb-select>
                     </div>
@@ -214,7 +215,7 @@
             <nb-card-header class="nb-card-header">SEO Details</nb-card-header>
             <nb-card-body class="nb-card-body">
 
-              <div *ngIf="selectedLanguage.value !== ''" formArrayName='descriptions'>
+              <div formArrayName='descriptions'>
                 <div *ngFor="let descr of descriptions.controls; let j=index">
                   <div *ngIf="descr.value.language === selectedLanguage.value">
 

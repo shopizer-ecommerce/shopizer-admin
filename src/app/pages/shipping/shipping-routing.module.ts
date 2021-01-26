@@ -8,6 +8,8 @@ import { PackagesListComponent } from './packages/packages-list.component';
 import { PackagesAddComponent } from './packages/packages-add.component';
 import { RulesComponent } from './rules/rules.component';
 import { RulesListComponent } from './rules/rules-list.component';
+import { ShippingMethodsComponent } from './methods/methods.component';
+import { ShippingConfigureComponent } from './methods/configure.component';
 
 const routes: Routes = [{
   path: '',
@@ -37,6 +39,14 @@ const routes: Routes = [{
       path: 'rules',
       component: RulesListComponent,
     },
+    {
+      path: 'methods',
+      component: ShippingMethodsComponent,
+    },
+    {
+      path: 'methods-configure/:id',
+      component: ShippingConfigureComponent,
+    },
   ],
 }];
 
@@ -53,5 +63,7 @@ export const routedComponents = [
   PackagesListComponent,
   PackagesAddComponent,
   RulesComponent,
-  RulesListComponent
+  RulesListComponent,
+  ShippingMethodsComponent,
+  ShippingConfigureComponent
 ];

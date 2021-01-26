@@ -1,4 +1,15 @@
 {
+  "canadapost": "Canada Post",
+  "ups": "UPS",
+  "weightBased": "Weight Based Shipping Price",
+  "customQuotesRules": "Shipping by Fresh Organics",
+  "priceByDistance": "Shipping by Fresh Organics",
+  "storePickUp": "Store Pick UP",
+  "moneyorder": "Money Order",
+  "paypal-express-checkout": "PayPal Express Checkout",
+  "beanstream": "Beanstream",
+  "stripe": "Stripe",
+  "braintree": "Braintree",
   "COMPONENTS": {
     "LOGIN": "Login",
     "HOME": "Home",
@@ -10,6 +21,10 @@
     "SHIPPING_MANAGEMENT": "Shipping management",
     "CUSTOMER_MANAGEMENT": "Customer management",
     "ORDER_MANAGEMENT": "Order management",
+    "TAX_MANAGEMENT": "Tax management",
+    "PAYMENT": "Payment",
+    "TAX_CLASS": "Tax Classes",
+    "TAX_RATE": "Tax Rate",
     "USER": "User",
     "USERS": "Users",
     "MY_PROFILE": "My profile",
@@ -462,6 +477,7 @@
     "REMOVE": "Remove",
     "EDIT": "Edit",
     "OK": "Ok",
+    "SUBMIT": "Submit",
     "CANCEL": "Cancel",
     "REMOVE_QUESTION": "Do you really want to remove this entity?",
     "REMOVE_GEN_QUESTION": "Do you really want to remove",
@@ -567,6 +583,25 @@
     "folder": "folder"
   },
   "SYSTEM": {
-    "DELETE_CACHE" : "Delete Cache"
+    "DELETE_CACHE": "Delete Cache"
+  },
+  "TAX": {
+    "CREATE_TAX_CLASS": "Create Tax Classes",
+    "ADD_TAX_CLASS": "Add Tax Classes",
+    "UPDATE_TAX_CLASS": "Update Tax Classes",
+    "TAX_CLASS_CODE": "Tax class code",
+    "TAX_CLASS_NAME": "Tax class name",
+    "ADD_TAX_RATE": "Add Tax Rate",
+    "UPDATE_TAX_RATE": "Update Tax Rate",
+    "TAX_RATE_NAME": "Tax Rate Name",
+    "TAX_RATE_CODE": "Tax Rate Code",
+    "TAX_RATE": "Tax Rate",
+    "ORDER": "Order",
+    "SELECT_CLASS_NAME": "Select Tax Class Name",
+    "COMPOUND": "COMPOUND"
+  },
+  "PAYMENT": {
+    "PAYMENT_METHODS": "Payment Methods",
+    "PAYMENT_TYPE": "Payment Type"
   }
 }

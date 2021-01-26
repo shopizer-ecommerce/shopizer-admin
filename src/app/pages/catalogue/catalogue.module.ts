@@ -4,6 +4,7 @@ import { SharedModule } from '../shared/shared.module';
 import { CatalogueRoutingModule } from './catalogue-routing.module';
 import { CatalogueComponent } from './catalogue.component';
 import { NbDialogModule } from '@nebular/theme';
+import { CustomModule } from '../custome-component/custom.module';
 
 @NgModule({
   declarations: [
@@ -12,7 +13,8 @@ import { NbDialogModule } from '@nebular/theme';
   imports: [
     CatalogueRoutingModule,
     NbDialogModule.forChild(),
-    SharedModule
+    SharedModule,
+    CustomModule
   ]
 })
 export class CatalogueModule {

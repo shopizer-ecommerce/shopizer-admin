@@ -113,7 +113,7 @@ export class RulesListComponent implements OnInit {
   }
   onSelectStore(e) {
     // console.log(value)
-    this.selectedStore = e.value;
+    this.selectedStore = e;
     this.getShippingRulesList();
 
   }

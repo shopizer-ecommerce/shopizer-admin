@@ -118,7 +118,7 @@ export class CataloguesListComponent implements OnInit {
   }
 
   onSelectStore(e) {
-    this.params["store"] = e.value;
+    this.params["store"] = e;
     this.getList();
   }
 

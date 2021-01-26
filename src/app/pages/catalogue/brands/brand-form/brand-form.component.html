@@ -51,7 +51,8 @@
             <div class="col-sm-12">
               <nb-select *ngIf="languages.length" placeholder="{{ 'COMMON.LANGUAGE' | translate}}" outline shape="rectangle"
                 formControlName='selectedLanguage' class="fullWidth">
-                <nb-option *ngFor="let language of languages" [value]="language.code">{{ language.code }}</nb-option>
+                <nb-option *ngFor="let language of languages" [value]="language.code">{{ ('LANG.'+language.code) |
+                  translate }}</nb-option>
               </nb-select>
             </div>
           </div>

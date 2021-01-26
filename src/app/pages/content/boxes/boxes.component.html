@@ -18,10 +18,11 @@
 
         </div>
         <div class="filter_right_section">
-          <p-dropdown *ngIf="stores.length> 0" [options]="stores" filter="true" (onChange)="onSelectStore($event)">
+          <ngx-store-autocomplete (onStore)="onSelectStore($event)"></ngx-store-autocomplete>
+          <!-- <p-dropdown *ngIf="stores.length> 0" [options]="stores" filter="true" (onChange)="onSelectStore($event)">
             <ng-template let-item pTemplate="selectedItem">{{item.label}}</ng-template>
             <ng-template let-car pTemplate="item">{{car.label}}</ng-template>
-          </p-dropdown>
+          </p-dropdown> -->
           <a class="createBtn" (click)="addBoxes()">
             <img class="pointer sda" src="../../../../assets/img/plus.png" title="{{ 'COMPONENTS.CREATE_OPTION' | translate}}"
               alt="">

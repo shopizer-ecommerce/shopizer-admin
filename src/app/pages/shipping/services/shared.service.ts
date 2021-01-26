@@ -72,5 +72,8 @@ export class SharedService {
   getShippingRulesDetails(code): Observable<any> {
     return this.crudService.getShipping('/v2/shipping/rules/' + code);
   }
+  getShippingModules(): Observable<any> {
+    return this.crudService.get('/v1/private/modules/shipping');
+  }
 }
 

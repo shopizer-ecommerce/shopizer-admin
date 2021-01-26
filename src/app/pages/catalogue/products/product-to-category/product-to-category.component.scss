@@ -1,138 +1,95 @@
-@import "../../../../@theme/styles/themes";
+.label-row {
+    margin-bottom: 17px;
 
-@include nb-install-component() {
-    nb-card {
-        transform: translate3d(0, 0, 0);
+    label {
+        font-size: 20px;
     }
 }
 
-.page-card {
-    background: transparent;
-    border: none;
+.inventory_create_page {
 
-    .productToCategory {
-        .main_header {
-            padding: 0px 30px 10px 0px;
 
-            .page_title {
-                margin-top: -25px;
-                font-weight: 600;
-            }
+    .main_header {
+        .page_title {
+            margin-top: -25px;
+            font-weight: 600;
         }
 
-        .pointer {
-            height: 18px;
-            width: 18px;
-            margin-left: 20px;
-            cursor: pointer;
+        .back_button {
+            margin-top: 21px !important;
         }
 
-        .filter_section {
-            background: #fff;
-            padding: 10px 15px;
-            margin: -10px 0 10px 0;
-        }
-    }
-}
-
-:host ::ng-deep .productList {
-    .filter_section {
-        .filter_right_section {
-            button {
-                font-weight: 600 !important;
-                font-size: 14px !important;
-            }
-        }
     }
 
-    .home-table {
-        thead {
-            .ng2-smart-titles {
-                th {
-                    a {
-                        font-weight: 600;
-                    }
-                }
-            }
+    .product-item {
+        display: flex;
+        align-items: center;
+        padding: .5rem;
+        width: 100%;
+
+        img {
+            width: 75px;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+            margin-right: 1rem;
         }
 
-        tbody {
-            tr {
-                cursor: pointer;
-
-                &:hover,
-                &.selected {
-                    background: #e6f3ff !important;
-                }
-
-                a.ng2-smart-action:not(:last-child) {
-                    padding-right: 0px !important;
-                    margin-right: 0px !important;
-                }
-            }
+        .p-mb-2 {
+            font-size: 16px;
+            font-weight: bold;
         }
-    }
-}
 
-.buttons-row {
-    float: right;
-}
+        .p-mb-3 {
+            font-weight: bold
+        }
 
-.filter_section {
-    width: 100%;
+        .product-list-detail {
+            flex: 1 1 0;
+            padding: 0px 45px 0px 0px;
+        }
 
-    .filter_left_section {
-        width: 50%;
+        .product-list-action {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+        }
 
-        .sda {
-            height: 18px;
-            width: 18px;
-            margin-left: 20px;
-            cursor: pointer;
+        .product-category-icon {
+
+            vertical-align: middle;
+            margin-right: .5rem;
+        }
+
+        .product-category {
+            vertical-align: middle;
+            line-height: 1;
         }
     }
 
-    .filter_right_section {
-        width: 50%;
-        text-align: right;
 
-        .createBtn {
-            padding: 8px 10px 9.5px 10px;
-            background-color: #f7f9fc !important;
-            color: #000 !important;
-            border: 1px solid #edf1f7 !important;
-            border-radius: 5px;
-            margin-left: 20px;
 
-            label {
-                display: inline-block;
-                font-weight: 600 !important;
-                font-size: 14px !important;
-            }
 
-            .sda {
-                margin-right: 20px;
-                cursor: pointer;
-                margin-left: 0 !important;
-            }
+}
+
+:host ::ng-deep .inventory_create_page {
+    .nb-card-header {
+        font-weight: 700;
+    }
+
+
+}
+
+@media screen and (max-width: 576px) {
+    .product-item {
+        flex-wrap: wrap;
+
+        .image-container {
+            width: 100%;
+            text-align: center;
         }
 
-        .store_select {
-            width: 29% !important
+        img {
+            margin: 0 0 1rem 0;
+            width: 100px;
         }
     }
-}
-
-thead,
-tbody {
-    display: block;
-}
-
-tbody {
-    height: 100px;
-    /* Just for the demo          */
-    overflow-y: auto;
-    /* Trigger vertical scroll    */
-    overflow-x: hidden;
-    /* Hide the horizontal scroll */
 }

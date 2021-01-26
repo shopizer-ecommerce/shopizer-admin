@@ -9,6 +9,7 @@ import { LightboxModule } from 'ngx-lightbox';
 import { MalihuScrollbarModule } from 'ngx-malihu-scrollbar';
 import { FileManagerModule } from 'ng6-file-man';
 import { NgxSummernoteModule } from 'ngx-summernote';
+import { CustomModule } from '../custome-component/custom.module';
 @NgModule({
   declarations: [
     ...routedComponents
@@ -23,7 +24,8 @@ import { NgxSummernoteModule } from 'ngx-summernote';
     NgxSummernoteModule,
     NgxDropzoneModule,
     LightboxModule,
-    MalihuScrollbarModule.forRoot()
+    MalihuScrollbarModule.forRoot(),
+    CustomModule
   ],
   exports: [ngfModule]
 })

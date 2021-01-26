@@ -1,0 +1,55 @@
+<div class="inner_pages packages_add_box">
+  <div class="" [nbSpinner]="loadingList" nbSpinnerSize="large" nbSpinnerStatus="primary">
+    <nb-card-header class="main_header">
+      <h1 class="page_title" *ngIf="!isUpdate">{{'TAX.ADD_TAX_CLASS' | translate}}</h1>
+      <h1 class="page_title" *ngIf="isUpdate">{{'TAX.UPDATE_TAX_CLASS' | translate}}</h1>
+      <!-- <div class="content_spacing">
+        <ngx-store-autocomplete class="searchDropdown" (onStore)="onSelectStore($event)"></ngx-store-autocomplete>
+      </div> -->
+      <div class="content_spacing">
+        <button type="button" class="cancel_button" (click)="goBack()">{{'COMMON.CANCEL' | translate }}</button>
+      </div>
+
+      <div class="content_spacing">
+        <button type="button" *ngIf="isUpdate" nbButton class="success_button" [disabled]="!taxClassesForm.form.valid"
+          (click)="update()">{{'CUSTOMERS.UPDATE'|translate }}</button>
+
+        <button type="submit" *ngIf="!isUpdate" class="success_button" (click)="save()" [disabled]="!taxClassesForm.form.valid || codeExits">{{'COMMON.SAVE'
+          | translate }}</button>
+      </div>
+    </nb-card-header>
+
+    <form #taxClassesForm="ngForm" role="form">
+      <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+          <nb-card class="nb-card inline-form-card">
+            <nb-card-body class="nb-card-body">
+
+              <div class="row">
+
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                  <div class="form-group">
+                    <label class="label inputLabel">{{'TAX.TAX_CLASS_CODE' | translate}}<span>*</span></label>
+                    <input type="text" class="form-control inputText" [disabled]="isUpdate" placeholder="{{'TAX.TAX_CLASS_CODE' | translate}}"
+                      [(ngModel)]="tax.code" name="code" (focusout)="focusOutFunction()" required>
+                    <span *ngIf="codeExits" class="err-message">{{'PACKAGING.CODE_EXITS' | translate}}</span>
+                  </div>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                  <div class="form-group">
+                    <label class="label inputLabel">{{'TAX.TAX_CLASS_NAME' | translate}}<span>*</span></label>
+                    <input type="text" class="form-control inputText" placeholder="{{'TAX.TAX_CLASS_NAME' | translate}}"
+                      [(ngModel)]="tax.name" name="name" required>
+                  </div>
+                </div>
+
+              </div>
+            </nb-card-body>
+          </nb-card>
+        </div>
+      </div>
+
+
+    </form>
+  </div>
+</div>
