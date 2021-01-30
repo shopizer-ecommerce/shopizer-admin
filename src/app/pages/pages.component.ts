@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 
 import { MENU_ITEMS } from './pages-menu';
 import { TranslateService } from '@ngx-translate/core';
+import { ConnectionStatusService } from './shared/services/connection-status.service';
 
 @Component({
   selector: 'ngx-pages',
@@ -17,11 +18,13 @@ export class PagesComponent {
   menu;
 
   constructor(
-    private translate: TranslateService
+    private translate: TranslateService,
+    private connectionStatusService: ConnectionStatusService
   ) {
     this.menu = MENU_ITEMS;
     this.translateMenu(this.menu);
     this.checkAccess(this.menu);
+    this.checkConnection();
     this.translate.onLangChange.subscribe((lang) => {
       this.translateMenu(this.menu);
     });
@@ -46,6 +49,12 @@ export class PagesComponent {
         this.translateMenu(el.children);
       }
     });
+  }
+
+  checkConnection() {
+    this.connectionStatusService.getStatusConnection().subscribe(res => {
+      console.log(res);
+    })
   }
 
 }
