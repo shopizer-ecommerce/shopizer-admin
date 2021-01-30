@@ -19,7 +19,7 @@ export class ConnectionStatusService {
         const url = this.url.substring(0, this.url.length-3)
         return timer(0, 5000)
         .pipe(
-            switchMap(_ => this.http.get<Health>(`${url}actuator/health`))
+            switchMap(_ => this.http.get<Health>(`${url}actuator/health/ping`))
         );
     }
 }
