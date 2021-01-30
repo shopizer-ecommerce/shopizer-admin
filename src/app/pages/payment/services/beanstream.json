@@ -1,0 +1,83 @@
+[
+    {
+        "type": "checkbox",
+        "label": "Enabled",
+        "placeholder": "",
+        "name": "active",
+        "isRequired": false,
+        "optionData": [],
+        "value": false
+    },
+    {
+        "type": "checkbox",
+        "label": "Default",
+        "placeholder": "",
+        "name": "default",
+        "isRequired": false,
+        "optionData": [],
+        "value": false
+    },
+    {
+        "type": "dropdown",
+        "label": "Environment",
+        "placeholder": "Please select environment",
+        "name": "enviroment",
+        "isRequired": true,
+        "optionData": [
+            {
+                "id": "test",
+                "label": "Test"
+            },
+            {
+                "id": "prod",
+                "label": "Prod"
+            }
+        ],
+        "value": ""
+    },
+    {
+        "type": "text",
+        "label": "Merchant Id",
+        "placeholder": "Enter a merchant id",
+        "name": "merchant_id",
+        "isRequired": true,
+        "optionData": [],
+        "value": ""
+    },
+    {
+        "type": "text",
+        "label": "Username",
+        "placeholder": "Enter a username",
+        "name": "username",
+        "isRequired": true,
+        "optionData": [],
+        "value": ""
+    },
+    {
+        "type": "text",
+        "label": "Password",
+        "placeholder": "Enter a password",
+        "name": "password",
+        "isRequired": true,
+        "optionData": [],
+        "value": ""
+    },
+    {
+        "type": "radio",
+        "label": "Transaction type",
+        "placeholder": "",
+        "name": "type",
+        "isRequired": false,
+        "optionData": [
+            {
+                "label": "Pre-authorization",
+                "value": "1"
+            },
+            {
+                "label": "Sale",
+                "value": "2"
+            }
+        ],
+        "value": ""
+    }
+]

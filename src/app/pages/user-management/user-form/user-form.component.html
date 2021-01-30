@@ -42,7 +42,7 @@
           <div class="form-group">
             <label class="col-sm-3 col-form-label inputLabel">{{ 'STORE.MERCHANT_STORE' | translate }} *</label>
             <div class="col-sm-12">
-              <nb-select *ngIf="stores.length" [(selected)]="store" placeholder="{{ 'STORE.MERCHANT_STORE' | translate }}"
+              <nb-select *ngIf="stores.length" [(selected)]="store" [disabled]="selfEdit" placeholder="{{ 'STORE.MERCHANT_STORE' | translate }}"
                 formControlName='store' outline shape="rectangle" class="fullWidth">
                 <nb-option *ngFor="let store of stores" [value]="store.code" (click)="chooseMerchant(store)">{{
                   store.code

@@ -1,0 +1,29 @@
+[
+    {
+        "type": "checkbox",
+        "label": "Enabled",
+        "placeholder": "",
+        "name": "active",
+        "isRequired": false,
+        "optionData": [],
+        "value": false
+    },
+    {
+        "type": "dropdown",
+        "label": "Environment",
+        "placeholder": "Please select environment",
+        "name": "enviroment",
+        "isRequired": true,
+        "optionData": [
+            {
+                "id": "test",
+                "label": "Test"
+            },
+            {
+                "id": "prod",
+                "label": "Prod"
+            }
+        ],
+        "value": ""
+    }
+]

@@ -15,10 +15,11 @@ import { PaginatorComponent } from './components/paginator/paginator.component';
 import { PickListModule } from 'primeng/picklist';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { DropdownModule } from 'primeng/dropdown';
-import {AutoCompleteModule} from 'primeng/autocomplete';
+import { AutoCompleteModule } from 'primeng/autocomplete';
 import { BackButtonComponent } from './components/back-button/back-button.component';
 import { TreeTableModule } from 'primeng/treetable';
 import { ValidateNumberDirective } from './validation/validate-number.directive';
+// import { EqualValidator } from './validation/equal-validator';
 import { PasswordPromptComponent } from './components/password-prompt/password-prompt';
 
 
@@ -32,7 +33,8 @@ import { PasswordPromptComponent } from './components/password-prompt/password-p
     PasswordPromptComponent,
     PaginatorComponent,
     BackButtonComponent,
-    ValidateNumberDirective
+    ValidateNumberDirective,
+    // EqualValidator
   ],
   imports: [
     CommonModule,
@@ -63,7 +65,8 @@ import { PasswordPromptComponent } from './components/password-prompt/password-p
     DropdownModule,
     AutoCompleteModule,
     MultiSelectModule,
-    ValidateNumberDirective
+    ValidateNumberDirective,
+    // EqualValidator
   ],
   providers: [CurrencyPipe],
   entryComponents: [ShowcaseDialogComponent],

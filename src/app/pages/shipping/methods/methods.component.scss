@@ -1,0 +1,164 @@
+@import "../../../@theme/styles/themes";
+
+@include nb-install-component() {
+    nb-card {
+        transform: translate3d(0, 0, 0);
+    }
+}
+
+.payment-card {
+    background: transparent;
+    border: none;
+
+    .orderList {
+        .main_header {
+            padding: 0px 30px 10px 0px;
+
+            .page_title {
+                margin-top: -25px;
+                font-weight: 600;
+            }
+        }
+
+        .grid-body {
+            max-height: 1000px;
+            overflow-y: scroll;
+            scrollbar-width: none;
+            // margin: -5px;
+            // padding: 30px 0;
+
+            .row {
+                margin: 0 -15px;
+            }
+
+
+            .grid-product {
+                text-align: center;
+                padding-bottom: 15px;
+                padding-top: 15px;
+                background-color: #fff;
+                border: 1px solid lightgray;
+                margin: 10px;
+
+
+                .image {
+                    width: 100%;
+                    display: -webkit-box;
+                    display: -webkit-flex;
+                    display: -moz-box;
+                    display: -ms-flexbox;
+                    display: flex;
+                    -webkit-box-pack: center;
+                    -webkit-justify-content: center;
+                    -moz-box-pack: center;
+                    -ms-flex-pack: center;
+                    justify-content: center;
+                    -webkit-box-align: center;
+                    -webkit-align-items: center;
+                    -moz-box-align: center;
+                    -ms-flex-align: center;
+                    align-items: center;
+                    height: 100px;
+                    // margin-bottom: 18px;
+                    position: relative;
+                    overflow: hidden;
+                    cursor: pointer;
+
+
+
+                    img {
+                        width: auto;
+                        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+                    }
+
+
+
+                }
+
+                .name {
+                    font-size: 18px;
+                    font-weight: 600;
+
+                }
+
+                .name-subtext {
+                    font-size: 13px;
+                }
+
+                .price {
+                    font-size: 12px;
+                    padding: 12px;
+
+                    .discount-price {
+                        text-decoration: line-through;
+                    }
+                }
+
+                .configure-button {
+                    padding: 20px;
+
+                    .createBtn {
+                        padding: 8px 25px 9.5px 25px;
+                        background-color: #f7f9fc;
+                        color: #000;
+                        // border: 1px solid #edf1f7 !important;
+                        border-radius: 5px;
+                        margin-left: 20px;
+                        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+                        // text-transform: uppercase;
+                        font-weight: 600;
+                        font-size: 0.875rem;
+
+                        &:hover {
+                            background-color: #f7f9fcc4 !important;
+                            box-shadow: 0px 7px 15px rgba(165, 162, 162, 0.25), 1px 3px 8px rgba(165, 162, 162, 0.25) !important;
+                        }
+
+                        &.success {
+                            background-color: green !important;
+                            color: #fff !important;
+
+                            &:hover {
+                                background-color: #0080008c !important;
+                                box-shadow: 0px 7px 15px rgba(165, 162, 162, 0.25), 1px 3px 8px rgba(165, 162, 162, 0.25) !important;
+                            }
+                        }
+
+                        &.warning {
+                            background-color: #ffaa00 !important;
+                            color: #fff !important;
+
+                            &:hover {
+                                background-color: #ffc94d !important;
+                                box-shadow: 0px 7px 15px rgba(165, 162, 162, 0.25), 1px 3px 8px rgba(165, 162, 162, 0.25) !important;
+                            }
+                        }
+
+                    }
+                }
+            }
+        }
+
+    }
+}
+
+:host ::ng-deep .orderList {}
+
+.buttons-row {
+    float: right;
+}
+
+
+thead,
+tbody {
+    display: block;
+}
+
+tbody {
+    height: 100px;
+    /* Just for the demo          */
+    overflow-y: auto;
+    /* Trigger vertical scroll    */
+    overflow-x: hidden;
+    /* Hide the horizontal scroll */
+}

@@ -59,10 +59,10 @@ export class PageComponent {
 
   // request params
   params = {
-      lang: this.storageService.getLanguage(),
-      store: this.storageService.getMerchant(),
-      count: this.perPage,
-      page: 0
+    lang: this.storageService.getLanguage(),
+    store: this.storageService.getMerchant(),
+    count: this.perPage,
+    page: 0
   };
 
   source: any = new LocalDataSource();
@@ -90,7 +90,7 @@ export class PageComponent {
   }
   getPages() {
     this.loadingList = true;
-    this.crudService.get('/v1/private/content/pages', {store:this.params.store})
+    this.crudService.get('/v1/private/content/pages', { store: this.params.store })
       .subscribe(data => {
         this.source = data;
         this.tempData = data;
@@ -111,6 +111,10 @@ export class PageComponent {
   addPages() {
     localStorage.setItem('contentpageid', '');
     this.router.navigate(['/pages/content/pages/add']);
+  }
+  onSelectStore(e) {
+    this.params["store"] = e;
+    this.getPages();
   }
   onClickAction(event) {
     switch (event.action) {

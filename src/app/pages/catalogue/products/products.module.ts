@@ -22,6 +22,7 @@ import { AttributeRoutingModule } from './routing/attribute-routing.module';
 import { ProductsRoutingModule } from './routing/products-routing.module';
 import { PriceRoutingModule } from './routing/price-routing.module';
 import { InventoryRoutingModule } from './routing/inventory-routing.module';
+import { CustomModule } from '../../custome-component/custom.module';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,7 @@ import { InventoryRoutingModule } from './routing/inventory-routing.module';
     PriceFormComponent,
 
     ProductAttributesComponent,
-    AttributeFormComponent,
+    AttributeFormComponent
   ],
   imports: [
     ProductsRoutingModule,
@@ -52,6 +53,7 @@ import { InventoryRoutingModule } from './routing/inventory-routing.module';
     AttributeRoutingModule,
 
     SharedModule,
+    CustomModule,
     NgxSummernoteModule
 
   ],

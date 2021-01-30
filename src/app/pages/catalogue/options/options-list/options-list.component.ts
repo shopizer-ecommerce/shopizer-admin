@@ -125,7 +125,7 @@ export class OptionsListComponent implements OnInit {
           type: 'string',
           filter: false,
           valuePrepareFunction: (type) => {
-              return this.translate.instant('COMMON.' + type);
+            return this.translate.instant('COMMON.' + type);
           }
         }
       },
@@ -185,7 +185,7 @@ export class OptionsListComponent implements OnInit {
     this.getList();
   }
   onSelectStore(e) {
-    this.params["store"] = e.value;
+    this.params["store"] = e;
     this.getList();
   }
   onClickAction(event) {

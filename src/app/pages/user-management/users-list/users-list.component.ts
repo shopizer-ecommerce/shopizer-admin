@@ -86,7 +86,7 @@ export class UsersListComponent implements OnInit {
   }
 
   /** callback methods for table list*/
-  private loadList(newParams:any) {
+  private loadList(newParams: any) {
     //console.log('CallBack loadList');
     //console.log(JSON.stringify(newParams));
     this.currentPage = 1; //back to page 1
@@ -95,7 +95,7 @@ export class UsersListComponent implements OnInit {
   }
 
   choseStore(event) {
-    this.params.store = event.value;
+    this.params.store = event;
     this.getList();
   }
 
@@ -106,20 +106,20 @@ export class UsersListComponent implements OnInit {
     this.getList();
   }
 
-  ngOnInit() { 
+  ngOnInit() {
     this.isSuperadmin = this.securityService.isSuperAdmin();
     this.storeService.getListOfStores({ start: 0 })
-    .subscribe(res => {
-      res.data.forEach((store) => {
-        this.stores.push({ value: store.code, label: store.code });
+      .subscribe(res => {
+        res.data.forEach((store) => {
+          this.stores.push({ value: store.code, label: store.code });
+        });
       });
-    });
 
     //ng2-smart-table server side filter
     this.source.onChanged().subscribe((change) => {
 
       if (!this.loadingList) {//listing service
-        this.listingService.filterDetect(this.params,change,this.loadList.bind(this),this.resetList.bind(this));
+        this.listingService.filterDetect(this.params, change, this.loadList.bind(this), this.resetList.bind(this));
       }
 
     });

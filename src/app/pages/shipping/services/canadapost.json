@@ -1,0 +1,191 @@
+[
+    {
+        "type": "checkbox",
+        "label": "Enabled",
+        "placeholder": "",
+        "name": "active",
+        "isRequired": false,
+        "optionData": [],
+        "value": false
+    },
+    {
+        "type": "dropdown",
+        "label": "Environment",
+        "placeholder": "Please select environment",
+        "name": "enviroment",
+        "isRequired": true,
+        "optionData": [
+            {
+                "id": "test",
+                "label": "Test"
+            },
+            {
+                "id": "prod",
+                "label": "Prod"
+            }
+        ],
+        "value": ""
+    },
+    {
+        "type": "text",
+        "label": "Canada Post identifier (CPC number)",
+        "placeholder": "Enter a cpc number",
+        "name": "cpc_number",
+        "isRequired": true,
+        "optionData": [],
+        "value": ""
+    },
+    {
+        "type": "text",
+        "label": "Canada Post user name (first part of the API key before semi column)",
+        "placeholder": "Enter a username",
+        "name": "username",
+        "isRequired": true,
+        "optionData": [],
+        "value": ""
+    },
+    {
+        "type": "text",
+        "label": "Canada Post password (second part of the API key after semi column)",
+        "placeholder": "Enter a password",
+        "name": "password",
+        "isRequired": true,
+        "optionData": [],
+        "value": ""
+    },
+    {
+        "type": "text",
+        "label": "Canada Post API key",
+        "placeholder": "Enter a post api key",
+        "name": "api_key",
+        "isRequired": true,
+        "optionData": [],
+        "value": ""
+    },
+    {
+        "type": "groupcheckbox",
+        "label": "Services to be rated - Canada",
+        "placeholder": "",
+        "name": "canada_services",
+        "isRequired": false,
+        "optionData": [
+            {
+                "label": "Regular Parcel",
+                "value": false
+            },
+            {
+                "label": "Expedited Parcel",
+                "value": false
+            },
+            {
+                "label": "Xpresspost",
+                "value": false
+            },
+            {
+                "label": "Xpresspost Certified",
+                "value": false
+            },
+            {
+                "label": "Priority",
+                "value": false
+            },
+            {
+                "label": "Delivered Tonight",
+                "value": false
+            },
+            {
+                "label": "Library Books",
+                "value": false
+            }
+        ],
+        "value": ""
+    },
+    {
+        "type": "groupcheckbox",
+        "label": "Services to be rated - United states",
+        "placeholder": "",
+        "name": "us_services",
+        "isRequired": false,
+        "optionData": [
+            {
+                "label": "Expedited Parcel USA",
+                "value": false
+            },
+            {
+                "label": "Priority Worldwide Envelope USA",
+                "value": false
+            },
+            {
+                "label": "Priority Worldwide pak USA",
+                "value": false
+            },
+            {
+                "label": "Priority Worldwide Parcel USA",
+                "value": false
+            },
+            {
+                "label": "Small Packet USA Air",
+                "value": false
+            },
+            {
+                "label": "Tracked Packet - USA",
+                "value": false
+            },
+            {
+                "label": "USA.TP.LVW",
+                "value": false
+            },
+            {
+                "label": "Xpresspost USA",
+                "value": false
+            }
+        ],
+        "value": ""
+    },
+    {
+        "type": "groupcheckbox",
+        "label": "Services to be rated - International",
+        "placeholder": "",
+        "name": "international_services",
+        "isRequired": false,
+        "optionData": [
+            {
+                "label": "Xpresspost International",
+                "value": false
+            },
+            {
+                "label": "Priority Worldwide Envelope USA",
+                "value": false
+            },
+            {
+                "label": "International Parcel Surface",
+                "value": false
+            },
+            {
+                "label": "Priority Worldwide Envelope International",
+                "value": false
+            },
+            {
+                "label": "Priority Worldwide pak International",
+                "value": false
+            },
+            {
+                "label": "Priority Worldwide parcel International",
+                "value": false
+            },
+            {
+                "label": "Small Packet International Air",
+                "value": false
+            },
+            {
+                "label": "Small Packet International Surface",
+                "value": false
+            },
+            {
+                "label": "Tracked Packet - International",
+                "value": false
+            }
+        ],
+        "value": ""
+    }
+]

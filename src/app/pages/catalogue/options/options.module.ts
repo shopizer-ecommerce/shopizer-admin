@@ -10,6 +10,7 @@ import { OptionsComponent } from './options.component';
 import { OptionValueImageComponent } from './option-value-image/option-value-image.component';
 import { OptionsSetListComponent } from './options-set-list/options-set-list.component';
 import { OptionSetComponent } from './options-set/option-set.component';
+import { CustomModule } from '../../custome-component/custom.module';
 @NgModule({
   declarations: [
     OptionsComponent,
@@ -24,6 +25,7 @@ import { OptionSetComponent } from './options-set/option-set.component';
   imports: [
     OptionsRoutingModule,
     SharedModule,
+    CustomModule
   ]
 })
 export class OptionsModule { }

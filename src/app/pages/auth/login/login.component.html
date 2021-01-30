@@ -81,7 +81,7 @@
         <div *ngIf="isSubmitted && formControls.username.errors" class="help-block" style="margin-top:-32px; color:#ff3d71;font-size: 12px;">
           <span *ngIf="isSubmitted && formControls.username.errors.required">{{ 'LOGIN.INVALID_EMPTY_USERNAME' |
             translate}}</span>
-          <span *ngIf="isSubmitted && formControls.username.errors.email">U{{ 'LOGIN.INVALID_FORMAT_USERNAME' |
+          <span *ngIf="isSubmitted && formControls.username.errors.email">{{ 'LOGIN.INVALID_FORMAT_USERNAME' |
             translate}}</span>
         </div>
 
@@ -109,13 +109,13 @@
             <div class="contact100-form-checkbox">
               <nb-checkbox [value]="false">&nbsp;{{ 'LOGIN.REMEMBER_USERNAME' | translate}}</nb-checkbox>
             </div>
-            <!--
-          <div>
-            <a href="#" class="txt3">
+
+            <div>
+              <a href="javascript:void(0);" class="txt3" (click)="onClickForgotPassword()">
                 {{ 'LOGIN.FORGOT_PASSWORD' | translate}}
-            </a>
-          </div>
-          -->
+              </a>
+            </div>
+
           </div>
         </div>
 

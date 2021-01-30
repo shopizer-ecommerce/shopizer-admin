@@ -43,6 +43,14 @@ const routes: Routes = [{
       loadChildren: 'app/pages/shipping/shipping.module#ShippingModule'
     },
     {
+      path: 'payment',
+      loadChildren: 'app/pages/payment/payment.module#PaymentModule'
+    },
+    {
+      path: 'tax-management',
+      loadChildren: 'app/pages/tax-management/tax-management.module#TaxManagementModule'
+    },
+    {
       path: 'customer',
       loadChildren: 'app/pages/customers/customer.module#CustomersModule'
     },

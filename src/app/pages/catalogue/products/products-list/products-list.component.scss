@@ -81,20 +81,24 @@
 .filter_section {
   width: 100%;
 
-  .filter_left_section {
-    width: 50%;
+  // .filter_left_section {
+  //   width: 80%;
 
-    .sda {
-      height: 18px;
-      width: 18px;
-      margin-left: 20px;
-      cursor: pointer;
-    }
-  }
+  //   .sda {
+  //     height: 18px;
+  //     width: 18px;
+  //     margin-left: 20px;
+  //     cursor: pointer;
+  //   }
+  // }
 
   .filter_right_section {
-    width: 50%;
+    width: 100%;
     text-align: right;
+    display: flex;
+    justify-content: flex-end;
+    padding-left: 0px;
+    padding-right: 0px;
 
     .createBtn {
       padding: 8px 10px 9.5px 10px;

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import { OptionService } from '../../../options/services/option.service';
@@ -31,6 +31,7 @@ export class AttributeFormComponent implements OnInit {
 
   constructor(
     private activatedRoute: ActivatedRoute,
+    private router: Router,
     private fb: FormBuilder,
     private optionService: OptionService,
     private optionValuesService: OptionValuesService,
@@ -46,8 +47,8 @@ export class AttributeFormComponent implements OnInit {
         optionValueRes.optionValues.forEach((optionValue) => {
           this.optionValues.push({ value: optionValue.code, label: optionValue.code });
         });
-        this.options.push({ value: '', label: '---' });
-        this.optionValues.push({ value: '', label: '---' });
+        // this.options.push({ value: '', label: 'Please select options' });
+        // this.optionValues.push({ value: '', label: 'Please select option values' });
       });
   }
 
@@ -122,14 +123,19 @@ export class AttributeFormComponent implements OnInit {
       this.productAttributesService.updateAttribute(this.productId, this.attributeId, this.form.value)
         .subscribe(res => {
           this.attribute = res;
+          this.goToback();
           this.toastr.success(this.translate.instant('PRODUCT_ATTRIBUTES.PRODUCT_ATTRIBUTES_UPDATED'));
         });
     } else {
       this.productAttributesService.createAttribute(this.productId, this.form.value).subscribe(res => {
         this.attribute = res;
+        this.goToback();
         this.toastr.success(this.translate.instant('PRODUCT_ATTRIBUTES.PRODUCT_ATTRIBUTES_UPDATED'));
       });
     }
+  }
+  goToback() {
+    this.router.navigate(['pages/catalogue/products/' + this.productId + '/product-attributes']);
   }
 
 }

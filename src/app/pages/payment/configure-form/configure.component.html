@@ -1,0 +1,68 @@
+<div class="inner_pages packages_add_box">
+  <div class="" [nbSpinner]="loadingList" nbSpinnerSize="large" nbSpinnerStatus="primary">
+    <nb-card-header class="main_header">
+      <h1 class="page_title">Payment Configure - {{paymentType}}</h1>
+      <!-- <div class="content_spacing">
+        <nb-select placeholder="Language" outline shape="rectangle" [(ngModel)]="language" (ngModelChange)="getTaxRateDetail()"
+          name="language" [selected]="'en'">
+          <nb-option *ngFor="let lan of langData" [value]="lan.code">{{ ('LANG.'+ lan.code) |translate }}</nb-option>
+        </nb-select>
+      </div> -->
+      <div class="content_spacing">
+        <button type="button" class="cancel_button" (click)="goBack()">{{'COMMON.CANCEL' | translate }}</button>
+      </div>
+
+      <div class="content_spacing">
+        <button type="submit" class="success_button" (click)="save()" [disabled]="!configureForm.form.valid">{{'COMMON.SAVE'
+          | translate }}</button>
+      </div>
+    </nb-card-header>
+
+    <form #configureForm="ngForm" role="form">
+      <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+          <nb-card class="nb-card inline-form-card">
+            <nb-card-body class="nb-card-body">
+
+              <div class="row">
+
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" *ngFor="let data of formData">
+                  <div class="form-group" *ngIf="data.type == 'checkbox'">
+                    <nb-checkbox [(ngModel)]="data.value" name="{{data.name}}">{{data.label}}</nb-checkbox>
+                  </div>
+                  <div class="form-group" *ngIf="data.type == 'dropdown'">
+                    <label class="label inputLabel">{{data.label}}<span *ngIf="data.isRequired">*</span></label>
+                    <nb-select placeholder="{{data.placeholder}}" outline shape="rectangle" [(ngModel)]="data.value"
+                      class="select_fields" name="{{data.name}}" required="{{data.isRequired}}">
+                      <nb-option *ngFor="let value of data.optionData" [value]="value.id">{{value.label}}</nb-option>
+                    </nb-select>
+                  </div>
+                  <div class="form-group" *ngIf="data.type == 'text'">
+                    <label class="label inputLabel">{{data.label}}<span *ngIf="data.isRequired">*</span></label>
+                    <input type="text" class="form-control inputText" placeholder="{{data.placeholder}}" [(ngModel)]="data.value"
+                      name="{{data.name}}" required="{{data.isRequired}}">
+                  </div>
+                  <div class="form-group" *ngIf="data.type == 'summernote'">
+                    <label class="label inputLabel">{{data.label}}<span *ngIf="data.isRequired">*</span></label>
+                    <div [ngxSummernote]="editorConfig" [(ngModel)]="data.value" name="{{data.name}}">
+                    </div>
+                  </div>
+                  <div class="form-group" *ngIf="data.type == 'radio'">
+                    <label class="label inputLabel">{{data.label}}<span *ngIf="data.isRequired">*</span></label>
+                    <div>
+                      <nb-radio-group [(ngModel)]="data.value" name="{{data.name}}">
+                        <nb-radio *ngFor="let type of data.optionData" [value]="type.value" class="shipping-radio">{{type.label}}</nb-radio>
+                      </nb-radio-group>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </nb-card-body>
+          </nb-card>
+        </div>
+      </div>
+
+
+    </form>
+  </div>
+</div>

@@ -10,6 +10,7 @@ import { OrderHistoryComponent } from './order-history/order-history';
 import { OrderTransactionComponent } from './order-transaction/order-transaction';
 import { NbDialogModule } from '@nebular/theme';
 import { MalihuScrollbarModule } from 'ngx-malihu-scrollbar';
+import { CustomModule } from '../custome-component/custom.module';
 @NgModule({
   declarations: [
     OrdersComponent,
@@ -30,6 +31,7 @@ import { MalihuScrollbarModule } from 'ngx-malihu-scrollbar';
     SharedModule,
     NbDialogModule.forChild(),
     MalihuScrollbarModule.forRoot(),
+    CustomModule
   ]
 })
 export class OrdersModule { }
