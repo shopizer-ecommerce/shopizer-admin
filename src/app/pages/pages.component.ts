@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 
 import { MENU_ITEMS } from './pages-menu';
 import { TranslateService } from '@ngx-translate/core';
+import { ConnectionStatusService } from './shared/services/connection-status.service';
+import { NbToastRef, NbToastrService } from '@nebular/theme';
 
 @Component({
   selector: 'ngx-pages',
@@ -17,11 +19,14 @@ export class PagesComponent {
   menu;
 
   constructor(
-    private translate: TranslateService
+    private translate: TranslateService,
+    private connectionStatusService: ConnectionStatusService,
+    private toastrService: NbToastrService
   ) {
     this.menu = MENU_ITEMS;
     this.translateMenu(this.menu);
     this.checkAccess(this.menu);
+    this.checkConnection();
     this.translate.onLangChange.subscribe((lang) => {
       this.translateMenu(this.menu);
     });
@@ -46,6 +51,19 @@ export class PagesComponent {
         this.translateMenu(el.children);
       }
     });
+  }
+
+  checkConnection() {
+    this.connectionStatusService.getStatusConnection().subscribe(res => {
+      let toast: NbToastRef = null;
+      if (res.status !== 'UP') {
+        toast = this.toastrService.show(status, `The connection to the server has been lost.`, { status: 'danger', duration: 0, preventDuplicates: true });
+      } else {
+        if (toast) {
+          toast.close();
+        }
+      }
+    })
   }
 
 }
