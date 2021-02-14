@@ -12,16 +12,13 @@
 
 export const environment = {
     production: false,
+    //GOOGLE MAP
     googleApiKey: '',
     //MARKETPLACE | BTB | STANDARD
     mode: 'STANDARD',
-    //DON'T USE THIS ONE
-    //apiUrl: 'http://aws-demo.shopizer.com:8080/api',
-    //THIS FOR LOCAL
-    apiUrl: 'http://localhost:8080/api',
-    //USE THIS ONE :-)
-    //apiUrl: 'http://15.223.64.6:9090/api',
-    shippingApi: 'http://15.223.64.6:9091/api',
+    //API URL
+    apiUrl: 'http://aws-demo.shopizer.com:8080/api',
+    shippingApi: 'http://localhost:8080/api',
     client: {
         language: {
             default: 'en',

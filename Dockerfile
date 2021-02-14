@@ -1,11 +1,27 @@
-FROM nginx:alpine
+# build env
+FROM node:13.12.0-alpine as builder
 
-## Remove default nginx index page
+RUN mkdir -p /app
 
-RUN rm -rf /usr/share/nginx/html/*
+WORKDIR /app
 
-COPY dist /usr/share/nginx/html
+COPY conf ./
 
-EXPOSE 80
+COPY package.json /app
+COPY package-lock.json  /app
 
-ENTRYPOINT ["nginx", "-g", "daemon off;"]
+RUN npm ci --silent
+#must match package.json react-scripts
+COPY . /app
+RUN npm run build
+
+
+# production env
+FROM nginx:stable-alpine
+
+# Nginx config
+RUN rm -rf /etc/nginx/conf.d
+COPY conf /etc/nginx
+
+
+COPY --from=builder /app/shopizer-admin /usr/share/nginx/html
