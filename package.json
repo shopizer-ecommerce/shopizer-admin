@@ -1,6 +1,5 @@
 {
-  "name": "shopizer-admin"
-  },
+  "name": "shopizer-admin",
   "scripts": {
     "ng": "ng",
     "conventional-changelog": "conventional-changelog",
