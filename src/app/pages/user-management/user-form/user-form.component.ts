@@ -343,7 +343,6 @@ export class UserFormComponent implements OnInit {
     const email = event.target.value;
     const store = (this.form.value && this.form.value.store) || (this._user && this._user.merchant);
     if (email !== '') {
-      console.log('Check email');
       this.userService.checkIfUserExist({ unique: email, merchant: store })
         .subscribe(res => {
           if (this._user && this._user.emailAddress === email) {
