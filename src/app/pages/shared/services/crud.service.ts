@@ -28,6 +28,7 @@ export class CrudService {
   }
 
   post(path, body: any | null, options?: any): Observable<any> {
+    console.log('... call ...');
     return this.http.post(`${this.url}${path}`, body, options);
   }
 
