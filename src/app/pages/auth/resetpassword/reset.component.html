@@ -1,7 +1,7 @@
 <div class="limiter">
-  <div class="container-login100">
+  <div class="container-login100" [nbSpinner]="loadingList" nbSpinnerSize="large" nbSpinnerStatus="primary">
     <div class="wrap-login100 p-l-85 p-r-85 p-t-55 p-b-55">
-      <form class="login100-form validate-form flex-sb flex-w" #forgotPasswordForm="ngForm" role="form">
+      <form *ngIf="isValid" class="login100-form validate-form flex-sb flex-w" #forgotPasswordForm="ngForm" role="form">
         <span style="width:100%;" class="titleClass">
 
           <img src="assets/img/shopizer-logo.png" width="200" style="margin-top:-15px;">
@@ -10,7 +10,9 @@
           </span>
 
         </span>
-
+        <div class="form-group row alert-error" *ngIf="successMessage !== ''" style="width:100%;line-height: 2.5;color:green;font-size: 12px;margin-bottom:10px;">
+          {{successMessage}}
+        </div>
         <div class="form-group row alert-error" *ngIf="errorMessage !== ''" style="width:100%;line-height: 2.5;color:#ff3d71;font-size: 12px;margin-bottom:10px;">
           {{errorMessage}}
         </div>
@@ -58,11 +60,22 @@
           </div>
         </div>
         <div class="container-login100-form-btn">
-          <button type="button" [disabled]="!forgotPasswordForm.form.valid" nbButton class="login100-form-btn">
+          <button type="button" [disabled]="!forgotPasswordForm.form.valid" (click)="onClickSubmit()" nbButton class="login100-form-btn">
             {{ 'COMMON.SUBMIT' | translate}}
           </button>
         </div>
       </form>
+      <div *ngIf="!isValid" class="error-area">
+
+        <h1>400</h1>
+        <h2>Your reset password link is
+          invalid.</h2>
+        <p>
+          To reset your password, return to the login page and select 'Forgot Password' to send a new email
+        </p>
+        <a>Back to login page</a>
+
+      </div>
     </div>
   </div>
 </div>

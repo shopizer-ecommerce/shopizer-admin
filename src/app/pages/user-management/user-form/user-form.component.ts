@@ -54,9 +54,9 @@ export class UserFormComponent implements OnInit {
    * can change other users password
    */
 
-   /**
-    * Can't change self store even if super admin
-    */
+  /**
+   * Can't change self store even if super admin
+   */
   rules = {
     'ADMIN_RETAIL': {
       rules: [
@@ -100,7 +100,7 @@ export class UserFormComponent implements OnInit {
       this.canRemove = false;
     }
 
-    if(this.roles.isSuperadmin || this.roles.isAdmin || this.roles.isRetailAdmin ) {//current user can change password if one of the following
+    if (this.roles.isSuperadmin || this.roles.isAdmin || this.roles.isRetailAdmin) {//current user can change password if one of the following
       this.canChangePassword = true;
     }
 

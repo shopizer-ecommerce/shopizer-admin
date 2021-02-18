@@ -22,6 +22,7 @@ export class LoginComponent implements OnInit {
     email: '',
     password: ''
   }
+  isRemember: Boolean = false;
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
@@ -35,11 +36,26 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
+
     document.getElementsByTagName('body')[0].className += ' nb-theme-corporate';
     this.form = this.fb.group({
       username: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required]
     });
+    console.log(localStorage.getItem('isRemember'));
+    if (localStorage.getItem('isRemember') === 'true') {
+      this.isRemember = true;
+      let loginEmail = localStorage.getItem('loginEmail')
+      console.log(loginEmail)
+      console.log(this.form)
+      this.form.patchValue({
+        username: loginEmail
+      });
+      // this.user.username
+      // setIsRemember(true)
+      // setLoginValue('username', getLocalData('`loginEmail`'))
+      // setLoginValue('loginPassword', '')
+    }
   }
 
   passwordType() {
@@ -85,15 +101,32 @@ export class LoginComponent implements OnInit {
             localStorage.setItem('roles', JSON.stringify(this.userService.roles));
             localStorage.setItem('merchant', user.merchant);
             delay(1000);
+            if (this.isRemember) {
+              localStorage.setItem('loginEmail', formData.username)
+            } else {
+              localStorage.setItem('loginEmail', '')
+            }
             this.router.navigate(['pages']);
           }, err => {
             this.toastr.error(err.error.message);
           });
       }, err => {
-        this.errorMessage = this.translate.instant('LOGIN.INVALID_DATA');
+        if (err.status === 0) {
+          this.errorMessage = this.translate.instant('COMMON.INTERNAL_SERVER_ERROR');
+        } else {
+          this.errorMessage = this.translate.instant('LOGIN.INVALID_DATA');
+        }
       });
   }
-
+  onCheckRemember(e) {
+    console.log(e.target.checked)
+    this.isRemember = e.target.checked;
+    if (e.target.checked) {
+      localStorage.setItem('isRemember', 'true')
+    } else {
+      localStorage.setItem('isRemember', 'false')
+    }
+  }
 
   getFormValidationErrors() {
     Object.keys(this.form.controls).forEach(key => {

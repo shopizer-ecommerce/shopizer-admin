@@ -108,6 +108,12 @@
     "REMEMBER_USERNAME": "Remember my user name",
     "FORGOT_PASSWORD": "Forgot Password?"
   },
+  "FORGOT_PASSWORD": {
+    "USER_NOT_FOUND": "Your email address is not registerd.",
+    "SENT_LINK": "Reset password link sent successfully.",
+    "SUCCESS": "You have successfully reset your password. you can now login as usual with your email address and your new password.",
+    "FAIL": "Password don't match"
+  },
   "HEADER": {
     "PROFILE": "Profile",
     "LOGOUT": "Log out"
@@ -525,7 +531,8 @@
     "radio": "Radio",
     "checkbox": "Checkbox",
     "select": "Select",
-    "text": "Text"
+    "text": "Text",
+    "INTERNAL_SERVER_ERROR": "The connection to the server has been lost."
   },
   "DESCRIPTION_FORM": {
     "NAME": "Name",

@@ -11,15 +11,15 @@ import { environment } from '../../../../environments/environment';
 })
 export class ConnectionStatusService {
     url = environment.apiUrl;
-    constructor(private http: HttpClient){
+    constructor(private http: HttpClient) {
 
     }
 
     getStatusConnection(): Observable<Health> {
-        const url = this.url.substring(0, this.url.length-3)
-        return timer(0, 5000)
-        .pipe(
-            switchMap(_ => this.http.get<Health>(`${url}actuator/health/ping`))
-        );
+        const url = this.url.substring(0, this.url.length - 3)
+        return timer(0, 30000)
+            .pipe(
+                switchMap(_ => this.http.get<Health>(`${url}actuator/health/ping`))
+            );
     }
 }

@@ -9,6 +9,42 @@ html {
     height: 100%;
 }
 
+.error-area {
+    text-align: center;
+
+    h1 {
+        font-size: 17rem !important;
+        font-weight: bold;
+        letter-spacing: 1rem;
+        line-height: 1.1;
+        margin-bottom: 30px;
+        color: #598bff96;
+    }
+
+    h2 {
+        font-size: 25px;
+        font-weight: 600;
+    }
+
+    p {
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 24px;
+        margin-bottom: 30px;
+    }
+
+    a {
+        width: 100%;
+        background-color: #36f !important;
+        border-color: #36f !important;
+        color: #fff !important;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24) !important;
+        text-transform: uppercase !important;
+        font-size: 0.875rem !important;
+        padding: 0.6875rem 1.125rem;
+    }
+}
+
 /*---------------------------------------------*/
 a {
     font-size: 14px;
