@@ -57,15 +57,16 @@ export class AddBoxComponent {
     this.loadingList = true;
     let param = {
       "code": this.page.code,
+      "contentType": "BOX",
       "descriptions": [
         {
-          "contentType": "BOXES",
+          // "contentType": "BOXES",
           "language": 'en',
           "name": this.page.ePagename,
           "pageContent": this.page.ePagecontent
         },
         {
-          "contentType": "BOXES",
+          // "contentType": "BOXES",
           "language": 'fr',
           "name": this.page.ePagename,
           "pageContent": this.page.ePagecontent
@@ -73,14 +74,14 @@ export class AddBoxComponent {
       ],
       "displayedInMenu": this.page.mainmenu
     }
-    this.crudService.post('/v1/private/content/page', param)
+    this.crudService.post('/v1/private/content/', param)
       .subscribe(data => {
         this.loadingList = false;
-        this.toastr.success('Boxe added successfully');
+        this.toastr.success('Box added successfully');
         // this.buttonText = 'Update';
         // this.titleText = 'Update Manage Page';
         // this.getContentDetails();
-        // this.router.navigate(['/pages/content/pages/list']);
+        this.router.navigate(['/pages/content/boxes/list']);
       }, error => {
         this.loadingList = false;
       });

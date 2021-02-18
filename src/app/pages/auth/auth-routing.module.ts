@@ -5,13 +5,13 @@ import { LoginComponent } from './login/login.component';
 import { ForgotPasswordComponent } from './forgotpassword/forgot.component';
 import { AuthComponent } from './auth.component';
 
-import { ResetPasswordComponent } from './resetpassword/reset.component';
+// import { ResetPasswordComponent } from './resetpassword/reset.component';
 const routes: Routes = [
   {
     path: '', component: AuthComponent, children: [
       { path: '', component: LoginComponent },
       { path: 'forgot-password', component: ForgotPasswordComponent },
-      { path: 'reset-password', component: ResetPasswordComponent },
+      // { path: 'user/:id/reset/:id', component: ResetPasswordComponent },
       // {
       //   path: 'sign-up', children: [
       //     { path: '', component: SignUpComponent },

@@ -272,6 +272,11 @@ iframe {
         background-color: #edf1f7;
         border-color: #e4e9f2;
     }
+
+    &.password_type {
+        -webkit-text-security: disc;
+        -moz-text-security: disc;
+    }
 }
 
 input:focus {

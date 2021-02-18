@@ -110,9 +110,10 @@ export class AddPageComponent {
     this.loadingList = true;
     let param = {
       "code": this.code,
+      "contentType": "PAGE",
       "descriptions": [
         {
-          "contentType": "PAGE",
+
           "language": 'en',
           "metaDetails": this.en.metaDetails,
           "name": this.en.name,
@@ -121,7 +122,7 @@ export class AddPageComponent {
           "title": this.en.title
         },
         {
-          "contentType": "PAGE",
+          // "contentType": "PAGE",
           "language": 'fr',
           "metaDetails": this.en.metaDetails,
           "name": this.en.name,
