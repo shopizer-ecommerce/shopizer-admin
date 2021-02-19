@@ -58,10 +58,10 @@ export class PagesComponent {
     this.connectionStatusService.getStatusConnection().subscribe(res => {
       let toast: NbToastRef = null;
       if (res.status !== 'UP') {
-        // this.router.navigate(['errorPage']);
+        this.router.navigate(['/errorPage']);
         // toast = this.toastrService.show(status, `The connection to the server has been lost.`, { status: 'danger', duration: 0, preventDuplicates: true });
       } else {
-        this.router.navigate(['/errorPage']);
+
         if (toast) {
           toast.close();
         }
