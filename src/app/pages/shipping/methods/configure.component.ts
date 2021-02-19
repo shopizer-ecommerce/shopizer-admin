@@ -7,6 +7,8 @@ let canadapost = require('../services/canadapost.json');
 let upsData = require('../services/ups.json');
 let customRulesData = require('../services/customrules.json');
 let storePickUpData = require('../services/storepickup.json');
+import { SharedService } from '../services/shared.service';
+import { async } from 'q';
 // let braintreeData = require('../services/braintree.json');
 @Component({
   selector: 'ngx-shipping-configure',
@@ -19,7 +21,7 @@ export class ShippingConfigureComponent implements OnInit {
   formData: Array<any> = [];
   loadingList: boolean = false;
   shippingType: any;
-
+  shippingData: any;
   editorConfig = {
     placeholder: '',
     tabsize: 2,
@@ -42,7 +44,7 @@ export class ShippingConfigureComponent implements OnInit {
     private toastr: ToastrService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-
+    private sharedService: SharedService
   ) {
     // this.getCountry();
     // this.getLanguages();
@@ -56,6 +58,8 @@ export class ShippingConfigureComponent implements OnInit {
     else if (type == 'ups') {
       this.formData = upsData;
       this.shippingType = "UPS";
+
+
     }
     else if (type == 'customQuotesRules') {
       this.formData = customRulesData;
@@ -69,14 +73,55 @@ export class ShippingConfigureComponent implements OnInit {
       this.formData = storePickUpData;
       this.shippingType = 'Store Pick Up'
     }
-
+    this.getShippingConfigureDetails(type)
   }
-
+  getShippingConfigureDetails(type) {
+    this.loadingList = true;
+    this.sharedService.getShippingModulesDetails(type)
+      .subscribe(data => {
+        console.log(data);
+        this.loadingList = false;
+        this.shippingData = data;
+      }, error => {
+        this.loadingList = false;
+      });
+    this.shippingData = {
+      "code": "ups",
+      "active": true,
+      "defaultSelected": false,
+      "integrationKeys": {
+        "password": "password123",
+        "accessKey": "123456",
+        "userId": "test123"
+      },
+      "integrationOptions": {
+        "selectservice": [
+          "no"
+        ],
+        "packages": [
+          "01"
+        ]
+      }
+    }
+    this.setConfigureData();
+  }
+  setConfigureData() {
+    // console.log(this.formData)
+    this.formData.map(async (value, i) => {
+      // console.log(value.name)
+      // console.log(value.objectKey == '' ? this.shippingData[value.name] : this.shippingData[value.name][value.objectKey])
+      if (value.type == 'radio') {
+        this.formData[i].value = this.shippingData[value.objectKey][value.name][0]
+      } else {
+        this.formData[i].value = value.objectKey == '' ? this.shippingData[value.name] : this.shippingData[value.objectKey][value.name]
+      }
+    });
+  }
   save() {
     console.log(this.formData)
     let param = {};
     this.formData.map((value) => {
-      param[value.name] = value.value
+      param[value.name] = this.shippingData[value.name]
     });
     console.log(param)
   }

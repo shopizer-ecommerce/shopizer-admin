@@ -4,7 +4,7 @@ import { MENU_ITEMS } from './pages-menu';
 import { TranslateService } from '@ngx-translate/core';
 import { ConnectionStatusService } from './shared/services/connection-status.service';
 import { NbToastRef, NbToastrService } from '@nebular/theme';
-
+import { Router } from '@angular/router';
 @Component({
   selector: 'ngx-pages',
   styleUrls: ['pages.component.scss'],
@@ -21,7 +21,8 @@ export class PagesComponent {
   constructor(
     private translate: TranslateService,
     private connectionStatusService: ConnectionStatusService,
-    private toastrService: NbToastrService
+    private toastrService: NbToastrService,
+    private router: Router,
   ) {
     this.menu = MENU_ITEMS;
     this.translateMenu(this.menu);
@@ -57,8 +58,10 @@ export class PagesComponent {
     this.connectionStatusService.getStatusConnection().subscribe(res => {
       let toast: NbToastRef = null;
       if (res.status !== 'UP') {
-        toast = this.toastrService.show(status, `The connection to the server has been lost.`, { status: 'danger', duration: 0, preventDuplicates: true });
+        // this.router.navigate(['errorPage']);
+        // toast = this.toastrService.show(status, `The connection to the server has been lost.`, { status: 'danger', duration: 0, preventDuplicates: true });
       } else {
+        this.router.navigate(['/errorPage']);
         if (toast) {
           toast.close();
         }

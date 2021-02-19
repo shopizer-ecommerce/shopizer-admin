@@ -4,6 +4,7 @@
         "label": "Enabled",
         "placeholder": "",
         "name": "active",
+        "objectKey": "",
         "isRequired": false,
         "optionData": [],
         "value": false
@@ -13,6 +14,7 @@
         "label": "Environment",
         "placeholder": "Please select environment",
         "name": "enviroment",
+        "objectKey": "",
         "isRequired": true,
         "optionData": [
             {
@@ -30,7 +32,8 @@
         "type": "text",
         "label": "UPS access key",
         "placeholder": "Enter a access key",
-        "name": "access_key",
+        "name": "accessKey",
+        "objectKey": "integrationKeys",
         "isRequired": true,
         "optionData": [],
         "value": ""
@@ -39,7 +42,8 @@
         "type": "text",
         "label": "User ID",
         "placeholder": "Enter a user id",
-        "name": "username",
+        "name": "userId",
+        "objectKey": "integrationKeys",
         "isRequired": true,
         "optionData": [],
         "value": ""
@@ -49,6 +53,7 @@
         "label": "Password",
         "placeholder": "Enter a password",
         "name": "password",
+        "objectKey": "integrationKeys",
         "isRequired": true,
         "optionData": [],
         "value": ""
@@ -57,40 +62,41 @@
         "type": "radio",
         "label": "Package Type",
         "placeholder": "",
-        "name": "package_type",
+        "name": "packages",
+        "objectKey": "integrationOptions",
         "isRequired": false,
         "optionData": [
             {
                 "label": "UPS Letter",
-                "value": "1"
+                "value": "01"
             },
             {
                 "label": "Customer Package",
-                "value": "2"
+                "value": "02"
             },
             {
                 "label": "UPS Tube",
-                "value": "3"
+                "value": "03"
             },
             {
                 "label": "UPS Pak",
-                "value": "4"
+                "value": "04"
             },
             {
                 "label": "UPS Express Box",
-                "value": "5"
+                "value": "05"
             },
             {
                 "label": "UPS 25kg Box",
-                "value": "6"
+                "value": "06"
             },
             {
                 "label": "UPS 10kg box",
-                "value": "7"
+                "value": "07"
             },
             {
                 "label": "Unknown",
-                "value": "8"
+                "value": "08"
             }
         ],
         "value": ""
@@ -99,12 +105,13 @@
         "type": "radio",
         "label": "UPS Shipping Methods",
         "placeholder": "",
-        "name": "all_ups",
+        "name": "selectservice",
+        "objectKey": "integrationOptions",
         "isRequired": false,
         "optionData": [
             {
                 "label": "Let UPS propose all available shipping methods",
-                "value": "1"
+                "value": "no"
             }
         ],
         "value": ""
