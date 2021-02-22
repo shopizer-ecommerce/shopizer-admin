@@ -4,6 +4,7 @@
         "label": "Enabled",
         "placeholder": "",
         "name": "active",
+        "objectKey": "",
         "isRequired": false,
         "optionData": [],
         "value": false
@@ -12,7 +13,8 @@
         "type": "checkbox",
         "label": "Default",
         "placeholder": "",
-        "name": "default",
+        "name": "defaultSelected",
+        "objectKey": "",
         "isRequired": false,
         "optionData": [],
         "value": false
@@ -22,6 +24,7 @@
         "label": "Environment",
         "placeholder": "Please select environment",
         "name": "enviroment",
+        "objectKey": "",
         "isRequired": true,
         "optionData": [
             {
@@ -39,7 +42,8 @@
         "type": "text",
         "label": "Secret key",
         "placeholder": "Enter a secret key",
-        "name": "secret_key",
+        "name": "secretKey",
+        "objectKey": "integrationKeys",
         "isRequired": true,
         "optionData": [],
         "value": ""
@@ -48,7 +52,8 @@
         "type": "text",
         "label": "Publishable key",
         "placeholder": "Enter a publishable key",
-        "name": "publish_key",
+        "name": "publishableKey",
+        "objectKey": "integrationKeys",
         "isRequired": true,
         "optionData": [],
         "value": ""
@@ -57,16 +62,17 @@
         "type": "radio",
         "label": "Transaction type",
         "placeholder": "",
-        "name": "type",
+        "name": "transaction",
+        "objectKey": "integrationKeys",
         "isRequired": false,
         "optionData": [
             {
                 "label": "Pre-authorization",
-                "value": "1"
+                "value": "AUTHORIZECAPTURE"
             },
             {
                 "label": "Sale",
-                "value": "2"
+                "value": "SALE"
             }
         ],
         "value": ""

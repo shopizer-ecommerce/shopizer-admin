@@ -17,4 +17,7 @@ export class PaymentService {
   getPaymentModules(): Observable<any> {
     return this.crudService.get('/v1/private/modules/payment');
   }
+  getPaymentModulesDetails(type): Observable<any> {
+    return this.crudService.get('/v1/private/modules/payment/' + type);
+  }
 }

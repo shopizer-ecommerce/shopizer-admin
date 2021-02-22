@@ -8,27 +8,19 @@ let paypalData = require('../services/paypal.json');
 let beanStreamData = require('../services/beanstream.json');
 let stripeData = require('../services/stripe.json');
 let braintreeData = require('../services/braintree.json');
+import { PaymentService } from '../services/payment.service';
 @Component({
   selector: 'ngx-payment-configure',
   templateUrl: './configure.component.html',
   styleUrls: ['./configure.component.scss'],
 })
 export class ConfigureComponent implements OnInit {
-  // formValue = {
-  //   country: '',
-  //   zone: '',
-  //   name: '',
-  //   code: '',
-  //   rate: '',
-  //   compound: '',
-  //   priority: 0,
-  //   taxClass: ''
-  // }
+
   active = '';
   formData: Array<any> = [];
   loadingList: boolean = false;
   paymentType: any;
-
+  paymentData: any;
   editorConfig = {
     placeholder: '',
     tabsize: 2,
@@ -48,6 +40,7 @@ export class ConfigureComponent implements OnInit {
     fontNames: ['Helvetica', 'Arial', 'Arial Black', 'Comic Sans MS', 'Courier New', 'Roboto', 'Times']
   };
   constructor(
+    private paymentService: PaymentService,
     private toastr: ToastrService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
@@ -74,9 +67,41 @@ export class ConfigureComponent implements OnInit {
       this.formData = braintreeData;
       this.paymentType = "Braintree";
     }
-
+    this.getPaymentConfigureDetails(paymenttype)
   }
+  getPaymentConfigureDetails(type) {
+    this.loadingList = true;
+    this.paymentService.getPaymentModulesDetails(type)
+      .subscribe(data => {
+        console.log(data);
+        this.loadingList = false;
+        this.paymentData = data;
+        this.setConfigureData();
+      }, error => {
+        this.loadingList = false;
+      });
+  }
+  setConfigureData() {
+    this.formData.map(async (value, i) => {
 
+      if (value.type == 'radio') {
+        let varType = Array.isArray(this.paymentData[value.objectKey][value.name])
+        this.formData[i].value = varType ? this.paymentData[value.objectKey][value.name][0] : this.paymentData[value.objectKey][value.name]
+      } else if (value.type == 'groupcheckbox') {
+        if (value.objectKey == '') {
+
+        } else {
+          this.paymentData[value.objectKey][value.name].map((option) => {
+            let a = value.optionData.findIndex((a) => a.value === option);
+            value.optionData[a].checked = true;
+          })
+
+        }
+      } else {
+        this.formData[i].value = value.objectKey == '' ? this.paymentData[value.name] : this.paymentData[value.objectKey][value.name]
+      }
+    });
+  }
   save() {
     console.log(this.formData)
     let param = {};

@@ -4,6 +4,7 @@
         "label": "Enabled",
         "placeholder": "",
         "name": "active",
+        "objectKey": "",
         "isRequired": false,
         "optionData": [],
         "value": false
@@ -13,6 +14,7 @@
         "label": "Environment",
         "placeholder": "Please select environment",
         "name": "enviroment",
+        "objectKey": "",
         "isRequired": true,
         "optionData": [
             {
@@ -30,7 +32,8 @@
         "type": "summernote",
         "label": "Pick up address that will be displayed to the client",
         "placeholder": "Pick up address that will be displayed to the client",
-        "name": "address",
+        "name": "note",
+        "objectKey": "integrationKeys",
         "isRequired": false,
         "optionData": [],
         "value": ""
@@ -40,6 +43,7 @@
         "label": "Price for store pick up in numeric format",
         "placeholder": "Enter a price",
         "name": "price",
+        "objectKey": "integrationKeys",
         "isRequired": true,
         "optionData": [],
         "value": ""

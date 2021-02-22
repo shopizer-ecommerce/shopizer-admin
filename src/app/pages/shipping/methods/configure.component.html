@@ -50,12 +50,13 @@
                   <div class="form-group" *ngIf="data.type == 'groupcheckbox'">
                     <label class="label inputLabel">{{data.label}}<span *ngIf="data.isRequired">*</span></label>
                     <div *ngFor="let group of data.optionData">
-                      <nb-checkbox [(ngModel)]="group.value" name="{{data.name}}">
+                      <nb-checkbox [(ngModel)]="group.checked" [ngModelOptions]="{standalone: true}">
                         {{group.label}}
                       </nb-checkbox>
                     </div>
                   </div>
-                  <div class="form-group" *ngIf="data.type == 'radio'">
+                  <div class="
+                        form-group" *ngIf="data.type == 'radio'">
                     <label class="label inputLabel">{{data.label}}<span *ngIf="data.isRequired">*</span></label>
                     <div>
                       <nb-radio-group [(ngModel)]="data.value" name="{{data.name}}">

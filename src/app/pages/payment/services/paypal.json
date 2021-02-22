@@ -4,6 +4,7 @@
         "label": "Enabled",
         "placeholder": "",
         "name": "active",
+        "objectKey": "",
         "isRequired": false,
         "optionData": [],
         "value": false
@@ -12,7 +13,8 @@
         "type": "checkbox",
         "label": "Default",
         "placeholder": "",
-        "name": "default",
+        "name": "defaultSelected",
+        "objectKey": "",
         "isRequired": false,
         "optionData": [],
         "value": false
@@ -22,6 +24,7 @@
         "label": "Environment",
         "placeholder": "Please select environment",
         "name": "enviroment",
+        "objectKey": "",
         "isRequired": true,
         "optionData": [
             {
@@ -40,6 +43,7 @@
         "label": "PayPal API username",
         "placeholder": "Enter a username",
         "name": "username",
+        "objectKey": "integrationKeys",
         "isRequired": true,
         "optionData": [],
         "value": ""
@@ -48,7 +52,8 @@
         "type": "text",
         "label": "PayPal API password",
         "placeholder": "Enter a password",
-        "name": "password",
+        "name": "api",
+        "objectKey": "integrationKeys",
         "isRequired": true,
         "optionData": [],
         "value": ""
@@ -58,6 +63,7 @@
         "label": "PayPal API signature",
         "placeholder": "Enter a signature",
         "name": "signature",
+        "objectKey": "integrationKeys",
         "isRequired": true,
         "optionData": [],
         "value": ""
@@ -66,16 +72,17 @@
         "type": "radio",
         "label": "Transaction type",
         "placeholder": "",
-        "name": "type",
+        "name": "transaction",
+        "objectKey": "integrationKeys",
         "isRequired": false,
         "optionData": [
             {
                 "label": "Pre-authorization",
-                "value": "1"
+                "value": "AUTHORIZECAPTURE"
             },
             {
                 "label": "Sale",
-                "value": "2"
+                "value": "SALE"
             }
         ],
         "value": ""

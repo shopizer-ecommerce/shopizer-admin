@@ -35,19 +35,19 @@ export class GlobalHttpInterceptorService implements HttpInterceptor {
         } else if (error.status !== 401) {
           if (error.error instanceof ErrorEvent) {
             // client-side error
-            errorMessage = `${this.translate.instant('COMMON.ERROR')}: ${ error.error.message }`;
+            errorMessage = `${this.translate.instant('COMMON.ERROR')}: ${error.error.message}`;
           } else {
             // server-side error
-            errorMessage = this.translate.instant('COMMON.ERROR_CODE') + `: ${ error.status }\n
-            ${this.translate.instant('COMMON.MESSAGE')}: ${ error.message }`;
+            errorMessage = this.translate.instant('COMMON.ERROR_CODE') + `: ${error.status}\n
+            ${this.translate.instant('COMMON.MESSAGE')}: ${error.message}`;
           }
           if (error.status !== 404) {
             this.toastr.error(errorMessage, this.translate.instant('COMMON.ERROR'));
-            if(error.status === 500)
+            if (error.status === 500)
               this.router.navigate(['/pages/error-500']);
           }
         } else if (error.status === 401) {
-          this.authService.logout();
+          // this.authService.logout();
         }
         return throwError(error);
       })

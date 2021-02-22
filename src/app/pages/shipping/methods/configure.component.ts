@@ -82,36 +82,29 @@ export class ShippingConfigureComponent implements OnInit {
         console.log(data);
         this.loadingList = false;
         this.shippingData = data;
+        this.setConfigureData();
       }, error => {
         this.loadingList = false;
       });
-    this.shippingData = {
-      "code": "ups",
-      "active": true,
-      "defaultSelected": false,
-      "integrationKeys": {
-        "password": "password123",
-        "accessKey": "123456",
-        "userId": "test123"
-      },
-      "integrationOptions": {
-        "selectservice": [
-          "no"
-        ],
-        "packages": [
-          "01"
-        ]
-      }
-    }
-    this.setConfigureData();
   }
   setConfigureData() {
-    // console.log(this.formData)
+
     this.formData.map(async (value, i) => {
-      // console.log(value.name)
-      // console.log(value.objectKey == '' ? this.shippingData[value.name] : this.shippingData[value.name][value.objectKey])
+
       if (value.type == 'radio') {
+        // console.log(Array.isArray(this.shippingData[value.objectKey][value.name]))
         this.formData[i].value = this.shippingData[value.objectKey][value.name][0]
+      } else if (value.type == 'groupcheckbox') {
+        if (value.objectKey == '') {
+
+        } else {
+          this.shippingData[value.objectKey][value.name].map((option) => {
+            let a = value.optionData.findIndex((a) => a.value === option)
+            // console.log(a)
+            value.optionData[a].checked = true;
+          })
+
+        }
       } else {
         this.formData[i].value = value.objectKey == '' ? this.shippingData[value.name] : this.shippingData[value.objectKey][value.name]
       }

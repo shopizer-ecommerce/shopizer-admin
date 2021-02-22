@@ -4,6 +4,7 @@
         "label": "Enabled",
         "placeholder": "",
         "name": "active",
+        "objectKey": "",
         "isRequired": false,
         "optionData": [],
         "value": false
@@ -13,6 +14,7 @@
         "label": "Default",
         "placeholder": "",
         "name": "default",
+        "objectKey": "",
         "isRequired": false,
         "optionData": [],
         "value": false
@@ -22,6 +24,7 @@
         "label": "Environment",
         "placeholder": "Please select environment",
         "name": "enviroment",
+        "objectKey": "",
         "isRequired": true,
         "optionData": [
             {
@@ -39,7 +42,8 @@
         "type": "text",
         "label": "Merchant ID",
         "placeholder": "Enter a merchant id",
-        "name": "merchant_id    ",
+        "name": "merchant_id",
+        "objectKey": "integrationKeys",
         "isRequired": true,
         "optionData": [],
         "value": ""
@@ -49,6 +53,7 @@
         "label": "Public key",
         "placeholder": "Enter a public key",
         "name": "public_key",
+        "objectKey": "integrationKeys",
         "isRequired": true,
         "optionData": [],
         "value": ""
@@ -58,6 +63,7 @@
         "label": "Private key",
         "placeholder": "Enter a private key",
         "name": "private_key",
+        "objectKey": "integrationKeys",
         "isRequired": true,
         "optionData": [],
         "value": ""
@@ -67,6 +73,7 @@
         "label": "Tokenization key",
         "placeholder": "Enter a tokenization key",
         "name": "token_key",
+        "objectKey": "integrationKeys",
         "isRequired": true,
         "optionData": [],
         "value": ""
@@ -75,16 +82,17 @@
         "type": "radio",
         "label": "Transaction type",
         "placeholder": "",
-        "name": "type",
+        "name": "transaction",
+        "objectKey": "integrationKeys",
         "isRequired": false,
         "optionData": [
             {
                 "label": "Pre-authorization",
-                "value": "1"
+                "value": "AUTHORIZECAPTURE"
             },
             {
                 "label": "Sale",
-                "value": "2"
+                "value": "SALE"
             }
         ],
         "value": ""

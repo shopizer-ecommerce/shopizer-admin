@@ -4,15 +4,17 @@
         "label": "Enabled",
         "placeholder": "",
         "name": "active",
+        "objectKey": "",
         "isRequired": false,
         "optionData": [],
         "value": false
     },
     {
         "type": "checkbox",
-        "label": "Default",
+        "label": "defaultSelected",
         "placeholder": "",
         "name": "default",
+        "objectKey": "",
         "isRequired": false,
         "optionData": [],
         "value": false
@@ -22,6 +24,7 @@
         "label": "Environment",
         "placeholder": "Please select environment",
         "name": "enviroment",
+        "objectKey": "",
         "isRequired": true,
         "optionData": [
             {
@@ -40,6 +43,7 @@
         "label": "Merchant Id",
         "placeholder": "Enter a merchant id",
         "name": "merchant_id",
+        "objectKey": "integrationKeys",
         "isRequired": true,
         "optionData": [],
         "value": ""
@@ -49,6 +53,7 @@
         "label": "Username",
         "placeholder": "Enter a username",
         "name": "username",
+        "objectKey": "integrationKeys",
         "isRequired": true,
         "optionData": [],
         "value": ""
@@ -58,6 +63,7 @@
         "label": "Password",
         "placeholder": "Enter a password",
         "name": "password",
+        "objectKey": "integrationKeys",
         "isRequired": true,
         "optionData": [],
         "value": ""
@@ -66,16 +72,17 @@
         "type": "radio",
         "label": "Transaction type",
         "placeholder": "",
-        "name": "type",
+        "name": "transaction",
+        "objectKey": "integrationKeys",
         "isRequired": false,
         "optionData": [
             {
                 "label": "Pre-authorization",
-                "value": "1"
+                "value": "AUTHORIZECAPTURE"
             },
             {
                 "label": "Sale",
-                "value": "2"
+                "value": "SALE"
             }
         ],
         "value": ""
