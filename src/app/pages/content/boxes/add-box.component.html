@@ -1,7 +1,7 @@
 <div class="inner_pages create_box">
 
   <nb-card-header class="main_header">
-    <h1 class="page_title">Create Manage Box</h1>
+    <h1 class="page_title">{{title}}</h1>
     <div class="content_spacing">
       <nb-select placeholder="Language" outline shape="rectangle" [(ngModel)]="page.language" name="language"
         [selected]="'en'">
@@ -12,7 +12,7 @@
       <button type="button" nbButton class="cancel_button" (click)="goToback()">Cancle</button>
     </div>
     <div class="content_spacing">
-      <button type="button" nbButton class="success_button" (click)="createBoxes()">Submit</button>
+      <button type="button" nbButton class="success_button" (click)="createBoxes()">{{buttonText}}</button>
     </div>
   </nb-card-header>
   <div class="" [nbSpinner]="loadingList" nbSpinnerSize="large" nbSpinnerStatus="primary">

@@ -217,6 +217,7 @@ export class UserFormComponent implements OnInit {
       userName: [''],
       emailAddress: ['', [Validators.required, Validators.email, Validators.pattern(this.emailPattern)]],
       password: ['', [Validators.required, Validators.pattern(this.pwdPattern)]],
+      repeatPassword: ['', [Validators.required]],
       active: [false],
       defaultLanguage: ['', [Validators.required]],
       groups: [[]],
@@ -237,6 +238,9 @@ export class UserFormComponent implements OnInit {
 
   get password() {
     return this.form.get('password');
+  }
+  get repeatPassword() {
+    return this.form.get('repeatPassword');
   }
 
   get defaultLanguage() {

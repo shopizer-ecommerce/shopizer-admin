@@ -19,7 +19,7 @@ export class CrudService {
     return this.http.get(`${this.shippingUrl}${path}`, { responseType: 'json', params });
   }
 
-  get(path, params?: { [param: string]: string | string[]; }): Observable<any> {
+  get(path, params?: any): Observable<any> {
     return this.http.get(`${this.url}${path}`, { responseType: 'json', params });
   }
 

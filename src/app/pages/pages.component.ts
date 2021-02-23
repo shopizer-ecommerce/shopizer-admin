@@ -61,7 +61,6 @@ export class PagesComponent {
         this.router.navigate(['/errorPage']);
         // toast = this.toastrService.show(status, `The connection to the server has been lost.`, { status: 'danger', duration: 0, preventDuplicates: true });
       } else {
-        this.router.navigate(['/errorPage']);
         if (toast) {
           toast.close();
         }

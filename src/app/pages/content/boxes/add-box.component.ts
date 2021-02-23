@@ -14,7 +14,10 @@ declare var $: any;
 })
 export class AddBoxComponent {
   loadingList = false;
-  languages: Array<any> = [{ 'code': 'en', 'name': 'English' }, { 'code': 'fr', 'name': 'French' }]
+  languages: Array<any> = [{ 'code': 'en', 'name': 'English' }, { 'code': 'fr', 'name': 'French' }];
+  contentBoxID: any;
+  buttonText: any = 'Submit'
+  title: any = 'Create Manage Box'
   page = {
     visible: false,
     mainmenu: false,
@@ -42,7 +45,7 @@ export class AddBoxComponent {
     },
     fontNames: ['Helvetica', 'Arial', 'Arial Black', 'Comic Sans MS', 'Courier New', 'Roboto', 'Times']
   };
-
+  params = this.loadParams();
   public scrollbarOptions = { axis: 'y', theme: 'minimal-dark' };
   constructor(
     private crudService: CrudService,
@@ -51,7 +54,25 @@ export class AddBoxComponent {
 
     private dialogService: NbDialogService
   ) {
-
+    if (localStorage.getItem('contentBoxID')) {
+      this.contentBoxID = localStorage.getItem('contentBoxID')
+      this.getBoxDetails();
+      this.title = "Update Manage Box"
+      this.buttonText = "Update"
+    }
+  }
+  loadParams() {
+    return {
+      // store: this.storageService.getMerchant(),
+      lang: "_all"
+    };
+  }
+  getBoxDetails() {
+    this.crudService.get('/v1/private/content/box/' + this.contentBoxID, this.params)
+      .subscribe(data => {
+        console.log(data)
+      }, error => {
+      });
   }
   createBoxes() {
     this.loadingList = true;
@@ -87,7 +108,7 @@ export class AddBoxComponent {
       });
   }
   goToback() {
-    this.router.navigate(['/pages/content/pages/list']);
+    this.router.navigate(['/pages/content/boxes/list']);
   }
   customButton(context) {
     const me = this;

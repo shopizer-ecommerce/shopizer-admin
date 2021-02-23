@@ -31,12 +31,30 @@ a:hover {
 }
 
 .error-status {
-    font-size: 12rem;
+    font-size: 9rem;
     font-weight: bold;
     letter-spacing: 1rem;
     line-height: 1.1;
     margin-bottom: 30px;
     color: #fb799c;
+}
+
+.error-title {
+    font-size: 3rem;
+    // font-weight: bold;
+    // letter-spacing: 1rem;
+    line-height: 1.1;
+    margin-bottom: 30px;
+    // color: #fb799c;
+}
+
+.error-message {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 24px;
+    margin-bottom: 15px;
+    color: #333;
+
 }
 
 /*---------------------------------------------*/
@@ -189,7 +207,7 @@ iframe {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding-bottom: 30px;
+    // padding-bottom: 30px;
 }
 
 .login100-form-title {
