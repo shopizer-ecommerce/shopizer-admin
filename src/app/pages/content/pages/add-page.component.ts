@@ -77,10 +77,16 @@ export class AddPageComponent {
       .subscribe(data => {
         console.log(data, '************')
         this.en = data;
-        this.visible = data.displayedInMenu;
+        this.visible = data.visible;
         this.mainmenu = data.displayedInMenu;
         this.code = data.code;
         this.order = 0;
+        this.en.name = data.description.name
+        this.en.slug = data.description.friendlyUrl
+        this.en.title = data.description.title
+        this.en.keyword = data.description.keyWords
+        this.en.metaDetails = data.description.metaDescription
+        this.en.pageContent = data.description.description
       }, error => {
       });
   }
@@ -115,25 +121,28 @@ export class AddPageComponent {
         {
 
           "language": 'en',
-          "metaDetails": this.en.metaDetails,
+          "metaDescription": this.en.metaDetails,
+          "keyWords": this.en.keyword,
           "name": this.en.name,
-          "pageContent": this.en.pageContent,
-          "slug": this.en.slug,
+          "description": this.en.pageContent,
+          "friendlyUrl": this.en.slug,
           "title": this.en.title
         },
         {
           // "contentType": "PAGE",
           "language": 'fr',
-          "metaDetails": this.en.metaDetails,
+          "metaDescription": this.en.metaDetails,
+          "keyWords": this.en.keyword,
           "name": this.en.name,
-          "pageContent": this.en.pageContent,
-          "slug": this.en.slug,
+          "description": this.en.pageContent,
+          "friendlyUrl": this.en.slug,
           "title": this.en.title
         }
       ],
-      "displayedInMenu": this.mainmenu
+      "displayedInMenu": this.mainmenu,
+      "visible": this.visible
     }
-    this.crudService.post('/v1/private/content/page', param)
+    this.crudService.post('/v1/private/content', param)
       .subscribe(data => {
         console.log(data);
         this.loadingList = false;

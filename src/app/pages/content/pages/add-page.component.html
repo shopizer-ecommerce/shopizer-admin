@@ -118,7 +118,7 @@
             <nb-card-header class="nb-card-header">Page content</nb-card-header>
             <nb-card-body class="nb-card-body">
               <div>
-                <div [ngxSummernote]="editorConfig">
+                <div [ngxSummernote]="editorConfig" [(ngModel)]="en.pageContent" name="pageContent">
                 </div>
               </div>
             </nb-card-body>

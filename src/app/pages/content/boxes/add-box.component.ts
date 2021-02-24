@@ -68,9 +68,14 @@ export class AddBoxComponent {
     };
   }
   getBoxDetails() {
-    this.crudService.get('/v1/private/content/box/' + this.contentBoxID, this.params)
+    this.crudService.get('/v1/private/content/boxes/' + this.contentBoxID)
       .subscribe(data => {
         console.log(data)
+
+        this.page.code = data.code;
+        this.page.visible = data.visible;
+        this.page.ePagename = data.description.name;
+        this.page.ePagecontent = data.description.description;
       }, error => {
       });
   }
@@ -84,16 +89,17 @@ export class AddBoxComponent {
           // "contentType": "BOXES",
           "language": 'en',
           "name": this.page.ePagename,
-          "pageContent": this.page.ePagecontent
+          "description": this.page.ePagecontent
         },
         {
           // "contentType": "BOXES",
           "language": 'fr',
           "name": this.page.ePagename,
-          "pageContent": this.page.ePagecontent
+          "description": this.page.ePagecontent
         }
       ],
-      "displayedInMenu": this.page.mainmenu
+      "displayedInMenu": this.page.mainmenu,
+      "visible": this.page.visible
     }
     this.crudService.post('/v1/private/content/', param)
       .subscribe(data => {

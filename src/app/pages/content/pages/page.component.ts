@@ -17,7 +17,9 @@ import { StorageService } from '../../shared/services/storage.service';
 export class PageComponent {
   search_text: string = '';
   stores: Array<any> = [];
-  perPage = 15;
+  perPage = 10;
+  currentPage = 1;
+  totalCount;
   settings = {
     mode: 'external',
     hideSubHeader: true,
@@ -46,14 +48,31 @@ export class PageComponent {
         title: 'Page Code',
         type: 'string',
       },
-      name: {
+      description: {
         title: 'Page Name',
         type: 'string',
+        valuePrepareFunction: (cell, row) => {
+          // console.log(row.description.name)
+          if (row.description) {
+            return row.description.name
+          } else {
+            return ''
+          }
+        }
       },
-      path: {
+      friendlyUrl: {
         title: 'Page Url',
-        type: 'string'
+        type: 'string',
+        valuePrepareFunction: (cell, row) => {
+          // console.log(row.description.name)
+          if (row.description) {
+            return row.description.friendlyUrl
+          } else {
+            return ''
+          }
+        }
       }
+
     },
   };
 
@@ -90,23 +109,51 @@ export class PageComponent {
   }
   getPages() {
     this.loadingList = true;
-    this.crudService.get('/v1/private/content/pages', { store: this.params.store })
+
+    this.params.page = this.currentPage - 1;
+    this.crudService.get('/v1/private/content/pages', this.params)
       .subscribe(data => {
-        this.source = data;
-        this.tempData = data;
+        this.source = data.items;
+        this.tempData = data.items;
+        this.totalCount = data.recordsTotal * data.totalPages
         this.loadingList = false;
       }, error => {
         this.loadingList = false;
       });
   }
-  search() {
-    const val = this.search_text.toLowerCase();
-    const temp = this.tempData.filter(function (d) {
-      return d.name.toLowerCase().indexOf(val) !== -1 || !val ||
-        d.code.toLowerCase().indexOf(val) !== -1 || !val ||
-        d.path.toLowerCase().indexOf(val) !== -1 || !val;
-    });
-    this.source = temp;
+  // search() {
+  //   const val = this.search_text.toLowerCase();
+  //   const temp = this.tempData.filter(function (d) {
+  //     return d.name.toLowerCase().indexOf(val) !== -1 || !val ||
+  //       d.code.toLowerCase().indexOf(val) !== -1 || !val ||
+  //       d.path.toLowerCase().indexOf(val) !== -1 || !val;
+  //   });
+  //   this.source = temp;
+  // }.
+  changePage(event) {
+    switch (event.action) {
+      case 'onPage': {
+        this.currentPage = event.data;
+        break;
+      }
+      case 'onPrev': {
+        this.currentPage--;
+        break;
+      }
+      case 'onNext': {
+        this.currentPage++;
+        break;
+      }
+      case 'onFirst': {
+        this.currentPage = 1;
+        break;
+      }
+      case 'onLast': {
+        this.currentPage = event.data;
+        break;
+      }
+    }
+    this.getPages();
   }
   addPages() {
     localStorage.setItem('contentpageid', '');

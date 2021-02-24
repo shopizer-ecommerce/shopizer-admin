@@ -69,7 +69,7 @@
             <nb-card-header class="nb-card-header">Box content</nb-card-header>
             <nb-card-body class="nb-card-body">
               <div>
-                <div [ngxSummernote]="editorConfig">
+                <div [ngxSummernote]="editorConfig" [(ngModel)]="page.ePagecontent" name="ePagecontent">
                 </div>
               </div>
             </nb-card-body>

@@ -12,7 +12,7 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./boxes.component.scss'],
 })
 export class BoxesComponent {
-  perPage = 3;
+  perPage = 10;
   currentPage = 1;
   totalCount;
   stores: Array<any> = [];
