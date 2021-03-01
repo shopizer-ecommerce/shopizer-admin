@@ -1,27 +1,39 @@
 # build env
 FROM node:13.12.0-alpine as builder
 
-RUN mkdir -p /app
-
 WORKDIR /app
 
-COPY conf ./
+# Copy project files to the docker image
+COPY . .
 
-COPY package.json /app
-COPY package-lock.json  /app
+# install angular/cli globally (latest version, change this to the version you are using)
+RUN yarn global add @angular/cli@latest
 
-RUN npm ci --silent
-#must match package.json react-scripts
-COPY . /app
-RUN npm run build
+# if you prefer npm, replace the above command with
+# RUN npm install @angular/cli@latest -g
 
+# install packages
+RUN yarn install
 
-# production env
-FROM nginx:stable-alpine
+# FOR NPM
+# npm install
 
-# Nginx config
-RUN rm -rf /etc/nginx/conf.d
-COPY conf /etc/nginx
+# Build Angular Application in Production
+RUN ng build --prod
 
+#### STAGE 2
+#### Deploying the application
 
-COPY --from=builder /app/shopizer-admin /usr/share/nginx/html
+FROM nginx:alpine
+
+VOLUME  /var/cache/nginx
+
+# Copy the build files from the project
+# replace "angular-docker-environment-variables" with your angular project name
+COPY --from=builder /app/dist/angular-docker-environment-variables /usr/share/nginx/html
+
+# Copy Nginx Files
+COPY --from=builder /app/.docker/.config/nginx.conf /etc/nginx/conf.d/default.conf
+
+# EXPOSE Port 80
+EXPOSE 80
