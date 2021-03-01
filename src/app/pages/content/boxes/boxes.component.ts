@@ -6,6 +6,9 @@ import { MalihuScrollbarService } from 'ngx-malihu-scrollbar';
 import { StoreService } from '../../store-management/services/store.service';
 import { StorageService } from '../../shared/services/storage.service';
 import { TranslateService } from '@ngx-translate/core';
+import { ToastrService } from 'ngx-toastr';
+import { NbDialogService } from '@nebular/theme';
+import { ShowcaseDialogComponent } from '../../shared/components/showcase-dialog/showcase-dialog.component';
 @Component({
   selector: 'boxes-table',
   templateUrl: './boxes.component.html',
@@ -16,6 +19,7 @@ export class BoxesComponent {
   currentPage = 1;
   totalCount;
   stores: Array<any> = [];
+  loadingList = false;
   params = this.loadParams();
   settings = {
     mode: 'external',
@@ -70,7 +74,9 @@ export class BoxesComponent {
     private mScrollbarService: MalihuScrollbarService,
     private storeService: StoreService,
     private storageService: StorageService,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private toastr: ToastrService,
+    private dialogService: NbDialogService
   ) {
     this.getStoreList();
     this.translate.onLangChange.subscribe((lang) => {
@@ -148,7 +154,8 @@ export class BoxesComponent {
       case 'edit':
         this.onEdit(event);
         break;
-
+      case 'delete':
+        this.onDelete(event);
     }
   }
   onEdit(event) {
@@ -156,13 +163,33 @@ export class BoxesComponent {
     localStorage.setItem('contentBoxID', event.data.code);
     this.router.navigate(['/pages/content/boxes/add']);
   }
-  // onDeleteConfirm(event): void {
-  //   if (window.confirm('Are you sure you want to delete?')) {
-  //     event.confirm.resolve();
-  //   } else {
-  //     event.confirm.reject();
-  //   }
-  // }
+  onDelete(event) {
+
+    // console.log(event);
+
+    this.dialogService.open(ShowcaseDialogComponent, {
+      context: 'Do you really want to remove this entity?'
+      // context: {
+      //   title: 'Are you sure!',
+      //   body: 'Do you really want to remove this entity?'
+      // },
+    }).onClose.subscribe(res => {
+      if (res) {
+        this.loadingList = true;
+        this.crudService.delete('/v1/private/content/' + event.data.id + '?id=' + event.data.id)
+          .subscribe(data => {
+            this.loadingList = false;
+            this.toastr.success('Content box deleted successfully');
+            this.getBox();
+          }, error => {
+            this.loadingList = false;
+          });
+      } else {
+        this.loadingList = false;
+      }
+    });
+
+  }
   ngAfterViewInit() {
     this.mScrollbarService.initScrollbar('.custom_scroll', { axis: 'y', theme: 'minimal-dark', scrollButtons: { enable: true } });
   }

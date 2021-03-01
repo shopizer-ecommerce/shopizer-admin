@@ -208,7 +208,13 @@ export class UserFormComponent implements OnInit {
       this.loader = false;
     });
   }
+  checkPasswords(group: FormGroup) { // here we have the 'passwords' group
+    console.log(group.get('password').value);
+    const password = group.get('password').value;
+    const confirmPassword = group.get('repeatPassword').value;
 
+    return password === confirmPassword ? null : { notSame: true }
+  }
   private createForm() {
     this.form = this.fb.group({
       firstName: ['', [Validators.required]],
@@ -221,7 +227,7 @@ export class UserFormComponent implements OnInit {
       active: [false],
       defaultLanguage: ['', [Validators.required]],
       groups: [[]],
-    });
+    }, { validators: this.checkPasswords });
   }
 
   get firstName() {
@@ -259,6 +265,7 @@ export class UserFormComponent implements OnInit {
       store: this._user.merchant,
       userName: '',
       password: '',
+      repeatPassword: '',
       emailAddress: this._user.emailAddress,
       active: this._user.active,
       defaultLanguage: this._user.defaultLanguage,

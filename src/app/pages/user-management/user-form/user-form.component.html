@@ -89,22 +89,27 @@
           <div class="form-group" *ngIf="!user?.id || canChangePassword">
             <label for="password" class="col-sm-3 col-form-label inputLabel">Repeat Password *</label>
             <div class="col-sm-12">
-              <input type="password" class="form-control inputText" id="repeatPassword" formControlName='passworepeatPasswordrd'
+              <input type="password" class="form-control inputText" id="repeatPassword" formControlName='repeatPassword'
                 placeholder="Repeat Password" required>
-              <span *ngIf="(repeatPassword.dirty || repeatPassword.touched) && repeatPassword.invalid && password"
+              <span *ngIf="(repeatPassword.dirty || repeatPassword.touched) && repeatPassword.invalid && repeatPassword"
                 class="err-message">
                 <span *ngIf="repeatPassword.errors.required">
-                  {{ 'USER_FORM.PASSWORD_ERROR_REQUIRED' | translate }}
+                  {{ 'USER_FORM.PASSWORD_ERROR_REQUIRED' | translate }}<br />
                 </span>
-                <span *ngIf="repeatPassword.errors.pattern">
-                  {{ 'USER_FORM.PASSWORD_ERROR_NOT_VALID' | translate }} <br />
-                  {{ 'USER_FORM.PASSWORD_ERROR_RULES' | translate }}
+
+              </span>
+              <span class="err-message" *ngIf="form.hasError('notSame')">
+                <span>
+                  Password do not match
                 </span>
               </span>
+
+
             </div>
           </div>
 
-          <div class="form-group">
+          <div class="
+                form-group">
             <nb-checkbox class="col-sm-4" formControlName='active'>{{ 'USER_FORM.ACTIVE' | translate
               }}
             </nb-checkbox>

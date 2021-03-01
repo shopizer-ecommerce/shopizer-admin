@@ -12,6 +12,7 @@ import { NbDialogModule } from '@nebular/theme';
 import { UserDetailsComponent } from './user-details/user-details.component';
 import { ButtonRenderUserComponent } from './users-list/button-render-user.component';
 import { CustomModule } from '../custome-component/custom.module';
+// import { EqualValidator } from '../shared/validation/equal-validator';
 @NgModule({
   declarations: [
     UserManagementComponent,
@@ -21,7 +22,8 @@ import { CustomModule } from '../custome-component/custom.module';
     UserFormComponent,
     CreateNewUserComponent,
     ButtonRenderUserComponent,
-    UserDetailsComponent
+    UserDetailsComponent,
+    // EqualValidator
   ],
   imports: [
     UserManagementRoutingModule,

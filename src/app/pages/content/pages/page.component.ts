@@ -180,31 +180,30 @@ export class PageComponent {
   }
   onDelete(event) {
 
-    console.log(event);
-    /** 
+    // console.log(event);
+
     this.dialogService.open(ShowcaseDialogComponent, {
-      context : 'Do you really want to remove this entity?'
-      //context: {
-      //  title: 'Are you sure!',
-      //  body: 'Do you really want to remove this entity?'
-      //},
-    })
-      .onClose.subscribe(res => {
-        if (res) {
-          this.loadingList = true;
-          this.crudService.delete('/v1/private/content/page/' + event.data.id + '?id=' + event.data.id)
-            .subscribe(data => {
-              this.loadingList = false;
-              this.toastr.success('Page deleted successfully');
-              this.getPages();
-            }, error => {
-              this.loadingList = false;
-            });
-        } else {
-          this.loadingList = false;
-        }
-      });
-      **/
+      context: 'Do you really want to remove this entity?'
+      // context: {
+      //   title: 'Are you sure!',
+      //   body: 'Do you really want to remove this entity?'
+      // },
+    }).onClose.subscribe(res => {
+      if (res) {
+        this.loadingList = true;
+        this.crudService.delete('/v1/private/content/' + event.data.id + '?id=' + event.data.id)
+          .subscribe(data => {
+            this.loadingList = false;
+            this.toastr.success('Content page deleted successfully');
+            this.getPages();
+          }, error => {
+            this.loadingList = false;
+          });
+      } else {
+        this.loadingList = false;
+      }
+    });
+
   }
   ngAfterViewInit() {
     this.mScrollbarService.initScrollbar('.custom_scroll', { axis: 'y', theme: 'minimal-dark', scrollButtons: { enable: true } });
