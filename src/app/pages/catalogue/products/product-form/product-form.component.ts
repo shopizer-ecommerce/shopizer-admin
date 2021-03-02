@@ -329,6 +329,7 @@ export class ProductFormComponent implements OnInit {
         this.removeImages(this.removedImagesArray);
         this.productService.updateProduct(this.product.id, productObject)
           .subscribe(res => {
+            this.uploadData.append('id', res.id);
             this.productImageService.createImage(res.id, this.uploadData)
               .subscribe(res1 => {
                 this.toastr.success(this.translate.instant('PRODUCT.PRODUCT_UPDATED'));
@@ -338,6 +339,7 @@ export class ProductFormComponent implements OnInit {
         this.saved = true;
         this.productService.createProduct(productObject)
           .subscribe(res => {
+            this.uploadData.append('id', res.id);
             this.productImageService.createImage(res.id, this.uploadData)
               .subscribe(res1 => {
                 this.toastr.success(this.translate.instant('PRODUCT.PRODUCT_CREATED'));

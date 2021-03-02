@@ -3,7 +3,9 @@ import { LocalDataSource } from 'ng2-smart-table';
 import { CrudService } from '../../shared/services/crud.service';
 import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { ConfigService } from '../../shared/services/config.service';
 import { ImageBrowserComponent } from '../../../@theme/components/image-browser/image-browser.component';
+// import { environment } from '../../../';
 import { NbDialogService } from '@nebular/theme';
 declare var jquery: any;
 declare var $: any;
@@ -16,11 +18,13 @@ declare var $: any;
 export class AddPageComponent {
   loadingList = false;
   visible: any = false;
+  descData: any;
+  updatedID: any;
   mainmenu: any = false;
   code: string = '';
   order: number = 0;
-  buttonText: string = 'Submit';
-  titleText: string = 'Create Manage Page';
+  buttonText: string = 'Save';
+  titleText: string = 'Add page details';
   language: string = 'en';
   public scrollbarOptions = { axis: 'y', theme: 'minimal-dark' };
 
@@ -43,52 +47,76 @@ export class AddPageComponent {
     },
     fontNames: ['Helvetica', 'Arial', 'Arial Black', 'Comic Sans MS', 'Courier New', 'Roboto', 'Times']
   };
-  en = {
-    metaDetails: '',
-    name: '',
-    pageContent: '',
-    path: '',
-    slug: '',
-    title: '',
-    keyword: '',
-    productGroup: ''
-  }
+  description: Array<any> = []
 
-  languages: Array<any> = [{ 'code': 'en', 'name': 'English' }, { 'code': 'fr', 'name': 'French' }]
+  defaultLanguage = 'en';
+  languages: Array<any> = [];
   codeExits: any;
   message: string = '';
   constructor(
     private crudService: CrudService,
     public router: Router,
     private toastr: ToastrService,
-
+    private configService: ConfigService,
     private dialogService: NbDialogService
   ) {
+    this.configService.getListOfSupportedLanguages(localStorage.getItem('merchant'))
+      .subscribe(res => {
+        console.log(res);
+        this.languages = res;
+        this.languages.forEach(lang => {
+          this.description.push({
+            language: lang.code,
+            metaDetails: '',
+            name: '',
+            pageContent: '',
+            path: '',
+            slug: '',
+            title: '',
+            keyword: '',
+            productGroup: ''
+          });
+        });
+      });
     if (localStorage.getItem('contentpageid')) {
       this.buttonText = 'Update';
-      this.titleText = 'Update Manage Page';
+      this.titleText = 'Update page details';
       this.getContentDetails()
     }
+
   }
-
   getContentDetails() {
-
-    this.crudService.get('/v1/content/pages/' + localStorage.getItem('contentpageid') + '?lang=' + this.language)
+    // console.log(this.language)
+    this.crudService.get('/v1/content/pages/' + localStorage.getItem('contentpageid') + '?lang=_all')
       .subscribe(data => {
-        console.log(data, '************')
-        this.en = data;
+        // console.log(data, '************')
+        // this.en = data;
+        this.updatedID = data.id;
         this.visible = data.visible;
         this.mainmenu = data.displayedInMenu;
         this.code = data.code;
         this.order = 0;
-        this.en.name = data.description.name
-        this.en.slug = data.description.friendlyUrl
-        this.en.title = data.description.title
-        this.en.keyword = data.description.keyWords
-        this.en.metaDetails = data.description.metaDescription
-        this.en.pageContent = data.description.description
+        this.descData = data.descriptions
+        this.fillForm()
+
       }, error => {
       });
+  }
+  fillForm() {
+    this.descData.forEach((newvalue, index) => {
+      this.description.forEach((value, index) => {
+        if (newvalue.language == value.language) {
+          value.name = newvalue.name
+          value.slug = newvalue.friendlyUrl
+          value.title = newvalue.title
+          value.keyword = newvalue.keyWords
+          value.metaDetails = newvalue.metaDescription
+          value.pageContent = newvalue.description
+        }
+      });
+
+    })
+    console.log(this.description);
   }
   focusOutFunction() {
     this.crudService.get('/v1/content/' + this.code)
@@ -100,7 +128,7 @@ export class AddPageComponent {
         this.message = "This code is available"
       });
   }
-  urlTitle(event) {
+  urlTitle(event, lang) {
     let text = event.target.value;
     var characters = [' ', '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '+', '=', '_', '{', '}', '[', ']', '|', '/', '<', '>', ',', '.', '?', '--'];
 
@@ -109,7 +137,12 @@ export class AddPageComponent {
       text = text.replace(new RegExp("\\" + char, "g"), '-');
     }
     text = text.toLowerCase();
-    this.en.slug = text;
+    this.description.forEach((value, index) => {
+      if (lang == value.language) {
+        value.slug = text
+      }
+    });
+    // this.en.slug = text;
   }
 
   createPages() {
@@ -117,43 +150,36 @@ export class AddPageComponent {
     let param = {
       "code": this.code,
       "contentType": "PAGE",
-      "descriptions": [
-        {
-
-          "language": 'en',
-          "metaDescription": this.en.metaDetails,
-          "keyWords": this.en.keyword,
-          "name": this.en.name,
-          "description": this.en.pageContent,
-          "friendlyUrl": this.en.slug,
-          "title": this.en.title
-        },
-        {
-          // "contentType": "PAGE",
-          "language": 'fr',
-          "metaDescription": this.en.metaDetails,
-          "keyWords": this.en.keyword,
-          "name": this.en.name,
-          "description": this.en.pageContent,
-          "friendlyUrl": this.en.slug,
-          "title": this.en.title
-        }
-      ],
+      "descriptions": this.description,
       "displayedInMenu": this.mainmenu,
       "visible": this.visible
     }
-    this.crudService.post('/v1/private/content', param)
-      .subscribe(data => {
-        console.log(data);
-        this.loadingList = false;
-        this.toastr.success('Page added successfully');
-        this.buttonText = 'Update';
-        this.titleText = 'Update Manage Page';
-        // this.getContentDetails();
-        // this.router.navigate(['/pages/content/pages/list']);
-      }, error => {
-        this.loadingList = false;
-      });
+    if (localStorage.getItem('contentpageid')) {
+      this.crudService.put('/v1/private/content/' + this.updatedID, param)
+        .subscribe(data => {
+          console.log(data);
+          this.loadingList = false;
+          this.toastr.success('Page updated successfully');
+          // this.buttonText = 'Update';
+          // this.titleText = 'Update page details';
+          // // this.getContentDetails();
+          this.router.navigate(['/pages/content/pages/list']);
+        }, error => {
+          this.loadingList = false;
+        });
+    } else {
+      this.crudService.post('/v1/private/content', param)
+        .subscribe(data => {
+          console.log(data);
+          this.loadingList = false;
+          this.toastr.success('Page added successfully');
+          // this.getContentDetails();
+          this.router.navigate(['/pages/content/pages/list']);
+        }, error => {
+          this.loadingList = false;
+        });
+    }
+
   }
   goToback() {
     this.router.navigate(['/pages/content/pages/list']);

@@ -2,9 +2,9 @@
   <nb-card-header class="main_header">
     <h1 class="page_title">{{titleText}}</h1>
     <div class="content_spacing">
-      <nb-select placeholder="Language" outline shape="rectangle" [(ngModel)]="language" (ngModelChange)="getContentDetails()"
-        name="language" [selected]="'en'">
-        <nb-option *ngFor="let lan of languages" [value]="lan.code">{{ lan.name }}</nb-option>
+      <nb-select placeholder="Language" outline shape="rectangle" [(ngModel)]="language" name="language" [selected]="defaultLanguage">
+        <nb-option *ngFor="let lan of languages" [value]="lan.code">{{
+          ('LANG.'+lan.code) |translate }}</nb-option>
       </nb-select>
     </div>
     <div class="content_spacing">
@@ -12,7 +12,7 @@
         | translate}}</button>
     </div>
     <div class="content_spacing">
-      <button type="submit" nbButton class="success_button" (click)="createPages()">{{'COMMON.SAVE' | translate }}</button>
+      <button type="submit" nbButton class="success_button" (click)="createPages()">{{buttonText | translate }}</button>
     </div>
   </nb-card-header>
   <div class="" [nbSpinner]="loadingList" nbSpinnerSize="large" nbSpinnerStatus="primary">
@@ -50,22 +50,7 @@
                   </div>
                 </div>
               </div>
-              <div class="row">
-                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                  <div class="form-group">
-                    <label for="exampleInputPassword1" class="label inputLabel">Page name <span>*</span></label>
-                    <input type="text" [(ngModel)]="en.name" name="name" class="form-control inputText" id="page_name"
-                      placeholder="Page Name" (keyup)="urlTitle($event)" required>
-                  </div>
-                </div>
-                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                  <div class="form-group">
-                    <label for="exampleInputPassword1" class="label inputLabel">Search engine friendly url</label>
-                    <input type="text" [(ngModel)]="en.slug" name="slug" class="form-control inputText" id="url"
-                      placeholder="Url">
-                  </div>
-                </div>
-              </div>
+
             </nb-card-body>
           </nb-card>
         </div>
@@ -73,41 +58,59 @@
           <nb-card class="nb-card inline-form-card">
             <nb-card-header class="nb-card-header">SEO Details</nb-card-header>
             <nb-card-body class="nb-card-body">
+              <div *ngFor="let descr of description; let j=index">
 
-              <div class="row">
-                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                  <div class="form-group">
-                    <label for="exampleInputPassword1" class="label inputLabel">Title</label>
-                    <input type="text" [(ngModel)]="en.title" name="title" class="form-control inputText" id="title"
-                      placeholder="Title">
+                <div *ngIf="descr.language === language">
+                  <div class="row">
+                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                      <div class="form-group">
+                        <label for="exampleInputPassword1" class="label inputLabel">Title</label>
+                        <input type="text" [(ngModel)]="descr.title" name="title" class="form-control inputText" id="title"
+                          placeholder="Title">
+                      </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                      <div class="form-group">
+                        <label for="exampleInputPassword1" class="label inputLabel">Keywords</label>
+                        <input type="text" [(ngModel)]="descr.keyword" name="keyword" class="form-control inputText" id="keyword"
+                          placeholder="keyword">
+                      </div>
+                    </div>
                   </div>
-                </div>
-                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                  <div class="form-group">
-                    <label for="exampleInputPassword1" class="label inputLabel">Keywords</label>
-                    <input type="text" [(ngModel)]="en.keyword" name="keyword" class="form-control inputText" id="keyword"
-                      placeholder="keyword">
+                  <div class="row">
+                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                      <div class="form-group">
+                        <label for="exampleInputPassword1" class="label inputLabel">Page name <span>*</span></label>
+                        <input type="text" [(ngModel)]="descr.name" name="name" class="form-control inputText" id="page_name"
+                          placeholder="Page Name" (keyup)="urlTitle($event, descr.language)" required>
+                      </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                      <div class="form-group">
+                        <label for="exampleInputPassword1" class="label inputLabel">Search engine friendly url <span>*</span></label>
+                        <input type="text" [(ngModel)]="descr.slug" name="slug" class="form-control inputText" id="url"
+                          placeholder="Url" required>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                      <div class="form-group">
+                        <label for="exampleInputPassword1" class="label inputLabel">Product group</label>
+                        <input type="text" [(ngModel)]="descr.productGroup" name="productGroup" class="form-control inputText"
+                          id="product_group" placeholder="Product group">
+                      </div>
+                    </div>
+                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                      <div class="form-group">
+                        <label for="exampleInputPassword1" class="label inputLabel">Description metatag</label>
+                        <input type="text" [(ngModel)]="descr.metaDetails" name="metaDetails" class="form-control inputText"
+                          id="description" placeholder="Description metatag">
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
-
-              <div class="row">
-                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                  <div class="form-group">
-                    <label for="exampleInputPassword1" class="label inputLabel">Product group</label>
-                    <input type="text" [(ngModel)]="en.productGroup" name="productGroup" class="form-control inputText"
-                      id="product_group" placeholder="Product group">
-                  </div>
-                </div>
-                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                  <div class="form-group">
-                    <label for="exampleInputPassword1" class="label inputLabel">Description metatag</label>
-                    <input type="text" [(ngModel)]="en.metaDetails" name="metaDetails" class="form-control inputText"
-                      id="description" placeholder="Description metatag">
-                  </div>
-                </div>
-              </div>
-
             </nb-card-body>
           </nb-card>
         </div>
@@ -117,8 +120,11 @@
           <nb-card class="nb-card inline-form-card">
             <nb-card-header class="nb-card-header">Page content</nb-card-header>
             <nb-card-body class="nb-card-body">
-              <div>
-                <div [ngxSummernote]="editorConfig" [(ngModel)]="en.pageContent" name="pageContent">
+              <div *ngFor="let descr of description; let j=index">
+                <div *ngIf="descr.language === language">
+
+                  <div [ngxSummernote]="editorConfig" [(ngModel)]="descr.pageContent" name="pageContent">
+                  </div>
                 </div>
               </div>
             </nb-card-body>
