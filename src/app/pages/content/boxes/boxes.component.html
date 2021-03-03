@@ -2,7 +2,7 @@
   <nb-card-body [nbSpinner]="loadingList" nbSpinnerSize="large" nbSpinnerStatus="primary" class="boxsList">
     <div class="inner_pages_legacy">
       <nb-card-header class="main_header">
-        <h1 class="page_title">Content Boxes</h1>
+        <h1 class="page_title">{{ 'COMPONENTS.CONTENT_BOXES' | translate}}</h1>
         <div class="content_spacing_empty"></div>
 
       </nb-card-header>
@@ -26,7 +26,7 @@
           <a class="createBtn" (click)="addBoxes()">
             <img class="pointer sda" src="../../../../assets/img/plus.png" title="{{ 'COMPONENTS.CREATE_OPTION' | translate}}"
               alt="">
-            <label>Create Box</label>
+            <label>{{'CONTENT.CREATE_BOX' | translate}}</label>
           </a>
         </div>
       </form>

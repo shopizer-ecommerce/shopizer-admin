@@ -21,49 +21,7 @@ export class BoxesComponent {
   stores: Array<any> = [];
   loadingList = false;
   params = this.loadParams();
-  settings = {
-    mode: 'external',
-    hideSubHeader: true,
-    actions: {
-      add: false,
-      edit: false,
-      delete: false,
-      position: 'right',
-      custom: [
-        {
-          name: 'edit',
-          title: '<i class="nb-edit"></i>'
-        },
-        {
-          name: 'delete',
-          title: '<i class="nb-trash"></i>'
-        },
-        // {
-        //   name: 'delete',
-        //   title: '<i class="nb-info"></i>'
-        // }
-      ]
-    },
-    columns: {
-      id: {
-        title: 'ID',
-        type: 'number',
-      },
-      code: {
-        title: 'Code',
-        type: 'string',
-      },
-      description: {
-        title: 'Name',
-        type: 'string',
-        valuePrepareFunction: (cell, row) => {
-          // console.log(row.description.name)
-          return row.description.name
-        }
-      }
-    },
-  };
-
+  settings = {}
   // request params
 
   source: LocalDataSource = new LocalDataSource();
@@ -114,6 +72,53 @@ export class BoxesComponent {
         this.totalCount = data.recordsTotal * data.totalPages
       }, error => {
       });
+    this.setSettings();
+  }
+  setSettings() {
+    this.settings = {
+      mode: 'external',
+      hideSubHeader: true,
+      actions: {
+        columnTitle: this.translate.instant('ORDER.ACTIONS'),
+        add: false,
+        edit: false,
+        delete: false,
+        position: 'right',
+        custom: [
+          {
+            name: 'edit',
+            title: '<i class="nb-edit"></i>'
+          },
+          {
+            name: 'delete',
+            title: '<i class="nb-trash"></i>'
+          },
+          // {
+          //   name: 'delete',
+          //   title: '<i class="nb-info"></i>'
+          // }
+        ]
+      },
+      columns: {
+        id: {
+          title: this.translate.instant('COMMON.ID'),
+          type: 'number',
+        },
+        code: {
+          title: this.translate.instant('CONTENT.CODE'),
+          type: 'string',
+        },
+        description: {
+          title: this.translate.instant('CONTENT.NAME'),
+          type: 'string',
+          valuePrepareFunction: (cell, row) => {
+            // console.log(row.description.name)
+            return row.description.name
+          }
+        }
+      },
+    };
+
   }
   addBoxes() {
     localStorage.setItem('contentBoxID', '');

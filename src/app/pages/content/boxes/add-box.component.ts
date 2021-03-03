@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { ImageBrowserComponent } from '../../../@theme/components/image-browser/image-browser.component';
 import { NbDialogService } from '@nebular/theme';
+import { ConfigService } from '../../shared/services/config.service';
 declare var jquery: any;
 declare var $: any;
 @Component({
@@ -14,18 +15,21 @@ declare var $: any;
 })
 export class AddBoxComponent {
   loadingList = false;
-  languages: Array<any> = [{ 'code': 'en', 'name': 'English' }, { 'code': 'fr', 'name': 'French' }];
+  languages: Array<any> = [];
   contentBoxID: any;
-  buttonText: any = 'Submit'
-  title: any = 'Create Manage Box'
+  updatedID: any;
+  buttonText: any = 'Save'
+  // title: any = 'Add Box Details'
+  language: string = 'en';
+  description: Array<any> = []
   page = {
     visible: false,
     mainmenu: false,
     code: '',
     order: '',
-    language: 'en',
-    ePagename: '',
-    ePagecontent: '',
+    //   language: 'en',
+    //   ePagename: '',
+    //   ePagecontent: '',
   }
   editorConfig = {
     placeholder: '',
@@ -51,13 +55,31 @@ export class AddBoxComponent {
     private crudService: CrudService,
     public router: Router,
     private toastr: ToastrService,
-
+    private configService: ConfigService,
     private dialogService: NbDialogService
   ) {
+    this.configService.getListOfSupportedLanguages(localStorage.getItem('merchant'))
+      .subscribe(res => {
+        console.log(res);
+        this.languages = res;
+        this.languages.forEach(lang => {
+          this.description.push({
+            language: lang.code,
+            name: '',
+            description: '',
+            // path: '',
+            // friendlyUrl: '',
+            // title: '',
+            // metaDescription: '',
+            // keyWords: '',
+            // highlights: ''
+          });
+        });
+      });
     if (localStorage.getItem('contentBoxID')) {
       this.contentBoxID = localStorage.getItem('contentBoxID')
       this.getBoxDetails();
-      this.title = "Update Manage Box"
+      // this.title = "Update Box Details"
       this.buttonText = "Update"
     }
   }
@@ -68,14 +90,28 @@ export class AddBoxComponent {
     };
   }
   getBoxDetails() {
-    this.crudService.get('/v1/private/content/boxes/' + this.contentBoxID)
+    this.crudService.get('/v1/private/content/boxes/' + this.contentBoxID + '?lang=' + this.language)
       .subscribe(data => {
         console.log(data)
-
+        this.updatedID = data.id;
         this.page.code = data.code;
         this.page.visible = data.visible;
-        this.page.ePagename = data.description.name;
-        this.page.ePagecontent = data.description.description;
+        this.page.mainmenu = data.displayedInMenu;
+
+
+        // data.descriptions.forEach((newvalue, index) => {
+        this.description.forEach((value, index) => {
+          if (this.language == value.language) {
+            value.name = data.description.name
+            // value.friendlyUrl = data.description.friendlyUrl
+            // value.title = data.description.title
+            value.description = data.description.description
+            // value.metaDescription = data.description.metaDescription
+            // value.keyWords = data.description.keyWords
+          }
+          // });
+
+        })
       }, error => {
       });
   }
@@ -83,35 +119,31 @@ export class AddBoxComponent {
     this.loadingList = true;
     let param = {
       "code": this.page.code,
-      "contentType": "BOX",
-      "descriptions": [
-        {
-          // "contentType": "BOXES",
-          "language": 'en',
-          "name": this.page.ePagename,
-          "description": this.page.ePagecontent
-        },
-        {
-          // "contentType": "BOXES",
-          "language": 'fr',
-          "name": this.page.ePagename,
-          "description": this.page.ePagecontent
-        }
-      ],
-      "displayedInMenu": this.page.mainmenu,
+      // "contentType": "BOX",
+      "descriptions": this.description,
+      // "displayedInMenu": this.page.mainmenu,
       "visible": this.page.visible
     }
-    this.crudService.post('/v1/private/content/', param)
-      .subscribe(data => {
-        this.loadingList = false;
-        this.toastr.success('Box added successfully');
-        // this.buttonText = 'Update';
-        // this.titleText = 'Update Manage Page';
-        // this.getContentDetails();
-        this.router.navigate(['/pages/content/boxes/list']);
-      }, error => {
-        this.loadingList = false;
-      });
+    if (localStorage.getItem('contentBoxID')) {
+      this.crudService.put('/v1/private/content/' + this.updatedID, param)
+        .subscribe(data => {
+          console.log(data);
+          this.loadingList = false;
+          this.toastr.success('Box updated successfully');
+          this.router.navigate(['/pages/content/boxes/list']);
+        }, error => {
+          this.loadingList = false;
+        });
+    } else {
+      this.crudService.post('/v1/private/content/box', param)
+        .subscribe(data => {
+          this.loadingList = false;
+          this.toastr.success('Box added successfully');
+          this.router.navigate(['/pages/content/boxes/list']);
+        }, error => {
+          this.loadingList = false;
+        });
+    }
   }
   goToback() {
     this.router.navigate(['/pages/content/boxes/list']);

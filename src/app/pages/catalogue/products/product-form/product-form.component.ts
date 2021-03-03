@@ -224,6 +224,7 @@ export class ProductFormComponent implements OnInit {
   }
 
   onImageChanged(event) {
+    console.log(event);
     switch (event.type) {
       case 'add': {
         this.uploadData.append('file[]', event.data, event.data.name);

@@ -8,7 +8,7 @@ import { ToastrService } from 'ngx-toastr';
 import { MalihuScrollbarService } from 'ngx-malihu-scrollbar';
 import { StoreService } from '../../store-management/services/store.service';
 import { StorageService } from '../../shared/services/storage.service';
-
+import { TranslateService } from '@ngx-translate/core';
 @Component({
   selector: 'page-table',
   templateUrl: './page.component.html',
@@ -20,61 +20,7 @@ export class PageComponent {
   perPage = 10;
   currentPage = 1;
   totalCount;
-  settings = {
-    mode: 'external',
-    hideSubHeader: true,
-    actions: {
-      add: false,
-      edit: false,
-      delete: false,
-      position: 'right',
-      custom: [
-        {
-          name: 'edit',
-          title: '<i class="nb-edit"></i>'
-        },
-        {
-          name: 'delete',
-          title: '<i class="nb-trash"></i>'
-        }
-      ]
-    },
-    columns: {
-      id: {
-        title: 'ID',
-        type: 'number',
-      },
-      code: {
-        title: 'Page Code',
-        type: 'string',
-      },
-      description: {
-        title: 'Page Name',
-        type: 'string',
-        valuePrepareFunction: (cell, row) => {
-          // console.log(row.description.name)
-          if (row.description) {
-            return row.description.name
-          } else {
-            return ''
-          }
-        }
-      },
-      friendlyUrl: {
-        title: 'Page Url',
-        type: 'string',
-        valuePrepareFunction: (cell, row) => {
-          // console.log(row.description.name)
-          if (row.description) {
-            return row.description.friendlyUrl
-          } else {
-            return ''
-          }
-        }
-      }
-
-    },
-  };
+  settings = {};
 
   // request params
   params = {
@@ -95,9 +41,17 @@ export class PageComponent {
     private mScrollbarService: MalihuScrollbarService,
     private storeService: StoreService,
     private storageService: StorageService,
+    private translate: TranslateService
   ) {
     this.getStoreList()
-    this.getPages()
+
+    this.translate.onLangChange.subscribe((lang) => {
+      this.params.lang = this.storageService.getLanguage();
+      this.getPages()
+    });
+  }
+  ngOnInit() {
+    this.getPages();
   }
   getStoreList() {
     this.storeService.getListOfMerchantStoreNames({ 'store': '' })
@@ -120,16 +74,67 @@ export class PageComponent {
       }, error => {
         this.loadingList = false;
       });
+    this.setSettings();
   }
-  // search() {
-  //   const val = this.search_text.toLowerCase();
-  //   const temp = this.tempData.filter(function (d) {
-  //     return d.name.toLowerCase().indexOf(val) !== -1 || !val ||
-  //       d.code.toLowerCase().indexOf(val) !== -1 || !val ||
-  //       d.path.toLowerCase().indexOf(val) !== -1 || !val;
-  //   });
-  //   this.source = temp;
-  // }.
+  setSettings() {
+    this.settings = {
+      mode: 'external',
+      hideSubHeader: true,
+      actions: {
+        columnTitle: this.translate.instant('ORDER.ACTIONS'),
+        add: false,
+        edit: false,
+        delete: false,
+        position: 'right',
+        custom: [
+          {
+            name: 'edit',
+            title: '<i class="nb-edit"></i>'
+          },
+          {
+            name: 'delete',
+            title: '<i class="nb-trash"></i>'
+          }
+        ]
+      },
+      columns: {
+        id: {
+          title: this.translate.instant('COMMON.ID'),
+          type: 'number',
+        },
+        code: {
+          title: this.translate.instant('CONTENT.CODE'),
+          type: 'string',
+        },
+        description: {
+          title: this.translate.instant('CONTENT.NAME'),
+          type: 'string',
+          valuePrepareFunction: (cell, row) => {
+            // console.log(row.description.name)
+            if (row.description) {
+              return row.description.name
+            } else {
+              return ''
+            }
+          }
+        },
+        friendlyUrl: {
+          title: this.translate.instant('CONTENT.URL'),
+          type: 'string',
+          valuePrepareFunction: (cell, row) => {
+            // console.log(row.description.name)
+            if (row.description) {
+              return row.description.friendlyUrl
+            } else {
+              return ''
+            }
+          }
+        }
+
+      },
+    };
+  }
+
   changePage(event) {
     switch (event.action) {
       case 'onPage': {

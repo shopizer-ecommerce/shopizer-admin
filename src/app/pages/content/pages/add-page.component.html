@@ -1,18 +1,23 @@
 <div class="inner_pages create_page">
   <nb-card-header class="main_header">
-    <h1 class="page_title">{{titleText}}</h1>
+    <!-- <h1 class="page_title">{{titleText}}</h1> -->
+    <h1 class="page_title" *ngIf="buttonText == 'Save'">{{'CONTENT.ADD_PAGE_DETAILS' | translate}}</h1>
+    <h1 class="page_title" *ngIf="buttonText == 'Update'">{{'CONTENT.UPDATE_PAGE_DETAILS' | translate}}</h1>
     <div class="content_spacing">
-      <nb-select placeholder="Language" outline shape="rectangle" [(ngModel)]="language" name="language" [selected]="defaultLanguage">
+      <nb-select placeholder="Language" outline shape="rectangle" [(ngModel)]="language" name="language" [selected]="language">
         <nb-option *ngFor="let lan of languages" [value]="lan.code">{{
-          ('LANG.'+lan.code) |translate }}</nb-option>
+          ('LANG.'+lan.code) | translate }}</nb-option>
       </nb-select>
     </div>
     <div class="content_spacing">
-      <button type="button" nbButton class="cancel_button" (click)="goToback()">{{ 'ORDER_FORM.CANCLE'
+      <button type="button" nbButton class="cancel_button" (click)="goToback()">{{ 'COMMON.CANCEL'
         | translate}}</button>
     </div>
     <div class="content_spacing">
-      <button type="submit" nbButton class="success_button" (click)="createPages()">{{buttonText | translate }}</button>
+      <button type="submit" nbButton class="success_button" *ngIf="buttonText == 'Save'" (click)="createPages()">{{'COMMON.SAVE'|
+        translate }}</button>
+      <button type="submit" nbButton class="success_button" *ngIf="buttonText == 'Update'" (click)="createPages()">{{'COMMON.UPDATE'|
+        translate }}</button>
     </div>
   </nb-card-header>
   <div class="" [nbSpinner]="loadingList" nbSpinnerSize="large" nbSpinnerStatus="primary">
@@ -20,14 +25,14 @@
       <div class="row">
         <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
           <nb-card class="nb-card inline-form-card">
-            <nb-card-header class="nb-card-header">Basic Details</nb-card-header>
+            <nb-card-header class="nb-card-header">{{ 'CONTENT.BASIC_DETAILS'
+              | translate}}</nb-card-header>
             <nb-card-body class="nb-card-body">
               <div class="row">
                 <div class="col-lg-12">
                   <div class="form-group">
-                    <nb-checkbox [(ngModel)]="visible" name="visible">Visible</nb-checkbox>
-                    <nb-checkbox [(ngModel)]="mainmenu" name="mainmenu">Display this page in main
-                      menu
+                    <nb-checkbox [(ngModel)]="visible" name="visible">{{ 'CONTENT.VISIBLE' | translate}}</nb-checkbox>
+                    <nb-checkbox [(ngModel)]="mainmenu" name="mainmenu">{{ 'CONTENT.MAINMENU' | translate}}
                     </nb-checkbox>
                   </div>
                 </div>
@@ -35,18 +40,18 @@
               <div class="row">
                 <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                   <div class="form-group">
-                    <label for="inputWebsite" class="label inputLabel">Code <span>*</span></label>
-                    <input type="text" [(ngModel)]="code" name="code" class="form-control inputText" id="code"
-                      placeholder="Code" (focusout)="focusOutFunction()" required>
+                    <label for="inputWebsite" class="label inputLabel">{{ 'CONTENT.CODE' | translate}} <span>*</span></label>
+                    <input type="{{ 'CONTENT.CODE' | translate}}" [(ngModel)]="code" name="code" class="form-control inputText"
+                      id="code" placeholder="Code" (focusout)="focusOutFunction()" required>
                     <span *ngIf="codeExits" class="err-message">{{message}}</span>
                     <span *ngIf="!codeExits" class="err-message-success">{{message}}</span>
                   </div>
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                   <div class="form-group">
-                    <label for="exampleInputPassword1" class="label inputLabel">Order</label>
+                    <label for="exampleInputPassword1" class="label inputLabel">{{ 'CONTENT.ORDER' | translate}}</label>
                     <input type="number" [(ngModel)]="order" name="order" class="form-control inputText" id="order"
-                      placeholder="Order">
+                      placeholder="{{ 'CONTENT.ORDER' | translate}}">
                   </div>
                 </div>
               </div>
@@ -56,7 +61,7 @@
         </div>
         <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
           <nb-card class="nb-card inline-form-card">
-            <nb-card-header class="nb-card-header">SEO Details</nb-card-header>
+            <nb-card-header class="nb-card-header">{{ 'CONTENT.SEO_DETAILS' | translate}}</nb-card-header>
             <nb-card-body class="nb-card-body">
               <div *ngFor="let descr of description; let j=index">
 
@@ -64,48 +69,54 @@
                   <div class="row">
                     <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                       <div class="form-group">
-                        <label for="exampleInputPassword1" class="label inputLabel">Title</label>
+                        <label for="exampleInputPassword1" class="label inputLabel">{{ 'CONTENT.TITLE' | translate}}</label>
                         <input type="text" [(ngModel)]="descr.title" name="title" class="form-control inputText" id="title"
-                          placeholder="Title">
+                          placeholder="{{ 'CONTENT.TITLE' | translate}}">
                       </div>
                     </div>
                     <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                       <div class="form-group">
-                        <label for="exampleInputPassword1" class="label inputLabel">Keywords</label>
-                        <input type="text" [(ngModel)]="descr.keyword" name="keyword" class="form-control inputText" id="keyword"
-                          placeholder="keyword">
+                        <label for="exampleInputPassword1" class="label inputLabel">{{ 'CONTENT.KEYWORDS' | translate}}</label>
+                        <input type="text" [(ngModel)]="descr.keyWords" name="keyWords" class="form-control inputText"
+                          id="keyword" placeholder="{{ 'CONTENT.KEYWORDS' | translate}}">
                       </div>
                     </div>
                   </div>
                   <div class="row">
                     <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                       <div class="form-group">
-                        <label for="exampleInputPassword1" class="label inputLabel">Page name <span>*</span></label>
+                        <label for="exampleInputPassword1" class="label inputLabel">{{ 'CONTENT.PAGE_NAME' |
+                          translate}}<span>*</span></label>
                         <input type="text" [(ngModel)]="descr.name" name="name" class="form-control inputText" id="page_name"
-                          placeholder="Page Name" (keyup)="urlTitle($event, descr.language)" required>
+                          placeholder="{{ 'CONTENT.PAGE_NAME' | translate}}" (keyup)="urlTitle($event, descr.language)"
+                          required>
                       </div>
                     </div>
                     <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                       <div class="form-group">
-                        <label for="exampleInputPassword1" class="label inputLabel">Search engine friendly url <span>*</span></label>
-                        <input type="text" [(ngModel)]="descr.slug" name="slug" class="form-control inputText" id="url"
-                          placeholder="Url" required>
+                        <label for="exampleInputPassword1" class="label inputLabel">{{ 'CONTENT.FRIENDLY_URL' |
+                          translate}} <span>*</span></label>
+                        <input type="text" [(ngModel)]="descr.friendlyUrl" name="friendlyUrl" class="form-control inputText"
+                          id="url" placeholder="{{ 'CONTENT.FRIENDLY_URL' | translate}}" required>
                       </div>
                     </div>
                   </div>
                   <div class="row">
                     <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                       <div class="form-group">
-                        <label for="exampleInputPassword1" class="label inputLabel">Product group</label>
+                        <label for="exampleInputPassword1" class="label inputLabel">{{ 'CONTENT.PRODUCT_GROUP' |
+                          translate}}</label>
                         <input type="text" [(ngModel)]="descr.productGroup" name="productGroup" class="form-control inputText"
-                          id="product_group" placeholder="Product group">
+                          id="product_group" placeholder="{{ 'CONTENT.PRODUCT_GROUP' |
+                          translate}}">
                       </div>
                     </div>
                     <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                       <div class="form-group">
-                        <label for="exampleInputPassword1" class="label inputLabel">Description metatag</label>
-                        <input type="text" [(ngModel)]="descr.metaDetails" name="metaDetails" class="form-control inputText"
-                          id="description" placeholder="Description metatag">
+                        <label for="exampleInputPassword1" class="label inputLabel">{{ 'CONTENT.METATAG' |
+                          translate}}</label>
+                        <input type="text" [(ngModel)]="descr.metaDescription" name="metaDescription" class="form-control inputText"
+                          id="description" placeholder="{{ 'CONTENT.METATAG' | translate}}">
                       </div>
                     </div>
                   </div>
@@ -118,12 +129,12 @@
       <div class="row">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
           <nb-card class="nb-card inline-form-card">
-            <nb-card-header class="nb-card-header">Page content</nb-card-header>
+            <nb-card-header class="nb-card-header">{{ 'CONTENT.PAGE_CONTENT' | translate}}</nb-card-header>
             <nb-card-body class="nb-card-body">
               <div *ngFor="let descr of description; let j=index">
                 <div *ngIf="descr.language === language">
 
-                  <div [ngxSummernote]="editorConfig" [(ngModel)]="descr.pageContent" name="pageContent">
+                  <div [ngxSummernote]="editorConfig" [(ngModel)]="descr.description" name="description">
                   </div>
                 </div>
               </div>

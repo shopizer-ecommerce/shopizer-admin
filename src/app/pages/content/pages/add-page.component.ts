@@ -24,8 +24,13 @@ export class AddPageComponent {
   code: string = '';
   order: number = 0;
   buttonText: string = 'Save';
-  titleText: string = 'Add page details';
+  // titleText: string = 'Add page details';
   language: string = 'en';
+  description: Array<any> = []
+  languages: Array<any> = [];
+  codeExits: any;
+  message: string = '';
+
   public scrollbarOptions = { axis: 'y', theme: 'minimal-dark' };
 
 
@@ -47,12 +52,6 @@ export class AddPageComponent {
     },
     fontNames: ['Helvetica', 'Arial', 'Arial Black', 'Comic Sans MS', 'Courier New', 'Roboto', 'Times']
   };
-  description: Array<any> = []
-
-  defaultLanguage = 'en';
-  languages: Array<any> = [];
-  codeExits: any;
-  message: string = '';
   constructor(
     private crudService: CrudService,
     public router: Router,
@@ -67,20 +66,20 @@ export class AddPageComponent {
         this.languages.forEach(lang => {
           this.description.push({
             language: lang.code,
-            metaDetails: '',
             name: '',
-            pageContent: '',
+            description: '',
             path: '',
-            slug: '',
+            friendlyUrl: '',
             title: '',
-            keyword: '',
-            productGroup: ''
+            metaDescription: '',
+            keyWords: '',
+            // highlights: ''
           });
         });
       });
     if (localStorage.getItem('contentpageid')) {
       this.buttonText = 'Update';
-      this.titleText = 'Update page details';
+      // this.titleText = 'Update page details';
       this.getContentDetails()
     }
 
@@ -107,16 +106,17 @@ export class AddPageComponent {
       this.description.forEach((value, index) => {
         if (newvalue.language == value.language) {
           value.name = newvalue.name
-          value.slug = newvalue.friendlyUrl
+          value.friendlyUrl = newvalue.friendlyUrl
           value.title = newvalue.title
-          value.keyword = newvalue.keyWords
-          value.metaDetails = newvalue.metaDescription
-          value.pageContent = newvalue.description
+          value.description = newvalue.description
+          value.metaDescription = newvalue.metaDescription
+          value.keyWords = newvalue.keyWords
+          // value.highlights = newvalue.highlights
         }
       });
 
     })
-    console.log(this.description);
+    // console.log(this.description);
   }
   focusOutFunction() {
     this.crudService.get('/v1/content/' + this.code)
@@ -139,7 +139,7 @@ export class AddPageComponent {
     text = text.toLowerCase();
     this.description.forEach((value, index) => {
       if (lang == value.language) {
-        value.slug = text
+        value.friendlyUrl = text
       }
     });
     // this.en.slug = text;
@@ -149,9 +149,9 @@ export class AddPageComponent {
     this.loadingList = true;
     let param = {
       "code": this.code,
-      "contentType": "PAGE",
+      // "contentType": "PAGE",
       "descriptions": this.description,
-      "displayedInMenu": this.mainmenu,
+      "linkToMenu": this.mainmenu,
       "visible": this.visible
     }
     if (localStorage.getItem('contentpageid')) {
@@ -168,7 +168,7 @@ export class AddPageComponent {
           this.loadingList = false;
         });
     } else {
-      this.crudService.post('/v1/private/content', param)
+      this.crudService.post('/v1/private/content/page', param)
         .subscribe(data => {
           console.log(data);
           this.loadingList = false;
