@@ -235,7 +235,7 @@ export class ProductFormComponent implements OnInit {
     console.log(event);
     switch (event.type) {
       case 'add': {
-        this.uploadData.append('file[]', event.data, event.data.name);
+        this.uploadData.append('file', event.data);
         break;
       }
       case 'remove': {
