@@ -155,7 +155,7 @@ export class AddPageComponent {
       "visible": this.visible
     }
     if (localStorage.getItem('contentpageid')) {
-      this.crudService.put('/v1/private/content/' + this.updatedID, param)
+      this.crudService.put('/v1/private/content/page/' + this.updatedID, param)
         .subscribe(data => {
           console.log(data);
           this.loadingList = false;

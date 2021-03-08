@@ -9,7 +9,7 @@ import { NbDialogService } from '@nebular/theme';
 import { ShowcaseDialogComponent } from '../../../shared/components/showcase-dialog/showcase-dialog.component';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DomSanitizer } from '@angular/platform-browser';
-
+import { ConfigService } from '../../../shared/services/config.service';
 @Component({
   selector: 'ngx-types',
   templateUrl: './type-details.component.html',
@@ -22,12 +22,14 @@ export class TypeDetailsComponent implements OnInit {
   isReadonlyCode = false;
   isCodeExist = false;
   isValidCode = true;
-
+  languages = [];
   type = {
     id: '',
     code: '',
     //name: '',
-    allowAddToCart: false
+    allowAddToCart: false,
+    visible: '',
+    description: { name: '', language: '' }
   }
 
   constructor(
@@ -40,9 +42,10 @@ export class TypeDetailsComponent implements OnInit {
     private storageService: StorageService,
     private typesService: TypesService,
     private activatedRoute: ActivatedRoute,
-  ) { 
+    private configService: ConfigService
+  ) {
 
-
+    this.languages = [...this.configService.languages];
   }
 
   ngOnInit(): void {
@@ -63,6 +66,9 @@ export class TypeDetailsComponent implements OnInit {
           this.type.code = res.code;
           //this.type.name = res.name;
           this.type.allowAddToCart = res.allowAddToCart;
+          this.type.visible = res.visible;
+          this.type.description = res.description;
+
           this.isReadonlyCode = true;
 
           this.adjustForm();
@@ -70,29 +76,64 @@ export class TypeDetailsComponent implements OnInit {
 
         }, error => {
           this.loading = false;
-        }); 
+        });
     }
-    
+
   }
 
   private createForm() {
     this.form = this.fb.group({
       allowAddToCart: [true],
+      visible: [false],
       code: [{ value: '', disabled: false }, [Validators.required, Validators.pattern(validators.alphanumeric)]],
-      //name: ['',[Validators.required]],
+      selectedLanguage: ['en'],
+      descriptions: this.fb.array([]),
+      // name: ['', [Validators.required]]
+    });
+    this.addFormArray();
+  }
+
+  addFormArray() {
+    const control = <FormArray>this.form.controls.descriptions;
+    this.languages.forEach(lang => {
+      control.push(
+        this.fb.group({
+          language: [lang.code, []],
+          name: ['', []]
+        })
+      );
     });
   }
 
   private adjustForm() {
     this.form.patchValue({
       allowAddToCart: this.type.allowAddToCart,
+      visible: this.type.visible,
       code: this.type.code,
+      selectedLanguage: 'en',
       //name: this.type.name,
     });
 
     if (this.type.id) {
       this.form.controls['code'].disable();
     }
+    if (this.type.description) {
+      this.fillFormArray();
+    }
+  }
+  fillFormArray() {
+    this.form.value.descriptions.forEach((desc, index) => {
+      // console.log(desc)
+      // console.log(this.selectedLanguage)
+      // this.description.descriptions.forEach((description) => {
+      if (desc.language === this.selectedLanguage.value) {
+        (<FormArray>this.form.get('descriptions')).at(index).patchValue({
+          language: this.type.description.language,
+          name: this.type.description.name,
+        });
+      }
+      // });
+    });
   }
 
   save() {
@@ -100,8 +141,8 @@ export class TypeDetailsComponent implements OnInit {
     this.isValidCode = true;
 
 
-    if(this.form.invalid) {
-      if(this.code.invalid) {
+    if (this.form.invalid) {
+      if (this.code.invalid) {
         this.isValidCode = false;
       }
 
@@ -112,7 +153,7 @@ export class TypeDetailsComponent implements OnInit {
     let obj = this.form.value;
 
     if (this.type.id) {
-      
+
       this.typesService.updateType(this.type.id, obj)
         .subscribe((res) => {
           this.toastr.success(this.translate.instant('PRODUCT_TYPE.PRODUCT_TYPE_UPDATED'));
@@ -120,7 +161,7 @@ export class TypeDetailsComponent implements OnInit {
         }, error => {
           this.loading = false;
         });
-     
+
     }
     else {
       this.typesService.createType(obj)
@@ -137,15 +178,23 @@ export class TypeDetailsComponent implements OnInit {
     this.router.navigate(['pages/catalogue/types/types-list']);
   }
 
+
   get code() {
     return this.form.get('code');
+  }
+  get selectedLanguage() {
+    return this.form.get('selectedLanguage');
+  }
+
+  get descriptions(): FormArray {
+    return <FormArray>this.form.get('descriptions');
   }
 
   checkCode(event) {
     const code = event.target.value.trim();
     //console.log('Entering checkCode ' + code);
     this.isValidCode = true;
-    
+
     this.typesService.checkCode(code)
       .subscribe(res => {
         //console.log(res)

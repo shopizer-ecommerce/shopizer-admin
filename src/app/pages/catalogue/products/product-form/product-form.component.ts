@@ -95,8 +95,16 @@ export class ProductFormComponent implements OnInit {
     const config$ = this.configService.getListOfSupportedLanguages(localStorage.getItem('merchant'));
     forkJoin(manufacture$, product$, config$)
       .subscribe(([manufacturers, productTypes, languages]) => {
-        this.manufacturers = [...manufacturers.manufacturers];
-        this.productTypes = [...productTypes.list];
+
+        // console.log(manufacturers)
+        manufacturers.manufacturers.forEach((option) => {
+          this.manufacturers.push({ value: option.code, label: option.code });
+        });
+        productTypes.list.forEach((option) => {
+          this.productTypes.push({ value: option.code, label: option.code });
+        });
+        // this.manufacturers = [...manufacturers.manufacturers];
+        // this.productTypes = [...productTypes.list];
         this.languages = [...languages];
         this.createForm();
         this.addFormArray();

@@ -1,67 +1,83 @@
 <div class="inner_pages create_page">
-
-        <nb-card-header class="main_header">
-          <h1 class="page_title">{{ 'PRODUCT_TYPE.PRODUCT_TYPE_DETAILS' | translate}}</h1>
-      
-          <div class="content_spacing">
-            <button type="button" nbButton class="cancel_button" (click)="goToback()">{{ 'ORDER_FORM.CANCLE'
-              | translate}}</button>
-          </div>
-      
-          <div class="content_spacing">
-            <button nbButton type="button" class="success_button" (click)="save()">{{'COMMON.SAVE'
-              | translate }}</button>
-          </div>
-        </nb-card-header>
-      
-        <div [nbSpinner]="loading" nbSpinnerSize="large" nbSpinnerStatus="primary">
-      
-      
-          <form [formGroup]='form'>
-      
-            <nb-card class="nb-card inline-form-card">
-              <nb-card-body class="nb-card-body">
-                <div class="form-group">
-                  <label class="col-form-label inputLabel"></label>
-                      <nb-checkbox formControlName='allowAddToCart' name="allowAddToCart">
-                    {{ 'PRODUCT_TYPE.ALLOW_ADD_TO_CART' | translate}}
-                  </nb-checkbox>
-                </div>
-      
-                <div class="form-group">
-                    <label class="col-form-label inputLabel">{{ 'COMMON.CODE' | translate }}
-                      *</label>
-                    <input type="text" class="form-control inputText" id="code" formControlName='code'
-                        [readOnly]="isReadonlyCode" (change)="checkCode($event)" required>
-                    <div *ngIf="(code.dirty || code.touched) && code.invalid && code" class="err-message" style="margin-top:10px;">
-                        <span *ngIf="code.errors.required">
-                          {{ 'COMMON.CODE_REQUIRED' | translate}}
-                        </span>
-                        <span *ngIf="code.errors.pattern">
-                          {{ 'COMMON.ALPHA_DECIMAL_RULE' | translate}}
-                        </span>
-                    </div>
-
-                    <span *ngIf="isCodeExist" class="err-message">
-                        {{ 'COMMON.CODE_EXISTS' | translate}}
-                    </span>
-                    <div *ngIf="!isValidCode" class="err-message" style="margin-top:10px;">
-                        {{ 'COMMON.CODE_REQUIRED' | translate}}
-                    </div>
-                </div>
-
-                <!--
-                <div class="form-group">
-                    <label class="col-form-label inputLabel">{{ 'COMMON.NAME' | translate }}
-                      *</label>
-                    <input type="text" class="form-control inputText" id="name" formControlName='name' required>
-                </div>
-                -->
-
-              </nb-card-body>
-            </nb-card>
-          </form>
-      
-        </div>
-      
+  <form [formGroup]='form'>
+    <nb-card-header class="main_header">
+      <h1 class="page_title">{{ 'PRODUCT_TYPE.PRODUCT_TYPE_DETAILS' | translate}}</h1>
+      <div class="content_spacing">
+        <nb-select *ngIf="languages.length" placeholder="{{ 'COMMON.LANGUAGE' | translate }}" outline shape="rectangle"
+          class="fullWidth" formControlName='selectedLanguage' (onChange)="ngOnInit()">
+          <nb-option *ngFor="let language of languages" [value]="language.code">{{ ('LANG.'+language.code) |
+            translate }}</nb-option>
+        </nb-select>
       </div>
+      <div class="content_spacing">
+        <button type="button" nbButton class="cancel_button" (click)="goToback()">{{ 'ORDER_FORM.CANCLE'
+          | translate}}</button>
+      </div>
+
+      <div class="content_spacing">
+        <button nbButton type="button" class="success_button" (click)="save()">{{'COMMON.SAVE'
+          | translate }}</button>
+      </div>
+    </nb-card-header>
+
+    <div [nbSpinner]="loading" nbSpinnerSize="large" nbSpinnerStatus="primary">
+
+
+
+
+      <nb-card class="nb-card inline-form-card">
+        <nb-card-body class="nb-card-body">
+          <div class="form-group">
+            <label class="col-form-label inputLabel"></label>
+            <nb-checkbox formControlName='allowAddToCart' name="allowAddToCart">
+              {{ 'PRODUCT_TYPE.ALLOW_ADD_TO_CART' | translate}}
+            </nb-checkbox>
+            <!-- <nb-checkbox [(ngModel)]="page.mainmenu" name="mainmenu">{{ 'CONTENT.MAINMENU' | translate}}</nb-checkbox> -->
+            <nb-checkbox formControlName='visible' name="visible">
+              {{ 'CONTENT.VISIBLE' | translate}}
+            </nb-checkbox>
+          </div>
+
+          <div class="form-group">
+            <label class="col-form-label inputLabel">{{ 'COMMON.CODE' | translate }}
+              *</label>
+            <input type="text" class="form-control inputText" id="code" formControlName='code' [readOnly]="isReadonlyCode"
+              (change)="checkCode($event)" required>
+            <div *ngIf="(code.dirty || code.touched) && code.invalid && code" class="err-message" style="margin-top:10px;">
+              <span *ngIf="code.errors.required">
+                {{ 'COMMON.CODE_REQUIRED' | translate}}
+              </span>
+              <span *ngIf="code.errors.pattern">
+                {{ 'COMMON.ALPHA_DECIMAL_RULE' | translate}}
+              </span>
+            </div>
+
+            <span *ngIf="isCodeExist" class="err-message">
+              {{ 'COMMON.CODE_EXISTS' | translate}}
+            </span>
+            <div *ngIf="!isValidCode" class="err-message" style="margin-top:10px;">
+              {{ 'COMMON.CODE_REQUIRED' | translate}}
+            </div>
+          </div>
+
+          <div *ngIf="selectedLanguage.value !== ''" formArrayName='descriptions'>
+            <div *ngFor="let descr of descriptions.controls; let j=index">
+              <div *ngIf="descr.value.language === selectedLanguage.value">
+                <div [formGroupName]="j">
+                  <div class="form-group">
+                    <label class="col-form-label inputLabel">{{ 'COMMON.NAME' | translate }}*</label>
+                    <input type="text" class="form-control inputText" id="name" formControlName='name' required>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+        </nb-card-body>
+      </nb-card>
+
+
+    </div>
+  </form>
+</div>

@@ -53,6 +53,7 @@ export class ImageUploadingComponent implements OnInit, OnChanges {
         name: files.name
       };
       this.images.push(img);
+      console.log(files)
       this.imageChanged.emit({ type: 'add', data: files });
     };
     reader.readAsDataURL(files);

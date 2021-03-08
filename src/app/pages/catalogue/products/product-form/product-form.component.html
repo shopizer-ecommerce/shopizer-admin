@@ -87,13 +87,18 @@
                   <div class="form-group">
                     <label class="col-form-label inputLabel">{{ 'PRODUCT.MANUFACTURER' | translate}}</label>
                     <div>
-                      <nb-select *ngIf="manufacturers.length > 0" placeholder="{{ 'PRODUCT.MANUFACTURER' | translate}}"
+                      <p-dropdown [options]="manufacturers" placeholder="{{ 'PRODUCT.MANUFACTURER' | translate}}"
+                        formControlName='manufacturer' filter="true">
+                        <ng-template let-item pTemplate="selectedItem">{{item.label}}</ng-template>
+                        <ng-template let-el pTemplate="item">{{el.label}}</ng-template>
+                      </p-dropdown>
+                      <!-- <nb-select *ngIf="manufacturers.length > 0" placeholder="{{ 'PRODUCT.MANUFACTURER' | translate}}"
                         formControlName='manufacturer' outline shape="rectangle" class="select_fields">
                         <nb-option *ngFor="let manufacturer of manufacturers" [value]="manufacturer.code">{{
                           manufacturer.code
                           }}
                         </nb-option>
-                      </nb-select>
+                      </nb-select> -->
                     </div>
                   </div>
                 </div>
@@ -105,10 +110,15 @@
                   <div class="form-group">
                     <label class=" col-form-label inputLabel">{{ 'PRODUCT.PRODUCT_TYPE' | translate}}</label>
                     <div>
-                      <nb-select placeholder="{{ 'PRODUCT.PRODUCT_TYPE' | translate}}" formControlName='type' outline
+                      <p-dropdown [options]="productTypes" placeholder="{{ 'PRODUCT.PRODUCT_TYPE' | translate}}"
+                        formControlName='type' filter="true">
+                        <ng-template let-item pTemplate="selectedItem">{{item.label}}</ng-template>
+                        <ng-template let-el pTemplate="item">{{el.label}}</ng-template>
+                      </p-dropdown>
+                      <!-- <nb-select placeholder="{{ 'PRODUCT.PRODUCT_TYPE' | translate}}" formControlName='type' outline
                         shape="rectangle" class="select_fields">
                         <nb-option *ngFor="let type of productTypes" [value]="type.code">{{ type.code }}</nb-option>
-                      </nb-select>
+                      </nb-select> -->
                     </div>
                   </div>
                 </div>

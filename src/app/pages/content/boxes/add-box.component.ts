@@ -125,7 +125,7 @@ export class AddBoxComponent {
       "visible": this.page.visible
     }
     if (localStorage.getItem('contentBoxID')) {
-      this.crudService.put('/v1/private/content/' + this.updatedID, param)
+      this.crudService.put('/v1/private/content/box/' + this.updatedID, param)
         .subscribe(data => {
           console.log(data);
           this.loadingList = false;
