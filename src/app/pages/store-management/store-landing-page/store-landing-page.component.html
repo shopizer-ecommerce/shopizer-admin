@@ -1,29 +1,35 @@
 <div class="inner_pages store_landing_page">
+  <form *ngIf="!loading" [formGroup]='form'>
+    <nb-card-header class="main_header">
+      <h1 class="page_title">{{ 'STORE.STORE_INFORMATION' | translate}}</h1>
 
-  <nb-card-header class="main_header">
-    <h1 class="page_title">{{ 'STORE.STORE_INFORMATION' | translate}}</h1>
+      <div class="content_spacing">
+        <nb-select [(selected)]="selectedItem" outline shape="rectangle">
+          <nb-option *ngFor="let item of sidemenuLinks" [value]="item.id" (click)="route(item.link)">{{ item.title }}
+          </nb-option>
+        </nb-select>
+      </div>
+      <div class="content_spacing">
+        <nb-select placeholder="Language" outline shape="rectangle" formControlName='selectedLanguage'>
+          <nb-option *ngFor="let lan of languages" [value]="lan.code">{{
+            ('LANG.'+lan.code) | translate }}</nb-option>
+        </nb-select>
+      </div>
+      <div class="content_spacing">
+        <button type="submit" (click)="save()" nbButton class="success_button">{{'COMMON.SAVE'
+          |
+          translate }}</button>
+      </div>
+    </nb-card-header>
 
-    <div class="content_spacing">
-      <nb-select [(selected)]="selectedItem" outline shape="rectangle">
-        <nb-option *ngFor="let item of sidemenuLinks" [value]="item.id" (click)="route(item.link)">{{ item.title }}
-        </nb-option>
-      </nb-select>
-    </div>
-    <div class="content_spacing">
-      <button type="submit" (click)="save()" [disabled]="!form.valid" nbButton class="success_button">{{'COMMON.SAVE'
-        |
-        translate }}</button>
-    </div>
-  </nb-card-header>
-
-  <div [nbSpinner]="loading" nbSpinnerSize="large" nbSpinnerStatus="primary">
+    <div [nbSpinner]="loading" nbSpinnerSize="large" nbSpinnerStatus="primary">
 
 
-    <form *ngIf="!loading" [formGroup]='form'>
+
       <nb-card class="nb-card inline-form-card">
         <nb-card-body>
           <input type="hidden" class="form-control inputText" id="code" formControlName='code'>
-          <div class="form-group">
+          <!-- <div class="form-group">
             <label class="col-sm-10 label inputLabel">{{ 'COMMON.LANGUAGE' | translate}}</label>
             <div class="col-sm-12">
               <nb-select *ngIf="languages.length" placeholder="{{ 'COMMON.SELECT_LANGUAGE' | translate}}"
@@ -32,9 +38,9 @@
                   {{ ('LANG.'+language.code) | translate }}</nb-option>
               </nb-select>
             </div>
-          </div>
+          </div> -->
 
-          <hr />
+          <!-- <hr /> -->
 
           <div *ngIf="selectedLanguage.value !== ''" formArrayName='descriptions'>
             <div *ngFor="let descr of descriptions.controls; let j=index">
@@ -89,6 +95,7 @@
 
         </nb-card-body>
       </nb-card>
-    </form>
-  </div>
+
+    </div>
+  </form>
 </div>

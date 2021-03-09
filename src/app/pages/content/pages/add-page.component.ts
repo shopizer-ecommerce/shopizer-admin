@@ -96,7 +96,10 @@ export class AddPageComponent {
         this.code = data.code;
         this.order = 0;
         this.descData = data.descriptions
-        this.fillForm()
+        setTimeout(() => {
+          this.fillForm();
+        }, 1000);
+
 
       }, error => {
       });

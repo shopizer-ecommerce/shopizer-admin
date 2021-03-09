@@ -21,7 +21,7 @@ export class BrandsListComponent implements OnInit {
   settings = {};
   searchValue: string = '';
   // paginator
-  perPage = 30;
+  perPage = 5;
   currentPage = 1;
   totalCount;
 
@@ -57,13 +57,16 @@ export class BrandsListComponent implements OnInit {
     this.loadingList = true;
     this.brandService.getListOfBrands(this.params)
       .subscribe(brands => {
-        this.totalCount = brands.totalCount;
+        this.totalCount = brands.recordsTotal;
         this.source.load(brands.manufacturers);
         this.loadingList = false;
       });
     this.setSettings();
   }
-
+  onSelectStore(e) {
+    this.params["store"] = e;
+    this.getList();
+  }
   setSettings() {
     this.settings = {
       actions: {

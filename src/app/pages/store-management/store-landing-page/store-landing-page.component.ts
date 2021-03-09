@@ -75,18 +75,18 @@ export class StoreLandingPageComponent implements OnInit {
     const code = this.activatedRoute.snapshot.paramMap.get('code');
 
     forkJoin(
-        this.storeService.getPageContent('LANDING_PAGE', code),
-        this.storeService.getStore(code)
-      )
+      this.storeService.getPageContent('LANDING_PAGE', code),
+      this.storeService.getStore(code)
+    )
       .subscribe(([res, st]) => {
-        if(!res.status) {//404 should not rais an error
+        if (!res.status) {//404 should not rais an error
           this.page = res;
         }
         this.store = st;
         this.languages = this.store.supportedLanguages;
         this.createForm();
         this.fillForm();
-    });
+      });
   }
 
   route(link) {
@@ -95,7 +95,7 @@ export class StoreLandingPageComponent implements OnInit {
 
   private createForm() {
     this.form = this.fb.group({
-      selectedLanguage: ['', [Validators.required]],
+      selectedLanguage: ['en', [Validators.required]],
       code: [''],
       id: '',
       descriptions: this.fb.array([]),
@@ -124,7 +124,7 @@ export class StoreLandingPageComponent implements OnInit {
       descriptions: [],
       selectedLanguage: 'en',
     });
-    if(this.page) {
+    if (this.page) {
       this.fillFormArray();
     }
   }

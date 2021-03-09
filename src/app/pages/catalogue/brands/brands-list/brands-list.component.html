@@ -18,13 +18,14 @@
             (click)="resetSearch()" class="sda">
 
         </div>
-        <!-- <div class="filter_right_section">
-            <a class="createBtn" [routerLink]="['/pages/catalogue/brands/create-brand']">
+        <div class="filter_right_section">
+          <ngx-store-autocomplete (onStore)="onSelectStore($event)"></ngx-store-autocomplete>
+          <!-- <a class="createBtn" [routerLink]="['/pages/catalogue/brands/create-brand']">
               <img class="pointer sda" src="../../../../assets/img/plus.png" title="{{ 'COMPONENTS.CREATE_BRAND' | translate}}"
                 alt="">
               <label>{{ 'COMPONENTS.CREATE_BRAND' | translate}}</label>
-            </a>
-          </div> -->
+            </a> -->
+        </div>
 
       </form>
       <ng2-smart-table [settings]="settings" [source]="source" (custom)="route($event)" class="home-table">

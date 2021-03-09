@@ -66,7 +66,7 @@ export class BrandFormComponent implements OnInit {
     this.form = this.fb.group({
       code: ['', [Validators.required, Validators.pattern(validators.alphanumeric)]],
       order: ['', [Validators.required, Validators.pattern(validators.number)]],
-      selectedLanguage: ['', [Validators.required]],
+      selectedLanguage: ['en', [Validators.required]],
       descriptions: this.fb.array([]),
     });
   }
