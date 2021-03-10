@@ -33,9 +33,11 @@ export class RulesListComponent implements OnInit {
     private storeService: StoreService,
     private storageService: StorageService,
   ) {
-    this.getShippingRulesList();
+
     this.isSuperAdmin = this.storageService.getUserRoles().isSuperadmin;
-    this.selectedStore = this.storageService.getMerchant()
+    this.selectedStore = this.storageService.getMerchant();
+    console.log(this.selectedStore)
+    this.getShippingRulesList();
   }
 
   ngOnInit() {

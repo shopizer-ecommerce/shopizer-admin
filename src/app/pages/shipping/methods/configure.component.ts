@@ -7,6 +7,7 @@ let canadapost = require('../services/canadapost.json');
 let upsData = require('../services/ups.json');
 let customRulesData = require('../services/customrules.json');
 let storePickUpData = require('../services/storepickup.json');
+let weightBased = require('../services/weightbased.json');
 import { SharedService } from '../services/shared.service';
 import { async } from 'q';
 // let braintreeData = require('../services/braintree.json');
@@ -51,6 +52,7 @@ export class ShippingConfigureComponent implements OnInit {
   }
   ngOnInit() {
     let type = this.activatedRoute.snapshot.paramMap.get('id');
+    console.log(type);
     if (type == 'canadapost') {
       this.formData = canadapost;
       this.shippingType = "Canada Post";
@@ -58,8 +60,10 @@ export class ShippingConfigureComponent implements OnInit {
     else if (type == 'ups') {
       this.formData = upsData;
       this.shippingType = "UPS";
-
-
+    }
+    else if (type == 'weightBased') {
+      this.formData = weightBased;
+      this.shippingType = 'Weight Based Shipping Price'
     }
     else if (type == 'customQuotesRules') {
       this.formData = customRulesData;

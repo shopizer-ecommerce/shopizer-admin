@@ -12,7 +12,7 @@
           "builder": "@angular-builders/custom-webpack:browser",
           "options": {
             "customWebpackConfig": {
-              "path":"custom-webpack.config.js"
+              "path": "custom-webpack.config.js"
             },
             "preserveSymlinks": true,
             "outputPath": "dist",
@@ -73,7 +73,7 @@
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.prod.ts"
+                  "with": "src/environments/environment-prod.ts"
                 }
               ]
             }

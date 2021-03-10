@@ -49,7 +49,7 @@ export class TaxRateListComponent implements OnInit {
     this.selectedStore = this.storageService.getMerchant()
   }
   getStoreList() {
-    this.storeService.getListOfMerchantStoreNames({ 'store': '123' })
+    this.storeService.getListOfMerchantStoreNames({ 'store': '' })
       .subscribe(res => {
         res.forEach((store) => {
           this.stores.push({ value: store.code, label: store.code });

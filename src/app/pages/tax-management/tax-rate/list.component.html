@@ -10,7 +10,7 @@
       <form class="form-inline filter_section">
         <div class="filter_left_section">
         </div>
-        <div class="filter_right_section" *ngIf="isSuperAdmin">
+        <div class="filter_right_section">
           <ngx-store-autocomplete (onStore)="onSelectStore($event)"></ngx-store-autocomplete>
           <!-- <p-dropdown *ngIf="stores.length> 0" [options]="stores" name="country" filter="true" (onChange)="onSelectStore($event)">
             <ng-template let-item pTemplate="selectedItem">{{item.label}}</ng-template>
