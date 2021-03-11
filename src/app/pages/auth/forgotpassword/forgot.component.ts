@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
+
+import { Location, PlatformLocation } from '@angular/common';
 // import { ToastrService } from 'ngx-toastr';
 
 @Component({
@@ -15,18 +17,21 @@ export class ForgotPasswordComponent implements OnInit {
   isSubmitted: boolean = false;
   loadingList: boolean = false;
   user = {
-    email: ''
+    email: '',
+    url: ''
   }
   constructor(
     private authService: AuthService,
     private router: Router,
     // private toastr: ToastrService,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private location: Location,
+    private platformLocation: PlatformLocation
   ) {
   }
 
   ngOnInit() {
-
+    console.log(this.location.prepareExternalUrl('/'));
   }
   onKeyUp() {
     this.isSubmitted = false;
@@ -37,8 +42,10 @@ export class ForgotPasswordComponent implements OnInit {
   onSubmit() {
     this.loadingList = true;
     this.errorMessage = '';
+    this.successMessage = '';
     this.isSubmitted = true;
-    this.authService.forgot(this.user.email)
+    this.user.url = (this.platformLocation as any).location.origin + this.location.prepareExternalUrl('/')
+    this.authService.forgot(this.user.email, this.user.url)
       .subscribe(res => {
         this.loadingList = false;
         this.user.email = '';

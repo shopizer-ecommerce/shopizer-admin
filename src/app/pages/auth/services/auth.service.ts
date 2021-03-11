@@ -46,8 +46,8 @@ export class AuthService {
     return this.crudService.get('/v1/auth/refresh');
   }
 
-  forgot(userName: string): Observable<any> {
-    return this.crudService.post('/v1/user/password/reset/request', { userName });
+  forgot(username: string, returnUrl: string): Observable<any> {
+    return this.crudService.post('/v1/user/password/reset/request', { username, returnUrl });
   }
   validateResetToken(token): Observable<any> {
     return this.crudService.get('/v1/user/DEFAULT/reset/' + token);

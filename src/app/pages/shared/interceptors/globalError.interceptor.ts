@@ -42,7 +42,7 @@ export class GlobalHttpInterceptorService implements HttpInterceptor {
             ${this.translate.instant('COMMON.MESSAGE')}: ${error.message}`;
           }
           if (error.status !== 404) {
-            this.toastr.error(errorMessage, this.translate.instant('COMMON.ERROR'));
+            // this.toastr.error(errorMessage, this.translate.instant('COMMON.ERROR'));
             if (error.status === 500)
               this.router.navigate(['/pages/error-500']);
           }

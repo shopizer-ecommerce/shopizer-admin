@@ -72,6 +72,7 @@
         height: -moz-calc(100vh - 275px);
         height: -o-calc(100vh - 275px);
         margin-bottom: 0;
+        overflow-y: auto;
 
         li {
             padding: 0 15px;
@@ -222,87 +223,61 @@
 
 
 @media (max-width: 767px) {
-    // .gallery_listing_main {
-    //     text-align: center;
-
-    //     li {
-    //         width: 150px;
-    //         display: inline-block;
-    //         float: none;
-
-    //         .gallery_listing_box,
-    //         .dropzone_custom {
-    //             height: 120px;
-    //         }
-
-    //         .dropzone_custom {
-    //             display: block;
-    //         }
-
-    //     }
-    // }
+    .image_browse {
+        .gallery_listing_main {
+            li {
+                width: 50%;
+            }
+        }
+    }
 }
 
 @media (min-width: 768px) and (max-width: 991px) {
-    // .gallery_listing_main {
-    //     li {
-    //         width: 25%;
-
-    //         .gallery_listing_box,
-    //         .dropzone_custom {
-    //             height: 150px;
-    //         }
-
-    //     }
-    // }
+    .image_browse {
+        .gallery_listing_main {
+            li {
+                width: 50%;
+            }
+        }
+    }
 }
 
 @media (min-width: 992px) and (max-width: 1099px) {
-    // .gallery_listing_main {
-    //     li {
-    //         width: 25%;
-
-    //         .gallery_listing_box,
-    //         .dropzone_custom {
-    //             height: 150px;
-    //         }
-
-    //     }
-    // }
+    .image_browse {
+        .gallery_listing_main {
+            li {
+                width: 33.333333333333%;
+            }
+        }
+    }
 }
 
 @media (min-width: 1100px) and (max-width: 1299px) {
-    // .gallery_listing_main {
-    //     li {
-    //         width: 20%;
-
-    //         .gallery_listing_box,
-    //         .dropzone_custom {
-    //             height: 175px;
-    //         }
-
-    //     }
-    // }
+    .image_browse {
+        .gallery_listing_main {
+            li {
+                width: 33.333333333333%;
+            }
+        }
+    }
 }
 
 @media (min-width: 1300px) and (max-width: 1499px) {
-    // .gallery_listing_main {
-    //     li {
-    //         width: 20%;
-
-    //         .gallery_listing_box,
-    //         .dropzone_custom {
-    //             height: 180px;
-    //         }
-
-    //     }
-    // }
+    .image_browse {
+        .gallery_listing_main {
+            li {
+                width: 25%;
+            }
+        }
+    }
 }
 
 @media (min-width: 1500px) and (max-width: 1600px) {
-    // .gallery_listing_main {
-    //     li {
-    //         width: 20%;
-    //     }
-    // }
+    .image_browse {
+        .gallery_listing_main {
+            li {
+                width: 20%;
+            }
+        }
+    }
 }
