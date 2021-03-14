@@ -4,6 +4,7 @@
 
 
 export const environment = {
+    production: true,
     //GOOGLE MAP
     googleApiKey: process.env.APP_MAP_API_KEY || '',
     //MARKETPLACE | BTB | STANDARD
