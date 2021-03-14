@@ -9,7 +9,7 @@ import { BrandDetailsComponent } from './brand-details/brand-details.component';
 import { BrandsListComponent } from './brands-list/brands-list.component';
 import { NgxSummernoteModule } from 'ngx-summernote';
 import { NbDialogModule } from '@nebular/theme';
-import { CustomModule } from '../../custome-component/custom.module';
+import { CustomModule } from '../../custom-component/custom.module';
 @NgModule({
   declarations: [
     BrandsComponent,

@@ -10,7 +10,7 @@ import { OrderHistoryComponent } from './order-history/order-history';
 import { OrderTransactionComponent } from './order-transaction/order-transaction';
 import { NbDialogModule } from '@nebular/theme';
 import { MalihuScrollbarModule } from 'ngx-malihu-scrollbar';
-import { CustomModule } from '../custome-component/custom.module';
+import { CustomModule } from '../custom-component/custom.module';
 @NgModule({
   declarations: [
     OrdersComponent,

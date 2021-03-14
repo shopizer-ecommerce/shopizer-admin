@@ -26,9 +26,26 @@ import { ImageBrowserComponent } from './@theme/components/image-browser/image-b
 import { GlobalErrorHandler } from './pages/shared/classes/error-handler/global-error-handler';
 import { FileManagerModule } from 'ng6-file-man';
 import { ResetPasswordComponent } from './pages/auth/resetpassword/reset.component';
+import { CustomComponent } from './pages/custom-component/custom.component';
 import { EqualValidator } from './pages/shared/validation/equal-validator';
+import { TinyMCEComponent } from './@theme/components/tiny-mce/tiny-mce.component';
+import { ManageAddComponent } from './pages/customers/manageoptions/add.component';
+import { ManageListComponent } from './pages/customers/manageoptions/list.component';
+import { OptionListComponent } from './pages/customers/options/list.component';
+import { ValueAddComponent } from './pages/customers/optionsvalue/add.component';
 @NgModule({
-  declarations: [AppComponent, ResetPasswordComponent, EqualValidator, ImageBrowserComponent],
+  declarations: [
+    AppComponent, 
+    ResetPasswordComponent, 
+    EqualValidator, 
+    ImageBrowserComponent, 
+    TinyMCEComponent,
+    CustomComponent,
+    ManageAddComponent,
+    ManageListComponent,
+    OptionListComponent,
+    ValueAddComponent
+  ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,

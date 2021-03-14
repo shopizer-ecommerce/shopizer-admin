@@ -9,7 +9,7 @@ import { LightboxModule } from 'ngx-lightbox';
 import { MalihuScrollbarModule } from 'ngx-malihu-scrollbar';
 import { FileManagerModule } from 'ng6-file-man';
 import { NgxSummernoteModule } from 'ngx-summernote';
-import { CustomModule } from '../custome-component/custom.module';
+import { CustomModule } from '../custom-component/custom.module';
 @NgModule({
   declarations: [
     ...routedComponents

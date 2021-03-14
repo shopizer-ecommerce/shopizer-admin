@@ -5,7 +5,7 @@ import { PaymentRoutingModule } from './payment-routing.module';
 import { SharedModule } from '../shared/shared.module';
 import { NbDialogModule } from '@nebular/theme';
 import { MalihuScrollbarModule } from 'ngx-malihu-scrollbar';
-import { CustomModule } from '../custome-component/custom.module';
+import { CustomModule } from '../custom-component/custom.module';
 import { NgxSummernoteModule } from 'ngx-summernote';
 import { PaymentMethodsComponent } from './methods/methods.component';
 import { ConfigureComponent } from './configure-form/configure.component';

@@ -8,7 +8,7 @@ import { CataloguesRoutingModule } from './catalogues-routing.module';
 import { CataloguesListComponent } from './catalogues-list/catalogues-list.component';
 import { CatalogueFormComponent } from './catalogue-form/catalogue-form.component';
 import { ProductToCatalogueComponent } from './product-to-catalogue/product-to-catalogue.component';
-import { CustomModule } from '../../custome-component/custom.module';
+import { CustomModule } from '../../custom-component/custom.module';
 @NgModule({
   declarations: [
     CataloguesComponent,

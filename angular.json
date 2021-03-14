@@ -9,11 +9,8 @@
       "projectType": "application",
       "architect": {
         "build": {
-          "builder": "@angular-builders/custom-webpack:browser",
+          "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "customWebpackConfig": {
-              "path": "custom-webpack.config.js"
-            },
             "preserveSymlinks": true,
             "outputPath": "dist",
             "index": "src/index.html",
@@ -73,7 +70,7 @@
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment-prod.ts"
+                  "with": "src/environments/environment.prod.ts"
                 }
               ]
             }
