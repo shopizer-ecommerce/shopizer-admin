@@ -34,7 +34,7 @@ export class RulesComponent implements OnInit {
     constructor(
         private sharedService: SharedService
     ) {
-        this.getShippingCondition()
+        //this.getShippingCondition()
     }
     ngOnInit() {
     }

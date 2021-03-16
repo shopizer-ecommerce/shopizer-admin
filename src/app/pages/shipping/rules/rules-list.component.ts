@@ -17,7 +17,7 @@ import { ToastrService } from 'ngx-toastr';
 export class RulesListComponent implements OnInit {
 
   source: LocalDataSource = new LocalDataSource();
-  loadingList = false;
+  loadingList: boolean = false;
   settings = {};
   perPage = 10;
   currentPage = 1;
@@ -37,7 +37,7 @@ export class RulesListComponent implements OnInit {
     this.isSuperAdmin = this.storageService.getUserRoles().isSuperadmin;
     this.selectedStore = this.storageService.getMerchant();
     console.log(this.selectedStore)
-    this.getShippingRulesList();
+    //this.getShippingRulesList();
   }
 
   ngOnInit() {
@@ -56,14 +56,17 @@ export class RulesListComponent implements OnInit {
       });
   }
   getShippingRulesList() {
-    this.loadingList = true;
+    //this.loadingList = true;
+    /**
     this.sharedService.getShippingRules(this.selectedStore)
       .subscribe(data => {
         this.loadingList = false;
         this.source.load(data);
       }, error => {
 
-      });
+    });
+    **/
+    //this.loadingList = false;
     this.setSettings();
   }
 

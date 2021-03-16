@@ -32,7 +32,11 @@ import { TinyMCEComponent } from './@theme/components/tiny-mce/tiny-mce.componen
 import { ManageAddComponent } from './pages/customers/manageoptions/add.component';
 import { ManageListComponent } from './pages/customers/manageoptions/list.component';
 import { OptionListComponent } from './pages/customers/options/list.component';
+import { OptionsAddComponent } from './pages/customers/options/add.component';
 import { ValueAddComponent } from './pages/customers/optionsvalue/add.component';
+import { ValueListComponent } from './pages/customers/optionsvalue/list.component';
+import { CountryOrdersComponent } from './pages/shared/wigets/e-commerce/country-orders/country-orders.component';
+import { CountryOrdersChartComponent } from './pages/shared/wigets/e-commerce/country-orders/chart/country-orders-chart.component';
 @NgModule({
   declarations: [
     AppComponent, 
@@ -42,9 +46,13 @@ import { ValueAddComponent } from './pages/customers/optionsvalue/add.component'
     TinyMCEComponent,
     CustomComponent,
     ManageAddComponent,
-    ManageListComponent,
-    OptionListComponent,
-    ValueAddComponent
+    //ManageListComponent, //TODO
+    //OptionListComponent, //TODO
+    ValueAddComponent,
+    OptionsAddComponent,
+    //ValueListComponent, //TODO
+    //CountryOrdersComponent, //TODO
+    //CountryOrdersChartComponent
   ],
   imports: [
     BrowserModule,
