@@ -73,7 +73,7 @@ export class ConfigureComponent implements OnInit {
     this.loadingList = true;
     this.paymentService.getPaymentModulesDetails(type)
       .subscribe(data => {
-        console.log(data);
+        // console.log(data);
         this.loadingList = false;
         this.paymentData = data;
         this.setConfigureData();
@@ -103,12 +103,37 @@ export class ConfigureComponent implements OnInit {
     });
   }
   save() {
+    let paymenttype = this.activatedRoute.snapshot.paramMap.get('id');
     console.log(this.formData)
-    let param = {};
+    let param: any = {};
     this.formData.map((value) => {
       param[value.name] = value.value
     });
-    console.log(param)
+    // console.log(param)
+    let body: any = {};
+    if (paymenttype == "stripe") {
+      body = { 'code': paymenttype, 'active': param.active, 'defaultSelected': param.defaultSelected, 'integrationKeys': { 'publishableKey': param.publishableKey, 'secretKey': param.secretKey, 'transaction': param.transaction }, 'integrationOptions': null }
+    } else if (paymenttype == 'moneyorder') {
+      body = { 'code': paymenttype, 'active': param.active, 'defaultSelected': param.defaultSelected, 'integrationKeys': { 'address': param.address }, 'integrationOptions': null }
+    } else if (paymenttype == 'paypal-express-checkout') {
+      body = { 'code': paymenttype, 'active': param.active, 'defaultSelected': param.defaultSelected, 'integrationKeys': { 'api': param.api, 'signature': param.signature, 'transaction': param.transaction, 'username': param.username }, 'integrationOptions': null }
+    } else if (paymenttype == 'braintree') {
+      body = { 'code': paymenttype, 'active': param.active, 'defaultSelected': param.defaultSelected, 'integrationKeys': { 'merchant_id': param.merchant_id, 'public_key': param.public_key, 'private_key': param.private_key, 'tokenization_key': param.tokenization_key, 'transaction': param.transaction }, 'integrationOptions': null }
+    } else if (paymenttype == 'beanstream') {
+      body = { 'code': paymenttype, 'active': param.active, 'defaultSelected': param.defaultSelected, 'integrationKeys': { 'merchantid': param.merchantid, 'username': param.username, 'password': param.password, 'transaction': param.transaction }, 'integrationOptions': null }
+    }
+    this.savePayment(body);
+  }
+  savePayment(param) {
+    this.paymentService.savePayment(param)
+      .subscribe(data => {
+        // console.log(data);
+        this.loadingList = false;
+        this.toastr.success('Payment data has been configured successfully.');
+        // this.goToback()
+      }, error => {
+        this.loadingList = false;
+      });
   }
 
   goBack() {

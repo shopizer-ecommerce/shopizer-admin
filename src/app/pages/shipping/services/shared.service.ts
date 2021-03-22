@@ -78,5 +78,8 @@ export class SharedService {
   getShippingModulesDetails(type): Observable<any> {
     return this.crudService.get('/v1/private/modules/shipping/' + type);
   }
+  saveShippingMethods(param): Observable<any> {
+    return this.crudService.post('/v1/private/modules/shipping/', param);
+  }
 }
 

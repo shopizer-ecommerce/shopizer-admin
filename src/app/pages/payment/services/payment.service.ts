@@ -20,4 +20,7 @@ export class PaymentService {
   getPaymentModulesDetails(type): Observable<any> {
     return this.crudService.get('/v1/private/modules/payment/' + type);
   }
+  savePayment(param) {
+    return this.crudService.post('/v1/private/modules/payment/', param);
+  }
 }

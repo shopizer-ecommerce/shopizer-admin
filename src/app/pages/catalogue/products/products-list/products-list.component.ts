@@ -56,7 +56,7 @@ export class ProductsListComponent implements OnInit {
       store: this.storageService.getMerchant(),
       lang: this.storageService.getLanguage(),
       count: this.perPage,
-      start: 0
+      page: 0
     };
   }
 
@@ -103,8 +103,8 @@ export class ProductsListComponent implements OnInit {
       });
   }
   getList() {
-    const startFrom = (this.currentPage - 1) * this.perPage;
-    this.params.start = startFrom;
+    const startFrom = this.currentPage - 1;
+    this.params.page = startFrom;
     this.loadingList = true;
     this.productService.getListOfProducts(this.params)
       .subscribe(res => {

@@ -115,12 +115,39 @@ export class ShippingConfigureComponent implements OnInit {
     });
   }
   save() {
-    console.log(this.formData)
-    let param = {};
+    // console.log(this.formData)
+    let type = this.activatedRoute.snapshot.paramMap.get('id');
+    let param: any = {};
     this.formData.map((value) => {
-      param[value.name] = this.shippingData[value.name]
+      // console.log(value.value)
+      if (value.objectKey === "integrationOptions") {
+        let a = value.optionData.filter((a) => { return a.checked === true }).map(function (obj) {
+          return obj.value;
+        });;
+        // console.log(a)
+        param[value.name] = a
+      } else {
+        param[value.name] = value.value
+      }
     });
     console.log(param)
+    let body: any = {};
+    if (type == "canadapost") {
+      body = { 'code': type, 'active': param.active, 'defaultSelected': param.defaultSelected, 'integrationKeys': { 'account': param.account, 'apikey': param.apikey, 'password': param.password, 'username': param.username }, 'integrationOptions': { 'services-domestic': param['services-domestic'], 'services-intl': param['services-intl'], 'services-usa': param['services-usa'] } }
+    }
+    this.saveShippingData(body)
+  }
+  saveShippingData(body) {
+    console.log(body)
+    this.loadingList = true;
+    this.sharedService.saveShippingMethods(body)
+      .subscribe(data => {
+        console.log(data);
+        this.loadingList = false;
+        this.toastr.success('Shipping methods has been saved successfully.');
+      }, error => {
+        this.loadingList = false;
+      });
   }
 
   goBack() {
