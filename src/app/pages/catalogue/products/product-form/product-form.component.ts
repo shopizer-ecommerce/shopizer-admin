@@ -189,20 +189,22 @@ export class ProductFormComponent implements OnInit {
 
   fillFormArray() {
     this.form.value.descriptions.forEach((desc, index) => {
-      this.product.descriptions.forEach((description) => {
-        if (desc.language === description.language) {
-          (<FormArray>this.form.get('descriptions')).at(index).patchValue({
-            language: description.language,
-            name: description.name,
-            highlights: description.highlights,
-            friendlyUrl: description.friendlyUrl,
-            description: description.description,
-            title: description.title,
-            keyWords: description.keyWords,
-            metaDescription: description.metaDescription,
-          });
-        }
-      });
+      if (this.product != null && this.product.descriptions) {
+        this.product.descriptions.forEach((description) => {
+          if (desc.language === description.language) {
+            (<FormArray>this.form.get('descriptions')).at(index).patchValue({
+              language: description.language,
+              name: description.name,
+              highlights: description.highlights,
+              friendlyUrl: description.friendlyUrl,
+              description: description.description,
+              title: description.title,
+              keyWords: description.keyWords,
+              metaDescription: description.metaDescription,
+            });
+          }
+        });
+      }
     });
   }
 

@@ -31,6 +31,9 @@ export class GlobalHttpInterceptorService implements HttpInterceptor {
       catchError((error) => {
         let errorMessage = '';
         console.log('In error ** ' + error.status);
+        if (error.status == 0) {
+          this.router.navigate(['errorPage']);
+        }
         if (error.status === 404 && req.url.search(/login/gi) !== -1) {
         } else if (error.status !== 401) {
           if (error.error instanceof ErrorEvent) {
@@ -47,7 +50,7 @@ export class GlobalHttpInterceptorService implements HttpInterceptor {
               this.router.navigate(['/pages/error-500']);
           }
         } else if (error.status === 401) {
-          // this.authService.logout();
+          this.authService.logout();
         }
         return throwError(error);
       })

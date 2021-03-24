@@ -121,19 +121,35 @@ export class ShippingConfigureComponent implements OnInit {
     this.formData.map((value) => {
       // console.log(value.value)
       if (value.objectKey === "integrationOptions") {
-        let a = value.optionData.filter((a) => { return a.checked === true }).map(function (obj) {
-          return obj.value;
-        });;
-        // console.log(a)
-        param[value.name] = a
+        if (value.type == 'radio') {
+          param[value.name] = value.value
+        } else {
+          let a = value.optionData.filter((a) => { return a.checked === true }).map(function (obj) {
+            return obj.value;
+          });
+          param[value.name] = a
+        }
       } else {
         param[value.name] = value.value
       }
     });
-    console.log(param)
+    // console.log(param)
     let body: any = {};
     if (type == "canadapost") {
       body = { 'code': type, 'active': param.active, 'defaultSelected': param.defaultSelected, 'integrationKeys': { 'account': param.account, 'apikey': param.apikey, 'password': param.password, 'username': param.username }, 'integrationOptions': { 'services-domestic': param['services-domestic'], 'services-intl': param['services-intl'], 'services-usa': param['services-usa'] } }
+    } else if (type == 'ups') {
+      body = { 'code': type, 'active': param.active, 'defaultSelected': param.defaultSelected, 'integrationKeys': { 'accessKey': param.accessKey, 'password': param.password, 'userId': param.userId }, 'integrationOptions': { 'packages': [param['packages']], 'selectservice': [param['selectservice']] } }
+    } else if (type == 'weightBased') {
+      body = { 'code': type, 'active': param.active, 'defaultSelected': param.defaultSelected, 'integrationKeys': {}, 'integrationOptions': {} }
+    }
+    else if (type == 'customQuotesRules') {
+      body = { 'code': type, 'active': param.active, 'defaultSelected': param.defaultSelected, 'integrationKeys': {}, 'integrationOptions': {} }
+    }
+    else if (type == 'priceByDistance') {
+      body = { 'code': type, 'active': param.active, 'defaultSelected': param.defaultSelected, 'integrationKeys': {}, 'integrationOptions': {} }
+    }
+    else if (type == 'storePickUp') {
+      body = { 'code': type, 'active': param.active, 'defaultSelected': param.defaultSelected, 'integrationKeys': { 'note': param.note, 'price': param.price }, 'integrationOptions': {} }
     }
     this.saveShippingData(body)
   }

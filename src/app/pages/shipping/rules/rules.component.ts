@@ -35,8 +35,16 @@ export class RulesComponent implements OnInit {
         private sharedService: SharedService
     ) {
         //this.getShippingCondition()
+        this.getRulesCriterias()
     }
     ngOnInit() {
+    }
+
+    getRulesCriterias() {
+        this.sharedService.getRulesCriterias()
+            .subscribe(data => {
+                console.log(data)
+            });
     }
 
     getShippingCondition() {

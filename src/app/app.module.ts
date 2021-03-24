@@ -40,10 +40,10 @@ import { ValueListComponent } from './pages/customers/optionsvalue/list.componen
 
 @NgModule({
   declarations: [
-    AppComponent, 
-    ResetPasswordComponent, 
-    EqualValidator, 
-    ImageBrowserComponent, 
+    AppComponent,
+    ResetPasswordComponent,
+    EqualValidator,
+    ImageBrowserComponent,
     TinyMCEComponent,
     CustomComponent,
     ManageAddComponent,

@@ -60,6 +60,7 @@ export class SharedService {
   deletePackaging(code): Observable<any> {
     return this.crudService.delete('/v1/private/shipping/package/' + code);
   }
+  // ************ Shipping Rules API Services OLD start **************
   getRulesCondition(): Observable<any> {
     return this.crudService.getShipping('/v2/shipping/rules/conditions');
   }
@@ -72,6 +73,13 @@ export class SharedService {
   getShippingRulesDetails(code): Observable<any> {
     return this.crudService.getShipping('/v2/shipping/rules/' + code);
   }
+  // ************ Shipping Rules API Services OLD end **************
+
+  // ************ Shipping Rules API NEW Start ***************
+  getRulesCriterias(): Observable<any> {
+    return this.crudService.getShipping('/v1/private/criterias');
+  }
+  // ************ Shipping Rules API NEW Start ***************
   getShippingModules(): Observable<any> {
     return this.crudService.get('/v1/private/modules/shipping');
   }
