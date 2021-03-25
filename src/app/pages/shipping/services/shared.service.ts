@@ -77,7 +77,13 @@ export class SharedService {
 
   // ************ Shipping Rules API NEW Start ***************
   getRulesCriterias(): Observable<any> {
-    return this.crudService.getShipping('/v1/private/criterias');
+    return this.crudService.getShipping('/private/criterias');
+  }
+  getRulesActions(): Observable<any> {
+    return this.crudService.getShipping('/private/actions');
+  }
+  createShippingRules(param): Observable<any> {
+    return this.crudService.postShipping('/private/rules', param);
   }
   // ************ Shipping Rules API NEW Start ***************
   getShippingModules(): Observable<any> {

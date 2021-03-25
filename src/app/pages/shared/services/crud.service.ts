@@ -18,7 +18,9 @@ export class CrudService {
   getShipping(path, params?: { [param: string]: string | string[]; }): Observable<any> {
     return this.http.get(`${this.shippingUrl}${path}`, { responseType: 'json', params });
   }
-
+  postShipping(path, body: any | null, options?: any): Observable<any> {
+    return this.http.post(`${this.shippingUrl}${path}`, body, options);
+  }
   get(path, params?: any): Observable<any> {
     return this.http.get(`${this.url}${path}`, { responseType: 'json', params });
   }

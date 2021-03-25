@@ -3,6 +3,7 @@ import { QueryBuilderConfig } from 'angular2-query-builder';
 
 import { SharedService } from '../services/shared.service';
 import { error } from '@angular/compiler/src/util';
+import { StoreService } from '../../store-management/services/store.service';
 @Component({
     selector: 'ngx-rules',
     templateUrl: './rules.component.html',
@@ -15,79 +16,134 @@ export class RulesComponent implements OnInit {
 
         ]
     };
+    stores = [];
     rules = {
+        enabled: false,
         code: '',
         name: '',
         timeBased: '',
         startDate: new Date(),
         endDate: new Date(),
         order: '',
+        store: '',
         selected_result: '',
     }
-
+    actionsData: Array<any> = [];
     config: QueryBuilderConfig;
+
     rules_time: boolean = false;
     loadingList: boolean = false
     shippingResult: Array<any> = [];
     resultData: Array<any> = [];
     selectedResult: any;
     constructor(
-        private sharedService: SharedService
+        private sharedService: SharedService,
+        private storeService: StoreService,
     ) {
+        this.getStoreList();
         //this.getShippingCondition()
         this.getRulesCriterias()
+        this.getRulesActions()
+
     }
     ngOnInit() {
     }
-
+    getStoreList() {
+        this.storeService.getListOfMerchantStoreNames({ 'store': '' })
+            .subscribe(res => {
+                console.log(res);
+                res.forEach((store) => {
+                    this.stores.push({ value: store.code, label: store.code });
+                });
+            });
+    }
     getRulesCriterias() {
+        let fields = {}
         this.sharedService.getRulesCriterias()
             .subscribe(data => {
                 console.log(data)
-            });
-    }
-
-    getShippingCondition() {
-        this.loadingList = true;
-        let fields = {}
-        this.sharedService.getRulesCondition()
-            .subscribe(data => {
-                // console.log(data)
-
                 data.map((value) => {
                     fields[value.code] = {
                         "name": value.name,
-                        "type": value.options.length > 0 ? 'category' : value.format == 'DECIMAL' || value.format == 'NUMERIC' ? 'number' : value.format.toLowerCase(),
+                        // "type": value.options.length > 0 ? 'category' : value.format == 'DECIMAL' || value.format == 'NUMERIC' ? 'number' : value.format.toLowerCase(),
+                        "type": value.criteriaType == 'text' ? 'string' : 'string',
                         "operators": value.operators,
                         "options": []
                     }
-                    value.options.map((opt) => {
-                        fields[value.code].options.push({ name: opt.name, value: opt.value })
-                    })
+                    // value.options.map((opt) => {
+                    //     fields[value.code].options.push({ name: opt.name, value: opt.value })
+                    // })
 
                 });
-                // config: QueryBuilderConfig = { fields: {} }
-                // console.log(fields);
+
                 this.config = { fields };
-                this.loadingList = false;
-
-                // this.source.load(data);
-            }, error => {
-                this.loadingList = false;
             });
-        this.getShippingResult();
     }
-    getShippingResult() {
-
-        this.sharedService.getRulesResult()
+    getRulesActions() {
+        this.sharedService.getRulesActions()
             .subscribe(data => {
-                // console.log(data);
-                this.shippingResult = data;
-            }, error => {
-
+                console.log(data);
+                this.actionsData = data
             });
-        this.getShippingRulesDetails()
     }
+    onSubmit() {
+        console.log(this.query)
+        console.log(this.rules)
+        let param = {
+            name: this.rules.name,
+            code: this.rules.code,
+            store: this.rules.store,
+            enabled: this.rules.enabled,
+            startDate: this.rules.startDate,
+            endDate: this.rules.endDate,
+            ruleSets: this.query
+        }
+        this.sharedService.createShippingRules(param)
+            .subscribe(data => {
+                console.log(data);
+            });
+    }
+    // getShippingCondition() {
+    //     this.loadingList = true;
+    //     let fields = {}
+    //     this.sharedService.getRulesCondition()
+    //         .subscribe(data => {
+    //             // console.log(data)
+
+    //             data.map((value) => {
+    //                 fields[value.code] = {
+    //                     "name": value.name,
+    //                     "type": value.options.length > 0 ? 'category' : value.format == 'DECIMAL' || value.format == 'NUMERIC' ? 'number' : value.format.toLowerCase(),
+    //                     "operators": value.operators,
+    //                     "options": []
+    //                 }
+    //                 value.options.map((opt) => {
+    //                     fields[value.code].options.push({ name: opt.name, value: opt.value })
+    //                 })
+
+    //             });
+    //             // config: QueryBuilderConfig = { fields: {} }
+    //             // console.log(fields);
+    //             this.config = { fields };
+    //             this.loadingList = false;
+
+    //             // this.source.load(data);
+    //         }, error => {
+    //             this.loadingList = false;
+    //         });
+    //     this.getShippingResult();
+    // }
+    // getShippingResult() {
+
+    //     this.sharedService.getRulesResult()
+    //         .subscribe(data => {
+    //             // console.log(data);
+    //             this.shippingResult = data;
+    //         }, error => {
+
+    //         });
+    //     this.getShippingRulesDetails()
+    // }
     getShippingRulesDetails() {
         if (localStorage.getItem('rulesCode')) {
             this.sharedService.getShippingRulesDetails(localStorage.getItem('rulesCode'))
