@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { QueryBuilderConfig } from 'angular2-query-builder';
-
+import { Router } from '@angular/router';
 import { SharedService } from '../services/shared.service';
 import { error } from '@angular/compiler/src/util';
 import { StoreService } from '../../store-management/services/store.service';
+import * as moment from 'moment';
 @Component({
     selector: 'ngx-rules',
     templateUrl: './rules.component.html',
@@ -39,6 +40,7 @@ export class RulesComponent implements OnInit {
     constructor(
         private sharedService: SharedService,
         private storeService: StoreService,
+        public router: Router
     ) {
         this.getStoreList();
         //this.getShippingCondition()
@@ -86,18 +88,27 @@ export class RulesComponent implements OnInit {
                 this.actionsData = data
             });
     }
+    goToback() {
+        this.router.navigate(['/pages/shipping/rules']);
+    }
     onSubmit() {
-        console.log(this.query)
-        console.log(this.rules)
+        // console.log(this.query)
+        let actions = [];
+        this.actionsData.map((value) => {
+            actions.push({ code: value.code, value: value.value })
+        });
         let param = {
-            name: this.rules.name,
-            code: this.rules.code,
-            store: this.rules.store,
-            enabled: this.rules.enabled,
-            startDate: this.rules.startDate,
-            endDate: this.rules.endDate,
-            ruleSets: this.query
+            "name": this.rules.name,
+            "code": this.rules.code,
+            "store": this.rules.store,
+            "enabled": this.rules.enabled,
+            "startDate": moment(this.rules.startDate).utc(),
+            "action": actions,
+            "ruleSets": [
+                this.query
+            ]
         }
+        console.log(param);
         this.sharedService.createShippingRules(param)
             .subscribe(data => {
                 console.log(data);
@@ -144,22 +155,22 @@ export class RulesComponent implements OnInit {
     //         });
     //     this.getShippingRulesDetails()
     // }
-    getShippingRulesDetails() {
-        if (localStorage.getItem('rulesCode')) {
-            this.sharedService.getShippingRulesDetails(localStorage.getItem('rulesCode'))
-                .subscribe(data => {
-                    console.log(data)
-                    this.rules = data;
-                    this.rules.startDate = new Date(data.startDate)
-                    this.rules.endDate = new Date(data.endDate)
-                    this.resultData = data.results;
-                    this.query = data.conditions[0]
-                }, error => {
+    // getShippingRulesDetails() {
+    //     if (localStorage.getItem('rulesCode')) {
+    //         this.sharedService.getShippingRulesDetails(localStorage.getItem('rulesCode'))
+    //             .subscribe(data => {
+    //                 console.log(data)
+    //                 this.rules = data;
+    //                 this.rules.startDate = new Date(data.startDate)
+    //                 this.rules.endDate = new Date(data.endDate)
+    //                 this.resultData = data.results;
+    //                 this.query = data.conditions[0]
+    //             }, error => {
 
-                });
-        }
+    //             });
+    //     }
 
-    }
+    // }
     onClickConfigure() {
         // console.log(this.selected_result);
         this.selectedResult = this.rules.selected_result

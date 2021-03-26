@@ -2,10 +2,14 @@
   <div class="" [nbSpinner]="loadingList" nbSpinnerSize="large" nbSpinnerStatus="primary">
     <nb-card-header class="main_header">
       <h1 class="page_title">{{'RULES.ADD_RULES' | translate}}</h1>
-
       <div class="content_spacing">
-        <button type="button" nbButton class="success_button" (click)="onSubmit()">Submit</button>
+        <button type="button" nbButton class="cancel_button" (click)="goToback()">{{ 'COMMON.CANCEL'
+          | translate}}</button>
       </div>
+      <div class="content_spacing">
+        <button type="button" nbButton class="success_button" (click)="onSubmit()" [disabled]="!pagesForm.form.valid">Submit</button>
+      </div>
+
     </nb-card-header>
     <form #pagesForm="ngForm" role="form">
       <div class="row">
@@ -25,14 +29,14 @@
                   <div class="form-group">
                     <label class="label inputLabel">{{'RULES.RULES_UNIQUE_CODE' | translate}}</label>
                     <input type="text" class="form-control inputText" placeholder="{{'RULES.RULES_UNIQUE_CODE' | translate}}"
-                      [(ngModel)]="rules.code" name="code">
+                      [(ngModel)]="rules.code" name="code" required>
                   </div>
                 </div>
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                   <div class="form-group">
                     <label class="label inputLabel">{{'RULES.RULES_NAME' | translate}}</label>
                     <input type="text" class="form-control inputText" placeholder="{{'RULES.RULES_NAME' | translate}}"
-                      name="name" [(ngModel)]="rules.name">
+                      name="name" [(ngModel)]="rules.name" required>
                   </div>
                 </div>
                 <!-- <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -47,7 +51,7 @@
                   <div class="form-group">
                     <label class="label inputLabel">Start Date</label>
                     <input class="form-control has-person-icon inputText" placeholder="{{'RULES.START_DATE' | translate}}"
-                      [readOnly]="true" [nbDatepicker]="datepicker" [(ngModel)]="rules.startDate" name="startDate">
+                      [readOnly]="true" [nbDatepicker]="datepicker" required [(ngModel)]="rules.startDate" name="startDate">
                     <nb-datepicker #datepicker></nb-datepicker>
                   </div>
                 </div>
@@ -63,7 +67,7 @@
                   <div class="form-group">
                     <label class="label inputLabel">{{ 'STORE.MERCHANT_STORE' | translate }}</label>
                     <nb-select *ngIf="stores.length" [(selected)]="store" [(ngModel)]="rules.store" name="endDate"
-                      placeholder="{{ 'STORE.MERCHANT_STORE' | translate }}" outline shape="rectangle" class="fullWidth">
+                      placeholder="{{ 'STORE.MERCHANT_STORE' | translate }}" required outline shape="rectangle" class="fullWidth">
                       <nb-option *ngFor="let store of stores" [value]="store.value">{{store.label}}
                       </nb-option>
                     </nb-select>
@@ -112,9 +116,10 @@
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                   <div class="form-group">
                     <label *ngIf="action.valueType !== 'checkbox'" class="label inputLabel">{{action.name}}</label>
-                    <nb-checkbox *ngIf="action.valueType == 'checkbox'" name="dsfsdfsdf">{{action.name}}</nb-checkbox>
+                    <nb-checkbox *ngIf="action.valueType == 'checkbox'" required [(ngModel)]="action.value" name="{{action.code}}"
+                      name="dsfsdfsdf">{{action.name}}</nb-checkbox>
                     <input *ngIf="action.valueType == 'text'" type="text" class=" form-control inputText" placeholder="{{action.name}}"
-                      name="order">
+                      [(ngModel)]="action.value" name="{{action.code}}" required>
                   </div>
                 </div>
                 <!-- <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">

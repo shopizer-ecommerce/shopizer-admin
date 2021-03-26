@@ -61,18 +61,18 @@ export class SharedService {
     return this.crudService.delete('/v1/private/shipping/package/' + code);
   }
   // ************ Shipping Rules API Services OLD start **************
-  getRulesCondition(): Observable<any> {
-    return this.crudService.getShipping('/v2/shipping/rules/conditions');
-  }
-  getRulesResult(): Observable<any> {
-    return this.crudService.getShipping('/v2/shipping/rules/results');
-  }
-  getShippingRules(storeCode): Observable<any> {
-    return this.crudService.getShipping('/v2/shipping/rules/?store=' + storeCode);
-  }
-  getShippingRulesDetails(code): Observable<any> {
-    return this.crudService.getShipping('/v2/shipping/rules/' + code);
-  }
+  // getRulesCondition(): Observable<any> {
+  //   return this.crudService.getShipping('/v2/shipping/rules/conditions');
+  // }
+  // getRulesResult(): Observable<any> {
+  //   return this.crudService.getShipping('/v2/shipping/rules/results');
+  // }
+  // getShippingRules(storeCode): Observable<any> {
+  //   return this.crudService.getShipping('/v2/shipping/rules/?store=' + storeCode);
+  // }
+  // getShippingRulesDetails(code): Observable<any> {
+  //   return this.crudService.getShipping('/v2/shipping/rules/' + code);
+  // }
   // ************ Shipping Rules API Services OLD end **************
 
   // ************ Shipping Rules API NEW Start ***************
@@ -84,6 +84,12 @@ export class SharedService {
   }
   createShippingRules(param): Observable<any> {
     return this.crudService.postShipping('/private/rules', param);
+  }
+  getShippingRules(storeCode): Observable<any> {
+    return this.crudService.getShipping('/private/rules/?store=' + storeCode);
+  }
+  deleteRules(code): Observable<any> {
+    return this.crudService.deleteShipping('/private/rules/' + code);
   }
   // ************ Shipping Rules API NEW Start ***************
   getShippingModules(): Observable<any> {

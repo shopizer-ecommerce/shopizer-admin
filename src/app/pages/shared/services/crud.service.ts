@@ -21,6 +21,9 @@ export class CrudService {
   postShipping(path, body: any | null, options?: any): Observable<any> {
     return this.http.post(`${this.shippingUrl}${path}`, body, options);
   }
+  deleteShipping(path, options?: any): Observable<any> {
+    return this.http.delete(`${this.shippingUrl}${path}`, options);
+  }
   get(path, params?: any): Observable<any> {
     return this.http.get(`${this.url}${path}`, { responseType: 'json', params });
   }
