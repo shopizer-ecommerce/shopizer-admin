@@ -6,7 +6,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { ShowcaseDialogComponent } from '../../../shared/components/showcase-dialog/showcase-dialog.component';
 import { ProductGroupsService } from '../services/product-groups.service';
 import { ActiveButtonComponent } from './active-button.component';
-
+import { StorageService } from '../../../shared/services/storage.service';
 @Component({
   selector: 'ngx-groups-list',
   templateUrl: './groups-list.component.html',
@@ -15,23 +15,28 @@ import { ActiveButtonComponent } from './active-button.component';
 export class GroupsListComponent implements OnInit {
   source: LocalDataSource = new LocalDataSource();
   loadingList = false;
-
+  params = this.loadParams();
   settings = {};
 
   constructor(
     private dialogService: NbDialogService,
     private translate: TranslateService,
-    private productGroupsService: ProductGroupsService
+    private productGroupsService: ProductGroupsService,
+    private storageService: StorageService,
   ) {
   }
-
+  loadParams() {
+    return {
+      store: this.storageService.getMerchant()
+    };
+  }
   ngOnInit() {
     this.getList();
   }
 
   getList() {
     this.loadingList = true;
-    this.productGroupsService.getListOfProductGroups().subscribe(res => {
+    this.productGroupsService.getListOfProductGroups(this.params).subscribe(res => {
       this.source.load(res);
       this.loadingList = false;
     });
@@ -82,19 +87,27 @@ export class GroupsListComponent implements OnInit {
     };
   }
 
+  onSelectStore(e) {
+    console.log(e);
+    this.params["store"] = e;
+    this.getList();
+  }
   deleteRecord(event) {
-    this.dialogService.open(ShowcaseDialogComponent, {})
-      .onClose.subscribe(res => {
-        if (res) {
-          event.confirm.resolve();
-          this.productGroupsService.removeProductGroup(event.data.id)
-            .subscribe(result => {
-              this.getList();
-            });
-        } else {
-          event.confirm.reject();
-        }
-      });
+    console.log(event);
+    if (event.action == "remove") {
+      this.dialogService.open(ShowcaseDialogComponent, {})
+        .onClose.subscribe(res => {
+          if (res) {
+            // event.confirm.resolve();
+            this.productGroupsService.removeProductGroup(event.data.code)
+              .subscribe(result => {
+                this.getList();
+              });
+          } else {
+            event.confirm.reject();
+          }
+        });
+    }
   }
 
 }

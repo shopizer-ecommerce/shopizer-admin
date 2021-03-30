@@ -132,6 +132,7 @@ export class ConfigureComponent implements OnInit {
         this.toastr.success('Payment data has been configured successfully.');
         // this.goToback()
       }, error => {
+        this.toastr.success('Payment data configured failed.');
         this.loadingList = false;
       });
   }

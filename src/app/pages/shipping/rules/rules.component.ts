@@ -5,6 +5,7 @@ import { SharedService } from '../services/shared.service';
 import { error } from '@angular/compiler/src/util';
 import { StoreService } from '../../store-management/services/store.service';
 import * as moment from 'moment';
+import { ToastrService } from 'ngx-toastr';
 @Component({
     selector: 'ngx-rules',
     templateUrl: './rules.component.html',
@@ -25,11 +26,12 @@ export class RulesComponent implements OnInit {
         timeBased: '',
         startDate: new Date(),
         endDate: new Date(),
-        order: '',
+        order: 0,
         store: '',
         selected_result: '',
     }
     actionsData: Array<any> = [];
+    selectedActionsData: Array<any> = [];
     config: QueryBuilderConfig;
 
     rules_time: boolean = false;
@@ -40,7 +42,8 @@ export class RulesComponent implements OnInit {
     constructor(
         private sharedService: SharedService,
         private storeService: StoreService,
-        public router: Router
+        public router: Router,
+        private toastr: ToastrService
     ) {
         this.getStoreList();
         //this.getShippingCondition()
@@ -91,11 +94,24 @@ export class RulesComponent implements OnInit {
     goToback() {
         this.router.navigate(['/pages/shipping/rules']);
     }
+    onAddActions(actions) {
+        console.log('onAddActions')
+        this.selectedActionsData.push(actions)
+    }
+    onDeleteIcon(index) {
+        this.selectedActionsData.splice(index, 1);
+    }
     onSubmit() {
-        // console.log(this.query)
+        this.loadingList = true;
+        console.log(this.query)
         let actions = [];
         this.actionsData.map((value) => {
             actions.push({ code: value.code, value: value.value })
+        });
+        let querys = { condition: this.query.condition, rules: [] };
+        console.log()
+        this.query.rules.map((q) => {
+            querys.rules.push({ field: q.field, operator: q.operator, value: [q.value] })
         });
         let param = {
             "name": this.rules.name,
@@ -105,13 +121,16 @@ export class RulesComponent implements OnInit {
             "startDate": moment(this.rules.startDate).utc(),
             "action": actions,
             "ruleSets": [
-                this.query
+                querys
             ]
         }
         console.log(param);
         this.sharedService.createShippingRules(param)
             .subscribe(data => {
                 console.log(data);
+                this.loadingList = false;
+                this.toastr.success('Rules has been added successfully');
+                this.goToback()
             });
     }
     // getShippingCondition() {

@@ -1,32 +1,19 @@
-<!-- <nb-card size="small" class="page-card"> -->
-<!-- <div *ngIf="loading" class="loading-block" [nbSpinner]="loading" nbSpinnerSize="large" nbSpinnerStatus="primary"></div> -->
-<!-- <nb-card-body class="productGroupPage">
-    <div class="inner_pages_legacy">
-      <nb-card-header class="main_header">
-        <h1 class="page_title">{{ 'PRODUCT_GROUP.CREATE_PRODUCT_GROUP' | translate}}</h1>
-        <div class="content_spacing" style="height:60px;">
-        </div>
-        <button type="submit" class="btn success_button">Save</button>
-      </nb-card-header>
-
-    </div> -->
-
 <div class="inner_pages product_group__create_page">
+  <form [formGroup]='form' class="productGroupForm">
+    <nb-card-header class="main_header">
+      <h1 class="page_title">{{ 'PRODUCT_GROUP.CREATE_PRODUCT_GROUP' | translate}}</h1>
+      <div class="content_spacing">
+        <button type="button" nbButton class="cancel_button" (click)="goToback()">{{ 'ORDER_FORM.CANCLE'
+          | translate}}</button>
+      </div>
+      <div class="content_spacing">
+        <button type="submit" nbButton class="success_button" (click)="save()" [disabled]="!form.valid">{{'COMMON.SAVE' | translate }}</button>
+      </div>
+    </nb-card-header>
 
-  <nb-card-header class="main_header">
-    <h1 class="page_title">{{ 'PRODUCT_GROUP.CREATE_PRODUCT_GROUP' | translate}}</h1>
-    <div class="content_spacing">
-      <button type="button" nbButton class="cancel_button" (click)="goToback()">{{ 'ORDER_FORM.CANCLE'
-        | translate}}</button>
-    </div>
-    <div class="content_spacing">
-      <button type="submit" nbButton class="success_button">{{'COMMON.SAVE' | translate }}</button>
-    </div>
-  </nb-card-header>
+    <div [nbSpinner]="loading" nbSpinnerSize="large" nbSpinnerStatus="primary">
 
-  <div [nbSpinner]="loading" nbSpinnerSize="large" nbSpinnerStatus="primary">
 
-    <form [formGroup]='form' class="productGroupForm">
       <nb-card class="nb-card inline-form-card">
         <nb-card-body class="nb-card-body">
           <div class="form-group">
@@ -50,8 +37,9 @@
         </nb-card-body>
       </nb-card>
 
-    </form>
-  </div>
+
+    </div>
+  </form>
 </div>
 <!-- </nb-card-body>
 </nb-card> -->

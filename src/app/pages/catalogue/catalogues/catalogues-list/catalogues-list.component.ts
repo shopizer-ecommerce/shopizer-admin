@@ -56,12 +56,14 @@ export class CataloguesListComponent implements OnInit {
   }
 
   getList() {
+
     this.params.page = this.currentPage - 1;
     this.loadingList = true;
     this.catalogService.getListOfCatalogues(this.params)
       .subscribe(res => {
         this.totalCount = res.recordsTotal;
-        this.source.load(res.catalogs);
+        console.log(res)
+        this.source.load(res.items);
         this.loadingList = false;
       });
     this.setSettings();

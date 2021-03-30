@@ -51,7 +51,7 @@
                   <div class="form-group">
                     <label class="label inputLabel">Start Date</label>
                     <input class="form-control has-person-icon inputText" placeholder="{{'RULES.START_DATE' | translate}}"
-                      [readOnly]="true" [nbDatepicker]="datepicker" required [(ngModel)]="rules.startDate" name="startDate">
+                      [readOnly]="true" [nbDatepicker]="datepicker" [(ngModel)]="rules.startDate" name="startDate">
                     <nb-datepicker #datepicker></nb-datepicker>
                   </div>
                 </div>
@@ -64,14 +64,20 @@
                   </div>
                 </div>
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                  <div class="form-group">
+                  <!-- <div class="form-group">
                     <label class="label inputLabel">{{ 'STORE.MERCHANT_STORE' | translate }}</label>
                     <nb-select *ngIf="stores.length" [(selected)]="store" [(ngModel)]="rules.store" name="endDate"
                       placeholder="{{ 'STORE.MERCHANT_STORE' | translate }}" required outline shape="rectangle" class="fullWidth">
                       <nb-option *ngFor="let store of stores" [value]="store.value">{{store.label}}
                       </nb-option>
                     </nb-select>
-                  </div>
+                  </div> -->
+                  <label class="label inputLabel">{{ 'STORE.MERCHANT_STORE' | translate }}</label>
+                  <p-dropdown [options]="stores" placeholder="{{ 'STORE.MERCHANT_STORE' | translate}}" [(ngModel)]="rules.store"
+                    name="store" filter="true">
+                    <ng-template let-item pTemplate="selectedItem">{{item.label}}</ng-template>
+                    <ng-template let-el pTemplate="item">{{el.label}}</ng-template>
+                  </p-dropdown>
                 </div>
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                   <div class="form-group">
@@ -109,17 +115,42 @@
       <div class="row">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
           <nb-card class="nb-card inline-form-card">
-            <nb-card-header class="nb-card-header">{{'RULES.SHIPPING_RESULTS' | translate}}</nb-card-header>
-            <nb-card-body class="nb-card-body">
+            <nb-card-header class="nb-card-header">
+              <div>{{'RULES.SHIPPING_RESULTS' | translate}}</div>
 
-              <div class="row" *ngFor="let action of actionsData">
+              <div style="width: 20%;float: right; margin-top: -32px;">
+                <div class="form-group">
+                  <!-- <label class="label inputLabel">{{ 'STORE.MERCHANT_STORE' | translate }}</label> -->
+                  <nb-select (onChange)="onAddActions()" name="action" placeholder="Add Actions" outline shape="rectangle"
+                    class="fullWidth">
+                    <nb-option *ngFor="let action of actionsData" [value]="action.code" (click)="onAddActions(action)">{{action.name}}
+                    </nb-option>
+                  </nb-select>
+                </div>
+              </div>
+            </nb-card-header>
+            <div class="nb-card-header">
+
+              <div class="row">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                   <div class="form-group">
-                    <label *ngIf="action.valueType !== 'checkbox'" class="label inputLabel">{{action.name}}</label>
-                    <nb-checkbox *ngIf="action.valueType == 'checkbox'" required [(ngModel)]="action.value" name="{{action.code}}"
-                      name="dsfsdfsdf">{{action.name}}</nb-checkbox>
-                    <input *ngIf="action.valueType == 'text'" type="text" class=" form-control inputText" placeholder="{{action.name}}"
-                      [(ngModel)]="action.value" name="{{action.code}}" required>
+                    <!-- <div *ngFor="let action of selectedActionsData">
+                      <label *ngIf="action.valueType !== 'checkbox'" class="label inputLabel">{{action.name}}</label>
+                    </div> -->
+                    <div style="align-items: center; justify-content: space-between; flex-wrap: wrap; flex-direction: row;">
+                      <div style="display: flex; align-items: center; justify-content: space-between; margin: 25px 0"
+                        *ngFor="let action of selectedActionsData;let i = index">
+                        <label *ngIf="action.valueType !== 'checkbox'" class="label inputLabel">{{action.name}}</label>
+                        <input *ngIf="action.valueType == 'text'" type="text" class=" form-control inputText"
+                          placeholder="{{action.name}}" [(ngModel)]="action.value" name="{{action.code}}">
+
+                        <!-- <i class="q-icon q-remove-icon"></i> -->
+                        <nb-checkbox *ngIf="action.valueType == 'checkbox'" [(ngModel)]="action.value" name="{{action.code}}"
+                          name="dsfsdfsdf">{{action.name}}</nb-checkbox>
+                        <nb-icon style="border: 1px solid red;color: red;width: 30px;height: 30px;display: block;margin-left: 10px;"
+                          icon="close-outline" (click)="onDeleteIcon(i)"></nb-icon>
+                      </div>
+                    </div>
                   </div>
                 </div>
                 <!-- <div class="col-lg-5 col-md-5 col-sm-12 col-xs-12">
@@ -193,7 +224,7 @@
                 </div> -->
               </div>
 
-            </nb-card-body>
+            </div>
           </nb-card>
         </div>
       </div>

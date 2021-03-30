@@ -27,11 +27,11 @@ export class ProductsGroupsListComponent implements OnInit {
       count: -1,
       start: 0
     };
-    forkJoin(this.productService.getListOfProducts(params), this.productGroupsService.getListOfProductGroups())
+    forkJoin(this.productService.getListOfProducts(params), this.productGroupsService.getListOfProductGroups({ store: this.storageService.getMerchant() }))
       .subscribe(([products, groups]) => {
         this.availableList = [...products.products];
         this.groups = [...groups];
-    });
+      });
   }
 
   ngOnInit() {

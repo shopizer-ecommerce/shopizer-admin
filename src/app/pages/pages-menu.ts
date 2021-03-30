@@ -280,13 +280,13 @@ export const MENU_ITEMS: MenuItem[] = [
             hidden: false,
             guards: [IsSuperadmin, IsAdmin, IsAdminRetail, IsAdminCatalogue],
           },
-          {
-            title: 'COMPONENTS.CREATE_PRODUCTS_GROUPS',
-            key: 'COMPONENTS.CREATE_PRODUCTS_GROUPS',
-            link: '/pages/catalogue/products-groups/create-products-group',
-            hidden: false,
-            guards: [IsSuperadmin, IsAdmin, IsAdminRetail, IsAdminCatalogue],
-          }
+          // {
+          //   title: 'COMPONENTS.CREATE_PRODUCTS_GROUPS',
+          //   key: 'COMPONENTS.CREATE_PRODUCTS_GROUPS',
+          //   link: '/pages/catalogue/products-groups/create-products-group',
+          //   hidden: false,
+          //   guards: [IsSuperadmin, IsAdmin, IsAdminRetail, IsAdminCatalogue],
+          // }
         ]
       },
       {
