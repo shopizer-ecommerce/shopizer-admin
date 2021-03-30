@@ -26,10 +26,10 @@ export class TypeDetailsComponent implements OnInit {
   type = {
     id: '',
     code: '',
-    //name: '',
     allowAddToCart: false,
     visible: '',
-    description: { name: '', language: '' }
+    description: { name: '', language: '' },
+    descriptions: []
   }
 
   constructor(
@@ -54,7 +54,8 @@ export class TypeDetailsComponent implements OnInit {
     if (typeId) {
       this.loading = true;
       let param = {
-        lang: this.storageService.getLanguage(),
+        //lang: this.storageService.getLanguage(),
+        lang: "_all",
         store: this.storageService.getMerchant()
       }
       this.typesService.getType(typeId, param)
@@ -64,10 +65,10 @@ export class TypeDetailsComponent implements OnInit {
 
           this.type.id = res.id;
           this.type.code = res.code;
-          //this.type.name = res.name;
           this.type.allowAddToCart = res.allowAddToCart;
           this.type.visible = res.visible;
           this.type.description = res.description;
+          this.type.descriptions = res.descriptions;
 
           this.isReadonlyCode = true;
 
@@ -111,28 +112,27 @@ export class TypeDetailsComponent implements OnInit {
       visible: this.type.visible,
       code: this.type.code,
       selectedLanguage: 'en',
-      //name: this.type.name,
     });
 
     if (this.type.id) {
       this.form.controls['code'].disable();
     }
-    if (this.type.description) {
+    if (this.type.descriptions) {
       this.fillFormArray();
     }
   }
   fillFormArray() {
     this.form.value.descriptions.forEach((desc, index) => {
-      // console.log(desc)
-      // console.log(this.selectedLanguage)
-      // this.description.descriptions.forEach((description) => {
       if (desc.language === this.selectedLanguage.value) {
-        (<FormArray>this.form.get('descriptions')).at(index).patchValue({
-          language: this.type.description.language,
-          name: this.type.description.name,
+        this.type.descriptions.forEach((d, i) => {
+          if(d.language === this.selectedLanguage.value) {
+            (<FormArray>this.form.get('descriptions')).at(index).patchValue({
+              language: d.language,
+              name: d.name,
+            });
+          }
         });
       }
-      // });
     });
   }
 
@@ -184,6 +184,13 @@ export class TypeDetailsComponent implements OnInit {
   }
   get selectedLanguage() {
     return this.form.get('selectedLanguage');
+  }
+
+  selectLanguage(lang) {
+    this.form.patchValue({
+      selectedLanguage: lang,
+    });
+    this.fillFormArray();
   }
 
   get descriptions(): FormArray {
