@@ -163,6 +163,7 @@ export class ShippingConfigureComponent implements OnInit {
         this.toastr.success('Shipping methods has been saved successfully.');
       }, error => {
         this.loadingList = false;
+        this.toastr.error('Shipping methods configured has been failed..');
       });
   }
 

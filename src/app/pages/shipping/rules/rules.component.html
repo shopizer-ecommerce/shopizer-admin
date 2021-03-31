@@ -1,13 +1,13 @@
 <div class="inner_pages rules_page">
   <div class="" [nbSpinner]="loadingList" nbSpinnerSize="large" nbSpinnerStatus="primary">
     <nb-card-header class="main_header">
-      <h1 class="page_title">{{'RULES.ADD_RULES' | translate}}</h1>
+      <h1 class="page_title">{{ title | translate}}</h1>
       <div class="content_spacing">
         <button type="button" nbButton class="cancel_button" (click)="goToback()">{{ 'COMMON.CANCEL'
           | translate}}</button>
       </div>
       <div class="content_spacing">
-        <button type="button" nbButton class="success_button" (click)="onSubmit()" [disabled]="!pagesForm.form.valid">Submit</button>
+        <button type="button" nbButton class="success_button" (click)="onSubmit()" [disabled]="!pagesForm.form.valid">{{buttonText}}</button>
       </div>
 
     </nb-card-header>
@@ -51,7 +51,7 @@
                   <div class="form-group">
                     <label class="label inputLabel">Start Date</label>
                     <input class="form-control has-person-icon inputText" placeholder="{{'RULES.START_DATE' | translate}}"
-                      [readOnly]="true" [nbDatepicker]="datepicker" [(ngModel)]="rules.startDate" name="startDate">
+                      [nbDatepicker]="datepicker" [(ngModel)]="rules.startDate" name="startDate">
                     <nb-datepicker #datepicker></nb-datepicker>
                   </div>
                 </div>
@@ -59,7 +59,7 @@
                   <div class="form-group">
                     <label class="label inputLabel">End Date</label>
                     <input class="form-control has-person-icon inputText" placeholder="{{'RULES.END_DATE' | translate}}"
-                      [readOnly]="true" [nbDatepicker]="datepicker1" [(ngModel)]="rules.endDate" name="endDate">
+                      [nbDatepicker]="datepicker1" [(ngModel)]="rules.endDate" name="endDate">
                     <nb-datepicker #datepicker1></nb-datepicker>
                   </div>
                 </div>

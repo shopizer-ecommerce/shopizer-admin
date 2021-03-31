@@ -164,7 +164,7 @@ export class RulesListComponent implements OnInit {
     if (e.action == 'delete') {
       this.delete(e);
     } if (e.action == 'edit') {
-      localStorage.setItem('rulesCode', e.data.code);
+      localStorage.setItem('rulesCode', JSON.stringify(e.data));
       this.router.navigate(['pages/shipping/rules/add']);
     }
   }

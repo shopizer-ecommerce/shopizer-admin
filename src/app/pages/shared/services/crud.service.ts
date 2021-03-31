@@ -24,6 +24,9 @@ export class CrudService {
   deleteShipping(path, options?: any): Observable<any> {
     return this.http.delete(`${this.shippingUrl}${path}`, options);
   }
+  putShipping(path, body: any | null, options?: any): Observable<any> {
+    return this.http.put(`${this.shippingUrl}${path}`, body, options);
+  }
   get(path, params?: any): Observable<any> {
     return this.http.get(`${this.url}${path}`, { responseType: 'json', params });
   }

@@ -30,11 +30,11 @@ import { CustomComponent } from './pages/custom-component/custom.component';
 import { EqualValidator } from './pages/shared/validation/equal-validator';
 import { TinyMCEComponent } from './@theme/components/tiny-mce/tiny-mce.component';
 import { ManageAddComponent } from './pages/customers/manageoptions/add.component';
-import { ManageListComponent } from './pages/customers/manageoptions/list.component';
-import { OptionListComponent } from './pages/customers/options/list.component';
+// import { ManageListComponent } from './pages/customers/manageoptions/list.component';
+// import { OptionListComponent } from './pages/customers/options/list.component';
 import { OptionsAddComponent } from './pages/customers/options/add.component';
 import { ValueAddComponent } from './pages/customers/optionsvalue/add.component';
-import { ValueListComponent } from './pages/customers/optionsvalue/list.component';
+// import { ValueListComponent } from './pages/customers/optionsvalue/list.component';
 //import { CountryOrdersComponent } from './pages/shared/wigets/e-commerce/country-orders/country-orders.component';
 //import { CountryOrdersChartComponent } from './pages/shared/wigets/e-commerce/country-orders/chart/country-orders-chart.component';
 

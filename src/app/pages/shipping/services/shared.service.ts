@@ -85,6 +85,9 @@ export class SharedService {
   createShippingRules(param): Observable<any> {
     return this.crudService.postShipping('/private/rules', param);
   }
+  updateShippingRules(id, param): Observable<any> {
+    return this.crudService.putShipping('/private/rules/' + id, param);
+  }
   getShippingRules(storeCode): Observable<any> {
     return this.crudService.getShipping('/private/rules/?store=' + storeCode);
   }

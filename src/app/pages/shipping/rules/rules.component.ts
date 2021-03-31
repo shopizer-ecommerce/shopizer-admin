@@ -20,10 +20,11 @@ export class RulesComponent implements OnInit {
     };
     stores = [];
     rules = {
+        id: '',
         enabled: false,
         code: '',
         name: '',
-        timeBased: '',
+        // timeBased: '',
         startDate: new Date(),
         endDate: new Date(),
         order: 0,
@@ -39,6 +40,8 @@ export class RulesComponent implements OnInit {
     shippingResult: Array<any> = [];
     resultData: Array<any> = [];
     selectedResult: any;
+    title: any = 'Add Rules'
+    buttonText: any = 'Submit'
     constructor(
         private sharedService: SharedService,
         private storeService: StoreService,
@@ -52,11 +55,38 @@ export class RulesComponent implements OnInit {
 
     }
     ngOnInit() {
+
+        if (localStorage.getItem('rulesCode')) {
+            setTimeout(() => {
+                let rulesData = JSON.parse(localStorage.getItem('rulesCode'))
+                // console.log(rulesData)
+                this.title = 'Update Rules'
+                this.buttonText = 'Update'
+                let j = this.stores.find(x => x.code === rulesData.store);
+                this.rules = rulesData
+                this.rules.endDate = new Date(rulesData.endDate)
+                this.rules.startDate = new Date(rulesData.startDate)
+                this.query = rulesData.ruleSets[0];
+
+                // console.log(this.actionsData);\
+                let array1 = this.actionsData
+                var array3 = array1.filter(function (obj) {
+                    return rulesData.actions.find((a) => {
+                        if (a.value) {
+                            obj.value = a.value
+                            return a.code === obj.code
+                        }
+                    });
+                });
+                this.selectedActionsData = array3;
+
+            }, 3000);
+        }
     }
     getStoreList() {
         this.storeService.getListOfMerchantStoreNames({ 'store': '' })
             .subscribe(res => {
-                console.log(res);
+                // console.log(res);
                 res.forEach((store) => {
                     this.stores.push({ value: store.code, label: store.code });
                 });
@@ -66,7 +96,7 @@ export class RulesComponent implements OnInit {
         let fields = {}
         this.sharedService.getRulesCriterias()
             .subscribe(data => {
-                console.log(data)
+                // console.log(data)
                 data.map((value) => {
                     fields[value.code] = {
                         "name": value.name,
@@ -87,7 +117,7 @@ export class RulesComponent implements OnInit {
     getRulesActions() {
         this.sharedService.getRulesActions()
             .subscribe(data => {
-                console.log(data);
+                // console.log(data);
                 this.actionsData = data
             });
     }
@@ -96,6 +126,8 @@ export class RulesComponent implements OnInit {
     }
     onAddActions(actions) {
         console.log('onAddActions')
+        console.log(actions)
+        actions.value = ''
         this.selectedActionsData.push(actions)
     }
     onDeleteIcon(index) {
@@ -103,7 +135,7 @@ export class RulesComponent implements OnInit {
     }
     onSubmit() {
         this.loadingList = true;
-        console.log(this.query)
+        // console.log(this.query)
         let actions = [];
         this.actionsData.map((value) => {
             actions.push({ code: value.code, value: value.value })
@@ -119,19 +151,30 @@ export class RulesComponent implements OnInit {
             "store": this.rules.store,
             "enabled": this.rules.enabled,
             "startDate": moment(this.rules.startDate).utc(),
-            "action": actions,
+            "endDate": moment(this.rules.endDate).utc(),
+            "actions": actions,
             "ruleSets": [
                 querys
             ]
         }
         console.log(param);
-        this.sharedService.createShippingRules(param)
-            .subscribe(data => {
-                console.log(data);
-                this.loadingList = false;
-                this.toastr.success('Rules has been added successfully');
-                this.goToback()
-            });
+        if (this.buttonText === 'Submit') {
+            this.sharedService.createShippingRules(param)
+                .subscribe(data => {
+                    console.log(data);
+                    this.loadingList = false;
+                    this.toastr.success('Rules has been added successfully');
+                    this.goToback()
+                });
+        } else {
+            this.sharedService.updateShippingRules(this.rules.id, param)
+                .subscribe(data => {
+                    console.log(data);
+                    this.loadingList = false;
+                    this.toastr.success('Rules has been updated successfully');
+                    this.goToback()
+                });
+        }
     }
     // getShippingCondition() {
     //     this.loadingList = true;

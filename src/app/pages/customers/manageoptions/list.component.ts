@@ -12,7 +12,7 @@ import { MalihuScrollbarService } from 'ngx-malihu-scrollbar';
 
 export class ManageListComponent implements OnInit {
 
-  constructor(private crudService: CrudService, public router: Router, private mScrollbarService: MalihuScrollbarService) {}
+  constructor(private crudService: CrudService, public router: Router, private mScrollbarService: MalihuScrollbarService) { }
   settings = {
     mode: 'external',
     hideSubHeader: true,
