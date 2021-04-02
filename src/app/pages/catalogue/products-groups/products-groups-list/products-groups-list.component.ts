@@ -15,7 +15,7 @@ export class ProductsGroupsListComponent implements OnInit {
   selectedList = [];
   groups = [];
   selectedGroup;
-
+  loading: boolean = false;
   constructor(
     private productService: ProductService,
     private productGroupsService: ProductGroupsService,

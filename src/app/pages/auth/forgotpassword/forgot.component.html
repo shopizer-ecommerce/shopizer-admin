@@ -23,7 +23,7 @@
           </span>
           <div class="validate-input m-b-36">
             <input class="inputLogin" type="email" [(ngModel)]="user.email" name="email" placeholder="Please enter a email address"
-              required pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]{2,}[.][a-zA-Z0-9-.]{2,}" #email="ngModel" (keyup)="onKeyUp(event)">
+              required pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]{2,}[.][a-zA-Z0-9-.]{2,}" #email="ngModel" (keyup)="onKeyUp()">
           </div>
         </div>
         <div [hidden]="email.valid || email.pristine" class="help-block" style="margin-top:-32px; color:#ff3d71;font-size: 12px;">

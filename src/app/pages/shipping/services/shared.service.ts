@@ -91,6 +91,9 @@ export class SharedService {
   getShippingRules(storeCode): Observable<any> {
     return this.crudService.getShipping('/private/rules/?store=' + storeCode);
   }
+  getShippingRulesDetails(id): Observable<any> {
+    return this.crudService.getShipping('/private/rules/' + id);
+  }
   deleteRules(code): Observable<any> {
     return this.crudService.deleteShipping('/private/rules/' + code);
   }

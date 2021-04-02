@@ -36,9 +36,11 @@
       <ng2-smart-table [settings]="settings" [source]="source" (custom)="deleteRecord($event)" class="home-table">
       </ng2-smart-table>
 
-      <ngx-paginator (changePage)="changePage($event)" [pagesToShow]="5" [currentPage]="currentPage" [perPage]="perPage"
+      <!-- <ngx-paginator (changePage)="changePage($event)" [pagesToShow]="5" [currentPage]="currentPage" [perPage]="perPage"
         [count]="totalCount">
-      </ngx-paginator>
+      </ngx-paginator> -->
+      <!-- <ngx-paginator [pagesToShow]="5" [currentPage]="currentPage" [perPage]="perPage" [count]="totalCount">
+      </ngx-paginator> -->
     </div>
   </nb-card-body>
 </nb-card>

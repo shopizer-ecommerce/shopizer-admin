@@ -57,30 +57,36 @@ export class RulesComponent implements OnInit {
     ngOnInit() {
 
         if (localStorage.getItem('rulesCode')) {
-            setTimeout(() => {
-                let rulesData = JSON.parse(localStorage.getItem('rulesCode'))
-                // console.log(rulesData)
-                this.title = 'Update Rules'
-                this.buttonText = 'Update'
-                let j = this.stores.find(x => x.code === rulesData.store);
-                this.rules = rulesData
-                this.rules.endDate = new Date(rulesData.endDate)
-                this.rules.startDate = new Date(rulesData.startDate)
-                this.query = rulesData.ruleSets[0];
+            // setTimeout(() => {
+            this.sharedService.getShippingRulesDetails(localStorage.getItem('rulesCode'))
+                .subscribe(rulesData => {
 
-                // console.log(this.actionsData);\
-                let array1 = this.actionsData
-                var array3 = array1.filter(function (obj) {
-                    return rulesData.actions.find((a) => {
-                        if (a.value) {
-                            obj.value = a.value
-                            return a.code === obj.code
-                        }
+                    // let rulesData = JSON.parse(localStorage.getItem('rulesCode'))
+                    // console.log(rulesData)
+                    this.title = 'Update Rules'
+                    this.buttonText = 'Update'
+                    let j = this.stores.find(x => x.code === rulesData.store);
+                    this.rules = rulesData
+                    this.rules.endDate = new Date(rulesData.endDate)
+                    this.rules.startDate = new Date(rulesData.startDate)
+                    this.query = rulesData.ruleSets[0];
+
+                    // console.log(this.actionsData);\
+                    let array1 = this.actionsData
+                    var array3 = array1.filter(function (obj) {
+                        return rulesData.actions.find((a) => {
+                            if (a.value) {
+                                obj.value = a.value
+                                return a.code === obj.code
+                            }
+                        });
                     });
-                });
-                this.selectedActionsData = array3;
+                    this.selectedActionsData = array3;
+                }, error => {
 
-            }, 3000);
+                });
+
+            // }, 3000);
         }
     }
     getStoreList() {
@@ -135,15 +141,18 @@ export class RulesComponent implements OnInit {
     }
     onSubmit() {
         this.loadingList = true;
-        // console.log(this.query)
+        console.log(this.query)
         let actions = [];
         this.actionsData.map((value) => {
             actions.push({ code: value.code, value: value.value })
         });
         let querys = { condition: this.query.condition, rules: [] };
-        console.log()
         this.query.rules.map((q) => {
-            querys.rules.push({ field: q.field, operator: q.operator, value: [q.value] })
+            if (typeof q.value === 'string' || q.value instanceof String) {
+                querys.rules.push({ field: q.field, operator: q.operator, value: [q.value] })
+            } else {
+                querys.rules.push({ field: q.field, operator: q.operator, value: q.value })
+            }
         });
         let param = {
             "name": this.rules.name,
@@ -165,6 +174,9 @@ export class RulesComponent implements OnInit {
                     this.loadingList = false;
                     this.toastr.success('Rules has been added successfully');
                     this.goToback()
+                }, error => {
+                    this.toastr.error('Rules has been added fail.');
+                    this.loadingList = false;
                 });
         } else {
             this.sharedService.updateShippingRules(this.rules.id, param)
@@ -173,6 +185,9 @@ export class RulesComponent implements OnInit {
                     this.loadingList = false;
                     this.toastr.success('Rules has been updated successfully');
                     this.goToback()
+                }, error => {
+                    this.toastr.error('Rules has been updated fail.');
+                    this.loadingList = false;
                 });
         }
     }

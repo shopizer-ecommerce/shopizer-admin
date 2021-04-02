@@ -121,8 +121,7 @@
               <div style="width: 20%;float: right; margin-top: -32px;">
                 <div class="form-group">
                   <!-- <label class="label inputLabel">{{ 'STORE.MERCHANT_STORE' | translate }}</label> -->
-                  <nb-select (onChange)="onAddActions()" name="action" placeholder="Add Actions" outline shape="rectangle"
-                    class="fullWidth">
+                  <nb-select name="action" placeholder="Add Actions" outline shape="rectangle" class="fullWidth">
                     <nb-option *ngFor="let action of actionsData" [value]="action.code" (click)="onAddActions(action)">{{action.name}}
                     </nb-option>
                   </nb-select>

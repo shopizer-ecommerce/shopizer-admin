@@ -18,6 +18,7 @@ import { Description } from '../../../shared/models/description';
 export class CatalogueFormComponent implements OnInit {
   @ViewChild('tree', { static: false }) tree;
   form: FormGroup;
+  loader: boolean = false;
   isCodeUnique = true;
   nodes = [];
   category = [];
@@ -30,8 +31,8 @@ export class CatalogueFormComponent implements OnInit {
     scrollOnActivate: true,
     animateSpeed: 30,
     animateAcceleration: 1.2,
-   //displayField: 'description.name'
-  } 
+    //displayField: 'description.name'
+  }
 
   constructor(
     //https://github.com/khan4019/tree-grid-directive
@@ -59,11 +60,11 @@ export class CatalogueFormComponent implements OnInit {
     }
   }
 
-  filterEntry(){
+  filterEntry() {
     let productsArray = [];
     let categoryArray = [];
-    if(this.nodes.length > 0) {
-      this.nodes.forEach(function(entry) {
+    if (this.nodes.length > 0) {
+      this.nodes.forEach(function (entry) {
         console.log(JSON.stringify(entry));
         //if(entry.category != null) {
         //  categoryArray.push(entry.category)

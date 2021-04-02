@@ -14,6 +14,7 @@ import { StorageService } from '../shared/services/storage.service';
 })
 export class HomeComponent implements OnInit {
   loading = false;
+  loadingList: boolean = false;
   user = {
     userName: '',
     lastAccess: '',

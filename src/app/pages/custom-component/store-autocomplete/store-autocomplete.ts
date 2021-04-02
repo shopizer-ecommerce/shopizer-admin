@@ -10,8 +10,8 @@ export class storeAutoCompleteComponent implements OnInit {
 
 
     @Output() onStore: EventEmitter<any> = new EventEmitter();
-
-    private _stores = [];
+    public merchant: any = '';
+    public _stores = [];
     // private _value: any = '';
 
     constructor(

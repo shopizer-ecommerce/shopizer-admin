@@ -122,31 +122,31 @@ export class RulesListComponent implements OnInit {
 
   }
   // paginator
-  // changePage(event) {
-  //   switch (event.action) {
-  //     case 'onPage': {
-  //       this.currentPage = event.data;
-  //       break;
-  //     }
-  //     case 'onPrev': {
-  //       this.currentPage--;
-  //       break;
-  //     }
-  //     case 'onNext': {
-  //       this.currentPage++;
-  //       break;
-  //     }
-  //     case 'onFirst': {
-  //       this.currentPage = 1;
-  //       break;
-  //     }
-  //     case 'onLast': {
-  //       this.currentPage = event.data;
-  //       break;
-  //     }
-  //   }
+  changePage(event) {
+    switch (event.action) {
+      case 'onPage': {
+        this.currentPage = event.data;
+        break;
+      }
+      case 'onPrev': {
+        this.currentPage--;
+        break;
+      }
+      case 'onNext': {
+        this.currentPage++;
+        break;
+      }
+      case 'onFirst': {
+        this.currentPage = 1;
+        break;
+      }
+      case 'onLast': {
+        this.currentPage = event.data;
+        break;
+      }
+    }
 
-  // }
+  }
   delete(e) {
     console.log(e)
     this.loadingList = true;
@@ -156,6 +156,7 @@ export class RulesListComponent implements OnInit {
         this.toastr.success("Packages has been deleted successfully");
         this.getShippingRulesList()
       }, error => {
+        this.toastr.success("Packages has been deleted fail");
         this.loadingList = false;
 
       });
@@ -164,7 +165,7 @@ export class RulesListComponent implements OnInit {
     if (e.action == 'delete') {
       this.delete(e);
     } if (e.action == 'edit') {
-      localStorage.setItem('rulesCode', JSON.stringify(e.data));
+      localStorage.setItem('rulesCode', e.data.id);
       this.router.navigate(['pages/shipping/rules/add']);
     }
   }

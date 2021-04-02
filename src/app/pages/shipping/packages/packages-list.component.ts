@@ -116,31 +116,31 @@ export class PackagesListComponent implements OnInit {
 
   }
   // paginator
-  // changePage(event) {
-  //   switch (event.action) {
-  //     case 'onPage': {
-  //       this.currentPage = event.data;
-  //       break;
-  //     }
-  //     case 'onPrev': {
-  //       this.currentPage--;
-  //       break;
-  //     }
-  //     case 'onNext': {
-  //       this.currentPage++;
-  //       break;
-  //     }
-  //     case 'onFirst': {
-  //       this.currentPage = 1;
-  //       break;
-  //     }
-  //     case 'onLast': {
-  //       this.currentPage = event.data;
-  //       break;
-  //     }
-  //   }
+  changePage(event) {
+    switch (event.action) {
+      case 'onPage': {
+        this.currentPage = event.data;
+        break;
+      }
+      case 'onPrev': {
+        this.currentPage--;
+        break;
+      }
+      case 'onNext': {
+        this.currentPage++;
+        break;
+      }
+      case 'onFirst': {
+        this.currentPage = 1;
+        break;
+      }
+      case 'onLast': {
+        this.currentPage = event.data;
+        break;
+      }
+    }
 
-  // }
+  }
   delete(e) {
     this.loadingList = true;
     this.sharedService.deletePackaging(e.data.code)

@@ -17,6 +17,7 @@ import { validators } from '../../../shared/validation/validators';
 export class OptionComponent implements OnInit {
   form: FormGroup;
   loader = false;
+  loadingInfo: boolean = false;
   option = new Option();
   languages = [];
   types = [

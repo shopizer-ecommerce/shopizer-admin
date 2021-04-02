@@ -18,6 +18,7 @@ import { OptionValueImageService } from '../services/option-value-image.service'
 export class OptionValuesComponent implements OnInit {
   form: FormGroup;
   loader = false;
+  loadingInfo: boolean = false;
   optionValue = new OptionValue();
   languages = [];
   types = [

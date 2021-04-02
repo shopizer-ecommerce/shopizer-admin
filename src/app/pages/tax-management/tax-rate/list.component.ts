@@ -232,7 +232,7 @@ export class TaxRateListComponent implements OnInit {
         }
       });
   }
-  createTaxRate(e) {
+  createTaxRate() {
     localStorage.setItem('rateId', '');
     this.router.navigate(['pages/tax-management/rate-add']);
   }

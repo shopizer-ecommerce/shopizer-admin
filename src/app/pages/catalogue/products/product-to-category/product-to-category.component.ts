@@ -17,7 +17,7 @@ export class ProductToCategoryComponent implements OnInit {
   loadingList = false;
   categories = [];
   settings = {};
-
+  loader: boolean = false;
   // paginator
   perPage = 10;
   currentPage = 1;

@@ -1,7 +1,8 @@
 <ngx-back-button></ngx-back-button>
 <nb-card size="small" class="page-card pick-list">
   <nb-card-header>
-    {{ 'COMPONENTS.CATALOGUE' | translate}} {{ catalog?.code }}
+    <!-- {{ 'COMPONENTS.CATALOGUE' | translate}} {{ catalog?.code }} -->
+    {{ 'COMPONENTS.CATALOGUE' | translate}}
   </nb-card-header>
   <nb-card-body>
     <div class="selector-wrap">
@@ -13,31 +14,19 @@
             </a>
           </nb-action>
         </nb-actions>
-        <nb-select *ngIf="availableList.length" placeholder="{{ 'COMPONENTS.CATALOGUES' | translate}}"
-                   outline
-                   shape="rectangle">
-          <nb-option *ngFor="let catalog of catalogues"
-                     [value]="catalog.code" (click)="selectGroup(catalog.code)">{{ catalog.code }}</nb-option>
+        <nb-select *ngIf="availableList.length" placeholder="{{ 'COMPONENTS.CATALOGUES' | translate}}" outline shape="rectangle">
+          <nb-option *ngFor="let catalog of catalogues" [value]="catalog.code" (click)="selectGroup(catalog.code)">{{
+            catalog.code }}</nb-option>
         </nb-select>
       </div>
     </div>
 
-    <p-pickList sourceHeader="{{ 'COMMON.AVAILABLE' | translate}}"
-                targetHeader="{{ 'COMMON.SELECTED' | translate}}"
-                dragdrop="true"
-                [responsive]="true"
-                [source]="availableList"
-                [target]="selectedList"
-                sourceFilterPlaceholder="{{ 'COMMON.SEARCH' | translate}}"
-                targetFilterPlaceholder="{{ 'COMMON.SEARCH' | translate}}"
-                [disabled]="!selectedGroup"
-                [showSourceControls]="false"
-                [showTargetControls]="false"
-                (onMoveToTarget)="moveEvent($event, 'toTarget')"
-                (onMoveToSource)="moveEvent($event, 'toSource')"
-                (onMoveAllToTarget)="moveEvent($event, 'allToTarget')"
-                (onMoveAllToSource)="moveEvent($event, 'allToSource')"
-                filterBy="code">
+    <p-pickList sourceHeader="{{ 'COMMON.AVAILABLE' | translate}}" targetHeader="{{ 'COMMON.SELECTED' | translate}}"
+      dragdrop="true" [responsive]="true" [source]="availableList" [target]="selectedList" sourceFilterPlaceholder="{{ 'COMMON.SEARCH' | translate}}"
+      targetFilterPlaceholder="{{ 'COMMON.SEARCH' | translate}}" [disabled]="!selectedGroup" [showSourceControls]="false"
+      [showTargetControls]="false" (onMoveToTarget)="moveEvent($event, 'toTarget')" (onMoveToSource)="moveEvent($event, 'toSource')"
+      (onMoveAllToTarget)="moveEvent($event, 'allToTarget')" (onMoveAllToSource)="moveEvent($event, 'allToSource')"
+      filterBy="code">
       <ng-template let-item pTemplate="item">
         <div class="ui-helper-clearfix item-picklist">
           <div>{{item?.id}}</div>

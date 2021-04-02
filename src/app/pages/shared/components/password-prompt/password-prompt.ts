@@ -9,7 +9,9 @@ import { NbDialogRef } from '@nebular/theme';
 export class PasswordPromptComponent {
 
   constructor(protected ref: NbDialogRef<PasswordPromptComponent>) { }
-
+  name = {
+    value: ''
+  }
   cancel() {
     this.ref.close();
   }

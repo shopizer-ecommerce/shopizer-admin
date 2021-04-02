@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./add.component.scss']
 })
 export class ValueAddComponent implements OnInit {
+  loadingList: boolean = false;
   displayText: Array<any> = [{ 'name': 'text' }, { 'name': 'select' }, { 'name': 'radio' }, { 'name': 'Checkbox' }]
   public scrollbarOptions = { axis: 'y', theme: 'minimal-dark' };
   constructor(

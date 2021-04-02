@@ -22,6 +22,7 @@ export class CategoriesListComponent implements OnInit {
   source: LocalDataSource = new LocalDataSource();
   listingService: ListingService;
   loadingList = false;
+  loading: boolean = false;
   categories = [];
   settings = {};
 
@@ -59,18 +60,18 @@ export class CategoriesListComponent implements OnInit {
     };
   }
 
-    /** callback methods for table list*/
-    private loadList(newParams:any) {
-      this.currentPage = 1; //back to page 1
-      this.params = newParams;
-      this.getList();
-    }
-  
-    private resetList() {
-      this.currentPage = 1;//back to page 1
-      this.params = this.loadParams();
-      this.getList();
-    }
+  /** callback methods for table list*/
+  private loadList(newParams: any) {
+    this.currentPage = 1; //back to page 1
+    this.params = newParams;
+    this.getList();
+  }
+
+  private resetList() {
+    this.currentPage = 1;//back to page 1
+    this.params = this.loadParams();
+    this.getList();
+  }
 
   ngOnInit() {
     this.getList();
@@ -84,7 +85,7 @@ export class CategoriesListComponent implements OnInit {
     //ng2-smart-table server side filter
     this.source.onChanged().subscribe((change) => {
       if (!this.loadingList) {//listing service
-        this.listingService.filterDetect(this.params,change,this.loadList.bind(this),this.resetList.bind(this));
+        this.listingService.filterDetect(this.params, change, this.loadList.bind(this), this.resetList.bind(this));
       }
     });
 

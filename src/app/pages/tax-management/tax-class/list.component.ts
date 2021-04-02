@@ -201,7 +201,7 @@ export class TaxClassListComponent implements OnInit {
         }
       });
   }
-  createTaxClass(e) {
+  createTaxClass() {
     localStorage.setItem('classId', '');
     this.router.navigate(['pages/tax-management/classes-add']);
   }

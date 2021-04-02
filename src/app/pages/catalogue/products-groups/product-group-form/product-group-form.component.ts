@@ -13,7 +13,7 @@ export class ProductGroupFormComponent implements OnInit {
   form: FormGroup;
   codePattern = '^[a-zA-Z0-9]+$';
   isCodeUnique = true;
-
+  loading: boolean = false;
   constructor(
     private fb: FormBuilder,
     private productGroupsService: ProductGroupsService,

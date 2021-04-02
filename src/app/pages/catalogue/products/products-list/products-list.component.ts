@@ -23,6 +23,7 @@ export class ProductsListComponent implements OnInit {
   source: LocalDataSource = new LocalDataSource();
   listingService: ListingService;
   loadingList = false;
+  loading: boolean = false;
   stores = [];
   isSuperadmin: boolean;
   selectedStore: String = '';

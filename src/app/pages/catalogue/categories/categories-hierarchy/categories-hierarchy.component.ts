@@ -16,6 +16,7 @@ export class CategoriesHierarchyComponent implements OnInit {
     allowDrag: true
   }
   loader = false;
+  loading: boolean = false;
   params = this.loadParams();
 
   constructor(
@@ -68,9 +69,9 @@ export class CategoriesHierarchyComponent implements OnInit {
     // someNode.expand();
     var parentId = event.to.parent.id;
 
-    if(event.to.parent.name === undefined) {
+    if (event.to.parent.name === undefined) {
       parentId = -1;
-    } 
+    }
 
     this.categoryService.updateHierarchy(event.node.id, parentId)
       .subscribe(res => {
