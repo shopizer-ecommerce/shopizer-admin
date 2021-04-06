@@ -84,6 +84,7 @@ export class ShippingConfigureComponent implements OnInit {
     this.sharedService.getShippingModulesDetails(type)
       .subscribe(data => {
         console.log(data);
+        this.active = data.active;
         this.loadingList = false;
         this.shippingData = data;
         this.setConfigureData();

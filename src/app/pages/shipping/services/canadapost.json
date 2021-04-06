@@ -25,7 +25,7 @@
         "placeholder": "Please select environment",
         "name": "enviroment",
         "objectKey": "",
-        "isRequired": true,
+        "isRequired": false,
         "optionData": [
             {
                 "id": "test",

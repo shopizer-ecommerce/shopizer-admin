@@ -62,13 +62,18 @@ export class RulesComponent implements OnInit {
                 .subscribe(rulesData => {
 
                     // let rulesData = JSON.parse(localStorage.getItem('rulesCode'))
-                    // console.log(rulesData)
+                    console.log(rulesData)
                     this.title = 'Update Rules'
                     this.buttonText = 'Update'
                     let j = this.stores.find(x => x.code === rulesData.store);
                     this.rules = rulesData
-                    this.rules.endDate = new Date(rulesData.endDate)
-                    this.rules.startDate = new Date(rulesData.startDate)
+                    setTimeout(() => {
+                        console.log(rulesData.store)
+                        this.rules.store = rulesData.store
+                    }, 3000);
+
+                    this.rules.endDate = rulesData.endDate && new Date(rulesData.endDate)
+                    this.rules.startDate = rulesData.startDate && new Date(rulesData.startDate)
                     this.query = rulesData.ruleSets[0];
 
                     // console.log(this.actionsData);\
@@ -96,6 +101,12 @@ export class RulesComponent implements OnInit {
                 res.forEach((store) => {
                     this.stores.push({ value: store.code, label: store.code });
                 });
+            });
+    }
+    onChangeCode(e) {
+        this.sharedService.checkCode(e.target.value)
+            .subscribe(res => {
+                console.log(res);
             });
     }
     getRulesCriterias() {
