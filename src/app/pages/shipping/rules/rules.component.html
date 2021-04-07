@@ -30,8 +30,8 @@
                     <label class="label inputLabel">{{'RULES.RULES_UNIQUE_CODE' | translate}}</label>
                     <input type="text" class="form-control inputText" placeholder="{{'RULES.RULES_UNIQUE_CODE' | translate}}"
                       [(ngModel)]="rules.code" (focusout)="onChangeCode($event)" name="code" required>
-                    <!-- <span *ngIf="codeExits" class="err-message">{{message}}</span>
-                    <span *ngIf="!codeExits" class="err-message-success">{{message}}</span> -->
+                    <span *ngIf="codeExits" class="err-message">{{'PACKAGING.CODE_EXITS' | translate}}</span>
+                    <!-- <span *ngIf="!codeExits" class="err-message-success">{{message}}</span> -->
                   </div>
                 </div>
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">

@@ -19,6 +19,7 @@ export class RulesComponent implements OnInit {
         ]
     };
     stores = [];
+    codeExits: boolean;
     rules = {
         id: '',
         enabled: false,
@@ -107,6 +108,10 @@ export class RulesComponent implements OnInit {
         this.sharedService.checkCode(e.target.value)
             .subscribe(res => {
                 console.log(res);
+                this.codeExits = true;
+            }, error => {
+                console.log(error);
+                this.codeExits = false;
             });
     }
     getRulesCriterias() {

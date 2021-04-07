@@ -98,7 +98,7 @@ export class SharedService {
     return this.crudService.deleteShipping('/private/rules/' + code);
   }
   checkCode(value): Observable<any> {
-    return this.crudService.getShipping('/private/rules/' + value + ' /unique?store=DEFAULT');
+    return this.crudService.getShipping('/private/rules/' + value + '/unique?store=DEFAULT');
   }
 
   // ************ Shipping Rules API NEW Start ***************
