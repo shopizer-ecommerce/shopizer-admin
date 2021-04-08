@@ -33,6 +33,19 @@
               <div class="row">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                   <div class="form-group">
+                    <div>
+                      <nb-checkbox formControlName='available'>
+                        {{ 'CONTENT.VISIBLE' | translate}}
+                      </nb-checkbox>
+                    </div>
+                  </div>
+
+
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                  <div class="form-group">
                     <label for="sku" class="col-form-label inputLabel">{{ 'PRODUCT.SKU' | translate}} *</label>
                     <div>
                       <input type="text" class="form-control inputText" id="sku" formControlName='sku' placeholder="{{ 'PRODUCT.SKU' | translate}}"
@@ -51,18 +64,7 @@
                     </div>
                   </div>
                 </div>
-              </div>
-              <div class="row">
-                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                  <div class="form-group">
-                    <div>
-                      <nb-checkbox formControlName='available'>
-                        {{ 'COMMON.AVAILABLE' | translate}}
-                      </nb-checkbox>
-                    </div>
-                  </div>
-                </div>
-                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                <!-- <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                   <div class="form-group">
                     <div>
                       <nb-checkbox formControlName='preOrder'>
@@ -70,10 +72,10 @@
                       </nb-checkbox>
                     </div>
                   </div>
-                </div>
+                </div> -->
               </div>
               <div class="row">
-                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                   <div class="form-group">
                     <label class="col-form-label inputLabel">{{ 'PRODUCT.DATE_AVAILABLE' | translate}}</label>
                     <div>
@@ -83,7 +85,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                   <div class="form-group">
                     <label class="col-form-label inputLabel">{{ 'PRODUCT.MANUFACTURER' | translate}}</label>
                     <div>
@@ -106,7 +108,7 @@
               </div>
 
               <div class="row">
-                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                   <div class="form-group">
                     <label class=" col-form-label inputLabel">{{ 'PRODUCT.PRODUCT_TYPE' | translate}}</label>
                     <div>
@@ -122,7 +124,7 @@
                     </div>
                   </div>
                 </div>
-                <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+                <!-- <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                   <div class="form-group">
                     <label for="price" class=" col-form-label inputLabel">{{ 'PRODUCT.PRICE' | translate}}</label>
                     <div>
@@ -130,11 +132,11 @@
                         ngxValidateNumber placeholder="{{ 'PRODUCT.PRICE' | translate}}" required>
                     </div>
                   </div>
-                </div>
+                </div> -->
               </div>
 
 
-              <div class="row">
+              <!-- <div class="row">
                 <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                   <div class="form-group">
                     <label for="quantity" class="col-form-label inputLabel">{{ 'PRODUCT.QUANTITY' |
@@ -154,14 +156,14 @@
                     </div>
                   </div>
                 </div>
-              </div>
+              </div> -->
 
 
 
 
 
 
-              <div class="form-group" formGroupName='productSpecifications'>
+              <!-- <div class="form-group" formGroupName='productSpecifications'>
                 <div class="row">
                   <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                     <div class="form-group">
@@ -206,15 +208,15 @@
                   </div>
                 </div>
 
-              </div>
-              <div class="form-group">
+              </div> -->
+              <!-- <div class="form-group">
                 <label for="height" class=" col-form-label inputLabel">{{ 'DESCRIPTION_FORM.IMAGE' | translate
                   }}</label>
                 <div>
                   <ngx-image-uploading [productImages]="product.images" (imageChanged)="onImageChanged($event)">
                   </ngx-image-uploading>
                 </div>
-              </div>
+              </div> -->
 
             </nb-card-body>
           </nb-card>

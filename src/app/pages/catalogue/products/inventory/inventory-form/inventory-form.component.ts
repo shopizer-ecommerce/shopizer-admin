@@ -8,6 +8,7 @@ import { ToastrService } from 'ngx-toastr';
 import { TranslateService } from '@ngx-translate/core';
 import { InventoryService } from '../../services/inventory.service';
 import * as moment from 'moment';
+import { validators } from '../../../../shared/validation/validators';
 
 @Component({
   selector: 'ngx-inventory-form',
@@ -59,20 +60,41 @@ export class InventoryFormComponent implements OnInit {
 
   private createForm() {
     this.form = this.fb.group({
-      store: ['DEFAULT', [Validators.required]],
-      owner: ['', [Validators.required]],
+      available: [false],
+      sku: ['', [Validators.required, Validators.pattern(validators.alphanumeric)]],
       dateAvailable: [new Date()],
-      quantity: [0, [Validators.required]]
+      store: ['DEFAULT', [Validators.required]],
+      variant: ['', [Validators.required]],
+      productSpecifications: this.fb.group({
+        weight: ['', [Validators.pattern(validators.number)]],
+        height: ['', [Validators.pattern(validators.number)]],
+        width: ['', [Validators.pattern(validators.number)]],
+        length: ['', [Validators.pattern(validators.number)]],
+      }),
+      priceDetails: this.fb.group({
+        finalPrice: ['', [Validators.required]],
+        discountedPrice: [''],
+        startDate: [new Date()],
+        endDate: [new Date()],
+      })
     });
   }
+  // private createForm() {
+  //   this.form = this.fb.group({
+  //     store: ['DEFAULT', [Validators.required]],
+  //     owner: ['', [Validators.required]],
+  //     dateAvailable: [new Date()],
+  //     quantity: [0, [Validators.required]]
+  //   });
+  // }
 
   fillForm() {
-    this.form.patchValue({
-      store: this.inventory.store.code,
-      owner: this.inventory.owner,
-      dateAvailable: this.inventory.dateAvailable,
-      quantity: this.inventory.quantity,
-    });
+    // this.form.patchValue({
+    //   store: this.inventory.store.code,
+    //   owner: this.inventory.owner,
+    //   dateAvailable: this.inventory.dateAvailable,
+    //   quantity: this.inventory.quantity,
+    // });
   }
 
 

@@ -119,21 +119,21 @@ export class ProductFormComponent implements OnInit {
     this.form = this.fb.group({
       sku: ['', [Validators.required, Validators.pattern(validators.alphanumeric)]],
       available: [false],
-      preOrder: [false],
+      // preOrder: [false],
       dateAvailable: [new Date()],
       //TODO
       manufacturer: ['DEFAULT'],
       type: ['GENERAL'],
-      price: [''],
-      quantity: ['', [Validators.required, Validators.pattern(validators.number)]],
-      sortOrder: ['', [Validators.required, Validators.pattern(validators.number)]],
-      productShipeable: [false, [Validators.required]],
-      productSpecifications: this.fb.group({
-        weight: ['', [Validators.pattern(validators.number)]],
-        height: ['', [Validators.pattern(validators.number)]],
-        width: ['', [Validators.pattern(validators.number)]],
-        length: ['', [Validators.pattern(validators.number)]],
-      }),
+      // price: [''],
+      // quantity: ['', [Validators.required, Validators.pattern(validators.number)]],
+      // sortOrder: ['', [Validators.required, Validators.pattern(validators.number)]],
+      // productShipeable: [false, [Validators.required]],
+      // productSpecifications: this.fb.group({
+      //   weight: ['', [Validators.pattern(validators.number)]],
+      //   height: ['', [Validators.pattern(validators.number)]],
+      //   width: ['', [Validators.pattern(validators.number)]],
+      //   length: ['', [Validators.pattern(validators.number)]],
+      // }),
       // placementOrder: [0, [Validators.required]],  // ???
       // taxClass: [0, [Validators.required]], // ???
       selectedLanguage: [this.defaultLanguage, [Validators.required]],
@@ -164,27 +164,27 @@ export class ProductFormComponent implements OnInit {
     this.form.patchValue({
       sku: this.product.sku,
       available: this.product.available,
-      preOrder: this.product.preOrder,
+      // preOrder: this.product.preOrder,
       dateAvailable: new Date(this.product.dateAvailable),
       manufacturer: this.product.manufacturer == null ? '' : this.product.manufacturer.code,
       type: this.product.type == null ? '' : this.product.type.code,
-      price: this.product.price,
-      quantity: this.product.quantity,
-      sortOrder: this.product.sortOrder,
-      productShipeable: this.product.productShipeable,
+      // price: this.product.price,
+      // quantity: this.product.quantity,
+      // sortOrder: this.product.sortOrder,
+      // productShipeable: this.product.productShipeable,
       // placementOrder: [0, [Validators.required]],  // ???
       // taxClass: [0, [Validators.required]], // ???
       selectedLanguage: this.defaultLanguage,
       descriptions: [],
     });
     this.fillFormArray();
-    const dimension = {
-      weight: this.product.productSpecifications.weight,
-      height: this.product.productSpecifications.height,
-      width: this.product.productSpecifications.width,
-      length: this.product.productSpecifications.length,
-    };
-    this.form.patchValue({ productSpecifications: dimension });
+    // const dimension = {
+    //   weight: this.product.productSpecifications.weight,
+    //   height: this.product.productSpecifications.height,
+    //   width: this.product.productSpecifications.width,
+    //   length: this.product.productSpecifications.length,
+    // };
+    // this.form.patchValue({ productSpecifications: dimension });
   }
 
   fillFormArray() {
@@ -233,31 +233,31 @@ export class ProductFormComponent implements OnInit {
     });
   }
 
-  onImageChanged(event) {
-    console.log(event);
-    switch (event.type) {
-      case 'add': {
-        this.uploadData.append('file', event.data);
-        break;
-      }
-      case 'remove': {
-        this.removedImagesArray.push(event.data);
-        break;
-      }
-      case 'remove-one': {
-        const fd = new FormData();
-        this.uploadData.delete(event.data.name);
-        this.uploadData.forEach((img) => {
-          if (img['name'] !== event.data.name) {
-            fd.append('file[]', img, img['name']);
-          }
-        });
-        this.uploadData = new FormData();
-        this.uploadData = fd;
-        break;
-      }
-    }
-  }
+  // onImageChanged(event) {
+  //   console.log(event);
+  //   switch (event.type) {
+  //     case 'add': {
+  //       this.uploadData.append('file', event.data);
+  //       break;
+  //     }
+  //     case 'remove': {
+  //       this.removedImagesArray.push(event.data);
+  //       break;
+  //     }
+  //     case 'remove-one': {
+  //       const fd = new FormData();
+  //       this.uploadData.delete(event.data.name);
+  //       this.uploadData.forEach((img) => {
+  //         if (img['name'] !== event.data.name) {
+  //           fd.append('file[]', img, img['name']);
+  //         }
+  //       });
+  //       this.uploadData = new FormData();
+  //       this.uploadData = fd;
+  //       break;
+  //     }
+  //   }
+  // }
 
   checkSku(event) {
     const sku = event.target.value;
@@ -267,15 +267,15 @@ export class ProductFormComponent implements OnInit {
       });
   }
 
-  removeImages(array) {
-    array.forEach((el) => {
-      this.productImageService.removeImage(el)
-        .subscribe(res1 => {
-        }, error => {
-          console.log('Something went wrong', error);
-        });
-    });
-  }
+  // removeImages(array) {
+  //   array.forEach((el) => {
+  //     this.productImageService.removeImage(el)
+  //       .subscribe(res1 => {
+  //       }, error => {
+  //         console.log('Something went wrong', error);
+  //       });
+  //   });
+  // }
 
   save() {
     if (!this.isCodeUnique) {
@@ -337,7 +337,7 @@ export class ProductFormComponent implements OnInit {
 
       if (this.product.id) {
         this.saved = true;
-        this.removeImages(this.removedImagesArray);
+        // this.removeImages(this.removedImagesArray);
         this.productService.updateProduct(this.product.id, productObject)
           .subscribe(res => {
             this.uploadData.append('id', res.id);

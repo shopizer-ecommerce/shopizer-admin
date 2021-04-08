@@ -38,8 +38,8 @@
       <div class="form-group">
         <label for="optionPrice" class="col-sm-10 col-form-label">{{ 'PRODUCT_ATTRIBUTES.OPTION_PRICE' | translate}}</label>
         <div class="col-sm-12">
-          <input type="number" class="form-control" id="optionPrice" formControlName='optionPrice'
-                 placeholder="{{ 'PRODUCT.QUANTITY' | translate}}" required>
+          <input type="number" class="form-control" id="optionPrice" formControlName='optionPrice' placeholder="{{ 'PRODUCT.QUANTITY' | translate}}"
+            required>
         </div>
       </div>
 
@@ -47,8 +47,8 @@
       <div class="form-group">
         <label for="order" class="col-sm-10 col-form-label">{{ 'COMMON.ORDER' | translate}}</label>
         <div class="col-sm-12">
-          <input type="number" class="form-control" id="order" formControlName='order'
-                 placeholder="{{ 'PRODUCT.QUANTITY' | translate}}" required>
+          <input type="number" class="form-control" id="order" formControlName='order' placeholder="{{ 'PRODUCT.QUANTITY' | translate}}"
+            required>
         </div>
       </div>
 
@@ -71,14 +71,15 @@
       </div>
 
       <div class="form-group">
-        <label for="additionalWeight" class="col-sm-10 col-form-label">{{ 'PRODUCT_ATTRIBUTES.ADDITIONAL_WEIGHT' | translate}}</label>
+        <label for="additionalWeight" class="col-sm-10 col-form-label">{{ 'PRODUCT_ATTRIBUTES.ADDITIONAL_WEIGHT' |
+          translate}}</label>
         <div class="col-sm-12">
           <input type="number" class="form-control" id="additionalWeight" formControlName='additionalWeight'
-                 placeholder="additionalWeight" required>
+            placeholder="additionalWeight" required>
         </div>
       </div>
 
-      <hr/>
+      <hr />
 
       <div class="form-group actions-button">
         <button type="submit" class="btn btn-primary" (click)="save()">{{ 'COMMON.SAVE' | translate }}</button>

@@ -68,7 +68,7 @@ export class ManageInventoryComponent implements OnInit {
     this.inventoryService.getListOfInventories(id, this.params)
       .subscribe(res => {
         this.totalCount = res.recordsTotal;
-        this.source.load(res.inventory);
+        this.source.load(res.items);
         this.loadingList = false;
       });
     this.setSettings();

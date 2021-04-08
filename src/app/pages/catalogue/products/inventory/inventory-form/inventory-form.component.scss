@@ -50,6 +50,92 @@
         }
     }
 
+    .add-button {
+        background-color: #36f;
+        border-color: #36f;
+        color: #fff;
+        margin-top: 11px;
+        width: 100px;
+        text-transform: uppercase;
+        font-weight: 600;
+        font-size: 0.875rem;
+        height: 35px;
+    }
+
+    .containerCenter {
+        display: flex;
+        justify-content: center;
+        float: right;
+        width: 100%;
+        // padding: 20px 0;
+
+        .centerSec {
+            width: 100%;
+
+            .tabelSec {
+                width: 100%;
+                display: table;
+                margin: 0 auto;
+                width: 100%;
+                border: 1px solid #e0e0e0;
+                border-radius: 5px;
+                margin-bottom: 20px;
+
+                table {
+                    width: 100%;
+                    border: 1px solid #e0e0e0;
+                    border-radius: 5px;
+                    overflow: hidden;
+
+                    thead {
+                        th {
+                            padding: 10px 6px;
+                            font-weight: 600;
+                            font-family: Roboto;
+                        }
+
+                        th:nth-child(1) {
+                            width: 33.33%;
+                        }
+
+                        th:nth-child(2) {
+                            width: 33.33%;
+                        }
+
+                        th:nth-child(3) {
+                            width: 33.33%;
+                        }
+
+                        th:nth-child(4) {
+                            width: 14%;
+                        }
+                    }
+
+                    tbody {
+                        tr:nth-child(odd) {
+                            background-color: #f9f9f9;
+                        }
+
+                        td {
+                            padding: 10px 6px;
+                            font-family: Roboto;
+                            text-transform: capitalize;
+                        }
+
+                        .boldTxt {
+                            font-weight: 600;
+                        }
+
+                        .blueTxt {
+                            color: #28bef8;
+                            margin-left: 6px;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
 }
 
 :host ::ng-deep .inventory_create_page {
