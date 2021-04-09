@@ -1,9 +1,7 @@
-.another-action {
-    margin-top: 2rem;
-
+* {
+    margin: 0px;
     padding: 0px;
     box-sizing: border-box;
-    width: 100%
 }
 
 body,
@@ -11,7 +9,55 @@ html {
     height: 100%;
 }
 
+:host ::ng-deep .limiter {
+    .select_fields {
+        width: 100%;
+        max-width: 26rem !important;
+
+
+        .select-button {
+            text-align: left;
+            height: 47px;
+
+            .placeholder {
+                color: #8e9ab4 !important;
+                font-weight: 200;
+            }
+
+            nb-icon {
+                right: 15px
+            }
+
+            svg {
+                width: 20px;
+                float: right;
+                fill: #8e9ab4
+            }
+        }
+    }
+}
+
+.another-action {
+    width: 100%
+}
+
+
 /*---------------------------------------------*/
+
+.mainContainer {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+
+    .width50 {
+        max-width: 47%;
+
+        &.leftSide {
+            margin-right: 30px;
+        }
+    }
+}
+
 a {
     font-size: 14px;
     line-height: 1.7;
@@ -130,14 +176,22 @@ iframe {
 }
 
 .txt3 {
-    font-size: 13px;
-    color: #555555;
-    line-height: 1.4;
+    font-size: 1rem;
+    line-height: 30px;
+    color: #666666;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
 }
 
 .txt4 {
     font-size: 14px;
     text-align: center;
+    color: #555555;
+    line-height: 1.4;
+}
+
+.txt5 {
+    font-size: 13px;
     color: #555555;
     line-height: 1.4;
 }
@@ -182,14 +236,14 @@ iframe {
 
 .login100-form {
     width: 100%;
-    max-width: 35rem;
+    max-width: 80%;
 }
 
 .titleClass {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding-bottom: 30px;
+    // padding-bottom: 30px;
 }
 
 .login100-form-title {
@@ -240,7 +294,7 @@ iframe {
     border-radius: 0.17rem;
     font-size: 0.9375rem;
     font-weight: 600;
-    line-height: 1.5rem;
+    // line-height: 1.5rem;
     padding: 0.6875rem 1rem;
     width: 100%;
     background-color: #f7f9fc;
@@ -449,7 +503,8 @@ input:focus {
 
 .login100-form-btn {
     width: 100%;
-    // padding: 0.8125rem 1.125rem;
+    margin: 25px 200px;
+    padding: 0.8125rem 1.125rem;
     background-color: #36f !important;
     border-color: #36f !important;
     color: #fff !important;

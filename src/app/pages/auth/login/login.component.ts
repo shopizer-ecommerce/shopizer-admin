@@ -144,4 +144,8 @@ export class LoginComponent implements OnInit {
     this.router.navigate(['auth/forgot-password']);
   }
 
+  onClickRegister() {
+    this.router.navigate(['auth/register']);
+  }
+
 }
