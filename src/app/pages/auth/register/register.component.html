@@ -8,9 +8,9 @@
 
         </span>
 
-        <div class="form-group row alert-error" *ngIf="errorMessage !== ''" style="width:100%;line-height: 2.5;color:#ff3d71;font-size: 12px;margin-bottom:10px;">
+        <!-- <div class="form-group row alert-error" *ngIf="errorMessage !== ''" style="width:100%;line-height: 2.5;color:#ff3d71;font-size: 12px;margin-bottom:10px;">
           {{errorMessage}}
-        </div>
+        </div> -->
 
 
         <div class="row mainContainer">
@@ -91,7 +91,7 @@
             <div style="width:100%;">
               <p class="txt3">Store information</p>
               <span class="txt1 p-b-11">
-                {{ 'Store name' || translate }}
+                {{ 'Store name'}}
               </span>
               <div class="validate-input m-b-12">
                 <input type="text" class="inputLogin" [(ngModel)]="user.storeName" name="storeName" placeholder="{{ 'Store name' | translate }}"
@@ -100,11 +100,25 @@
             </div>
             <div style="width:100%;">
               <span class="txt1 p-b-11">
-                {{ 'Unique Store Code' || translate }}
+                {{ 'Unique Store Code' }}
               </span>
               <div class="validate-input m-b-12">
-                <input type="text" class="inputLogin" [(ngModel)]="user.code" name="code" placeholder="{{ 'Unique Store Code' | translate }}"
-                  [readOnly]="isReadonlyCode" (change)="checkCode($event)" required>
+                <input type="text" class="inputLogin" [(ngModel)]="user.code" name="code" (focusout)="checkCode($event)"
+                  placeholder="{{ 'Unique Store Code' | translate }}" #code="ngModel" required>
+
+
+
+                <div *ngIf="(code.dirty || code.touched) && code.invalid && code" style="color:#ff3d71;font-size: 12px;">
+                  <span *ngIf="code.errors.required">
+                    {{ 'COMMON.CODE_REQUIRED' | translate}}
+                  </span>
+                  <span *ngIf="code.errors.pattern">
+                    {{ 'COMMON.ALPHA_DECIMAL_RULE' | translate}}
+                  </span>
+                </div>
+                <span *ngIf="isCodeUnique" style="color:#ff3d71;font-size: 12px;">
+                  {{ 'COMMON.CODE_EXISTS' | translate}}
+                </span>
               </div>
             </div>
             <div style="width:100%;">
@@ -141,8 +155,8 @@
                 {{ 'STORE_FORM.COUNTRY' | translate }}
               </span>
               <div class="validate-input m-b-12">
-                <nb-select class="select_fields" [(ngModel)]="user.country" name="country" placeholder="{{ 'STORE_FORM.COUNTRY' | translate }}"
-                  (selectedChange)="countryIsSelected($event)">
+                <nb-select class="select_fields" [(ngModel)]="user.country" name="country" (selectedChange)="countryIsSelected($event)"
+                  placeholder="{{ 'STORE_FORM.COUNTRY' | translate }}">
                   <nb-option *ngFor="let country of countries" [value]="country.code">{{ country.name }}</nb-option>
                 </nb-select>
               </div>

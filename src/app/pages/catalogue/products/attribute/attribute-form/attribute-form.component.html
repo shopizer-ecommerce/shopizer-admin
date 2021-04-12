@@ -26,22 +26,20 @@
           <div class="form-group">
             <label class="col-form-label inputLabel">{{ 'COMMON.CODE' | translate }}
               *</label>
-            <input type="text" class="form-control inputText" id="code" formControlName='code' [readOnly]="isReadonlyCode"
-              (change)="checkCode($event)" placehoder="Please enter unique code" required>
-            <!-- <div *ngIf="(code.dirty || code.touched) && code.invalid && code" class="err-message" style="margin-top:10px;">
-                    <span *ngIf="code.errors.required">
-                      {{ 'COMMON.CODE_REQUIRED' | translate}}
-                    </span>
-                    <span *ngIf="code.errors.pattern">
-                      {{ 'COMMON.ALPHA_DECIMAL_RULE' | translate}}
-                    </span>
-                </div>
-                <span *ngIf="isCodeExist" class="err-message">
-                    {{ 'COMMON.CODE_EXISTS' | translate}}
-                </span>
-                <div *ngIf="!isValidCode" class="err-message" style="margin-top:10px;">
-                    {{ 'COMMON.CODE_REQUIRED' | translate}}
-                </div> -->
+            <input type="text" class="form-control inputText" id="code" formControlName='code' (change)="checkCode($event)"
+              placeholder="Please enter unique code" required>
+
+            <div *ngIf="(code.dirty || code.touched) && code.invalid && code" class="err-message" style="margin-top:10px;">
+              <span *ngIf="code.errors.required">
+                {{ 'COMMON.CODE_REQUIRED' | translate}}
+              </span>
+              <span *ngIf="code.errors.pattern">
+                {{ 'COMMON.ALPHA_DECIMAL_RULE' | translate}}
+              </span>
+            </div>
+            <span *ngIf="isCodeExist" class="err-message">
+              {{ 'COMMON.CODE_EXISTS' | translate}}
+            </span>
           </div>
           <div class="form-group">
             <label class="col-form-label inputLabel">{{ 'OPTION.OPTION_NAME' | translate}} *</label>

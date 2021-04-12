@@ -55,5 +55,11 @@ export class AuthService {
   resetPassword(token, param): Observable<any> {
     return this.crudService.post('/v1/user/DEFAULT/password/' + token, param);
   }
+  checkIfStoreExist(code): Observable<any> {
+    const params = {
+      'code': code,
+    };
+    return this.crudService.get(`/v1/store/unique`, params);
+  }
 
 }

@@ -12,7 +12,7 @@ html {
 :host ::ng-deep .limiter {
     .select_fields {
         width: 100%;
-        max-width: 26rem !important;
+        max-width: 100% !important;
 
 
         .select-button {
@@ -48,6 +48,7 @@ html {
     width: 100%;
     display: flex;
     justify-content: center;
+    margin-top: 30px;
 
     .width50 {
         max-width: 47%;
@@ -221,7 +222,7 @@ iframe {
 
 .wrap-login100 {
     width: 90%;
-    height: 90vh;
+    height: 110vh;
     background: #fff;
     border-radius: 4px;
     position: relative;
@@ -515,6 +516,7 @@ input:focus {
 
     &:disabled {
         background-color: #598bff96 !important;
+        border-color: #598bff96 !important;
 
         &:hover {
             background-color: #598bff96 !important;
