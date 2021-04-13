@@ -7,19 +7,19 @@ import { ForgotPasswordComponent } from './forgotpassword/forgot.component';
 // import { ResetPasswordComponent } from './resetpassword/reset.component';
 import { AuthRoutingModule } from './auth-routing.module';
 import { SharedModule } from '../shared/shared.module';
-// import { EqualValidator } from '../shared/validation/equal-validator';
+import { MatchPassword } from '../shared/validation/match-password';
 @NgModule({
   declarations: [
     AuthComponent,
     LoginComponent,
     ForgotPasswordComponent,
-    RegisterComponent
+    RegisterComponent,
     // ResetPasswordComponent,
-    // EqualValidator
+    MatchPassword
   ],
   imports: [
     AuthRoutingModule,
     SharedModule
-  ]
+  ],
 })
 export class AuthModule { }

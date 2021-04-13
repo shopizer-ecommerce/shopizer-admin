@@ -61,5 +61,8 @@ export class AuthService {
     };
     return this.crudService.get(`/v1/store/unique`, params);
   }
+  register(param): Observable<any> {
+    return this.crudService.post('/v1/store/signup', param)
+  }
 
 }

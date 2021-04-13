@@ -17,13 +17,14 @@ import { ToastrService } from 'ngx-toastr';
 export class RegisterComponent implements OnInit {
   showPass = 0;
   isCodeUnique = false;
+  errorMessage: string = '';
   user = {
     firstName: '',
     lastName: '',
     email: '',
     password: '',
     repeatPassword: '',
-    storeName: '',
+    name: '',
     code: '',
     address: '',
     city: '',
@@ -85,7 +86,34 @@ export class RegisterComponent implements OnInit {
     }
   }
 
+  onRegister() {
+    let param = {
+      "address": this.user.address,
+      "city": this.user.city,
+      "code": this.user.code,
+      "country": this.user.country,
+      "email": this.user.email,
+      "firstName": this.user.firstName,
+      "lastName": this.user.lastName,
+      "name": this.user.name,
+      "password": this.user.password,
+      "postalCode": this.user.postalCode,
+      "repeatPassword": this.user.repeatPassword,
+      "stateProvince": this.user.state
+    }
+    this.authService.register(param)
+      .subscribe(res => {
+        console.log(res);
+      }, err => {
+        console.log(err);
+        if (err.status === 0) {
+          this.errorMessage = this.translate.instant('COMMON.INTERNAL_SERVER_ERROR');
+        } else {
+          this.errorMessage = err.error.message;
+        }
 
+      });
+  }
   onClickLogin() {
     this.router.navigate(['auth']);
   }
