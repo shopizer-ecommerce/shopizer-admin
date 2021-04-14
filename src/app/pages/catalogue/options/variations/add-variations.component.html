@@ -1,0 +1,90 @@
+<div class="inner_pages option_create_page">
+  <form [formGroup]='form'>
+    <nb-card-header class="main_header">
+      <h1 class="page_title">{{ 'COMPONENTS.ADD_VARIATIONS' | translate}}</h1>
+
+      <div class="content_spacing">
+        <button type="button" nbButton class="cancel_button" (click)="goToback()">{{ 'ORDER_FORM.CANCLE'
+          | translate}}</button>
+      </div>
+
+      <div class="content_spacing">
+        <button nbButton type="button" class="success_button" (click)="save()" [disabled]="!form.valid">{{'COMMON.SAVE'
+          | translate }}</button>
+      </div>
+    </nb-card-header>
+
+    <div [nbSpinner]="loading" nbSpinnerSize="large" nbSpinnerStatus="primary">
+
+
+
+
+      <nb-card class="nb-card inline-form-card">
+        <nb-card-body class="nb-card-body">
+
+
+          <div class="form-group">
+            <label class="col-form-label inputLabel">{{ 'COMMON.CODE' | translate }}
+              *</label>
+            <input type="text" class="form-control inputText" placeholder="Please enter unique code" id="code"
+              formControlName='code' [readOnly]="isReadonlyCode" (change)="checkCode($event)" required>
+            <div *ngIf="(code.dirty || code.touched) && code.invalid && code" class="err-message" style="margin-top:10px;">
+              <span *ngIf="code.errors.required">
+                {{ 'COMMON.CODE_REQUIRED' | translate}}
+              </span>
+              <span *ngIf="code.errors.pattern">
+                {{ 'COMMON.ALPHA_DECIMAL_RULE' | translate}}
+              </span>
+            </div>
+            <span *ngIf="isCodeExist" class="err-message">
+              {{ 'COMMON.CODE_EXISTS' | translate}}
+            </span>
+            <!-- <div *ngIf="!isValidCode" class="err-message" style="margin-top:10px;">
+              {{ 'COMMON.CODE_REQUIRED' | translate}}
+            </div> -->
+          </div>
+          <div class="form-group">
+            <label class="col-form-label inputLabel">{{ 'OPTION.OPTION_NAME' | translate}} *</label>
+            <nb-select placeholder="{{ 'OPTION_SET.SELECT_OPTION_NAME' | translate}}" outline shape="rectangle"
+              formControlName='option' name="option" class="fullWidth" required>
+              <nb-option *ngFor="let option of productOption" [value]="option.id">{{option.name}}</nb-option>
+            </nb-select>
+            <div *ngIf="(option.dirty || option.touched) && option.invalid
+            && option && option.errors.required"
+              class="err-message" style="margin-top:10px;">
+              {{ 'COMMON.VALUE_REQUIRED' | translate}}
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="col-form-label inputLabel">{{ 'OPTION_VALUE.OPTION_VALUE' | translate}}</label>
+
+            <nb-select placeholder="{{ 'OPTION_SET.ADD_OPTION_VALUE' | translate}}" outline shape="rectangle"
+              formControlName='optionValue' name="optionValue" class="fullWidth">
+              <nb-option *ngFor="let optionValue of productOptionValue" [value]="optionValue.id">{{optionValue.name}}</nb-option>
+            </nb-select>
+            <div *ngIf="(optionValue.dirty || optionValue.touched) && optionValue.invalid
+            && optionValue && optionValue.errors.required"
+              class="err-message" style="margin-top:10px;">
+              {{ 'COMMON.VALUE_REQUIRED' | translate}}
+            </div>
+          </div>
+
+          <!-- ProductType -->
+          <!-- <div class="form-group">
+              <label class="col-form-label inputLabel">{{ 'PRODUCT_TYPE.PRODUCT_TYPE' | translate}}</label>
+  
+              <nb-select  multiple placeholder="{{ 'PRODUCT_TYPE.PRODUCT_TYPE_ADD' | translate}}" (selectedChange)="setProductTypeSelected($event)" outline shape="rectangle"
+                [(selected)]="option.productTypes" class="fullWidth">
+                <nb-option  *ngFor="let productType of productTypes" [value]="productType.id">{{productType.code}}</nb-option>
+              </nb-select>
+  
+            </div> -->
+
+        </nb-card-body>
+      </nb-card>
+
+
+    </div>
+  </form>
+</div>

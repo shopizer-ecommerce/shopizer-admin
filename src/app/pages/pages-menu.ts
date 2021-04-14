@@ -240,7 +240,14 @@ export const MENU_ITEMS: MenuItem[] = [
             link: '/pages/catalogue/options/options-set-list',
             hidden: false,
             guards: [IsSuperadmin, IsAdmin, IsAdminRetail, IsAdminCatalogue],
-          }
+          },
+          {
+            title: 'COMPONENTS.VARIATIONS_LIST',
+            key: 'COMPONENTS.VARIATIONS_LIST',
+            link: '/pages/catalogue/options/variations/list',
+            hidden: false,
+            guards: [IsSuperadmin, IsAdmin, IsAdminRetail, IsAdminCatalogue],
+          },
         ]
       },
       {

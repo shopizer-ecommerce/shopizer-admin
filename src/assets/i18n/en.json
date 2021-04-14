@@ -96,7 +96,9 @@
     "ORIGIN": "Origin",
     "CUSTOMERS": "Customers",
     "CUSTOMER_LIST": "Customer List",
-    "MANAGE_OPTIONS": "Manage Options"
+    "MANAGE_OPTIONS": "Manage Options",
+    "VARIATIONS_LIST": "Variations List",
+    "ADD_VARIATIONS": "Add Variation"
   },
   "LOGIN": {
     "INVALID_DATA": "Invalid username or password",

@@ -8,6 +8,8 @@ import { OptionsValuesListComponent } from './options-values-list/options-values
 import { OptionValuesComponent } from './option-values/option-values.component';
 import { OptionsSetListComponent } from './options-set-list/options-set-list.component';
 import { OptionSetComponent } from './options-set/option-set.component';
+import { VariationsListComponent } from './variations/variations.component';
+import { AddVariationsComponent } from './variations/add-variations.component';
 
 const routes: Routes = [
   {
@@ -49,6 +51,14 @@ const routes: Routes = [
       {
         path: 'option-set/:optionId',
         component: OptionSetComponent
+      },
+      {
+        path: 'variations/list',
+        component: VariationsListComponent
+      },
+      {
+        path: 'variations/add',
+        component: AddVariationsComponent
       }
     ],
   }

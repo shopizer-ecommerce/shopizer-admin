@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+
+import { Location, PlatformLocation } from '@angular/common';
 import { FormBuilder, FormGroup, Validators, ValidationErrors } from '@angular/forms';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
@@ -18,6 +20,7 @@ export class RegisterComponent implements OnInit {
   showPass = 0;
   isCodeUnique = false;
   errorMessage: string = '';
+  successMessage: string = '';
   user = {
     firstName: '',
     lastName: '',
@@ -43,6 +46,8 @@ export class RegisterComponent implements OnInit {
     private toastr: ToastrService,
     private translate: TranslateService,
     private configService: ConfigService,
+    private location: Location,
+    private platformLocation: PlatformLocation
   ) {
     this.configService.getListOfCountries()
       .subscribe(data => {
@@ -99,11 +104,30 @@ export class RegisterComponent implements OnInit {
       "password": this.user.password,
       "postalCode": this.user.postalCode,
       "repeatPassword": this.user.repeatPassword,
-      "stateProvince": this.user.state
+      "stateProvince": this.user.state,
+      "url": (this.platformLocation as any).location.origin + this.location.prepareExternalUrl('/')
+
     }
     this.authService.register(param)
       .subscribe(res => {
         console.log(res);
+        this.errorMessage = ""
+        this.successMessage = "Your account is created successfully and email has been sent to " + this.user.email + " with details on completing the new store signup"
+        this.user = {
+          firstName: '',
+          lastName: '',
+          email: '',
+          password: '',
+          repeatPassword: '',
+          name: '',
+          code: '',
+          address: '',
+          city: '',
+          postalCode: '',
+          country: '',
+          state: ''
+        }
+
       }, err => {
         console.log(err);
         if (err.status === 0) {

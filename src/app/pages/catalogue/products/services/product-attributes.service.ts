@@ -13,17 +13,13 @@ export class ProductAttributesService {
     private crudService: CrudService
   ) {
   }
-  // checkAttributeCode (productId, attribute): Observable<any> {
 
-  // }
   getListOfProductsAttributes(productId, params): Observable<any> {
-    return this.crudService.get(`/v1/private/product/variation`, params);
-    // return this.crudService.get(`/v1/private/product/${productId}/attributes`, params);
+    return this.crudService.get(`/v1/private/product/${productId}/attributes`, params);
   }
 
-  createAttribute(params): Observable<any> {
-    return this.crudService.post(`/v1/private/product/variation`, params);
-    // return this.crudService.post(`/v1/private/product/${productId}/attribute`, attribute);
+  createAttribute(productId, attribute): Observable<any> {
+    return this.crudService.post(`/v1/private/product/${productId}/attribute`, attribute);
   }
 
   updateAttribute(productId, attributeId, attribute): Observable<any> {
