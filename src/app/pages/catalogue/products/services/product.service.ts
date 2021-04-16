@@ -27,7 +27,7 @@ export class ProductService {
     const params = {
       store: this.storageService.getMerchant()
     };
-    return this.crudService.put(`/v1/private/product/${id}`, product, { params });
+    return this.crudService.put(`/v2/private/product/definition/${id}`, product, { params });
   }
 
   getProductById(id): Observable<any> {
@@ -41,7 +41,7 @@ export class ProductService {
     const params = {
       store: this.storageService.getMerchant()
     };
-    return this.crudService.post(`/v1/private/product`, product, { params });
+    return this.crudService.post(`/v2/private/product/definition`, product);
   }
 
   deleteProduct(id): Observable<any> {

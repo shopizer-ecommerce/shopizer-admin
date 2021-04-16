@@ -36,7 +36,7 @@ export class VariationsListComponent implements OnInit {
 
     this.loadingList = true;
     this.variationService.getListOfVariations().subscribe((res) => {
-      this.source.load(res);
+      this.source.load(res.items);
       this.loadingList = false;
     });
     this.setSettings();

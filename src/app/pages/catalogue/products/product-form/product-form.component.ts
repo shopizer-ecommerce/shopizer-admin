@@ -117,13 +117,13 @@ export class ProductFormComponent implements OnInit {
 
   private createForm() {
     this.form = this.fb.group({
-      sku: ['', [Validators.required, Validators.pattern(validators.alphanumeric)]],
-      available: [false],
+      identifier: ['', [Validators.required, Validators.pattern(validators.alphanumeric)]],
+      visible: [false],
       // preOrder: [false],
       dateAvailable: [new Date()],
       //TODO
-      manufacturer: ['DEFAULT'],
-      type: ['GENERAL'],
+      manufacturer: [''],
+      type: [''],
       // price: [''],
       // quantity: ['', [Validators.required, Validators.pattern(validators.number)]],
       // sortOrder: ['', [Validators.required, Validators.pattern(validators.number)]],
@@ -151,7 +151,7 @@ export class ProductFormComponent implements OnInit {
           highlights: [''],
           friendlyUrl: ['', [Validators.required]],
           description: [''],
-          title: [''],
+          title: ['', [Validators.required]],
           keyWords: [''],
           metaDescription: [''],
         })
@@ -162,8 +162,8 @@ export class ProductFormComponent implements OnInit {
 
   fillForm() {
     this.form.patchValue({
-      sku: this.product.sku,
-      available: this.product.available,
+      identifier: this.product.identifier,
+      visible: this.product.visible,
       // preOrder: this.product.preOrder,
       dateAvailable: new Date(this.product.dateAvailable),
       manufacturer: this.product.manufacturer == null ? '' : this.product.manufacturer.code,
@@ -208,8 +208,8 @@ export class ProductFormComponent implements OnInit {
     });
   }
 
-  get sku() {
-    return this.form.get('sku');
+  get identifier() {
+    return this.form.get('identifier');
   }
 
   get selectedLanguage() {
@@ -260,10 +260,9 @@ export class ProductFormComponent implements OnInit {
   // }
 
   checkSku(event) {
-    const sku = event.target.value;
-    this.productService.checkProductSku(sku)
+    this.productService.checkProductSku(event.target.value)
       .subscribe(res => {
-        this.isCodeUnique = !(res.exists && (this.product.sku !== sku));
+        this.isCodeUnique = !(res.exists && (this.product.identifier !== event.target.value));
       });
   }
 
@@ -285,13 +284,14 @@ export class ProductFormComponent implements OnInit {
 
     const productObject = this.form.value;
     productObject.dateAvailable = moment(productObject.dateAvailable).format('yyyy-MM-DD');
-    productObject.productSpecifications.manufacturer = productObject.manufacturer;
+    // productObject.productSpecifications.manufacturer = productObject.manufacturer;
     // productObject.type = this.productTypes.find((type) => type.code === productObject.type); // TODO
 
     // save important values for filling empty field in result object
     const tmpObj = {
       name: '',
-      friendlyUrl: ''
+      friendlyUrl: '',
+      title: ''
     };
     productObject.descriptions.forEach((el) => {
       if (tmpObj.name === '' && el.name !== '') {
@@ -299,6 +299,9 @@ export class ProductFormComponent implements OnInit {
       }
       if (tmpObj.friendlyUrl === '' && el.friendlyUrl !== '') {
         tmpObj.friendlyUrl = el.friendlyUrl;
+      }
+      if (tmpObj.title === '' && el.title !== '') {
+        tmpObj.title = el.title;
       }
       for (const elKey in el) {
         if (el.hasOwnProperty(elKey)) {
@@ -308,9 +311,8 @@ export class ProductFormComponent implements OnInit {
         }
       }
     });
-
     // check required fields
-    if (tmpObj.name === '' || tmpObj.friendlyUrl === '' || productObject.sku === '') {
+    if (tmpObj.name === '' || tmpObj.friendlyUrl === '' || productObject.identifier === '' || productObject.manufacturer === '' || productObject.type === '' || tmpObj.title === '') {
       this.toastr.error(this.translate.instant('COMMON.FILL_REQUIRED_FIELDS'));
     } else {
       productObject.descriptions.forEach((el) => {
@@ -334,28 +336,29 @@ export class ProductFormComponent implements OnInit {
           }
         }
       });
-
+      console.log(productObject);
+      delete productObject.selectedLanguage;
       if (this.product.id) {
         this.saved = true;
         // this.removeImages(this.removedImagesArray);
         this.productService.updateProduct(this.product.id, productObject)
           .subscribe(res => {
-            this.uploadData.append('id', res.id);
-            this.productImageService.createImage(res.id, this.uploadData)
-              .subscribe(res1 => {
-                this.toastr.success(this.translate.instant('PRODUCT.PRODUCT_UPDATED'));
-              });
+            // this.uploadData.append('id', res.id);
+            // this.productImageService.createImage(res.id, this.uploadData)
+            // .subscribe(res1 => {
+            this.toastr.success(this.translate.instant('PRODUCT.PRODUCT_UPDATED'));
+            // });
           });
       } else {
         this.saved = true;
         this.productService.createProduct(productObject)
           .subscribe(res => {
-            this.uploadData.append('id', res.id);
-            this.productImageService.createImage(res.id, this.uploadData)
-              .subscribe(res1 => {
-                this.toastr.success(this.translate.instant('PRODUCT.PRODUCT_CREATED'));
-                this.router.navigate(['pages/catalogue/products/products-list']);
-              });
+            // this.uploadData.append('id', res.id);
+            // this.productImageService.createImage(res.id, this.uploadData)
+            // .subscribe(res1 => {
+            this.toastr.success(this.translate.instant('PRODUCT.PRODUCT_CREATED'));
+            this.router.navigate(['pages/catalogue/products/products-list']);
+            // });
           });
       }
     }

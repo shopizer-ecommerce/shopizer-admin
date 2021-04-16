@@ -25,7 +25,7 @@ export class AddVariationsComponent implements OnInit {
   defaultParam = {
   }
 
-  option = {
+  opt = {
     id: '',
     code: '',
     option: '',
@@ -103,12 +103,12 @@ export class AddVariationsComponent implements OnInit {
 
   private adjustForm() {
     this.form.patchValue({
-      code: this.option.code,
-      option: this.option.option,
-      optionValue: this.option.optionValue
+      code: this.opt.code,
+      option: this.opt.option,
+      optionValue: this.opt.optionValue
     });
 
-    if (this.option.id) {
+    if (this.opt.id) {
       this.form.controls['code'].disable();
     }
   }
@@ -165,7 +165,7 @@ export class AddVariationsComponent implements OnInit {
     return this.form.get('code');
   }
 
-  get opt() {
+  get option() {
     return this.form.get('option');
   }
 
@@ -176,12 +176,11 @@ export class AddVariationsComponent implements OnInit {
 
   checkCode(event) {
     // this.isValidCode = true;
-    // const code = event.target.value.trim();
-    // this.optionService.checkOptionSetCode(this.option.code)
-    //   .subscribe(res => {
-    //     //console.log(res)
-    //     this.isCodeExist = res.exists;
-    //   });
+    this.variationService.checkCode(event.target.value)
+      .subscribe(res => {
+        //console.log(res)
+        this.isCodeExist = res.exists;
+      });
   }
 
 
@@ -210,7 +209,7 @@ export class AddVariationsComponent implements OnInit {
     //   return;
     // }
 
-    if (this.option.id) {
+    if (this.opt.id) {
 
       //   this.optionService.updateSetOption(this.option.id, optionObj)
       //     .subscribe((res) => {
