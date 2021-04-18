@@ -1,8 +1,12 @@
 # shopizer-admin
 
+## Run locally
+
 npm i --yes
 ng serve -o
 
+## Run docker images
+
 docker run \
--e "APP_BASE_URL=http://aws-demo.shopizer.com:8080/" \
+-e "APP_BASE_URL=http://localhost:8080/api" \
 -it --rm -p 80:80 shopizerecomm/shopizer-admin
