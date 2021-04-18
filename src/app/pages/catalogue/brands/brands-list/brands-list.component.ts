@@ -21,7 +21,7 @@ export class BrandsListComponent implements OnInit {
   settings = {};
   searchValue: string = '';
   // paginator
-  perPage = 5;
+  perPage = 25;
   currentPage = 1;
   totalCount;
 
