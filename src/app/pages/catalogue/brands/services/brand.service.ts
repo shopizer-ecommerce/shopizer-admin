@@ -14,7 +14,7 @@ export class BrandService {
   }
 
   getListOfBrands(params): Observable<any> {
-    return this.crudService.get(`/v1/manufacturers/`, params);
+    return this.crudService.get(`/v1/private/manufacturers/`, params);
   }
 
   updateBrand(id, brand): Observable<any> {

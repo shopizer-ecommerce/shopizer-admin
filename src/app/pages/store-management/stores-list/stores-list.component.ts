@@ -10,6 +10,7 @@ import { StorageService } from '../../shared/services/storage.service';
 import { NbDialogService } from '@nebular/theme';
 import { ToastrService } from 'ngx-toastr';
 import { ShowcaseDialogComponent } from '../../shared/components/showcase-dialog/showcase-dialog.component';
+import { ListingService } from '../../shared/services/listing.service';
 
 @Component({
   selector: 'ngx-stores-list',
@@ -18,6 +19,7 @@ import { ShowcaseDialogComponent } from '../../shared/components/showcase-dialog
 })
 export class StoresListComponent implements OnInit {
   source: LocalDataSource = new LocalDataSource();
+  listingService: ListingService;
   store;
   loadingList = false;
 
@@ -42,14 +44,25 @@ export class StoresListComponent implements OnInit {
     private dialogService: NbDialogService,
     private translate: TranslateService,
     private securityService: SecurityService,
-    private _sanitizer: DomSanitizer,
+    private _sanitizer: DomSanitizer
   ) {
+    this.listingService = new ListingService();
   }
 
 
 
   ngOnInit() {
     this.getList();
+
+    //ng2-smart-table server side filter
+    this.source.onChanged().subscribe((change) => {
+
+      if (!this.loadingList) {//listing service
+        this.listingService.filterDetect(this.params,change,this.loadList.bind(this),this.resetList.bind(this));
+      }
+
+    });
+
   }
 
   loadParams() {
@@ -60,13 +73,30 @@ export class StoresListComponent implements OnInit {
     };
   }
 
+
+    /** callback methods for table list*/
+    private loadList(newParams:any) {
+      //console.log('CallBack loadList');
+      //console.log(JSON.stringify(newParams));
+      this.currentPage = 1; //back to page 1
+      this.params = newParams;
+      this.getList();
+    }
+  
+    private resetList() {
+      //console.log('CallBack resetList');
+      this.currentPage = 1;//back to page 1
+      this.params = this.loadParams();
+      this.getList();
+    }
+
   getList() {
     const startFrom = this.currentPage - 1;
     this.merchant = localStorage.getItem('merchant');
     this.params.page = startFrom;
     this.params.store = this.merchant;
     this.loadingList = true;
-    console.log(JSON.stringify(this.params));
+    //console.log(JSON.stringify(this.params));
     this.storeService.getListOfStores(this.params)
       .subscribe(res => {
         this.totalCount = res.recordsTotal;
@@ -200,24 +230,5 @@ export class StoresListComponent implements OnInit {
     this.getList();
   }
 
-  resetSearch() {
-    this.searchValue = null;
-    this.params = this.loadParams();
-    this.getList();
-  }
-
-  onSearch(query: string = '') {
-
-    if (query.length == 0) {
-      this.searchValue = null;
-      return;
-    }
-
-    //server side search
-    this.params["name"] = query;
-    this.getList();
-    this.searchValue = query;
-
-  }
 
 }

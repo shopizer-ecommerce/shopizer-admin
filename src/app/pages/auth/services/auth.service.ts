@@ -46,4 +46,23 @@ export class AuthService {
     return this.crudService.get('/v1/auth/refresh');
   }
 
+  forgot(username: string, returnUrl: string): Observable<any> {
+    return this.crudService.post('/v1/user/password/reset/request', { username, returnUrl });
+  }
+  validateResetToken(token): Observable<any> {
+    return this.crudService.get('/v1/user/DEFAULT/reset/' + token);
+  }
+  resetPassword(token, param): Observable<any> {
+    return this.crudService.post('/v1/user/DEFAULT/password/' + token, param);
+  }
+  checkIfStoreExist(code): Observable<any> {
+    const params = {
+      'code': code,
+    };
+    return this.crudService.get(`/v1/store/unique`, params);
+  }
+  register(param): Observable<any> {
+    return this.crudService.post('/v1/store/signup', param)
+  }
+
 }

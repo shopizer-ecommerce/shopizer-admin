@@ -1,0 +1,142 @@
+@import "../../../@theme/styles/themes";
+
+@include nb-install-component() {
+    nb-card {
+        transform: translate3d(0, 0, 0);
+    }
+}
+
+.page-card {
+    background: transparent;
+    border: none;
+
+    .rulesList {
+        .main_header {
+            padding: 0px 30px 10px 0px;
+
+            .page_title {
+                margin-top: -25px;
+                font-weight: 600;
+            }
+        }
+
+        .pointer {
+            height: 18px;
+            width: 18px;
+            margin-left: 20px;
+            cursor: pointer;
+        }
+
+        .filter_section {
+            background: #fff;
+            padding: 10px 15px;
+            margin: -10px 0 10px 0;
+        }
+    }
+}
+
+:host ::ng-deep .rulesList {
+    .filter_section {
+        .filter_right_section {
+            button {
+                font-weight: 600 !important;
+                font-size: 14px !important;
+            }
+        }
+    }
+
+    .home-table {
+        thead {
+            .ng2-smart-titles {
+                th {
+                    a {
+                        font-weight: 600;
+                    }
+                }
+            }
+        }
+
+        tbody {
+            tr {
+                cursor: pointer;
+
+                &:hover,
+                &.selected {
+                    background: #e6f3ff !important;
+                }
+
+                a.ng2-smart-action:not(:last-child) {
+                    padding-right: 0px !important;
+                    margin-right: 0px !important;
+                }
+            }
+        }
+    }
+}
+
+.buttons-row {
+    float: right;
+}
+
+.filter_section {
+    width: 100%;
+
+    .filter_left_section {
+        width: 50%;
+
+        .sda {
+            height: 18px;
+            width: 18px;
+            margin-left: 20px;
+            cursor: pointer;
+        }
+    }
+
+    .filter_right_section {
+        width: 50%;
+        text-align: right;
+        display: flex;
+        justify-content: flex-end;
+        padding-left: 0px;
+        padding-right: 0px;
+
+        .createBtn {
+            padding: 8px 10px 9.5px 10px;
+            background-color: #f7f9fc !important;
+            color: #000 !important;
+            border: 1px solid #edf1f7 !important;
+            border-radius: 5px;
+            margin-left: 20px;
+
+            label {
+                display: inline-block;
+                font-weight: 600 !important;
+                font-size: 14px !important;
+            }
+
+            .sda {
+                margin-right: 20px;
+                cursor: pointer;
+                margin-left: 0 !important;
+            }
+        }
+
+        // .store_select {
+        //     width: 29% !important
+        // }
+    }
+}
+
+thead,
+tbody {
+    display: block;
+}
+
+tbody {
+    height: 100px;
+    /* Just for the demo          */
+    overflow-y: auto;
+    /* Trigger vertical scroll    */
+    overflow-x: hidden;
+    /* Hide the horizontal scroll */
+}

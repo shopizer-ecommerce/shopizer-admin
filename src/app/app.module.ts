@@ -24,16 +24,44 @@ import { GlobalHttpInterceptorService } from './pages/shared/interceptors/global
 import { ToastrModule } from 'ngx-toastr';
 import { ImageBrowserComponent } from './@theme/components/image-browser/image-browser.component';
 import { GlobalErrorHandler } from './pages/shared/classes/error-handler/global-error-handler';
-import { FileManagerModule } from './ng6-file-man';
+import { FileManagerModule } from 'ng6-file-man';
+import { ResetPasswordComponent } from './pages/auth/resetpassword/reset.component';
+import { CustomComponent } from './pages/custom-component/custom.component';
+import { EqualValidator } from './pages/shared/validation/equal-validator';
+import { TinyMCEComponent } from './@theme/components/tiny-mce/tiny-mce.component';
+import { ManageAddComponent } from './pages/customers/manageoptions/add.component';
+// import { ManageListComponent } from './pages/customers/manageoptions/list.component';
+// import { OptionListComponent } from './pages/customers/options/list.component';
+import { OptionsAddComponent } from './pages/customers/options/add.component';
+import { ValueAddComponent } from './pages/customers/optionsvalue/add.component';
+// import { ValueListComponent } from './pages/customers/optionsvalue/list.component';
+//import { CountryOrdersComponent } from './pages/shared/wigets/e-commerce/country-orders/country-orders.component';
+//import { CountryOrdersChartComponent } from './pages/shared/wigets/e-commerce/country-orders/chart/country-orders-chart.component';
+
 @NgModule({
-  declarations: [AppComponent, ImageBrowserComponent],
+  declarations: [
+    AppComponent,
+    ResetPasswordComponent,
+    EqualValidator,
+    ImageBrowserComponent,
+    TinyMCEComponent,
+    CustomComponent,
+    ManageAddComponent,
+    //ManageListComponent, //TODO
+    //OptionListComponent, //TODO
+    ValueAddComponent,
+    OptionsAddComponent,
+    //ValueListComponent, //TODO
+    //CountryOrdersComponent, //TODO
+    //CountryOrdersChartComponent
+  ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
     AppRoutingModule,
     NbDateFnsDateModule.forRoot({
-      format: 'YYYY-MM-DD',
+      format: 'yyyy-MM-dd',
     }),
     NbMomentDateModule,
 

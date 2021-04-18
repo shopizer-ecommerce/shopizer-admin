@@ -1,17 +1,20 @@
 import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-
+import { NbDialogService } from '@nebular/theme';
 import { CategoryService } from '../services/category.service';
 import { ConfigService } from '../../../shared/services/config.service';
 import { ToastrService } from 'ngx-toastr';
 import { TranslateService } from '@ngx-translate/core';
 import { StoreService } from '../../../store-management/services/store.service';
 import { StorageService } from '../../../shared/services/storage.service';
+import { SecurityService } from '../../../shared/services/security.service';
 import { validators } from '../../../shared/validation/validators';
 import { slugify } from '../../../shared/utils/slugifying';
 import { environment } from '../../../../../environments/environment';
-
+import { ImageBrowserComponent } from '../../../../@theme/components/image-browser/image-browser.component';
+declare var jquery: any;
+declare var $: any;
 @Component({
   selector: 'ngx-category-form',
   templateUrl: './category-form.component.html',
@@ -26,11 +29,11 @@ export class CategoryFormComponent implements OnInit {
   languages = [];
   //default language
   defaultLanguage = environment.client.language.default;
-
   //select store
   stores = [];
   isSuperAdmin = false;
-  roles;
+  isRetailAdmin = false;
+  //roles;
   //current user associated merchant
   merchant;
 
@@ -39,15 +42,18 @@ export class CategoryFormComponent implements OnInit {
     placeholder: '',
     tabsize: 2,
     height: 300,
-    uploadImagePath: '',
     toolbar: [
       ['misc', ['codeview', 'undo', 'redo']],
       ['style', ['bold', 'italic', 'underline', 'clear']],
       ['font', ['bold', 'italic', 'underline', 'strikethrough', 'superscript', 'subscript', 'clear']],
       ['fontsize', ['fontname', 'fontsize', 'color']],
       ['para', ['style', 'ul', 'ol', 'paragraph', 'height']],
-      ['insert', ['table', 'picture', 'link', 'video', 'hr']]
+      ['insert', ['table', 'picture', 'link', 'video']],
+      ['customButtons', ['testBtn']]
     ],
+    buttons: {
+      'testBtn': this.customButton.bind(this)
+    },
     fontNames: ['Helvetica', 'Arial', 'Arial Black', 'Comic Sans MS', 'Courier New', 'Roboto', 'Times']
   };
   //loader image
@@ -62,23 +68,26 @@ export class CategoryFormComponent implements OnInit {
     private configService: ConfigService,
     private storeService: StoreService,
     private storageService: StorageService,
+    private securityService: SecurityService,
     private cdr: ChangeDetectorRef,
     private router: Router,
     private toastr: ToastrService,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private dialogService: NbDialogService
   ) {
-    this.roles = JSON.parse(localStorage.getItem('roles'));
+    //this.roles = JSON.parse(localStorage.getItem('roles'));
   }
 
   ngOnInit() {
 
-    this.isSuperAdmin = this.roles.isSuperadmin;
+    this.isSuperAdmin = this.securityService.isSuperAdmin();
+    this.isRetailAdmin = this.securityService.isRetailAdmin();
     this.merchant = this.storageService.getMerchant();
     //for populating stores dropdown list
-    this.storeService.getListOfMerchantStoreNames({'store':''})
-    .subscribe(res => {
-       this.stores = res;
-    });
+    this.storeService.getListOfMerchantStoreNames({ 'store': '' })
+      .subscribe(res => {
+        this.stores = res;
+      });
 
     //for selecting parent category - root or child of a parent
     this.categoryService.getListOfCategories()
@@ -94,10 +103,9 @@ export class CategoryFormComponent implements OnInit {
         this.roots = [...res.categories];
       });
     this.loader = true;
-    //console.log('Language value ' + this.selectedLanguage);
-
+ 
     //determines how many languages should be supported
-    this.configService.getListOfSupportedLanguages()
+    this.configService.getListOfSupportedLanguages(localStorage.getItem('merchant'))
       .subscribe(res => {
         this.languages = [...res];
         this.createForm();
@@ -105,7 +113,7 @@ export class CategoryFormComponent implements OnInit {
         this.fillEmptyForm();
         if (this.category.id) {
           this.fillForm();
-        } 
+        }
         this.loader = false;
       });
   }
@@ -120,14 +128,14 @@ export class CategoryFormComponent implements OnInit {
       selectedLanguage: ['', [Validators.required]],
       descriptions: this.fb.array([]),
     });
-    if(!this.isSuperAdmin) {
+    if (!this.isSuperAdmin) {
       this.form.get("store").disable();
     }
   }
 
   addFormArray() {
     const control = <FormArray>this.form.controls.descriptions;
-    console.log("Languages size " + this.languages.length);
+    //console.log("Languages size " + this.languages.length);
     this.languages.forEach(lang => {
       control.push(
         this.fb.group({
@@ -169,20 +177,22 @@ export class CategoryFormComponent implements OnInit {
   fillFormArray() {
     //each supported language
     this.form.value.descriptions.forEach((desc, index) => {
-      this.category.descriptions.forEach((description) => {
-        if (desc.language === description.language) {
-          //6 fields + language
-          (<FormArray>this.form.get('descriptions')).at(index).patchValue({
-            language: description.language,
-            name: description.name,
-            highlights: description.highlights,
-            friendlyUrl: description.friendlyUrl,
-            description: description.description,
-            title: description.title,
-            metaDescription: description.metaDescription,
-          });
-        }
-      });
+      if(this.category != null && this.category.descriptions) {
+        this.category.descriptions.forEach((description) => {
+          if (desc.language === description.language) {
+            //6 fields + language
+            (<FormArray>this.form.get('descriptions')).at(index).patchValue({
+              language: description.language,
+              name: description.name,
+              highlights: description.highlights,
+              friendlyUrl: description.friendlyUrl,
+              description: description.description,
+              title: description.title,
+              metaDescription: description.metaDescription,
+            });
+          }
+        });
+      }
     });
   }
 
@@ -206,11 +216,19 @@ export class CategoryFormComponent implements OnInit {
     return <FormArray>this.form.get('names');
   }
 
+  selectLanguage(lang) {
+    this.form.patchValue({
+      selectedLanguage: lang,
+    });
+    this.fillFormArray();
+  }
+
   changeName(event, index) {
+    
     (<FormArray>this.form.get('descriptions')).at(index).patchValue({
       friendlyUrl: slugify(event)
     });
-    (<any>this.form.get('friendlyUrl')).nativeElement.focus();
+
   }
 
   //determines if category code is unique
@@ -233,7 +251,7 @@ export class CategoryFormComponent implements OnInit {
   save() {
     const categoryObject = this.prepareSaveData();
 
-    if(!this.isSuperAdmin) {
+    if (!this.isSuperAdmin) {
       this.form.patchValue({ store: this.merchant });
     }
 
@@ -289,7 +307,7 @@ export class CategoryFormComponent implements OnInit {
       }
 
       let errors = this.findInvalidControls();
-      if(errors.length>0) {
+      if (errors.length > 0) {
         this.toastr.error(this.translate.instant('COMMON.FILL_REQUIRED_FIELDS'));
         return;
       }
@@ -312,21 +330,39 @@ export class CategoryFormComponent implements OnInit {
     }
   }
 
-  public findInvalidControls():string[] {
-    var invalidControls:string[] = [];
-    let recursiveFunc = (form:FormGroup|FormArray) => {
-      Object.keys(form.controls).forEach(field => { 
+  public findInvalidControls(): string[] {
+    var invalidControls: string[] = [];
+    let recursiveFunc = (form: FormGroup | FormArray) => {
+      Object.keys(form.controls).forEach(field => {
         const control = form.get(field);
         if (control.invalid) invalidControls.push(field);
         if (control instanceof FormGroup) {
           recursiveFunc(control);
         } else if (control instanceof FormArray) {
           recursiveFunc(control);
-        }        
+        }
       });
     }
     recursiveFunc(this.form);
     return invalidControls;
   }
+  customButton(context) {
+    const me = this;
+    const ui = $.summernote.ui;
+    const button = ui.button({
+      contents: '<i class="note-icon-picture"></i>',
+      tooltip: 'Gallery',
+      container: '.note-editor',
+      className: 'note-btn',
+      click: function () {
+        console.log(me);
 
+        me.dialogService.open(ImageBrowserComponent, {}).onClose.subscribe(name => name && context.invoke('editor.pasteHTML', '<img src="' + name + '">'));
+      }
+    });
+    return button.render();
+  }
+  goToback() {
+    this.router.navigate(['pages/catalogue/categories/categories-list']);
+  }
 }

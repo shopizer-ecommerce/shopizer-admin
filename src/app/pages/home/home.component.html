@@ -1,35 +1,82 @@
-<nb-card size="small" [nbSpinner]="loading" nbSpinnerStatus="info" nbSpinnerSize="xlarge">
-  <nb-card-header>
-    {{ "HOME.STORE_INFORMATION" | translate }}
+<div [nbSpinner]="loadingList" nbSpinnerSize="large" nbSpinnerStatus="primary">
+<div class="inner_pages home_page">
+  <nb-card-header class="main_header">
+      <h1 class="page_title"> {{ "HOME.STORE_INFORMATION" | translate }}</h1>
+      <div class="main_spacer">
+          &nbsp;
+      </div>
   </nb-card-header>
-  <nb-card-body>
+</div>
 
-    <div class="info-block">
-      <span><strong>{{user?.merchantName}}</strong></span>
-      <span>{{user?.address}}</span>
-      <span>{{user?.city}}, {{user?.stateProvince}}, {{user?.postalCode}}</span>
-      <span>{{user?.country}}</span>
-      <span>{{user?.phone}}</span>
+<div class="row">
+    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+        <nb-card class="nb-card inline-form-card">
+          <nb-card-header class="nb-card-header">Your store details</nb-card-header>
+          <nb-card-body class="nb-card-body">
+              <div class="info-block">
+                  <span><strong>{{user?.merchantName}}</strong></span>
+                  <span>{{user?.address}}</span>
+                  <span>{{user?.city}}, {{user?.stateProvince}}, {{user?.postalCode}}</span>
+                  <span>{{user?.country}}</span>
+                  <span>{{user?.phone}}</span>
+                </div>
+                <div class="info-block">
+                    <span>
+                      <i class="fa fa-user"></i>
+                      {{user?.userName}}
+                    </span>
+                    <span>
+                      <i class="fa fa-calendar-alt"></i>
+                      {{ "HOME.LAST_ACCESS" | translate }}: {{user?.lastAccess | date : 'medium'}}
+                    </span>
+                </div>
+          </nb-card-body>
+        </nb-card>
     </div>
-
-    <div class="info-block">
-      <span>
-        <i class="fa fa-user"></i>
-        {{user?.userName}}
-      </span>
-      <span>
-      <i class="fa fa-calendar-alt"></i>
-      {{ "HOME.LAST_ACCESS" | translate }}: {{user?.lastAccess | date : 'medium'}}
-      </span>
+    
+    <div class="col-lg-4 col-md-4 col-sm-12 col-xs-12">
+        <div [nbSpinner]="loading" nbSpinnerSize="large" nbSpinnerStatus="primary">
+        <nb-card class="nb-card inline-form-card">
+          <nb-card-header class="nb-card-header">System management</nb-card-header>
+          <nb-card-body class="nb-card-body">
+              <div>
+                  <button type="button" nbButton status="primary" (click)="deleteCache()">{{'SYSTEM.DELETE_CACHE' | translate }}</button>
+              </div>
+          </nb-card-body>
+        </nb-card>
+      </div>
     </div>
-  </nb-card-body>
-</nb-card>
+    
+</div>
 
-<nb-card size="small" *ngIf="canAccessToOrder">
+
+
+<div class="row">
+    <!--
+    <div class="col-xxl-6">
+            <ngx-profit-card></ngx-profit-card>
+    </div>
+    <div class="col-xxl-6">
+      TEST2
+    </div>
+    -->
+    <div class="col-xxl-12">
+      <!--<ngx-traffic-reveal-card></ngx-traffic-reveal-card>-->
+      <ngx-ecommerce-charts></ngx-ecommerce-charts>
+    </div>
+</div>
+
+<nb-card *ngIf="canAccessToOrder">
+  <div class="row">
+  <div class="col-xxl-12">
   <nb-card-header>
     {{ "HOME.RECENT_ORDERS" | translate }}
   </nb-card-header>
   <nb-card-body>
-<!--    <ngx-order-list></ngx-order-list>-->
+
   </nb-card-body>
+  </div>
+  </div>
 </nb-card>
+</div>
+

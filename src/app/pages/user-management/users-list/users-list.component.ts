@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { DomSanitizer } from '@angular/platform-browser';
 import * as _ from 'lodash';
 
 import { UserService } from '../../shared/services/user.service';
@@ -9,9 +8,12 @@ import { TranslateService } from '@ngx-translate/core';
 import { NbDialogService } from '@nebular/theme';
 import { StorageService } from '../../shared/services/storage.service';
 import { SecurityService } from '../../shared/services/security.service';
+import { StoreService } from '../../store-management/services/store.service';
 import { ToastrService } from 'ngx-toastr';
 import { ButtonRenderUserComponent } from './button-render-user.component'
 import { ShowcaseDialogComponent } from '../../shared/components/showcase-dialog/showcase-dialog.component';
+import { ListingService } from '../../shared/services/listing.service';
+
 
 @Component({
   selector: 'ngx-users-list',
@@ -20,34 +22,37 @@ import { ShowcaseDialogComponent } from '../../shared/components/showcase-dialog
 })
 export class UsersListComponent implements OnInit {
   source: LocalDataSource = new LocalDataSource();
+  listingService: ListingService;
   loadingList = false;
+  isSuperadmin: boolean;
 
   // paginator
-  perPage = 10;
+  perPage = 15;
   currentPage = 1;
   totalCount;
   totalPages;
-
-  searchValue: string = '';
 
   // server params
   params = this.loadParams();
 
   settings = {};
+  stores = [];
 
   constructor(
     private userService: UserService,
     private router: Router,
     private translate: TranslateService,
-    private _sanitizer: DomSanitizer,
     private storageService: StorageService,
     private securityService: SecurityService,
     private dialogService: NbDialogService,
-    private toastr: ToastrService,
+    private storeService: StoreService,
+    private toastr: ToastrService
   ) {
+    this.listingService = new ListingService()
     this.getList();
   }
 
+  //object
   loadParams() {
     return {
       lang: this.storageService.getLanguage(),
@@ -58,7 +63,6 @@ export class UsersListComponent implements OnInit {
   }
 
   getList() {
-    console.log('Getting list');
     this.params.page = this.currentPage - 1;
     this.loadingList = true;
     this.userService.getUsersList(this.storageService.getMerchant(), this.params)
@@ -67,11 +71,6 @@ export class UsersListComponent implements OnInit {
         this.totalCount = res.recordsTotal;
         this.totalPages = res.totalPages;
 
-        // remove current user from list
-        // const index = usersArray.findIndex(el => el.id === +this.userService.getUserId());
-        // usersArray.splice(index, 1);
-
-        // creating 'name' property for displaying in the table
         usersArray.map(user => {
           user.name = user.firstName + ' ' + user.lastName;
           return user;
@@ -86,7 +85,46 @@ export class UsersListComponent implements OnInit {
     });
   }
 
-  ngOnInit() { }
+  /** callback methods for table list*/
+  private loadList(newParams: any) {
+    //console.log('CallBack loadList');
+    //console.log(JSON.stringify(newParams));
+    this.currentPage = 1; //back to page 1
+    this.params = newParams;
+    this.getList();
+  }
+
+  choseStore(event) {
+    this.params.store = event;
+    this.getList();
+  }
+
+  private resetList() {
+    //console.log('CallBack resetList');
+    this.currentPage = 1;//back to page 1
+    this.params = this.loadParams();
+    this.getList();
+  }
+
+  ngOnInit() {
+    this.isSuperadmin = this.securityService.isSuperAdmin();
+    this.storeService.getListOfStores({ start: 0 })
+      .subscribe(res => {
+        res.data.forEach((store) => {
+          this.stores.push({ value: store.code, label: store.code });
+        });
+      });
+
+    //ng2-smart-table server side filter
+    this.source.onChanged().subscribe((change) => {
+
+      if (!this.loadingList) {//listing service
+        this.listingService.filterDetect(this.params, change, this.loadList.bind(this), this.resetList.bind(this));
+      }
+
+    });
+  }
+
 
   setSettings() {
 
@@ -206,38 +244,7 @@ export class UsersListComponent implements OnInit {
     this.getList();
   }
 
-  resetSearch() {
-    this.searchValue = null;
-    this.params = this.loadParams();
-    this.getList();
-  }
 
-  onSearch(query: string = '') {
 
-    if (query.length == 0) {
-      this.searchValue = null;
-      return;
-    }
-
-    //server side search
-    this.params["emailAddress"] = query;
-    this.getList();
-
-    /**
-    this.source.setFilter([
-      {
-        field: 'name',
-        search: query
-      },
-      {
-        field: 'emailAddress',
-        search: query
-      }
-    ], false); 
-    **/
-
-    this.searchValue = query;
-
-  }
 
 }

@@ -4,11 +4,12 @@ import { SharedModule } from '../shared/shared.module';
 import { ngfModule } from 'angular-file';
 import { QueryBuilderModule } from "angular2-query-builder";
 import { NbDialogModule } from '@nebular/theme';
-import { CKEditorModule } from 'ng2-ckeditor';
 import { NgxDropzoneModule } from 'ngx-dropzone';
 import { LightboxModule } from 'ngx-lightbox';
 import { MalihuScrollbarModule } from 'ngx-malihu-scrollbar';
-import { FileManagerModule } from '../../ng6-file-man';
+import { FileManagerModule } from 'ng6-file-man';
+import { NgxSummernoteModule } from 'ngx-summernote';
+import { CustomModule } from '../custom-component/custom.module';
 @NgModule({
   declarations: [
     ...routedComponents
@@ -20,10 +21,11 @@ import { FileManagerModule } from '../../ng6-file-man';
     FileManagerModule,
     QueryBuilderModule,
     NbDialogModule.forChild(),
-    CKEditorModule,
+    NgxSummernoteModule,
     NgxDropzoneModule,
     LightboxModule,
-    MalihuScrollbarModule.forRoot()
+    MalihuScrollbarModule.forRoot(),
+    CustomModule
   ],
   exports: [ngfModule]
 })

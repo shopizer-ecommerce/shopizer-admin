@@ -20,7 +20,10 @@ import { forkJoin } from 'rxjs';
   styleUrls: ['./store-form.component.scss']
 })
 export class StoreFormComponent implements OnInit {
+  @Input() title: string;
   @Input() store: any;
+  @Input() isCancel: string;
+
   @ViewChild('search', { static: false })
   searchElementRef: ElementRef;
   supportedLanguages = [];
@@ -56,7 +59,27 @@ export class StoreFormComponent implements OnInit {
   parentRetailer: any;
   merchant = '';
   parent: any;
-
+  selectedItem = '2';
+  sidemenuLinks = [
+    {
+      id: '0',
+      title: 'Store branding',
+      key: 'COMPONENTS.STORE_BRANDING',
+      link: 'store-branding'
+    },
+    {
+      id: '1',
+      title: 'Store home page',
+      key: 'COMPONENTS.STORE_LANDING',
+      link: 'store-landing'
+    },
+    {
+      id: '2',
+      title: 'Store details',
+      key: 'COMPONENTS.STORE_DETAILS',
+      link: 'store'
+    }
+  ];
   constructor(
     private fb: FormBuilder,
     private configService: ConfigService,
@@ -80,13 +103,13 @@ export class StoreFormComponent implements OnInit {
       this.configService.getListOfSupportedCurrency(),
       this.configService.getWeightAndSizes(),
       this.storeService.getListOfStores({ start: 0, length: 1500, retailers: true, store: this.merchant }),
-      this.configService.getListOfSupportedLanguages())
+      this.configService.getListOfSupportedLanguages(localStorage.getItem('merchant')))
       .subscribe(([countries, currencies, measures, stores, languages]) => {
         this.countries = [...countries];
         this.supportedCurrency = [...currencies];
         this.weightList = [...measures.weights];
         this.sizeList = [...measures.measures];
-        this.supportedLanguages = [...languages];
+        this.supportedLanguages = this.configService.getListOfGlobalLanguages();
         // use method for getting only retailer store
         //list of retailers
 
@@ -111,8 +134,8 @@ export class StoreFormComponent implements OnInit {
           }
         });
 
-        console.log('Retailer size ' + this.retailerArray.length);
-        console.log('Is retailer ' + this.isRetailer);
+        //console.log('Retailer size ' + this.retailerArray.length);
+        //console.log('Is retailer ' + this.isRetailer);
 
         this.adjustForm();
 
@@ -185,7 +208,7 @@ export class StoreFormComponent implements OnInit {
       email: ['', [Validators.required, Validators.pattern(validators.emailPattern)]],
       address: this.fb.group({
         searchControl: [''],
-        stateProvince: [{ value: '', disabled: true }],
+        stateProvince: [{ value: '', disabled: false }],
         country: ['', [Validators.required]],
         address: ['', [Validators.required]],
         postalCode: ['', [Validators.required]],
@@ -202,15 +225,15 @@ export class StoreFormComponent implements OnInit {
       retailer: [false],
       retailerStore: '',
     });
-    if (!this.store.id && this.roles.isAdminRetail) {
+    if (this.store && (!this.store.id && this.roles.isAdminRetail)) {
       this.form.patchValue({ retailer: false });
       this.form.patchValue({ retailerStore: this.merchant });
       this.form.controls['retailer'].disable();
       this.form.controls['retailerStore'].disable();
     }
 
-    console.log('Creating form 3 ');
-    console.log('Store id' + this.store.id);
+    //console.log('Creating form 3 ');
+    //console.log('Store id' + this.store.id);
     if (this.store && this.store.id > 0) {
       this.fillForm();
     }
@@ -254,13 +277,10 @@ export class StoreFormComponent implements OnInit {
   fillForm() {
 
     this.isRetailer = this.store.retailer;
-    console.log('Fill form store ' + JSON.stringify(this.store));
+    //console.log('Fill form store ' + JSON.stringify(this.store));
     if (this.store.parent && this.store.parent != null) {
       this.parentRetailer = this.store.parent;
     }
-
-    console.log('No parents');
-
     //console.log('Parent code ' + this.parentRetailer.code);
 
     this.store.supportedLanguages.forEach(lang => {
@@ -352,23 +372,21 @@ export class StoreFormComponent implements OnInit {
     const storeObj = this.form.value;
 
     //creating a child
-    if (!this.store.id) {
+    if (this.store && !this.store.id) {
       if (!this.roles.isSuperadmin && this.isRetailer) {
         storeObj.retailer = false;
         storeObj.retailerStore = this.merchant;
       }
     }
 
-    if (this.store.id && this.isRetailer) {
+    if (this.store && (this.store.id && this.isRetailer)) {
       storeObj.retailer = true;
     }
 
 
     storeObj.supportedLanguages = this.supportedLanguagesSelected;
-    //console.log(storeObj);
-    //return;
 
-    if (this.store.id) {
+    if (this.store && this.store.id) {
       this.storeService.updateStore(storeObj)
         .subscribe(store => {
           this.toastr.success(this.translate.instant('STORE_FORM.' + this.establishmentType + '_UPDATED'));
@@ -400,12 +418,12 @@ export class StoreFormComponent implements OnInit {
 
   countryIsSelected(code) {
     this.provinces = [];
-    this.stateProvince.disable();
+    // this.stateProvince.disable();
     this.configService.getListOfZonesProvincesByCountry(code)
       .subscribe(provinces => {
         this.provinces = [...provinces];
         if (this.provinces.length > 0) {
-          this.stateProvince.enable();
+          // this.stateProvince.enable();
         }
       }, error1 => {
         this.toastr.success(this.translate.instant('STORE_FORM.ERROR_STATE_PROVINCE'));
@@ -468,5 +486,11 @@ export class StoreFormComponent implements OnInit {
   canRemove() {
     return this.store.id && ((this.roles.isSuperadmin && this.establishmentType === 'RETAILER')
       || (this.roles.isSuperadmin && this.establishmentType === 'STORE')) && this.store.code !== 'DEFAULT';
+  }
+  onClickRoute(link) {
+    this.router.navigate(['pages/store-management/' + link + "/", this.store.code]);
+  }
+  goToBack() {
+    this.router.navigate(['pages/store-management/stores-list']);
   }
 }

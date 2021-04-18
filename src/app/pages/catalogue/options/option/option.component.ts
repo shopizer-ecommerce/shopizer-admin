@@ -17,10 +17,11 @@ import { validators } from '../../../shared/validation/validators';
 export class OptionComponent implements OnInit {
   form: FormGroup;
   loader = false;
+  loadingInfo: boolean = false;
   option = new Option();
   languages = [];
   types = [
-    'Select', 'Radio', 'Checkbox', 'Text'
+    'select', 'radio', 'checkbox', 'text'
   ];
   isCodeUnique = true;
 
@@ -65,7 +66,7 @@ export class OptionComponent implements OnInit {
     this.form = this.fb.group({
       code: ['', [Validators.required, Validators.pattern(validators.alphanumeric)]],
       type: ['', [Validators.required]],
-      selectedLanguage: [''],
+      selectedLanguage: ['en'],
       descriptions: this.fb.array([])
     });
     this.addFormArray();
@@ -76,8 +77,8 @@ export class OptionComponent implements OnInit {
     this.languages.forEach(lang => {
       control.push(
         this.fb.group({
-          language: [lang.code, [Validators.required]],
-          name: ['', [Validators.required]]
+          language: [lang.code, []],
+          name: ['', []]
         })
       );
     });
@@ -130,5 +131,7 @@ export class OptionComponent implements OnInit {
       });
     }
   }
-
+  goToback() {
+    this.router.navigate(['pages/catalogue/options/options-list']);
+  }
 }

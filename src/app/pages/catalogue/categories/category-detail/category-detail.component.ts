@@ -11,7 +11,7 @@ import { CategoryService } from '../services/category.service';
 export class CategoryDetailComponent implements OnInit {
   category: any = {};
   loadingInfo = false;
-
+  loading: boolean = false;
   constructor(
     private categoryService: CategoryService,
     private activatedRoute: ActivatedRoute

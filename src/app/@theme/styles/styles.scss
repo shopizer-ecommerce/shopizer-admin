@@ -19,6 +19,11 @@
 @import './overrides';
 @import 'custom';
 
+.nb-theme-corporate nb-checkbox .text:not(:empty) {
+  padding-left: 6px;
+  padding-right: 21px;
+}
+
 // install the framework and custom global styles
 @include nb-install() {
 
@@ -183,6 +188,7 @@
     display: none !important;
   }
 
+  /**
   .file-manager-left {
     width: 30%;
     max-width: 350px;
@@ -194,6 +200,33 @@
     @include borders;
     @include shadows
   }
+  **/
+
+  .file-manager-left {
+    display: none !important;
+  }
+
+
+  .new .file-manager-item {
+    &:hover {
+      background: transparent !important
+    }
+  }
+
+  .file-preview .fa-plus {
+    color: #36f !important;
+
+    &:hover {
+      color: #598bff !important
+    }
+  }
+
+  .upload-background {
+    .buttons:nth-of-type(1) {
+      display: none
+    }
+  }
+
 
   .file-manager-node {
     user-select: none;
@@ -558,13 +591,14 @@
 
   .side-view-preview-content {
     position: relative;
-    border-top: 1px solid $main-color;
+    /**border-top: 1px solid $main-color;**/
     border-bottom: 1px solid $main-color;
     min-height: 100%;
     flex-grow: 1;
     margin-bottom: 10px;
     padding: 5px;
   }
+
 
   ////////////
   // upload //
@@ -662,4 +696,10 @@
     color: $main-color;
     font-weight: bold;
   }
+}
+
+// .order_details {
+.nb-theme-corporate nb-select.size-medium:not(.full-width) {
+  // max-width: 23rem !important;
+  // width: 100% !important;
 }

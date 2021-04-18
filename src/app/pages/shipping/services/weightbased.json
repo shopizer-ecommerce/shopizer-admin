@@ -1,0 +1,41 @@
+[
+    {
+        "type": "checkbox",
+        "label": "Enabled",
+        "placeholder": "",
+        "name": "active",
+        "objectKey": "",
+        "isRequired": false,
+        "optionData": [],
+        "value": false
+    },
+    {
+        "type": "checkbox",
+        "label": "Default",
+        "placeholder": "",
+        "name": "defaultSelected",
+        "objectKey": "",
+        "isRequired": false,
+        "optionData": [],
+        "value": false
+    },
+    {
+        "type": "dropdown",
+        "label": "Environment",
+        "placeholder": "Please select environment",
+        "name": "enviroment",
+        "objectKey": "",
+        "isRequired": false,
+        "optionData": [
+            {
+                "id": "test",
+                "label": "Test"
+            },
+            {
+                "id": "prod",
+                "label": "Prod"
+            }
+        ],
+        "value": ""
+    }
+]

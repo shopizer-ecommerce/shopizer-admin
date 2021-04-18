@@ -18,6 +18,7 @@ import { OptionValueImageService } from '../services/option-value-image.service'
 export class OptionValuesComponent implements OnInit {
   form: FormGroup;
   loader = false;
+  loadingInfo: boolean = false;
   optionValue = new OptionValue();
   languages = [];
   types = [
@@ -67,7 +68,7 @@ export class OptionValuesComponent implements OnInit {
   private createForm() {
     this.form = this.fb.group({
       code: ['', [Validators.required, Validators.pattern(validators.alphanumeric)]],
-      selectedLanguage: [''],
+      selectedLanguage: ['en'],
       descriptions: this.fb.array([])
     });
     this.addFormArray();
@@ -78,8 +79,8 @@ export class OptionValuesComponent implements OnInit {
     this.languages.forEach(lang => {
       control.push(
         this.fb.group({
-          language: [lang.code, [Validators.required]],
-          name: ['', [Validators.required]]
+          language: [lang.code, []],
+          name: ['', []]
         })
       );
     });
@@ -154,5 +155,8 @@ export class OptionValuesComponent implements OnInit {
         });
       });
     }
+  }
+  goToback() {
+    this.router.navigate(['pages/catalogue/options/options-values-list']);
   }
 }

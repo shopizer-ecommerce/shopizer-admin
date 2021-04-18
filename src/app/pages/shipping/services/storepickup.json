@@ -1,0 +1,61 @@
+[
+    {
+        "type": "checkbox",
+        "label": "Enabled",
+        "placeholder": "",
+        "name": "active",
+        "objectKey": "",
+        "isRequired": false,
+        "optionData": [],
+        "value": false
+    },
+    {
+        "type": "checkbox",
+        "label": "Default",
+        "placeholder": "",
+        "name": "defaultSelected",
+        "objectKey": "",
+        "isRequired": false,
+        "optionData": [],
+        "value": false
+    },
+    {
+        "type": "dropdown",
+        "label": "Environment",
+        "placeholder": "Please select environment",
+        "name": "enviroment",
+        "objectKey": "",
+        "isRequired": false,
+        "optionData": [
+            {
+                "id": "test",
+                "label": "Test"
+            },
+            {
+                "id": "prod",
+                "label": "Prod"
+            }
+        ],
+        "value": ""
+    },
+    {
+        "type": "summernote",
+        "label": "Pick up address that will be displayed to the client",
+        "placeholder": "Pick up address that will be displayed to the client",
+        "name": "note",
+        "objectKey": "integrationKeys",
+        "isRequired": false,
+        "optionData": [],
+        "value": ""
+    },
+    {
+        "type": "number",
+        "label": "Price for store pick up in numeric format",
+        "placeholder": "Enter a price",
+        "name": "price",
+        "objectKey": "integrationKeys",
+        "isRequired": true,
+        "optionData": [],
+        "value": ""
+    }
+]

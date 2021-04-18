@@ -28,7 +28,7 @@ export class StoreService {
   }
 
   getListOfMerchantStoreNames(params): Observable<any> {
-    return this.crudService.get(`/v1/stores`, params);
+    return this.crudService.get(`/v1/private/stores/names`, params);
   }
 
   checkIfStoreExist(code): Observable<any> {
@@ -66,7 +66,7 @@ export class StoreService {
 
   createPageContent(content: any, storeCode: string) : Observable<any> {
 
-    return this.crudService.postWithStorParam(`/v1/private/content`, content, storeCode);
+    return this.crudService.postWithStoreParam(`/v1/private/content`, content, storeCode);
   }
 
   // end PAGE CONTENT

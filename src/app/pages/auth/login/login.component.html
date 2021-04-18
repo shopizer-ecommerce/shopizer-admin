@@ -1,71 +1,14 @@
-<!--
-<div class="row login-form">
-  <div class="col-md-4"></div>
-  <div class="col-md-4">
-    <nb-card>
-      <nb-card-header>{{ 'COMPONENTS.LOGIN' | translate}}</nb-card-header>
-      <nb-card-body>
-        <form [formGroup]='form' (ngSubmit)='onSubmit()'>
-          <div class="form-group row">
-            <label for="inputUsername1" class="col-sm-3 col-form-label">{{ 'LOGIN.USERNAME' | translate}}</label>
-            <div class="col-sm-9">
-              <input type="text" class="form-control" id="inputUsername1" formControlName='username'
-                     placeholder="{{ 'LOGIN.USERNAME' | translate}}" required>
-            </div>
-          </div>
-          <div class="form-group row">
-            <label for="inputPassword2" class="col-sm-3 col-form-label">{{ 'LOGIN.PASSWORD' | translate}}</label>
-            <div class="col-sm-9">
-              <input type="password" class="form-control" id="inputPassword2" formControlName='password'
-                     placeholder="{{ 'LOGIN.PASSWORD' | translate}}" required>
-            </div>
-          </div>
-          <div class="form-group row">
-            <div class="col-sm-3 col-form-label"></div>
-            <div class="col-sm-9">
-              <nb-checkbox [value]="false">{{ 'LOGIN.REMEMBER_USERNAME' | translate}}</nb-checkbox>
-            </div>
-          </div>
-          <div class="form-group row">
-            <div class="col-sm-3 col-form-label"></div>
-            <div class="col-sm-9">
-              {{ 'LOGIN.FORGOT_PASSWORD' | translate}}
-            </div>
-          </div>
-          <div class="form-group row">
-            <div class="offset-sm-3 col-sm-9">
-              <button type="submit" class="btn btn-primary">{{ 'COMMON.LOGIN' | translate}}</button>
-            </div>
-          </div>
-
-          <div class="form-group row alert-error" *ngIf="errorMessage !== ''">
-            {{errorMessage}}
-          </div>
-
-        </form>
-      </nb-card-body>
-    </nb-card>
-  </div>
-  <div class="col-md-4"></div>
-</div>
--->
 <div class="limiter">
   <div class="container-login100">
     <div class="wrap-login100 p-l-85 p-r-85 p-t-55 p-b-55">
       <form class="login100-form validate-form flex-sb flex-w" [formGroup]='form' (ngSubmit)='onSubmit()'>
         <span style="width:100%;" class="titleClass">
-          <!-- <span class="login100-form-title">
-            {{ 'COMPONENTS.LOGIN' | translate}}
-          </span>
-          <span class="login100-form-subtitle">
-            Hello! Log in with your email.
-          </span> -->
+
           <img src="assets/img/shopizer-logo.png" width="200" style="margin-top:-15px;">
 
         </span>
 
-        <div class="form-group row alert-error" *ngIf="errorMessage !== ''"
-          style="width:100%;line-height: 2.5;color:#ff3d71;font-size: 12px;margin-bottom:10px;">
+        <div class="form-group row alert-error" *ngIf="errorMessage !== ''" style="width:100%;line-height: 2.5;color:#ff3d71;font-size: 12px;margin-bottom:10px;">
           {{errorMessage}}
         </div>
 
@@ -79,11 +22,10 @@
           </div>
         </div>
 
-        <div *ngIf="isSubmitted && formControls.username.errors" class="help-block"
-          style="margin-top:-32px; color:#ff3d71;font-size: 12px;">
+        <div *ngIf="isSubmitted && formControls.username.errors" class="help-block" style="margin-top:-32px; color:#ff3d71;font-size: 12px;">
           <span *ngIf="isSubmitted && formControls.username.errors.required">{{ 'LOGIN.INVALID_EMPTY_USERNAME' |
             translate}}</span>
-          <span *ngIf="isSubmitted && formControls.username.errors.email">U{{ 'LOGIN.INVALID_FORMAT_USERNAME' |
+          <span *ngIf="isSubmitted && formControls.username.errors.email">{{ 'LOGIN.INVALID_FORMAT_USERNAME' |
             translate}}</span>
         </div>
 
@@ -95,13 +37,14 @@
             <span class="btn-show-pass">
               <i [class]="passwordType()==0 ? 'fa fa-eye' : 'fa fa-eye-slash'" (click)="showPassword()"></i>
             </span>
-            <input class="inputLogin" [type]="passwordType()==0 ? 'password' : 'text'" name="password"
-              formControlName='password' placeholder="Password" required>
+            <!-- <input class="inputLogin" [type]="passwordType()==0 ? 'password' : 'text'" name="password" formControlName='password'
+              placeholder="Password" required> -->
+            <input [class]="passwordType()==0 ? 'inputLogin password_type' : 'inputLogin'" type="text" name="password"
+              formControlName='password' autocomplete="off" placeholder="Password" required>
           </div>
         </div>
 
-        <div *ngIf="isSubmitted && formControls.password.errors" class="help-block"
-          style="margin-top:-8px; color:#ff3d71;font-size: 12px;">
+        <div *ngIf="isSubmitted && formControls.password.errors" class="help-block" style="margin-top:-8px; color:#ff3d71;font-size: 12px;">
           <span *ngIf="isSubmitted && formControls.password.errors.required">{{ 'LOGIN.INVALID_EMPTY_PASSWORD' |
             translate}}</span>
         </div>
@@ -110,24 +53,28 @@
         <div style="width:100%;">
           <div class="flex-sb-m w-full p-b-28 p-t-26">
             <div class="contact100-form-checkbox">
-              <nb-checkbox [value]="false">&nbsp;{{ 'LOGIN.REMEMBER_USERNAME' | translate}}</nb-checkbox>
+              <nb-checkbox [checked]="isRemember" (change)="onCheckRemember($event)">&nbsp;{{ 'LOGIN.REMEMBER_USERNAME'
+                |
+                translate}}</nb-checkbox>
             </div>
-            <!--
-          <div>
-            <a href="#" class="txt3">
+
+            <div>
+              <a href="javascript:void(0);" class="txt3" (click)="onClickForgotPassword()">
                 {{ 'LOGIN.FORGOT_PASSWORD' | translate}}
-            </a>
-          </div>
-          -->
+              </a>
+            </div>
+
           </div>
         </div>
 
         <div class="container-login100-form-btn">
-          <button type="submit" class="login100-form-btn">
+          <button type="submit" nbButton class="login100-form-btn">
             {{ 'COMMON.LOGIN' | translate}}
           </button>
         </div>
-
+        <section aria-label="Register" class="another-action">
+          <p class="txt4"> Don't have an account? <a class="txt3" href="javascript:void(0);" (click)="onClickRegister()">Register</a></p>
+        </section>
 
       </form>
     </div>

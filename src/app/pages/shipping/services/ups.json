@@ -1,0 +1,129 @@
+[
+    {
+        "type": "checkbox",
+        "label": "Enabled",
+        "placeholder": "",
+        "name": "active",
+        "objectKey": "",
+        "isRequired": false,
+        "optionData": [],
+        "value": false
+    },
+    {
+        "type": "checkbox",
+        "label": "Default",
+        "placeholder": "",
+        "name": "defaultSelected",
+        "objectKey": "",
+        "isRequired": false,
+        "optionData": [],
+        "value": false
+    },
+    {
+        "type": "dropdown",
+        "label": "Environment",
+        "placeholder": "Please select environment",
+        "name": "enviroment",
+        "objectKey": "",
+        "isRequired": false,
+        "optionData": [
+            {
+                "id": "test",
+                "label": "Test"
+            },
+            {
+                "id": "prod",
+                "label": "Prod"
+            }
+        ],
+        "value": ""
+    },
+    {
+        "type": "text",
+        "label": "UPS access key",
+        "placeholder": "Enter a access key",
+        "name": "accessKey",
+        "objectKey": "integrationKeys",
+        "isRequired": true,
+        "optionData": [],
+        "value": ""
+    },
+    {
+        "type": "text",
+        "label": "User ID",
+        "placeholder": "Enter a user id",
+        "name": "userId",
+        "objectKey": "integrationKeys",
+        "isRequired": true,
+        "optionData": [],
+        "value": ""
+    },
+    {
+        "type": "text",
+        "label": "Password",
+        "placeholder": "Enter a password",
+        "name": "password",
+        "objectKey": "integrationKeys",
+        "isRequired": true,
+        "optionData": [],
+        "value": ""
+    },
+    {
+        "type": "radio",
+        "label": "Package Type",
+        "placeholder": "",
+        "name": "packages",
+        "objectKey": "integrationOptions",
+        "isRequired": false,
+        "optionData": [
+            {
+                "label": "UPS Letter",
+                "value": "01"
+            },
+            {
+                "label": "Customer Package",
+                "value": "02"
+            },
+            {
+                "label": "UPS Tube",
+                "value": "03"
+            },
+            {
+                "label": "UPS Pak",
+                "value": "04"
+            },
+            {
+                "label": "UPS Express Box",
+                "value": "05"
+            },
+            {
+                "label": "UPS 25kg Box",
+                "value": "06"
+            },
+            {
+                "label": "UPS 10kg box",
+                "value": "07"
+            },
+            {
+                "label": "Unknown",
+                "value": "08"
+            }
+        ],
+        "value": ""
+    },
+    {
+        "type": "radio",
+        "label": "UPS Shipping Methods",
+        "placeholder": "",
+        "name": "selectservice",
+        "objectKey": "integrationOptions",
+        "isRequired": false,
+        "optionData": [
+            {
+                "label": "Let UPS propose all available shipping methods",
+                "value": "no"
+            }
+        ],
+        "value": ""
+    }
+]

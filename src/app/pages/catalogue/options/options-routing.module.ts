@@ -6,6 +6,10 @@ import { OptionsListComponent } from './options-list/options-list.component';
 import { OptionComponent } from './option/option.component';
 import { OptionsValuesListComponent } from './options-values-list/options-values-list.component';
 import { OptionValuesComponent } from './option-values/option-values.component';
+import { OptionsSetListComponent } from './options-set-list/options-set-list.component';
+import { OptionSetComponent } from './options-set/option-set.component';
+import { VariationsListComponent } from './variations/variations.component';
+import { AddVariationsComponent } from './variations/add-variations.component';
 
 const routes: Routes = [
   {
@@ -36,6 +40,26 @@ const routes: Routes = [
         path: 'option-value/:optionValueId',
         component: OptionValuesComponent,
       },
+      {
+        path: 'options-set-list',
+        component: OptionsSetListComponent
+      },
+      {
+        path: 'option-set',
+        component: OptionSetComponent
+      },
+      {
+        path: 'option-set/:optionId',
+        component: OptionSetComponent
+      },
+      {
+        path: 'variations/list',
+        component: VariationsListComponent
+      },
+      {
+        path: 'variations/add',
+        component: AddVariationsComponent
+      }
     ],
   }
 ];

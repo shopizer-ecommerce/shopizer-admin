@@ -1,0 +1,39 @@
+# Java Maven CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-java/ for more details
+#
+
+
+version: 2.1
+
+orbs:
+  slack: circleci/slack@3.4.2
+      
+working_directory: /tmp
+
+# Define the jobs we want to run for this project
+jobs:
+  deploy:
+    machine: true
+    steps:
+       - checkout
+       # start proprietary DB using private Docker image
+       # with credentials stored in the UI
+       - run: |
+           ls -al
+       - run: |
+           docker login -u shopizerecomm -p $DOCKERHUB_PASSWORD
+       - run: |
+           docker build . -t shopizerecomm/shopizer-admin:latest
+       - run: |
+           docker push shopizerecomm/shopizer-admin:latest
+       - slack/status:
+           fail_only: false
+           webhook: $SLACK_ADMIN_WEBHOOK
+
+
+# Orchestrate our job run sequence
+workflows:
+  build_and_deploy:
+    jobs:
+      - deploy

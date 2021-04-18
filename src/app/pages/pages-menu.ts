@@ -18,7 +18,6 @@ const IsSuperadmin = () => {
 };
 
 const IsAdmin = () => {
-  //return (JSON.parse(localStorage.getItem('roles'))).isAdmin;
   if (
     (JSON.parse(localStorage.getItem('roles'))).isSuperadmin ||
     (JSON.parse(localStorage.getItem('roles'))).isAdmin ||
@@ -75,6 +74,19 @@ const IsAdminRetail = () => {
   }
 };
 
+const IsOrderManagementVisible = () => {
+  if (
+    (JSON.parse(localStorage.getItem('roles'))).isSuperadmin ||
+    (JSON.parse(localStorage.getItem('roles'))).isAdminRetail ||
+    (JSON.parse(localStorage.getItem('roles'))).isAdminOrder ||
+    (JSON.parse(localStorage.getItem('roles'))).isAdmin
+  ) {
+    return true;
+  } else {
+    return false;
+  }
+};
+
 export const MENU_ITEMS: MenuItem[] = [
   {
     title: 'COMPONENTS.HOME',
@@ -84,20 +96,14 @@ export const MENU_ITEMS: MenuItem[] = [
     home: true,
   },
   {
-    title: 'COMPONENTS.USER',
-    key: 'COMPONENTS.USER',
+    title: 'COMPONENTS.USER_MANAGEMENT',
+    key: 'COMPONENTS.USER_MANAGEMENT',
     icon: 'person',
     children: [
       {
         title: 'COMPONENTS.MY_PROFILE',
         key: 'COMPONENTS.MY_PROFILE',
         link: '/pages/user-management/profile',
-        hidden: false
-      },
-      {
-        title: 'COMPONENTS.CHANGE_PASSWORD',
-        key: 'COMPONENTS.CHANGE_PASSWORD',
-        link: '/pages/user-management/change-password',
         hidden: false
       },
       {
@@ -117,8 +123,8 @@ export const MENU_ITEMS: MenuItem[] = [
     ],
   },
   {
-    title: 'COMPONENTS.STORE',
-    key: 'COMPONENTS.STORE',
+    title: 'COMPONENTS.STORE_MANAGEMENT',
+    key: 'COMPONENTS.STORE_MANAGEMENT',
     icon: 'shopping-bag',
     link: '',
     hidden: false,
@@ -148,8 +154,8 @@ export const MENU_ITEMS: MenuItem[] = [
     ],
   },
   {
-    title: 'COMPONENTS.CATALOGUE',
-    key: 'COMPONENTS.CATALOGUE',
+    title: 'COMPONENTS.CATALOUGE_MANAGEMENT',
+    key: 'COMPONENTS.CATALOUGE_MANAGEMENT',
     icon: 'pricetags',
     hidden: false,
     guards: [IsAdminRetail],
@@ -167,7 +173,6 @@ export const MENU_ITEMS: MenuItem[] = [
             guards: [isCategoryManagementVisible],
             hidden: false,
           },
-          /**
           {
             title: 'COMPONENTS.CREATE_CATEGORY',
             key: 'COMPONENTS.CREATE_CATEGORY',
@@ -175,7 +180,6 @@ export const MENU_ITEMS: MenuItem[] = [
             hidden: false,
             guards: [isCategoryManagementVisible],
           },
-          **/
           {
             title: 'COMPONENTS.CATEGORIES_HIERARCHY',
             key: 'COMPONENTS.CATEGORIES_HIERARCHY',
@@ -195,124 +199,143 @@ export const MENU_ITEMS: MenuItem[] = [
             title: 'COMPONENTS.PRODUCTS_LIST',
             key: 'COMPONENTS.PRODUCTS_LIST',
             link: '/pages/catalogue/products/products-list',
-            hidden: false
+            hidden: false,
+            guards: [IsAdminRetail]
           },
           {
             title: 'COMPONENTS.CREATE_PRODUCT',
             key: 'COMPONENTS.CREATE_PRODUCT',
             link: '/pages/catalogue/products/create-product',
-            hidden: false
+            hidden: false,
+            guards: [IsAdminRetail]
           }
 
-          /**
-          {
-             title: 'COMPONENTS.MANAGE_INVENTORY',
-             key: 'COMPONENTS.MANAGE_INVENTORY',
-             link: '/pages/catalogue/products/manage-inventory',
-             hidden: false
-           },
-           **/
-        ],
-      },
-      {
-        title: 'COMPONENTS.BRANDS',
-        key: 'COMPONENTS.BRANDS',
-        hidden: false,
-        children: [
-          {
-            title: 'COMPONENTS.CREATE_BRAND',
-            key: 'COMPONENTS.CREATE_BRAND',
-            link: '/pages/catalogue/brands/create-brand',
-            hidden: false
-          },
-          {
-            title: 'COMPONENTS.BRANDS_LIST',
-            key: 'COMPONENTS.BRANDS_LIST',
-            link: '/pages/catalogue/brands/brands-list',
-            hidden: false
-          },
-        ],
-      },
-      {
-        title: 'COMPONENTS.CATALOGUES',
-        key: 'COMPONENTS.CATALOGUES',
-        hidden: false,
-        children: [
-          {
-            title: 'COMPONENTS.CREATE_CATALOGUE',
-            key: 'COMPONENTS.CREATE_CATALOGUE',
-            link: '/pages/catalogue/catalogues/create-catalogue',
-            hidden: false
-          },
-          {
-            title: 'COMPONENTS.CATALOGUES_LIST',
-            key: 'COMPONENTS.CATALOGUES_LIST',
-            link: '/pages/catalogue/catalogues/catalogues-list',
-            hidden: false
-          },
-        ],
-      },
-      {
-        title: 'COMPONENTS.PRODUCTS_GROUPS',
-        key: 'COMPONENTS.PRODUCTS_GROUPS',
-        hidden: false,
-        children: [
-          {
-            title: 'COMPONENTS.CREATE_PRODUCTS_GROUPS',
-            key: 'COMPONENTS.CREATE_PRODUCTS_GROUPS',
-            link: '/pages/catalogue/products-groups/create-products-group',
-            hidden: false
-          },
-          {
-            title: 'COMPONENTS.LIST_PRODUCTS_GROUPS',
-            key: 'COMPONENTS.LIST_PRODUCTS_GROUPS',
-            link: '/pages/catalogue/products-groups/products-groups-list',
-            hidden: false
-          },
-          {
-            title: 'COMPONENTS.PRODUCTS_GROUPS_LIST',
-            key: 'COMPONENTS.PRODUCTS_GROUPS_LIST',
-            link: '/pages/catalogue/products-groups/groups-list',
-            hidden: false
-          },
         ],
       },
       {
         title: 'COMPONENTS.OPTIONS',
         key: 'COMPONENTS.OPTIONS',
         hidden: false,
+        guards: [IsSuperadmin, IsAdmin, IsAdminRetail, IsAdminCatalogue],
         children: [
           {
             title: 'COMPONENTS.OPTIONS_LIST',
             key: 'COMPONENTS.OPTIONS_LIST',
             link: '/pages/catalogue/options/options-list',
-            hidden: false
+            hidden: false,
+            guards: [IsSuperadmin, IsAdmin, IsAdminRetail, IsAdminCatalogue],
           },
-          // {
-          //   title: 'COMPONENTS.CREATE_OPTION',
-          //   key: 'COMPONENTS.CREATE_OPTION',
-          //   link: '/pages/catalogue/options/create-option',
-          //   hidden: false
-          // },
+
           {
             title: 'COMPONENTS.OPTIONS_VALUES_LIST',
             key: 'COMPONENTS.OPTIONS_VALUES_LIST',
             link: '/pages/catalogue/options/options-values-list',
-            hidden: false
+            hidden: false,
+            guards: [IsSuperadmin, IsAdmin, IsAdminRetail, IsAdminCatalogue],
+          },
+
+          {
+            title: 'COMPONENTS.OPTION_SET_LIST',
+            key: 'COMPONENTS.OPTION_SET_LIST',
+            link: '/pages/catalogue/options/options-set-list',
+            hidden: false,
+            guards: [IsSuperadmin, IsAdmin, IsAdminRetail, IsAdminCatalogue],
+          },
+          {
+            title: 'COMPONENTS.VARIATIONS_LIST',
+            key: 'COMPONENTS.VARIATIONS_LIST',
+            link: '/pages/catalogue/options/variations/list',
+            hidden: false,
+            guards: [IsSuperadmin, IsAdmin, IsAdminRetail, IsAdminCatalogue],
+          },
+        ]
+      },
+      {
+        title: 'COMPONENTS.BRANDS',
+        key: 'COMPONENTS.BRANDS',
+        hidden: false,
+        guards: [IsSuperadmin, IsAdmin, IsAdminRetail, IsAdminCatalogue],
+        children: [
+
+          {
+            title: 'COMPONENTS.BRANDS_LIST',
+            key: 'COMPONENTS.BRANDS_LIST',
+            link: '/pages/catalogue/brands/brands-list',
+            hidden: false,
+            guards: [IsSuperadmin, IsAdmin, IsAdminRetail, IsAdminCatalogue],
+          },
+          {
+            title: 'COMPONENTS.CREATE_BRAND',
+            key: 'COMPONENTS.CREATE_BRAND',
+            link: '/pages/catalogue/brands/create-brand',
+            hidden: false,
+            guards: [IsSuperadmin, IsAdmin, IsAdminRetail, IsAdminCatalogue],
+          }
+        ]
+      },
+      {
+        title: 'COMPONENTS.PRODUCTS_GROUPS',
+        key: 'COMPONENTS.PRODUCTS_GROUPS',
+        hidden: false,
+        guards: [IsSuperadmin, IsAdmin, IsAdminRetail, IsAdminCatalogue],
+        children: [
+
+          {
+            title: 'COMPONENTS.PRODUCTS_GROUPS_LIST',
+            key: 'COMPONENTS.PRODUCTS_GROUPS_LIST',
+            link: '/pages/catalogue/products-groups/groups-list',
+            hidden: false,
+            guards: [IsSuperadmin, IsAdmin, IsAdminRetail, IsAdminCatalogue],
           },
           // {
-          //   title: 'COMPONENTS.CREATE_OPTION_VALUE',
-          //   key: 'COMPONENTS.CREATE_OPTION_VALUE',
-          //   link: '/pages/catalogue/options/create-option-value',
-          //   hidden: false
-          // },
+          //   title: 'COMPONENTS.CREATE_PRODUCTS_GROUPS',
+          //   key: 'COMPONENTS.CREATE_PRODUCTS_GROUPS',
+          //   link: '/pages/catalogue/products-groups/create-products-group',
+          //   hidden: false,
+          //   guards: [IsSuperadmin, IsAdmin, IsAdminRetail, IsAdminCatalogue],
+          // }
+        ]
+      },
+      {
+        title: 'COMPONENTS.PRODUCT_TYPES',
+        key: 'COMPONENTS.PRODUCT_TYPES',
+        hidden: false,
+        guards: [IsSuperadmin, IsAdmin, IsAdminRetail, IsAdminCatalogue],
+        children: [
+
+          {
+            title: 'PRODUCT_TYPE.PRODUCT_TYPE_LIST',
+            key: 'PRODUCT_TYPE.PRODUCT_TYPE_LIST',
+            link: '/pages/catalogue/types/types-list',
+            hidden: false,
+            guards: [IsSuperadmin, IsAdmin, IsAdminRetail, IsAdminCatalogue],
+          }
+        ]
+      },
+
+
+      {
+        title: 'COMPONENTS.CATALOGUES',
+        key: 'COMPONENTS.CATALOGUES',
+        hidden: false,
+        guards: [IsSuperadmin, IsAdmin, IsAdminRetail, IsAdminCatalogue],
+        children: [
+
+          {
+            title: 'COMPONENTS.CATALOGUES_LIST',
+            key: 'COMPONENTS.CATALOGUES_LIST',
+            link: '/pages/catalogue/catalogues/catalogues-list',
+            hidden: false,
+            guards: [IsSuperadmin, IsAdmin, IsAdminRetail, IsAdminCatalogue],
+          }
         ],
       },
-    ],
+
+    ]
   },
   {
-    title: 'COMPONENTS.CONTENT',
-    key: 'COMPONENTS.CONTENT',
+    title: 'COMPONENTS.CONTENT_MANAGEMENT',
+    key: 'COMPONENTS.CONTENT_MANAGEMENT',
     icon: 'edit-2',
     children: [
       {
@@ -330,11 +353,11 @@ export const MENU_ITEMS: MenuItem[] = [
         key: 'COMPONENTS.CONTENT_IMAGES',
         link: '/pages/content/images/list',
       },
-      {
-        title: 'COMPONENTS.CONTENT_FILES',
-        key: 'COMPONENTS.CONTENT_FILES',
-        link: '/pages/content/files/list',
-      },
+      // {
+      //   title: 'COMPONENTS.CONTENT_FILES',
+      //   key: 'COMPONENTS.CONTENT_FILES',
+      //   link: '/pages/content/files/list',
+      // },
       // {
       //   title: 'Promotion',
       //   key: 'sideNav.managecontent',
@@ -344,25 +367,36 @@ export const MENU_ITEMS: MenuItem[] = [
     ],
   },
   {
-    title: 'COMPONENTS.SHIPPING',
-    key: 'COMPONENTS.SHIPPING',
+    title: 'COMPONENTS.SHIPPING_MANAGEMENT',
+    key: 'COMPONENTS.SHIPPING_MANAGEMENT',
     icon: 'car',
     children: [
       {
-        title: 'COMPONENTS.CONFIGURATION',
-        key: 'COMPONENTS.CONFIGURATION',
+        title: 'SHIPPING.EXPEDITION',
+        key: 'SHIPPING.EXPEDITION',
         link: '/pages/shipping/config',
       },
       {
         title: 'COMPONENTS.METHODS',
         key: 'COMPONENTS.METHODS',
-        link: '/pages/content/promotion',
+        link: '/pages/shipping/methods',
       },
       {
-        title: 'COMPONENTS.ORIGIN',
-        key: 'COMPONENTS.ORIGIN',
-        link: '/pages/shipping/config',
+        title: 'SHIPPING.ORIGIN',
+        key: 'SHIPPING.ORIGIN',
+        link: '/pages/shipping/origin',
       },
+      {
+        title: 'SHIPPING.PACKAGING',
+        key: 'SHIPPING.PACKAGING',
+        link: '/pages/shipping/packaging',
+      },
+      {
+        title: 'COMPONENTS.RULES',
+        key: 'COMPONENTS.RULES',
+        link: '/pages/shipping/rules',
+      },
+
       // {
       //   title: 'Options',
       //   key: 'sideNav.options',
@@ -375,14 +409,37 @@ export const MENU_ITEMS: MenuItem[] = [
       // }
     ]
   },
+  {
+    title: 'COMPONENTS.PAYMENT',
+    key: 'COMPONENTS.PAYMENT',
+    icon: 'credit-card',
+    link: '/pages/payment/methods'
+  },
+  {
+    title: 'COMPONENTS.TAX_MANAGEMENT',
+    key: 'COMPONENTS.TAX_MANAGEMENT',
+    icon: 'file-text',
+    children: [
+      {
+        title: 'COMPONENTS.TAX_CLASS',
+        key: 'COMPONENTS.TAX_CLASS',
+        link: '/pages/tax-management/classes-list'
+      },
+      {
+        title: 'COMPONENTS.TAX_RATE',
+        key: 'COMPONENTS.TAX_RATE',
+        link: '/pages/tax-management/rate-list'
+      }
+    ]
+  },
   // {
   //   title: 'Payment',
   //   // icon: 'fas fa-shopping-cart',
   //   link: '',
   // },
   {
-    title: 'COMPONENTS.CUSTOMERS',
-    key: 'COMPONENTS.CUSTOMERS',
+    title: 'COMPONENTS.CUSTOMER_MANAGEMENT',
+    key: 'COMPONENTS.CUSTOMER_MANAGEMENT',
     icon: 'people',
     children: [
       {
@@ -390,21 +447,21 @@ export const MENU_ITEMS: MenuItem[] = [
         key: 'COMPONENTS.CUSTOMER_LIST',
         link: '/pages/customer/list',
       },
-      {
-        title: 'COMPONENTS.OPTIONS',
-        key: 'COMPONENTS.OPTIONS',
-        link: '/pages/customer/option/list',
-      },
-      {
-        title: 'COMPONENTS.OPTIONS_VALUE',
-        key: 'COMPONENTS.OPTIONS_VALUE',
-        link: '/pages/customer/value/list',
-      },
-      {
-        title: 'COMPONENTS.MANAGE_OPTIONS',
-        key: 'COMPONENTS.MANAGE_OPTIONS',
-        link: '/pages/customer/manage/list',
-      }
+      // {
+      //   title: 'COMPONENTS.OPTIONS',
+      //   key: 'COMPONENTS.OPTIONS',
+      //   link: '/pages/customer/option/list',
+      // },
+      // {
+      //   title: 'COMPONENTS.OPTIONS_VALUE',
+      //   key: 'COMPONENTS.OPTIONS_VALUE',
+      //   link: '/pages/customer/value/list',
+      // },
+      // {
+      //   title: 'COMPONENTS.MANAGE_OPTIONS',
+      //   key: 'COMPONENTS.MANAGE_OPTIONS',
+      //   link: '/pages/customer/manage/list',
+      // }
     ]
   },
   // {
@@ -423,13 +480,21 @@ export const MENU_ITEMS: MenuItem[] = [
   //   link: '',
   // },
   {
-    title: 'COMPONENTS.ORDERS',
-    key: 'COMPONENTS.ORDERS',
+    title: 'COMPONENTS.ORDER_MANAGEMENT',
+    key: 'COMPONENTS.ORDER_MANAGEMENT',
     icon: 'shopping-cart',
-    link: '/pages/orders',
-    pathMatch: 'prefix',
+    // link: '/pages/orders',
+    // pathMatch: 'prefix',
     hidden: false,
-    guards: [IsAccessToOrder]
+    guards: [IsOrderManagementVisible],
+    children: [
+      {
+        title: 'COMPONENTS.ORDERS',
+        key: 'COMPONENTS.ORDERS',
+        link: '/pages/orders',
+        guards: [IsOrderManagementVisible]
+      }
+    ]
   },
   // {
   //   title: 'Manage taxes',

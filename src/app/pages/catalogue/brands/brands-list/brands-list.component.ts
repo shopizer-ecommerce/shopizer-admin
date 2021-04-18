@@ -19,15 +19,16 @@ export class BrandsListComponent implements OnInit {
   source: LocalDataSource = new LocalDataSource();
   loadingList = false;
   settings = {};
-
+  searchValue: string = '';
   // paginator
-  perPage = 30;
+  perPage = 5;
   currentPage = 1;
   totalCount;
 
   // request params
   params = {
     lang: this.storageService.getLanguage(),
+    store: this.storageService.getMerchant(),
     count: this.perPage,
     page: 0
   };
@@ -56,13 +57,16 @@ export class BrandsListComponent implements OnInit {
     this.loadingList = true;
     this.brandService.getListOfBrands(this.params)
       .subscribe(brands => {
-        this.totalCount = brands.totalCount;
+        this.totalCount = brands.recordsTotal;
         this.source.load(brands.manufacturers);
         this.loadingList = false;
       });
     this.setSettings();
   }
-
+  onSelectStore(e) {
+    this.params["store"] = e;
+    this.getList();
+  }
   setSettings() {
     this.settings = {
       actions: {

@@ -1,8 +1,30 @@
 {
+  "canadapost": "Canada Post",
+  "ups": "UPS",
+  "weightBased": "Weight Based Shipping Price",
+  "customQuotesRules": "Shipping by Fresh Organics",
+  "priceByDistance": "Shipping by Fresh Organics",
+  "storePickUp": "Store Pick UP",
+  "moneyorder": "Money Order",
+  "paypal-express-checkout": "PayPal Express Checkout",
+  "beanstream": "Beanstream",
+  "stripe": "Stripe",
+  "braintree": "Braintree",
   "COMPONENTS": {
     "LOGIN": "Login",
     "HOME": "Home",
     "SEARCH": "Search",
+    "USER_MANAGEMENT": "User management",
+    "STORE_MANAGEMENT": "Store management",
+    "CATALOUGE_MANAGEMENT": "Catalogue management",
+    "CONTENT_MANAGEMENT": "Content management",
+    "SHIPPING_MANAGEMENT": "Shipping management",
+    "CUSTOMER_MANAGEMENT": "Customer management",
+    "ORDER_MANAGEMENT": "Order management",
+    "TAX_MANAGEMENT": "Tax management",
+    "PAYMENT": "Payment",
+    "TAX_CLASS": "Tax Classes",
+    "TAX_RATE": "Tax Rate",
     "USER": "User",
     "USERS": "Users",
     "MY_PROFILE": "My profile",
@@ -26,16 +48,16 @@
     "CATALOGUE": "Catalogue",
     "CATALOGUES": "Catalogues",
     "CREATE_CATALOGUE": "Create catalogue",
-    "CATALOGUES_LIST": "Catalogues list",
+    "CATALOGUES_LIST": "List of catalogues",
     "CATEGORIES": "Category",
     "CATEGORY": "Category",
     "CREATE_CATEGORY": "Create category",
-    "CATEGORIES_LIST": "Category list",
+    "CATEGORIES_LIST": "List of category",
     "CATEGORIES_HIERARCHY": "Category hierarchy",
     "PRODUCTS": "Products",
     "PRODUCT": "Product",
     "CREATE_PRODUCT": "Create product",
-    "PRODUCTS_LIST": "Products list",
+    "PRODUCTS_LIST": "List of products",
     "PRODUCT_DETAILS": "Product details",
     "LIST_INVENTORY": "List inventory",
     "PRODUCT_TO_CATEGORY": "Product to category",
@@ -47,30 +69,36 @@
     "BRANDS": "Brands",
     "BRAND": "Brand",
     "CREATE_BRAND": "Create brand",
-    "BRANDS_LIST": "Brands list",
+    "BRANDS_LIST": "List of brands",
     "PRODUCTS_GROUPS": "Products groups",
     "CREATE_PRODUCTS_GROUPS": "Create product group",
     "LIST_PRODUCTS_GROUPS": "List products groups",
-    "PRODUCTS_GROUPS_LIST": "Product groups list",
-    "OPTIONS": "Options",
-    "OPTIONS_LIST": "Options list",
+    "PRODUCTS_GROUPS_LIST": "List of product groups",
+    "OPTIONS": "Product Options",
+    "OPTIONS_LIST": "List of product options",
     "CREATE_OPTION": "Create option",
     "OPTIONS_VALUE": "Option value",
-    "OPTIONS_VALUES_LIST": "Options values list",
+    "OPTIONS_VALUES_LIST": "List of product options values",
     "CREATE_OPTION_VALUE": "Create option value",
+    "OPTION_SET_LIST": "List of product options set",
+    "SET_OPTION": "Create options set",
+    "PRODUCT_TYPES": "Product types",
     "CONTENT": "Content",
-    "CONTENT_PAGES": "Pages",
-    "CONTENT_BOXES": "Boxes",
+    "CONTENT_PAGES": "Content Pages",
+    "CONTENT_BOXES": "Content Boxes",
     "CONTENT_IMAGES": "Images",
     "CONTENT_FILES": "Files",
     "ORDERS": "Orders",
     "SHIPPING": "Shipping",
     "CONFIGURATION": "Configuration",
     "METHODS": "Methods",
+    "RULES": "Rules",
     "ORIGIN": "Origin",
     "CUSTOMERS": "Customers",
     "CUSTOMER_LIST": "Customer List",
-    "MANAGE_OPTIONS": "Manage Options"
+    "MANAGE_OPTIONS": "Manage Options",
+    "VARIATIONS_LIST": "Variations List",
+    "ADD_VARIATIONS": "Add Variation"
   },
   "LOGIN": {
     "INVALID_DATA": "Invalid username or password",
@@ -81,6 +109,12 @@
     "PASSWORD": "Password",
     "REMEMBER_USERNAME": "Remember my user name",
     "FORGOT_PASSWORD": "Forgot Password?"
+  },
+  "FORGOT_PASSWORD": {
+    "USER_NOT_FOUND": "Your email address is not registerd.",
+    "SENT_LINK": "Reset password link sent successfully.",
+    "SUCCESS": "You have successfully reset your password. you can now login as usual with your email address and your new password.",
+    "FAIL": "Password don't match"
   },
   "HEADER": {
     "PROFILE": "Profile",
@@ -205,11 +239,15 @@
     "CATEGORY_CREATED": "Category created.",
     "CATEGORY_REMOVED": "Category removed."
   },
+  "CATEGORY_HIERARCHY": {
+    "DETAILS": "Drag and drop categories to re-organize placement"
+  },
   "CATALOG": {
     "CATALOGUES_PRODUCTS": "Catalogues products",
     "CATALOG_UPDATED": "Catalogue updated.",
     "CATALOG_CREATED": "Catalogue created.",
-    "CATALOG_REMOVED": "Catalogue removed."
+    "CATALOG_REMOVED": "Catalogue removed.",
+    "CATALOG_CONTENT": "Catalogue content"
   },
   "PRODUCT": {
     "SKU": "Sku",
@@ -254,6 +292,17 @@
     "INVENTORY_CREATED": "Inventory created.",
     "INVENTORY_REMOVED": "Inventory removed."
   },
+  "PRODUCT_TYPE": {
+    "PRODUCT_TYPE": "Product type",
+    "PRODUCT_TYPE_LIST": "List of product types",
+    "PRODUCT_TYPE_CREATE": "Create product type",
+    "PRODUCT_TYPE_DETAILS": "Product type details",
+    "ALLOW_ADD_TO_CART": "Allow add to cart",
+    "PRODUCT_TYPE_UPDATED": "Product type updated",
+    "PRODUCT_TYPE_DELETED": "Product type deleted",
+    "PRODUCT_TYPE_CREATED": "Product type created",
+    "PRODUCT_TYPE_ADD": "Add Product type"
+  },
   "PRICE": {
     "FINAL_PRICE": "Final price",
     "ORIGINAL_PRICE": "Original price",
@@ -265,21 +314,86 @@
     "SELECT_PRODUCT_GROUP": "Select group"
   },
   "OPTION": {
+    "OPTION_NAME": "Option name",
     "OPTION_UPDATED": "Option updated.",
     "OPTION_CREATED": "Option created.",
-    "OPTION_REMOVED": "Option removed."
+    "OPTION_REMOVED": "Option removed.",
+    "SET_OPTION_REMOVED": "Option set has been removed.",
+    "SET_OPTION_CREATED": "Option set has been created.",
+    "SET_OPTION_UPDATED": "Option set has been updated."
   },
   "OPTION_VALUE": {
+    "OPTION_VALUE": "Option value",
+    "OPTION_VALUE_NAME": "Option value name",
     "OPTION_VALUE_UPDATED": "Option value updated.",
     "OPTION_VALUE_CREATED": "Option value created.",
     "OPTION_VALUE_REMOVED": "Option value removed."
   },
+  "OPTION_SET": {
+    "SELECT_OPTION_NAME": "Select option name",
+    "ADD_OPTION_VALUE": "Add option values"
+  },
   "SHIPPING": {
     "CONFIGURATION": "Configuration",
-    "ORIGIN": "Shipping Origin",
-    "PACKAGING": "Packaging configuration",
+    "EXPEDITION": "Expedition",
+    "ORIGIN": "Shipping origin",
+    "PACKAGING": "Packaging",
     "RULES": "Shipping rules",
-    "METHODS": "Shipping methods"
+    "METHODS": "Shipping methods",
+    "CREATE_ORIGIN": "Create Origin",
+    "ORIGIN_UPDATE": "Origin has been updated",
+    "SHIP_TO_COUNTRIES": "Expedition has been updated"
+  },
+  "EXPEDITION": {
+    "SHIPPING_TYPE": "Shipping Type",
+    "DOMESTIC": "Domestic",
+    "INTERNATIONAL": "International",
+    "TAX_ON_SHIPPING": "Apply tax on shipping",
+    "SELECT_COUNTRY": "Select country"
+  },
+  "PACKAGING": {
+    "ADD_PACKAGING": "Add Packaging",
+    "CODE": "Code",
+    "WIDTH": "Width",
+    "HEIGHT": "Height",
+    "LENGTH": "Length",
+    "WEIGHT": "Weight",
+    "TYPE": "Type",
+    "ADD_PACKAGES": "Add Packages",
+    "ITEM_PACKAGING": "Item Packaging",
+    "BOX_PACKAGING": "Box Packaging",
+    "WEIGHT_UNITS": "Weight units",
+    "LB": "LB",
+    "SIZE_UNITS": "Size units",
+    "IN": "IN",
+    "CODE_EXITS": "Code is already exits",
+    "BOX_WIDTH": "Box width",
+    "BOX_HEIGHT": "Box height",
+    "BOX_LENGHT": "Box lenght",
+    "BOX_WEIGHT": "Box weight"
+  },
+  "RULES": {
+    "CREATE_RULES": "Create Rules",
+    "NAME": "Name",
+    "ADD_RULES": "Add Rules",
+    "RULES_METADATA": "Shipping rule metadata",
+    "RULES_UNIQUE_CODE": "Rules unique code",
+    "RULES_NAME": "Rules name",
+    "TIME_UNLIMITED": "Time unlimited",
+    "TIME_BASED": "Time based",
+    "START_DATE": "Start date",
+    "END_DATE": "End date",
+    "ORDER": "Order",
+    "RULES_CONDITION": "Rules condition",
+    "SHIPPING_RESULTS": "Shipping results",
+    "SELECT_CONFIGURATION": "Select configuration",
+    "CONFIGURE": "Configure",
+    "CONFIGURE_AREA": "Results configuration area",
+    "RESULT_NAME": "Result name",
+    "SELECT_METHODS": "Select Methods",
+    "YES": "Yes",
+    "NO": "No",
+    "VALUE": "Value"
   },
   "ORDER": {
     "CUSTOMER_NAME": "Customer Name",
@@ -291,7 +405,13 @@
     "SHIPPING_MODULE": "Shipping Module",
     "PAYMENT_MODULE": "Payment Module",
     "PAYMENT_TYPE": "Payment Type",
-    "ACTIONS": "Actions"
+    "ACTIONS": "Actions",
+    "ORDERED": "Ordered",
+    "PROCESSED": "Processed",
+    "DELIVERED": "Delivered",
+    "REFUNDED": "Refunded",
+    "CANCELED": "Canceled",
+    "SHOWALL": "All"
   },
   "ORDER_FORM": {
     "MORE_OPTIONS": "More Actions",
@@ -329,16 +449,30 @@
     "COMMENT": "Comment",
     "STATUS_COMMENT": "Status Comment",
     "UPDATE_STATUS": "Update Status",
-    "HISTORY_LIST": "History List",
     "DATE": "Date",
     "AMOUNT": "Amount",
     "PRINT_INVOICE": "Print Invoice",
     "ORDER_STATUS": "Order Status"
   },
+  "CUSTOMERS": {
+    "CUSTOMER_LIST": "Customers List",
+    "CREATE_CUSTOMER": "Create Customer",
+    "UPDATE_CUSTOMER": "Update Customer",
+    "UPDATE": "Update",
+    "USER_NAME": "User Name",
+    "COMPANY": "Company",
+    "DEFAULT_LANGUAGE": "Default language",
+    "SELECT_LANGUAGE": "Select Language",
+    "GROUPS": "Groups"
+  },
   "NOT_FOUND": {
     "PAGE_NOT_FOUND": "Page Not Found",
     "PAGE_NOT_FOUND_TEXT": "The page you were looking for doesn't exist",
     "BACK": "Take me home"
+  },
+  "ERROR": {
+    "SYSTEM_ERROR": "System Error",
+    "SYSTEM_ERROR_TEXT": "An error occured with this request"
   },
   "COMMON": {
     "LANGUAGE": "Language",
@@ -348,9 +482,11 @@
     "RESET": "Reset",
     "PASSWORD": "Password",
     "SAVE": "Save",
+    "UPDATE": "Update",
     "REMOVE": "Remove",
     "EDIT": "Edit",
     "OK": "Ok",
+    "SUBMIT": "Submit",
     "CANCEL": "Cancel",
     "REMOVE_QUESTION": "Do you really want to remove this entity?",
     "REMOVE_GEN_QUESTION": "Do you really want to remove",
@@ -379,6 +515,7 @@
     "ALPHA_DECIMAL_RULE": "Only letters and numbers are allowed.",
     "ORDER": "Order",
     "SEARCH": "Search",
+    "SEARCH_BY_NAME": "Search by name",
     "AVAILABLE": "Available",
     "SELECTED": "Selected",
     "VISIBLE": "Visible",
@@ -391,7 +528,14 @@
     "UNSAVED_DATA": "You have unsaved data. Are you sure you want to leave this page?",
     "ONLY_TEN_IMAGES": "You can upload max 10 images",
     "NO_ITEMS": "No items to show",
-    "VALUE_REQUIRED": "Value is required"
+    "VALUE_REQUIRED": "Value is required",
+    "ACTIONS": "Actions",
+    "READ_ONLY": "Read only",
+    "radio": "Radio",
+    "checkbox": "Checkbox",
+    "select": "Select",
+    "text": "Text",
+    "INTERNAL_SERVER_ERROR": "The connection to the server has been lost."
   },
   "DESCRIPTION_FORM": {
     "NAME": "Name",
@@ -409,7 +553,8 @@
   "LANG": {
     "en": "English",
     "fr": "French",
-    "ru": "Russian"
+    "ru": "Russian",
+    "es": "Spanish"
   },
   "filemanager": {
     "cancel": "Cancel",
@@ -445,7 +590,54 @@
     "yes_delete_this": "Yes, delete this",
     "you_are_trying_to_delete_following": "You are trying to delete following",
     "file": "file",
-    "folder": "folder",
-    "open_file_manager": "open in popup"
+    "folder": "folder"
+  },
+  "SYSTEM": {
+    "DELETE_CACHE": "Delete Cache"
+  },
+  "TAX": {
+    "CREATE_TAX_CLASS": "Create Tax Classes",
+    "ADD_TAX_CLASS": "Add Tax Classes",
+    "UPDATE_TAX_CLASS": "Update Tax Classes",
+    "TAX_CLASS_CODE": "Tax class code",
+    "TAX_CLASS_NAME": "Tax class name",
+    "ADD_TAX_RATE": "Add Tax Rate",
+    "UPDATE_TAX_RATE": "Update Tax Rate",
+    "TAX_RATE_NAME": "Tax Rate Name",
+    "TAX_RATE_CODE": "Tax Rate Code",
+    "TAX_RATE": "Tax Rate",
+    "ORDER": "Order",
+    "SELECT_CLASS_NAME": "Select Tax Class Name",
+    "COMPOUND": "COMPOUND"
+  },
+  "PAYMENT": {
+    "PAYMENT_METHODS": "Payment Methods",
+    "PAYMENT_TYPE": "Payment Type"
+  },
+  "CONTENT": {
+    "CODE": "Code",
+    "NAME": "Name",
+    "URL": "Url",
+    "CREATE_PAGE": "Create Page",
+    "CREATE_BOX": "Create Box",
+    "ADD_BOX_DETAILS": "Add Box Details",
+    "UPDATE_BOX_DETAILS": "Update Box Details",
+    "CANCLE": "Cancel",
+    "BASIC_DETAILS": "Basic Details",
+    "VISIBLE": "Visible",
+    "MAINMENU": "Display this page in main menu",
+    "BOX_NAME": "Box Name",
+    "ORDER": "Order",
+    "BOX_CONTENT": "Box content",
+    "ADD_PAGE_DETAILS": "Add page details",
+    "UPDATE_PAGE_DETAILS": "Update page details",
+    "SEO_DETAILS": "SEO Details",
+    "TITLE": "Title",
+    "KEYWORDS": "Keywords",
+    "PAGE_NAME": "Page Name",
+    "FRIENDLY_URL": "Search engine friendly url",
+    "PRODUCT_GROUP": "Product Group",
+    "METATAG": "Description metatag",
+    "PAGE_CONTENT": "Page content"
   }
 }

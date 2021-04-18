@@ -1,0 +1,84 @@
+<div class="inner_pages packages_add_box">
+  <div class="" [nbSpinner]="loadingList" nbSpinnerSize="large" nbSpinnerStatus="primary">
+    <nb-card-header class="main_header">
+      <h1 class="page_title">{{'PACKAGING.ADD_PACKAGES' | translate}}</h1>
+      <div class="content_spacing">
+        <button type="button" class="cancel_button" (click)="goBack()">{{'COMMON.CANCEL' | translate }}</button>
+      </div>
+      <div class="content_spacing">
+        <button type="submit" class="success_button" (click)="save()" [disabled]="!packagesForm.form.valid">{{'COMMON.SAVE'
+          | translate }}</button>
+      </div>
+    </nb-card-header>
+
+    <form #packagesForm="ngForm" role="form">
+      <div class="row">
+        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+          <nb-card class="nb-card inline-form-card">
+            <nb-card-body class="nb-card-body">
+
+              <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                  <div class="form-group">
+                    <nb-radio-group [(ngModel)]="packages.type" name="type">
+                      <nb-radio class="shipping-radio" [value]="false">{{'PACKAGING.ITEM_PACKAGING' | translate}}</nb-radio>
+                      <nb-radio class="shipping-radio" [value]="true">{{'PACKAGING.BOX_PACKAGING' | translate}}</nb-radio>
+                    </nb-radio-group>
+                  </div>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 ">
+                  <label class="labelTxt">
+                    {{'PACKAGING.WEIGHT_UNITS' | translate}} <span class="blackDark">{{'PACKAGING.LB' | translate}}</span>
+                  </label>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 m-b-15">
+                  <label class="labelTxt">
+                    {{'PACKAGING.SIZE_UNITS' | translate}} <span class="blackDark">{{'PACKAGING.IN' | translate}}</span>
+                  </label>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                  <div class="form-group">
+                    <label class="label inputLabel">{{'PACKAGING.CODE' | translate}}<span>*</span></label>
+                    <input type="text" class="form-control inputText" [disabled]="isUpdated" placeholder="{{'PACKAGING.CODE' | translate}}"
+                      [(ngModel)]="packages.code" name="code" required>
+                    <span *ngIf="codeExits" class="err-message">{{'PACKAGING.CODE_EXITS' | translate}}</span>
+                  </div>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" *ngIf="packages.type">
+                  <div class="form-group">
+                    <label class="label inputLabel">{{'PACKAGING.BOX_WIDTH' | translate}}<span>*</span></label>
+                    <input type="number" class="form-control inputText" placeholder="{{'PACKAGING.BOX_WIDTH' | translate}}"
+                      [(ngModel)]="packages.shippingWidth" name="shippingWidth" required>
+                  </div>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" *ngIf="packages.type">
+                  <div class="form-group">
+                    <label class="number inputLabel">{{'PACKAGING.BOX_HEIGHT' | translate}}<span>*</span></label>
+                    <input type="text" class="form-control inputText" placeholder="{{'PACKAGING.BOX_HEIGHT' | translate}}"
+                      [(ngModel)]="packages.shippingHeight" name="shippingHeight" required>
+                  </div>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" *ngIf="packages.type">
+                  <div class="form-group">
+                    <label class="label inputLabel">{{'PACKAGING.BOX_LENGHT' | translate}}<span>*</span></label>
+                    <input type="number" class="form-control inputText" placeholder="{{'PACKAGING.BOX_LENGHT' | translate}}"
+                      [(ngModel)]="packages.shippingLength" name="shippingLength" required>
+                  </div>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" *ngIf="packages.type">
+                  <div class="form-group">
+                    <label class="label inputLabel">{{'PACKAGING.BOX_WEIGHT' | translate}}<span>*</span></label>
+                    <input type="number" class="form-control inputText" placeholder="{{'PACKAGING.BOX_WEIGHT' | translate}}"
+                      [(ngModel)]="packages.shippingWeight" name="shippingWeight" required>
+                  </div>
+                </div>
+              </div>
+            </nb-card-body>
+          </nb-card>
+        </div>
+      </div>
+
+
+    </form>
+  </div>
+</div>

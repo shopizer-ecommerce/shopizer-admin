@@ -1,0 +1,27 @@
+<nb-card class="page-card inner_pages">
+  <nb-card-body [nbSpinner]="loadingList" nbSpinnerSize="large" nbSpinnerStatus="primary" class="optionList">
+    <div class="inner_pages_legacy">
+      <nb-card-header class="main_header">
+        <h1 class="page_title">{{'COMPONENTS.OPTION_SET_LIST' | translate}}</h1>
+        <div class="content_spacing_empty"></div>
+
+      </nb-card-header>
+      <form class="form-inline filter_section">
+        <div class="filter_left_section"> </div>
+        <div class="filter_right_section">
+          <a class="createBtn" [routerLink]="['/pages/catalogue/options/option-set']">
+            <img class="pointer sda" src="../../../../assets/img/plus.png" title="{{ 'COMPONENTS.SET_OPTION' | translate}}"
+              alt="">
+            <label>{{ 'COMPONENTS.SET_OPTION' | translate}}</label>
+          </a>
+        </div>
+
+      </form>
+
+
+      <ng2-smart-table [settings]="settings" [source]="source" (custom)="onClickAction($event)" class="home-table">
+      </ng2-smart-table>
+
+    </div>
+  </nb-card-body>
+</nb-card>

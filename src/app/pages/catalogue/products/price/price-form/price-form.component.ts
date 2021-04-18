@@ -62,7 +62,7 @@ export class PriceFormComponent implements OnInit {
     this.inventoryService.getInventoryById(this.params.productId, this.params.inventoryId)
       .subscribe(res => {
         this.inventory = res;
-        this.configService.getListOfSupportedLanguages()
+        this.configService.getListOfSupportedLanguages(localStorage.getItem('merchant'))
           .subscribe(ln => {
             this.languages = [...ln];
             this.addFormArray();
@@ -161,7 +161,7 @@ export class PriceFormComponent implements OnInit {
 
   save() {
     const priceObject = this.form.value;
-    priceObject.dateAvailable = moment(priceObject.dateAvailable).format('YYYY-MM-DD');
+    priceObject.dateAvailable = moment(priceObject.dateAvailable).format('yyyy-MM-DD');
     // save important values for filling empty field in result object
     const tmpObj = {
       name: '',
@@ -218,7 +218,7 @@ export class PriceFormComponent implements OnInit {
       // save as inventory updating
       this.inventoryService.updateInventory(this.params.productId, this.inventory.id, this.inventory)
         .subscribe((res) => {
-      });
+        });
     }
   }
 

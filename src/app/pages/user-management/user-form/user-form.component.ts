@@ -1,6 +1,6 @@
 import { ChangeDetectorRef, Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router, UrlTree, UrlSegment, UrlSegmentGroup, PRIMARY_OUTLET} from '@angular/router';
+import { Router, UrlTree, UrlSegment, UrlSegmentGroup, PRIMARY_OUTLET } from '@angular/router';
 
 import { ConfigService } from '../../shared/services/config.service';
 import { UserService } from '../../shared/services/user.service';
@@ -19,7 +19,7 @@ import { forkJoin } from 'rxjs';
 })
 export class UserFormComponent implements OnInit {
   form: FormGroup;
-  
+  @Input() title: string;
   private _user: User;
 
   @Input()
@@ -33,9 +33,10 @@ export class UserFormComponent implements OnInit {
   groups = [];
   canRemove = true;
   canEdit = true;
+  canChangePassword = false;
   selfEdit = false;
-  pwdPattern = '^(?=[^A-Z]*[A-Z])(?=[^a-z]*[a-z])(?=[^0-9]*[0-9]).{6,12}$';
-  emailPattern = '^([a-zA-Z0-9_\\-\\.]+)@([a-zA-Z0-9_\\-\\.]+)\\.([a-zA-Z]{2,5})$';
+  pwdPattern = '^(?=[^A-Z]*[A-Z])(?=[^a-z]*[a-z])(?=[^0-9]*[0-9]).{6,12}$';//TODO env variable
+  emailPattern = '^([a-zA-Z0-9_\\-\\.]+)@([a-zA-Z0-9_\\-\\.]+)\\.([a-zA-Z]{2,5})$';//TODO env variable
   stores = [];
   tree: UrlTree;
   store = null;
@@ -43,7 +44,19 @@ export class UserFormComponent implements OnInit {
 
   // user's roles
   roles;
+  /**
+   * RULES
+   */
   // rules for user's group
+  /**
+   * super admin
+   * admin
+   * can change other users password
+   */
+
+  /**
+   * Can't change self store even if super admin
+   */
   rules = {
     'ADMIN_RETAIL': {
       rules: [
@@ -78,16 +91,20 @@ export class UserFormComponent implements OnInit {
 
   ngOnInit() {
 
-    //remove user
-    this._user && this._user.id === +this.userService.getUserId() ? this.canRemove=false:this.canRemove=true
+    //if not user self remove user
+    this._user && this._user.id === +this.userService.getUserId() ? this.canRemove = false : this.canRemove = true
     this.selfEdit = this._user && this._user.id === +this.userService.getUserId();
 
     //don't show remove when creating a new user
-    if(!this._user ) {
+    if (!this._user) {
       this.canRemove = false;
     }
 
-    if(this._user) {
+    if (this.roles.isSuperadmin || this.roles.isAdmin || this.roles.isRetailAdmin) {//current user can change password if one of the following
+      this.canChangePassword = true;
+    }
+
+    if (this._user) {
       this._user.groups.forEach((uGroup) => {
         if (uGroup['name'] === 'SUPERADMIN') {
           this.canRemove = false;
@@ -96,22 +113,30 @@ export class UserFormComponent implements OnInit {
       });
     }
 
-    
+
     this.loader = true;
     this.createForm();
 
     this.store = this.storageService.getMerchant();
-    const languages = this.configService.getMerchantListOfSupportedLanguages();
+    //const languages = this.configService.getMerchantListOfSupportedLanguages();
+    const languages = this.configService.getListOfGlobalLanguages();
     const groups$ = this.configService.getListOfGroups();
-    const stores$ = this.storeService.getListOfMerchantStoreNames({'store':this.store});
+    const stores$ = this.storeService.getListOfMerchantStoreNames({ 'store': this.store });
     forkJoin(groups$, stores$).subscribe(([groups, stores]) => {
       // fill languages
       this.languages = [...languages];
 
       //current store
       //console.log('Current store -> ' + this.store);
+      /**
+       * Admin and superadmin can create users
+       * Only superadmin can create admins. Usually superadmin creates a store and the
+       * a user as store administration. Admin user can then create users for that store
+       * with lower privileges
+       */
       //*br1* only superadmin and retailer admin can see all stores
       //*br2* if store has child, can view childs also when not superadmin
+      //*br3* only superadmin can create an admin.
 
       // fill stores
       this.stores = [...stores];
@@ -127,27 +152,27 @@ export class UserFormComponent implements OnInit {
       //*br2* not activated
 
       //console.log(this.roles);
-      
-      (this.roles.isSuperadmin || this.roles.isAdminRetail) ?
-      this.form.controls['store'].enable() : this.form.controls['store'].disable();
 
-      console.log('User is admin retail ' + this.securityService.isRetailAdmin());
-      
-      
+      (this.roles.isSuperadmin || this.roles.isAdminRetail || this.roles.isAdmin) ?
+        this.form.controls['store'].enable() : this.form.controls['store'].disable();
+
+      //console.log('User is admin retail ' + this.securityService.isRetailAdmin());
+
+
       // fill groups
       groups.forEach((el) => {
         el.checked = false;
         el.disabled = false;
-        if(el.name === 'SUPERADMIN') {
+        if (el.name === 'SUPERADMIN') {
           el.disabled = true;
         }
-        if(el.name === 'ADMIN_RETAIL') {
-          if(this.securityService.hasRetailAdminRole()) {
+        if (el.name === 'ADMIN_RETAIL') {
+          if (this.securityService.hasRetailAdminRole()) {
             el.disabled = true;
           }
         }
-        if(el.name === 'ADMIN') {
-          if(this.securityService.hasAdminRole()) {
+        if (el.name === 'ADMIN') {//br3
+          if (!this.securityService.isSuperAdmin()) {
             el.disabled = true;
           }
         }
@@ -164,8 +189,7 @@ export class UserFormComponent implements OnInit {
         }
         this._user.groups.forEach((uGroup) => {
           this.groups.forEach((group) => {
-            //console.log('Looking at group ' + group.name);
-            if(group.name === 'SUPERADMIN') {
+            if (group.name === 'SUPERADMIN') {
               group.disabled = true;
             }
             //check this group if usr has it
@@ -174,7 +198,7 @@ export class UserFormComponent implements OnInit {
               group.disabled = false;
             }
             //self can't edit its groups
-            if(this.selfEdit) {//self cannot edit its own group
+            if (this.selfEdit) {//self cannot edit its own group
               group.disabled = true;
             }
           });
@@ -184,7 +208,13 @@ export class UserFormComponent implements OnInit {
       this.loader = false;
     });
   }
+  checkPasswords(group: FormGroup) { // here we have the 'passwords' group
+    console.log(group.get('password').value);
+    const password = group.get('password').value;
+    const confirmPassword = group.get('repeatPassword').value;
 
+    return password === confirmPassword ? null : { notSame: true }
+  }
   private createForm() {
     this.form = this.fb.group({
       firstName: ['', [Validators.required]],
@@ -193,10 +223,11 @@ export class UserFormComponent implements OnInit {
       userName: [''],
       emailAddress: ['', [Validators.required, Validators.email, Validators.pattern(this.emailPattern)]],
       password: ['', [Validators.required, Validators.pattern(this.pwdPattern)]],
+      repeatPassword: ['', [Validators.required]],
       active: [false],
       defaultLanguage: ['', [Validators.required]],
       groups: [[]],
-    });
+    }, { validators: this.checkPasswords });
   }
 
   get firstName() {
@@ -213,6 +244,9 @@ export class UserFormComponent implements OnInit {
 
   get password() {
     return this.form.get('password');
+  }
+  get repeatPassword() {
+    return this.form.get('repeatPassword');
   }
 
   get defaultLanguage() {
@@ -231,6 +265,7 @@ export class UserFormComponent implements OnInit {
       store: this._user.merchant,
       userName: '',
       password: '',
+      repeatPassword: '',
       emailAddress: this._user.emailAddress,
       active: this._user.active,
       defaultLanguage: this._user.defaultLanguage,
@@ -244,7 +279,7 @@ export class UserFormComponent implements OnInit {
 
   save() {
     var store = this.form.value.store;
-    if(!store) {
+    if (!store) {
       store = this.store;
     }
     if (this.form.value.store === '' && (this.roles.isSuperadmin || this.roles.isRetailerAdmin)) {
@@ -252,7 +287,7 @@ export class UserFormComponent implements OnInit {
       return;
     }
 
-    if(!this.form.value.store && this.user) {
+    if (!this.form.value.store && this.user) {
       store = this.user.merchant;
     }
 
@@ -278,7 +313,7 @@ export class UserFormComponent implements OnInit {
           this.toastr.success(this.translate.instant('USER_FORM.USER_UPDATED'));
         });
     } else {
-      console.log(this.form.value);
+      //console.log(this.form.value);
       this.userService.createUser(this.form.value, store)
         .subscribe(res => {
           this.toastr.success(this.translate.instant('USER_FORM.USER_CREATED'));
@@ -302,9 +337,9 @@ export class UserFormComponent implements OnInit {
     const invalid = [];
     const controls = this.form.controls;
     for (const name in controls) {
-        if (controls[name].invalid) {
-            invalid.push(name);
-        }
+      if (controls[name].invalid) {
+        invalid.push(name);
+      }
     }
     //console.log('Invalid fields ' + invalid);
     //console.log('Form valid ' + this.form.invalid);
@@ -333,7 +368,7 @@ export class UserFormComponent implements OnInit {
   }
 
   checkRules(role) {
-    console.log('Role name ' + role);
+    //console.log('Role name ' + role);
     if (this.rules[role].rules.length !== 0) {
       this.rules[role].rules.forEach((el) => {
         this.groups.forEach((group) => {
@@ -344,6 +379,9 @@ export class UserFormComponent implements OnInit {
         });
       });
     }
+  }
+  goToBack() {
+    this.router.navigate(['pages/user-management/users']);
   }
 
 }

@@ -1,0 +1,100 @@
+[
+    {
+        "type": "checkbox",
+        "label": "Enabled",
+        "placeholder": "",
+        "name": "active",
+        "objectKey": "",
+        "isRequired": false,
+        "optionData": [],
+        "value": false
+    },
+    {
+        "type": "checkbox",
+        "label": "Default",
+        "placeholder": "",
+        "name": "defaultSelected",
+        "objectKey": "",
+        "isRequired": false,
+        "optionData": [],
+        "value": false
+    },
+    {
+        "type": "dropdown",
+        "label": "Environment",
+        "placeholder": "Please select environment",
+        "name": "enviroment",
+        "objectKey": "",
+        "isRequired": false,
+        "optionData": [
+            {
+                "id": "test",
+                "label": "Test"
+            },
+            {
+                "id": "prod",
+                "label": "Prod"
+            }
+        ],
+        "value": ""
+    },
+    {
+        "type": "text",
+        "label": "Merchant ID",
+        "placeholder": "Enter a merchant id",
+        "name": "merchant_id",
+        "objectKey": "integrationKeys",
+        "isRequired": true,
+        "optionData": [],
+        "value": ""
+    },
+    {
+        "type": "text",
+        "label": "Public key",
+        "placeholder": "Enter a public key",
+        "name": "public_key",
+        "objectKey": "integrationKeys",
+        "isRequired": true,
+        "optionData": [],
+        "value": ""
+    },
+    {
+        "type": "text",
+        "label": "Private key",
+        "placeholder": "Enter a private key",
+        "name": "private_key",
+        "objectKey": "integrationKeys",
+        "isRequired": true,
+        "optionData": [],
+        "value": ""
+    },
+    {
+        "type": "text",
+        "label": "Tokenization key",
+        "placeholder": "Enter a tokenization key",
+        "name": "tokenization_key",
+        "objectKey": "integrationKeys",
+        "isRequired": true,
+        "optionData": [],
+        "value": ""
+    },
+    {
+        "type": "radio",
+        "label": "Transaction type",
+        "placeholder": "",
+        "name": "transaction",
+        "objectKey": "integrationKeys",
+        "isRequired": false,
+        "optionData": [
+            {
+                "label": "Pre-authorization",
+                "value": "AUTHORIZECAPTURE"
+            },
+            {
+                "label": "Sale",
+                "value": "SALE"
+            }
+        ],
+        "value": ""
+    }
+]

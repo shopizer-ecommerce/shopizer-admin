@@ -11,5 +11,12 @@ interface NodeModule {
 }
 
 declare var tinymce: any;
-
 declare var echarts: any;
+
+declare var $ENV: Env;
+interface Env {
+  googleApiKey: string;
+  mode: string;
+  apiUrl: string;
+  client: any;
+}

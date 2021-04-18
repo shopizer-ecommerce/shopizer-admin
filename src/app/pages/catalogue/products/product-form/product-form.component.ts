@@ -10,6 +10,7 @@ import { ProductService } from '../services/product.service';
 import { ProductImageService } from '../services/product-image.service';
 import { TranslateService } from '@ngx-translate/core';
 import { validators } from '../../../shared/validation/validators';
+import { environment } from '../../../../../environments/environment';
 import { slugify } from '../../../shared/utils/slugifying';
 import { forkJoin } from 'rxjs';
 
@@ -20,16 +21,46 @@ import { forkJoin } from 'rxjs';
 })
 export class ProductFormComponent implements OnInit {
   @Input() product;
+  @Input() _title: string;
   form: FormGroup;
   loader = false;
   manufacturers = [];
   languages = [];
   productTypes = [];
+  selectedItem = '0';
+  defaultLanguage = environment.client.language.default;
+  sidemenuLinks = [
+    {
+      id: '0',
+      title: 'Product details',
+      key: 'COMPONENTS.PRODUCT_DETAILS',
+      link: 'product-details'
+    },
+    {
+      id: '1',
+      title: 'Inventory management',
+      key: 'COMPONENTS.MANAGE_INVENTORY',
+      link: 'inventory-list'
+    },
+    {
+      id: '2',
+      title: 'Product attributes',
+      key: 'PRODUCT_ATTRIBUTES',
+      link: 'product-attributes'
+    },
+    {
+      id: '3',
+      title: 'Product to category',
+      key: 'PRODUCT_TO_CATEGORY',
+      link: 'category-association'
+    }
+  ];
   config = {
     placeholder: '',
     tabsize: 2,
     height: 300,
     uploadImagePath: '',
+    //edit toolbar
     toolbar: [
       ['misc', ['codeview', 'undo', 'redo']],
       ['style', ['bold', 'italic', 'underline', 'clear']],
@@ -44,7 +75,6 @@ export class ProductFormComponent implements OnInit {
   uploadData = new FormData();
   removedImagesArray = [];
   saved = false;
-
   constructor(
     private fb: FormBuilder,
     private manufactureService: ManufactureService,
@@ -58,14 +88,23 @@ export class ProductFormComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log('Lang ' + this.defaultLanguage);
     this.loader = true;
     const manufacture$ = this.manufactureService.getManufacturers();
     const product$ = this.productService.getProductTypes();
-    const config$ = this.configService.getListOfSupportedLanguages();
+    const config$ = this.configService.getListOfSupportedLanguages(localStorage.getItem('merchant'));
     forkJoin(manufacture$, product$, config$)
       .subscribe(([manufacturers, productTypes, languages]) => {
-        this.manufacturers = [...manufacturers.manufacturers];
-        this.productTypes = [...productTypes];
+
+        // console.log(manufacturers)
+        manufacturers.manufacturers.forEach((option) => {
+          this.manufacturers.push({ value: option.code, label: option.code });
+        });
+        productTypes.list.forEach((option) => {
+          this.productTypes.push({ value: option.code, label: option.code });
+        });
+        // this.manufacturers = [...manufacturers.manufacturers];
+        // this.productTypes = [...productTypes.list];
         this.languages = [...languages];
         this.createForm();
         this.addFormArray();
@@ -78,25 +117,26 @@ export class ProductFormComponent implements OnInit {
 
   private createForm() {
     this.form = this.fb.group({
-      sku: ['', [Validators.required, Validators.pattern(validators.alphanumeric)]],
-      available: [false],
-      preOrder: [false],
+      identifier: ['', [Validators.required, Validators.pattern(validators.alphanumeric)]],
+      visible: [false],
+      // preOrder: [false],
       dateAvailable: [new Date()],
-      manufacturer: ['DEFAULT'],
-      type: ['GENERAL'],
-      price: [''],
-      quantity: ['', [Validators.required, Validators.pattern(validators.number)]],
-      sortOrder: ['', [Validators.required, Validators.pattern(validators.number)]],
-      productShipeable: [false, [Validators.required]],
-      productSpecifications: this.fb.group({
-        weight: ['', [Validators.pattern(validators.number)]],
-        height: ['', [Validators.pattern(validators.number)]],
-        width: ['', [Validators.pattern(validators.number)]],
-        length: ['', [Validators.pattern(validators.number)]],
-      }),
+      //TODO
+      manufacturer: [''],
+      type: [''],
+      // price: [''],
+      // quantity: ['', [Validators.required, Validators.pattern(validators.number)]],
+      // sortOrder: ['', [Validators.required, Validators.pattern(validators.number)]],
+      // productShipeable: [false, [Validators.required]],
+      // productSpecifications: this.fb.group({
+      //   weight: ['', [Validators.pattern(validators.number)]],
+      //   height: ['', [Validators.pattern(validators.number)]],
+      //   width: ['', [Validators.pattern(validators.number)]],
+      //   length: ['', [Validators.pattern(validators.number)]],
+      // }),
       // placementOrder: [0, [Validators.required]],  // ???
       // taxClass: [0, [Validators.required]], // ???
-      selectedLanguage: ['', [Validators.required]],
+      selectedLanguage: [this.defaultLanguage, [Validators.required]],
       descriptions: this.fb.array([]),
     });
   }
@@ -111,7 +151,7 @@ export class ProductFormComponent implements OnInit {
           highlights: [''],
           friendlyUrl: ['', [Validators.required]],
           description: [''],
-          title: [''],
+          title: ['', [Validators.required]],
           keyWords: [''],
           metaDescription: [''],
         })
@@ -119,54 +159,57 @@ export class ProductFormComponent implements OnInit {
     });
   }
 
+
   fillForm() {
     this.form.patchValue({
-      sku: this.product.sku,
-      available: this.product.available,
-      preOrder: this.product.preOrder,
-      dateAvailable: this.product.dateAvailable,
-      manufacturer: this.product.manufacturer.code,
-      type: this.product.type.code,
-      price: this.product.price,
-      quantity: this.product.quantity,
-      sortOrder: this.product.sortOrder,
-      productShipeable: this.product.productShipeable,
+      identifier: this.product.identifier,
+      visible: this.product.visible,
+      // preOrder: this.product.preOrder,
+      dateAvailable: new Date(this.product.dateAvailable),
+      manufacturer: this.product.manufacturer == null ? '' : this.product.manufacturer.code,
+      type: this.product.type == null ? '' : this.product.type.code,
+      // price: this.product.price,
+      // quantity: this.product.quantity,
+      // sortOrder: this.product.sortOrder,
+      // productShipeable: this.product.productShipeable,
       // placementOrder: [0, [Validators.required]],  // ???
       // taxClass: [0, [Validators.required]], // ???
-      selectedLanguage: 'en',
+      selectedLanguage: this.defaultLanguage,
       descriptions: [],
     });
     this.fillFormArray();
-    const dimension = {
-      weight: this.product.productSpecifications.weight,
-      height: this.product.productSpecifications.height,
-      width: this.product.productSpecifications.width,
-      length: this.product.productSpecifications.length,
-    };
-    this.form.patchValue({ productSpecifications: dimension });
+    // const dimension = {
+    //   weight: this.product.productSpecifications.weight,
+    //   height: this.product.productSpecifications.height,
+    //   width: this.product.productSpecifications.width,
+    //   length: this.product.productSpecifications.length,
+    // };
+    // this.form.patchValue({ productSpecifications: dimension });
   }
 
   fillFormArray() {
     this.form.value.descriptions.forEach((desc, index) => {
-      this.product.descriptions.forEach((description) => {
-        if (desc.language === description.language) {
-          (<FormArray>this.form.get('descriptions')).at(index).patchValue({
-            language: description.language,
-            name: description.name,
-            highlights: description.highlights,
-            friendlyUrl: description.friendlyUrl,
-            description: description.description,
-            title: description.title,
-            keyWords: description.keyWords,
-            metaDescription: description.metaDescription,
-          });
-        }
-      });
+      if (this.product != null && this.product.descriptions) {
+        this.product.descriptions.forEach((description) => {
+          if (desc.language === description.language) {
+            (<FormArray>this.form.get('descriptions')).at(index).patchValue({
+              language: description.language,
+              name: description.name,
+              highlights: description.highlights,
+              friendlyUrl: description.friendlyUrl,
+              description: description.description,
+              title: description.title,
+              keyWords: description.keyWords,
+              metaDescription: description.metaDescription,
+            });
+          }
+        });
+      }
     });
   }
 
-  get sku() {
-    return this.form.get('sku');
+  get identifier() {
+    return this.form.get('identifier');
   }
 
   get selectedLanguage() {
@@ -177,54 +220,61 @@ export class ProductFormComponent implements OnInit {
     return <FormArray>this.form.get('descriptions');
   }
 
+  selectLanguage(lang) {
+    this.form.patchValue({
+      selectedLanguage: lang,
+    });
+    this.fillFormArray();
+  }
+
   changeName(event, index) {
     (<FormArray>this.form.get('descriptions')).at(index).patchValue({
       friendlyUrl: slugify(event)
     });
   }
 
-  onImageChanged(event) {
-    switch (event.type) {
-      case 'add': {
-        this.uploadData.append('file[]', event.data, event.data.name);
-        break;
-      }
-      case 'remove': {
-        this.removedImagesArray.push(event.data);
-        break;
-      }
-      case 'remove-one': {
-        const fd = new FormData();
-        this.uploadData.delete(event.data.name);
-        this.uploadData.forEach((img) => {
-          if (img['name'] !== event.data.name) {
-            fd.append('file[]', img, img['name']);
-          }
-        });
-        this.uploadData = new FormData();
-        this.uploadData = fd;
-        break;
-      }
-    }
-  }
+  // onImageChanged(event) {
+  //   console.log(event);
+  //   switch (event.type) {
+  //     case 'add': {
+  //       this.uploadData.append('file', event.data);
+  //       break;
+  //     }
+  //     case 'remove': {
+  //       this.removedImagesArray.push(event.data);
+  //       break;
+  //     }
+  //     case 'remove-one': {
+  //       const fd = new FormData();
+  //       this.uploadData.delete(event.data.name);
+  //       this.uploadData.forEach((img) => {
+  //         if (img['name'] !== event.data.name) {
+  //           fd.append('file[]', img, img['name']);
+  //         }
+  //       });
+  //       this.uploadData = new FormData();
+  //       this.uploadData = fd;
+  //       break;
+  //     }
+  //   }
+  // }
 
   checkSku(event) {
-    const sku = event.target.value;
-    this.productService.checkProductSku(sku)
+    this.productService.checkProductSku(event.target.value)
       .subscribe(res => {
-        this.isCodeUnique = !(res.exists && (this.product.sku !== sku));
+        this.isCodeUnique = !(res.exists && (this.product.identifier !== event.target.value));
       });
   }
 
-  removeImages(array) {
-    array.forEach((el) => {
-      this.productImageService.removeImage(el)
-        .subscribe(res1 => {
-        }, error => {
-          console.log('Something went wrong', error);
-        });
-    });
-  }
+  // removeImages(array) {
+  //   array.forEach((el) => {
+  //     this.productImageService.removeImage(el)
+  //       .subscribe(res1 => {
+  //       }, error => {
+  //         console.log('Something went wrong', error);
+  //       });
+  //   });
+  // }
 
   save() {
     if (!this.isCodeUnique) {
@@ -233,14 +283,15 @@ export class ProductFormComponent implements OnInit {
     }
 
     const productObject = this.form.value;
-    productObject.dateAvailable = moment(productObject.dateAvailable).format('YYYY-MM-DD');
-    productObject.productSpecifications.manufacturer = productObject.manufacturer;
+    productObject.dateAvailable = moment(productObject.dateAvailable).format('yyyy-MM-DD');
+    // productObject.productSpecifications.manufacturer = productObject.manufacturer;
     // productObject.type = this.productTypes.find((type) => type.code === productObject.type); // TODO
 
     // save important values for filling empty field in result object
     const tmpObj = {
       name: '',
-      friendlyUrl: ''
+      friendlyUrl: '',
+      title: ''
     };
     productObject.descriptions.forEach((el) => {
       if (tmpObj.name === '' && el.name !== '') {
@@ -248,6 +299,9 @@ export class ProductFormComponent implements OnInit {
       }
       if (tmpObj.friendlyUrl === '' && el.friendlyUrl !== '') {
         tmpObj.friendlyUrl = el.friendlyUrl;
+      }
+      if (tmpObj.title === '' && el.title !== '') {
+        tmpObj.title = el.title;
       }
       for (const elKey in el) {
         if (el.hasOwnProperty(elKey)) {
@@ -257,9 +311,8 @@ export class ProductFormComponent implements OnInit {
         }
       }
     });
-
     // check required fields
-    if (tmpObj.name === '' || tmpObj.friendlyUrl === '' || productObject.sku === '') {
+    if (tmpObj.name === '' || tmpObj.friendlyUrl === '' || productObject.identifier === '' || productObject.manufacturer === '' || productObject.type === '' || tmpObj.title === '') {
       this.toastr.error(this.translate.instant('COMMON.FILL_REQUIRED_FIELDS'));
     } else {
       productObject.descriptions.forEach((el) => {
@@ -283,29 +336,37 @@ export class ProductFormComponent implements OnInit {
           }
         }
       });
-
+      console.log(productObject);
+      delete productObject.selectedLanguage;
       if (this.product.id) {
         this.saved = true;
-        this.removeImages(this.removedImagesArray);
+        // this.removeImages(this.removedImagesArray);
         this.productService.updateProduct(this.product.id, productObject)
           .subscribe(res => {
-            this.productImageService.createImage(res.id, this.uploadData)
-              .subscribe(res1 => {
-                this.toastr.success(this.translate.instant('PRODUCT.PRODUCT_UPDATED'));
-              });
+            // this.uploadData.append('id', res.id);
+            // this.productImageService.createImage(res.id, this.uploadData)
+            // .subscribe(res1 => {
+            this.toastr.success(this.translate.instant('PRODUCT.PRODUCT_UPDATED'));
+            // });
           });
       } else {
         this.saved = true;
         this.productService.createProduct(productObject)
           .subscribe(res => {
-            this.productImageService.createImage(res.id, this.uploadData)
-              .subscribe(res1 => {
-                this.toastr.success(this.translate.instant('PRODUCT.PRODUCT_CREATED'));
-                this.router.navigate(['pages/catalogue/products/products-list']);
-              });
+            // this.uploadData.append('id', res.id);
+            // this.productImageService.createImage(res.id, this.uploadData)
+            // .subscribe(res1 => {
+            this.toastr.success(this.translate.instant('PRODUCT.PRODUCT_CREATED'));
+            this.router.navigate(['pages/catalogue/products/products-list']);
+            // });
           });
       }
     }
   }
-
+  route(link) {
+    this.router.navigate(['pages/catalogue/products/' + this.product.id + '/' + link]);
+  }
+  goToback() {
+    this.router.navigate(['pages/catalogue/products/products-list'])
+  }
 }

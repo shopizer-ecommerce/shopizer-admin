@@ -93,8 +93,14 @@
     }
 
     .filter_right_section {
+
         width: 100%;
         text-align: right;
+        display: flex;
+        justify-content: flex-end;
+        padding-left: 0px;
+        padding-right: 0px;
+
     }
 }
 

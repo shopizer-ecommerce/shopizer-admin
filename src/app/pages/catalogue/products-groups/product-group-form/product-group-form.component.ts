@@ -13,7 +13,7 @@ export class ProductGroupFormComponent implements OnInit {
   form: FormGroup;
   codePattern = '^[a-zA-Z0-9]+$';
   isCodeUnique = true;
-
+  loading: boolean = false;
   constructor(
     private fb: FormBuilder,
     private productGroupsService: ProductGroupsService,
@@ -48,6 +48,9 @@ export class ProductGroupFormComponent implements OnInit {
     this.productGroupsService.createProductGroup(this.form.value).subscribe(res => {
       this.router.navigate(['pages/catalogue/products-groups/groups-list']);
     });
+  }
+  goToback() {
+    this.router.navigate(['pages/catalogue/products-groups/groups-list']);
   }
 
 }

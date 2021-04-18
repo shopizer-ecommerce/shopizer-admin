@@ -1,0 +1,90 @@
+[
+    {
+        "type": "checkbox",
+        "label": "Enabled",
+        "placeholder": "",
+        "name": "active",
+        "objectKey": "",
+        "isRequired": false,
+        "optionData": [],
+        "value": false
+    },
+    {
+        "type": "checkbox",
+        "label": "Default",
+        "placeholder": "",
+        "name": "defaultSelected",
+        "objectKey": "",
+        "isRequired": false,
+        "optionData": [],
+        "value": false
+    },
+    {
+        "type": "dropdown",
+        "label": "Environment",
+        "placeholder": "Please select environment",
+        "name": "enviroment",
+        "objectKey": "",
+        "isRequired": false,
+        "optionData": [
+            {
+                "id": "test",
+                "label": "Test"
+            },
+            {
+                "id": "prod",
+                "label": "Prod"
+            }
+        ],
+        "value": ""
+    },
+    {
+        "type": "text",
+        "label": "Merchant Id",
+        "placeholder": "Enter a merchant id",
+        "name": "merchantid",
+        "objectKey": "integrationKeys",
+        "isRequired": true,
+        "optionData": [],
+        "value": ""
+    },
+    {
+        "type": "text",
+        "label": "Username",
+        "placeholder": "Enter a username",
+        "name": "username",
+        "objectKey": "integrationKeys",
+        "isRequired": true,
+        "optionData": [],
+        "value": ""
+    },
+    {
+        "type": "text",
+        "label": "Password",
+        "placeholder": "Enter a password",
+        "name": "password",
+        "objectKey": "integrationKeys",
+        "isRequired": true,
+        "optionData": [],
+        "value": ""
+    },
+    {
+        "type": "radio",
+        "label": "Transaction type",
+        "placeholder": "",
+        "name": "transaction",
+        "objectKey": "integrationKeys",
+        "isRequired": false,
+        "optionData": [
+            {
+                "label": "Pre-authorization",
+                "value": "AUTHORIZECAPTURE"
+            },
+            {
+                "label": "Sale",
+                "value": "SALE"
+            }
+        ],
+        "value": ""
+    }
+]

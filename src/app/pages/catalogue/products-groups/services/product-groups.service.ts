@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { CrudService } from '../../../shared/services/crud.service';
 import { Observable } from 'rxjs';
-import { StorageService } from '../../../shared/services/storage.service';
+// import { StorageService } from '../../../shared/services/storage.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,13 +10,13 @@ import { StorageService } from '../../../shared/services/storage.service';
 export class ProductGroupsService {
   constructor(
     private crudService: CrudService,
-    private storageService: StorageService
+    // private storageService: StorageService
   ) {
   }
 
-  getListOfProductGroups(): Observable<any> {
-    const store = this.storageService.getMerchant();
-    return this.crudService.get(`/v1/private/products/groups`, { store });
+  getListOfProductGroups(param): Observable<any> {
+    // const store = this.storageService.getMerchant();
+    return this.crudService.get(`/v1/private/products/groups`, param);
   }
 
   // TODO

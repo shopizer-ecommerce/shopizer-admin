@@ -11,7 +11,8 @@ import { CreateNewUserComponent } from './create-new-user/create-new-user.compon
 import { NbDialogModule } from '@nebular/theme';
 import { UserDetailsComponent } from './user-details/user-details.component';
 import { ButtonRenderUserComponent } from './users-list/button-render-user.component';
-
+import { CustomModule } from '../custom-component/custom.module';
+// import { EqualValidator } from '../shared/validation/equal-validator';
 @NgModule({
   declarations: [
     UserManagementComponent,
@@ -21,12 +22,14 @@ import { ButtonRenderUserComponent } from './users-list/button-render-user.compo
     UserFormComponent,
     CreateNewUserComponent,
     ButtonRenderUserComponent,
-    UserDetailsComponent
+    UserDetailsComponent,
+    // EqualValidator
   ],
   imports: [
     UserManagementRoutingModule,
     NbDialogModule.forChild(),
-    SharedModule
+    SharedModule,
+    CustomModule
   ],
   entryComponents: [ButtonRenderUserComponent],
 })

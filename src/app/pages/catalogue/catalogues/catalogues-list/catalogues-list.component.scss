@@ -1,70 +1,47 @@
-.page-card {
-    background: none;
-    border: none;
-    .inner_pages_legacy {
-        .main_header {
-            padding: 0px 30px 10px 0px;
-            .page_title {
-                margin-top: -25px;
-                font-weight: 600;
-            }
-        }
-        .form-inline {
-            margin: -10px 0 10px 0 !important;
-            background: #fff;
-            padding: 10px 15px;
-            border-radius: 5px;
-            justify-content: space-between;
-            .flexView {
-                display: flex;
-                .search {
-                    margin-right: 5px;
-                }
-                .pointer {
-                    padding: 6px;
-                    margin-right: 5px;
-                    margin-top: 3px;
-                }
+@import "../../../../@theme/styles/themes";
 
-                label {
-                    margin-top: 3px;
-                    cursor: pointer;
-                }
-                .createBtn {
-                    display: flex;
-                    &:link,
-                    &:visited,
-                    &:hover,
-                    &:active {
-                        color: #222b45;
-                        text-decoration: none;
-                        cursor: pointer;
-                    }
-                }
-            }
-        }
+@include nb-install-component() {
+    nb-card {
+        transform: translate3d(0, 0, 0);
     }
 }
-:host ::ng-deep .page-card {
-    .inner_pages_legacy {
-        .home-table {
-            thead {
-                .ng2-smart-titles {
-                    th {
-                        a {
-                            font-weight: 600;
-                        }
-                    }
+
+.catalogues_box {
+    .filter_section {
+        width: 100%;
+
+
+        .filter_right_section {
+            width: 100%;
+            text-align: right;
+            display: flex;
+            justify-content: flex-end;
+            padding-left: 0px;
+            padding-right: 0px;
+
+            .createBtn {
+                padding: 8px 10px 9.5px 10px;
+                background-color: #f7f9fc !important;
+                color: #000 !important;
+                border: 1px solid #edf1f7 !important;
+                border-radius: 5px;
+                margin-left: 20px;
+
+                label {
+                    display: inline-block;
+                    font-weight: 600 !important;
+                    font-size: 14px !important;
+                }
+
+                .sda {
+                    margin-right: 20px;
+                    cursor: pointer;
+                    margin-left: 0 !important;
                 }
             }
-            tbody {
-                tr {
-                    cursor: pointer;
-                    &:hover,
-                    &.selected {
-                        background: #e6f3ff !important;
-                    }
-                }
+
+            .store_select {
+                width: 29% !important
             }
         }
     }

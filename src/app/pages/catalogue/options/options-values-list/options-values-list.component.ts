@@ -8,7 +8,7 @@ import { ShowcaseDialogComponent } from '../../../shared/components/showcase-dia
 import { NbDialogService } from '@nebular/theme';
 import { ToastrService } from 'ngx-toastr';
 import { StorageService } from '../../../shared/services/storage.service';
-
+import { StoreService } from '../../../store-management/services/store.service';
 @Component({
   selector: 'ngx-options-values-list',
   templateUrl: './options-values-list.component.html',
@@ -20,15 +20,13 @@ export class OptionsValuesListComponent implements OnInit {
   loadingList = false;
 
   // paginator
-  perPage = 10;
+  perPage = 15;
   currentPage = 1;
   totalCount;
-
-  // request params
-  params = {
-    count: this.perPage,
-    page: 0
-  };
+  params = this.loadParams();
+  searchValue: string = '';
+  stores: Array<any> = [];
+  selectedStore: String = '';
   settings = {};
 
   constructor(
@@ -38,14 +36,31 @@ export class OptionsValuesListComponent implements OnInit {
     private dialogService: NbDialogService,
     private toastr: ToastrService,
     private storageService: StorageService,
+    private storeService: StoreService,
   ) {
+    this.getStoreList()
   }
-
+  loadParams() {
+    return {
+      store: this.storageService.getMerchant(),
+      lang: this.storageService.getLanguage(),
+      count: this.perPage,
+      page: 0
+    };
+  }
   ngOnInit() {
     this.getList();
   }
-
+  getStoreList() {
+    this.storeService.getListOfMerchantStoreNames({ 'store': '' })
+      .subscribe(res => {
+        res.forEach((store) => {
+          this.stores.push({ value: store.code, label: store.code });
+        });
+      });
+  }
   getList() {
+
     this.loadingList = true;
     this.params.page = this.currentPage - 1;
     this.optionValuesService.getListOfOptionValues(this.params)
@@ -68,18 +83,18 @@ export class OptionsValuesListComponent implements OnInit {
 
   setSettings() {
     this.settings = {
-      mode: 'inline',
-      delete: {
-        deleteButtonContent: '<i class="nb-trash"></i>',
-        confirmDelete: true
-      },
+      hideSubHeader: false,
       actions: {
         columnTitle: '',
         add: false,
         edit: false,
-        delete: true,
+        delete: false,
         position: 'right',
         sort: true,
+        custom: [
+          { name: 'edit', title: '<i class="nb-edit"></i>' },
+          { name: 'remove', title: '<i class="nb-trash"></i>' }
+        ],
       },
       pager: {
         display: false
@@ -88,17 +103,17 @@ export class OptionsValuesListComponent implements OnInit {
         id: {
           title: this.translate.instant('COMMON.ID'),
           type: 'number',
-          editable: false
+          filter: false
         },
         code: {
           title: this.translate.instant('COMMON.CODE'),
           type: 'string',
-          editable: false
+          filter: false
         },
         descriptions: {
           title: this.translate.instant('COMMON.NAME'),
           type: 'html',
-          editable: false,
+          filter: true,
           valuePrepareFunction: (descriptions) => {
             // parent_id for link
             let parent_id = -1;
@@ -110,8 +125,8 @@ export class OptionsValuesListComponent implements OnInit {
               }
               return el.language === this.storageService.getLanguage();
             });
-            const name = description && description.name ? description.name : 'null';
-            return `<a href="#/pages/catalogue/options/option-value/${parent_id}">${name}</a>`;
+            const name = description && description.name ? description.name : '';
+            return name;
           }
         }
       },
@@ -122,14 +137,14 @@ export class OptionsValuesListComponent implements OnInit {
     this.dialogService.open(ShowcaseDialogComponent, {})
       .onClose.subscribe(res => {
         if (res) {
-          event.confirm.resolve();
+          // event.confirm.resolve();
           this.optionValuesService.deleteOptionValue(event.data.id)
             .subscribe(result => {
               this.toastr.success(this.translate.instant('OPTION_VALUE.OPTION_VALUE_REMOVED'));
               this.getList();
             });
         } else {
-          event.confirm.reject();
+          // event.confirm.reject();
         }
       });
   }
@@ -160,5 +175,32 @@ export class OptionsValuesListComponent implements OnInit {
     }
     this.getList();
   }
-
+  onSearch(value) {
+    this.params["name"] = value;
+    this.searchValue = value;
+    this.getList()
+  }
+  resetSearch() {
+    this.params = this.loadParams();
+    this.searchValue = null;
+    this.getList();
+  }
+  onSelectStore(e) {
+    this.params["store"] = e;
+    this.getList();
+  }
+  onClickAction(event) {
+    switch (event.action) {
+      case 'edit':
+        this.onEdit(event);
+        break;
+      case 'remove':
+        this.deleteRecord(event)
+        break
+    }
+  }
+  onEdit(event) {
+    this.router.navigate(['/pages/catalogue/options/option-value/' + event.data.id]);
+  }
 }
+

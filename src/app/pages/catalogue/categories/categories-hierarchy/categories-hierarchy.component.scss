@@ -1,0 +1,213 @@
+@import "../../../../@theme/styles/styles.scss";
+
+/**
+@include nb-install-component() {
+    nb-card {
+        transform: translate3d(0, 0, 0);
+    }
+}
+
+.page-card {
+    background: transparent;
+    border: none;
+
+    .category_hierarcy {
+        .main_header {
+            padding: 0px 30px 10px 0px;
+
+            .page_title {
+                margin-top: -25px;
+                font-weight: 600;
+            }
+        }
+
+        .pointer {
+            height: 18px;
+            width: 18px;
+            margin-left: 20px;
+            cursor: pointer;
+        }
+
+        .filter_section {
+            background: #fff;
+            padding: 10px 15px;
+            margin: -10px 0 10px 0;
+        }
+    }
+}
+
+.containerCenter {
+    display: flex;
+    justify-content: center;
+    padding: 20px 0;
+
+    .centerSec {
+        width: 60%;
+        margin: 0 auto;
+        justify-content: center;
+
+        .tabelSec {
+            width: 100%;
+            display: table;
+            margin: 0 auto;
+            width: 100%;
+            border: 1px solid #e0e0e0;
+            border-radius: 5px;
+            margin-bottom: 20px;
+
+            table {
+                width: 100%;
+                border: 1px solid #e0e0e0;
+                border-radius: 5px;
+                overflow: hidden;
+
+                thead {
+                    display: contents !important;
+
+                    th {
+                        padding: 10px 6px;
+                        font-weight: 600;
+                        font-family: Roboto;
+                    }
+
+                    th:nth-child(1) {
+                        width: 47%;
+                    }
+
+                    th:nth-child(2) {
+                        width: 14%;
+                    }
+
+                    th:nth-child(3) {
+                        width: 14%;
+                    }
+
+                    th:nth-child(4) {
+                        width: 14%;
+                    }
+                }
+
+                tbody {
+                    tr:nth-child(odd) {
+                        background-color: #f9f9f9;
+                    }
+
+                    td {
+                        padding: 10px 6px;
+                        font-family: Roboto;
+                        text-transform: capitalize;
+                    }
+
+                    .boldTxt {
+                        font-weight: 600;
+                    }
+
+                    .blueTxt {
+                        color: #28bef8;
+                        margin-left: 6px;
+                    }
+                }
+            }
+        }
+
+
+    }
+}
+
+:host ::ng-deep .category_hierarcy {
+    .filter_section {
+        .filter_right_section {
+            button {
+                font-weight: 600 !important;
+                font-size: 14px !important;
+            }
+        }
+    }
+
+    .home-table {
+        thead {
+            .ng2-smart-titles {
+                th {
+                    a {
+                        font-weight: 600;
+                    }
+                }
+            }
+        }
+
+        tbody {
+            tr {
+                cursor: pointer;
+
+                &:hover,
+                &.selected {
+                    background: #e6f3ff !important;
+                }
+
+                a.ng2-smart-action:not(:last-child) {
+                    padding-right: 0px !important;
+                    margin-right: 0px !important;
+                }
+            }
+        }
+    }
+}
+
+.buttons-row {
+    float: right;
+}
+
+.filter_section {
+    width: 100%;
+
+    .filter_left_section {
+        width: 84%;
+
+        .sda {
+            height: 18px;
+            width: 18px;
+            margin-left: 20px;
+            cursor: pointer;
+        }
+    }
+
+    .filter_right_section {
+        width: 16%;
+        text-align: right;
+
+        .createBtn {
+            padding: 8px 10px 9.5px 10px;
+            background-color: #f7f9fc !important;
+            color: #000 !important;
+            border: 1px solid #edf1f7 !important;
+            border-radius: 5px;
+            margin-left: 20px;
+
+            label {
+                font-weight: 600 !important;
+                font-size: 14px !important;
+            }
+
+            .sda {
+                margin-right: 20px;
+                cursor: pointer;
+                margin-left: 0 !important;
+            }
+        }
+    }
+}
+**/
+
+// thead,
+// tbody {
+//     display: block;
+// }
+
+// tbody {
+//     height: 100px;
+//     /* Just for the demo          */
+//     overflow-y: auto;
+//     /* Trigger vertical scroll    */
+//     overflow-x: hidden;
+//     /* Hide the horizontal scroll */
+// }

@@ -8,6 +8,7 @@ import { ToastrService } from 'ngx-toastr';
 import { TranslateService } from '@ngx-translate/core';
 import { InventoryService } from '../../services/inventory.service';
 import * as moment from 'moment';
+import { validators } from '../../../../shared/validation/validators';
 
 @Component({
   selector: 'ngx-inventory-form',
@@ -16,6 +17,7 @@ import * as moment from 'moment';
 })
 export class InventoryFormComponent implements OnInit {
   @Input() inventory;
+  @Input() _title;
   form: FormGroup;
   stores = [];
   loader = false;
@@ -45,7 +47,7 @@ export class InventoryFormComponent implements OnInit {
         });
       });
     this.loader = true;
-    this.configService.getListOfSupportedLanguages()
+    this.configService.getListOfSupportedLanguages(localStorage.getItem('merchant'))
       .subscribe(res => {
         this.languages = [...res];
         this.createForm();
@@ -58,27 +60,48 @@ export class InventoryFormComponent implements OnInit {
 
   private createForm() {
     this.form = this.fb.group({
-      store: ['DEFAULT', [Validators.required]],
-      owner: ['', [Validators.required]],
+      available: [false],
+      sku: ['', [Validators.required, Validators.pattern(validators.alphanumeric)]],
       dateAvailable: [new Date()],
-      quantity: [0, [Validators.required]]
+      store: ['DEFAULT', [Validators.required]],
+      variant: ['', [Validators.required]],
+      productSpecifications: this.fb.group({
+        weight: ['', [Validators.pattern(validators.number)]],
+        height: ['', [Validators.pattern(validators.number)]],
+        width: ['', [Validators.pattern(validators.number)]],
+        length: ['', [Validators.pattern(validators.number)]],
+      }),
+      priceDetails: this.fb.group({
+        finalPrice: ['', [Validators.required]],
+        discountedPrice: [''],
+        startDate: [new Date()],
+        endDate: [new Date()],
+      })
     });
   }
+  // private createForm() {
+  //   this.form = this.fb.group({
+  //     store: ['DEFAULT', [Validators.required]],
+  //     owner: ['', [Validators.required]],
+  //     dateAvailable: [new Date()],
+  //     quantity: [0, [Validators.required]]
+  //   });
+  // }
 
   fillForm() {
-    this.form.patchValue({
-      store: this.inventory.store.code,
-      owner: this.inventory.owner,
-      dateAvailable: this.inventory.dateAvailable,
-      quantity: this.inventory.quantity,
-    });
+    // this.form.patchValue({
+    //   store: this.inventory.store.code,
+    //   owner: this.inventory.owner,
+    //   dateAvailable: this.inventory.dateAvailable,
+    //   quantity: this.inventory.quantity,
+    // });
   }
 
 
   save() {
     const inventoryObj = this.form.value;
     inventoryObj.dateAvailable =
-      inventoryObj.dateAvailable ? moment(inventoryObj.dateAvailable).format('YYYY-MM-DD') : '';
+      inventoryObj.dateAvailable ? moment(inventoryObj.dateAvailable).format('yyyy-MM-DD') : '';
     inventoryObj.prices = [...this.prices];
     inventoryObj.productId = this.productId;
     if (this.inventory.id) {

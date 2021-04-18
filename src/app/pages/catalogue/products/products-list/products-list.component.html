@@ -1,65 +1,40 @@
-<!-- <nb-card size="small" class="page-card">
-  <nb-card-header>
-    {{ 'COMPONENTS.PRODUCTS' | translate }}
-  </nb-card-header>
-  <nb-card-body [nbSpinner]="loadingList" nbSpinnerSize="large" nbSpinnerStatus="primary">
-
-    <div class="shop-select" *ngIf="isSuperadmin">
-      <nb-select *ngIf="stores.length" outline
-                 shape="rectangle" (selectedChange)="choseStore($event)" [selected]="'DEFAULT'">
-        <nb-option *ngFor="let store of stores" [value]="store.code">{{ store.code }}</nb-option>
-      </nb-select>
-    </div>
-
-    <ng2-smart-table
-      [settings]="settings"
-      [source]="source"
-      (editConfirm)="updateRecord($event)"
-      (deleteConfirm)="deleteRecord($event)">
-    </ng2-smart-table>
-
-    <ngx-paginator
-      (changePage)="changePage($event)"
-      [pagesToShow]="5"
-      [currentPage]="currentPage"
-      [perPage]="perPage"
-      [count]="totalCount">
-    </ngx-paginator>
-
-  </nb-card-body>
-</nb-card> -->
-<nb-card size="small" class="page-card">
-  <div *ngIf="loadingList" class="loading-block" [nbSpinner]="loadingList" nbSpinnerSize="large"
-    nbSpinnerStatus="primary"></div>
-  <nb-card-body *ngIf="!loadingList" class="userList">
-
+<nb-card class="page-card inner_pages">
+  <nb-card-body [nbSpinner]="loading" nbSpinnerSize="large" nbSpinnerStatus="primary" class="productList">
     <div class="inner_pages_legacy">
       <nb-card-header class="main_header">
         <h1 class="page_title">{{ 'COMPONENTS.PRODUCTS' | translate }}</h1>
-        <div class="content_spacing" style="height:60px;">
-        </div>
-        <nb-select *ngIf="stores.length" outline shape="rectangle" (selectedChange)="choseStore($event)"
-          [selected]="'DEFAULT'">
-          <nb-option *ngFor="let store of stores" [value]="store.code">{{ store.code }}</nb-option>
-        </nb-select>
+        <div class="content_spacing_empty"></div>
+
       </nb-card-header>
+
+
+      <form class="form-inline filter_section">
+        <div class="filter_left_section">
+        </div>
+        <div class="filter_right_section">
+          <!--
+          <p-dropdown *ngIf="stores.length > 0" [options]="stores" filter="true" (onChange)="choseStore($event)">
+            <ng-template let-item pTemplate="selectedItem">{{item.label}}</ng-template>
+            <ng-template let-car pTemplate="item">{{car.label}}</ng-template>
+          </p-dropdown>
+          -->
+          <ngx-store-autocomplete (onStore)="choseStore($event)"></ngx-store-autocomplete>
+          <!-- <p-autoComplete name="merchant" [(ngModel)]="merchant" [suggestions]="stores" [dropdown]="true" (onSelect)="choseStore($event)"
+            (completeMethod)="searchStore($event)"> -->
+          <!--
+              <ng-template let-item pTemplate="selectedItem">{{item.label}}</ng-template>
+              <ng-template let-car pTemplate="item">{{car.label}}</ng-template>
+              -->
+          <!-- </p-autoComplete> -->
+        </div>
+      </form>
+
+      <ng2-smart-table [settings]="settings" [source]="source" (custom)="route($event)" class="home-table">
+      </ng2-smart-table>
+
+      <ngx-paginator (changePage)="changePage($event)" [pagesToShow]="5" [currentPage]="currentPage" [perPage]="perPage"
+        [count]="totalCount">
+      </ngx-paginator>
     </div>
-
-
-    <form class="form-inline">
-      <input #search class="search form-control ng-pristine ng-valid ng-touched" value="{{ searchValue }}" type="text"
-        placeholder="{{ 'COMPONENTS.SEARCH' | translate }}" (keydown.enter)="onSearch(search.value)" style="width:25%">
-      <img class="pointer" src="../../../../assets/img/magnifying-glass.png" width="32" height="32"
-        (click)="onSearch(search.value)">
-      <img class="pointer" src="../../../../assets/img/reload.png" width="32" height="32" (click)="resetSearch()">
-    </form>
-
-
-    <ng2-smart-table [settings]="settings" [source]="source" (custom)="route($event)" class="home-table">
-    </ng2-smart-table>
-
-    <ngx-paginator (changePage)="changePage($event)" [pagesToShow]="5" [currentPage]="currentPage" [perPage]="perPage"
-      [count]="totalCount">
-    </ngx-paginator>
   </nb-card-body>
 </nb-card>

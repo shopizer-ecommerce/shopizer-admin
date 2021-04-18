@@ -1,0 +1,60 @@
+<nb-card class="payment-card inner_pages">
+  <nb-card-body [nbSpinner]="loadingList" nbSpinnerSize="large" nbSpinnerStatus="primary" class="orderList">
+    <div class="inner_pages_legacy">
+      <nb-card-header class="main_header">
+        <h1 class="page_title">{{ 'PAYMENT.PAYMENT_METHODS' | translate}}</h1>
+        <div class="content_spacing_empty"></div>
+
+      </nb-card-header>
+
+      <form class="form-inline filter_section">
+        <div class="filter_left_section">
+        </div>
+        <div class="filter_right_section">
+          <!-- <ngx-store-autocomplete (onStore)="onSelectStore($event)"></ngx-store-autocomplete> -->
+
+          <!-- <a class="createBtn" (click)="createTaxRate()">
+            <img class="pointer sda" src="../../../../assets/img/plus.png" title="create_tax_rate">
+            <label>{{ 'TAX.ADD_TAX_RATE' | translate}}</label>
+          </a> -->
+        </div>
+      </form>
+
+      <div class="grid-body row" data-layout="fitRows">
+        <div class="col-lg-3 col-md-3 col-sm-3 " *ngFor="let result of paymentData; let i = index">
+          <div class="grid-product">
+            <div class="image bg-lightblue">
+              <a>
+                <img *ngIf="result.image" src="../../../../assets/img/{{result.image}}" alt="image">
+                <img *ngIf="result.image == null" src="../../../../assets/img/noimg.png" alt="image">
+                <!-- <img [src]="result.image" alt="image"> -->
+              </a>
+            </div>
+            <a class="name">{{ result.code | translate}}</a>
+            <div class="name-subtext">({{result.code}})</div>
+            <!-- <div class="product-rating" data-star="4">
+              <ngb-rating [rate]="result.rating"></ngb-rating>
+            </div> -->
+            <div class="price"><span>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem
+                Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a
+                galley of type and scrambled it to make a type specimen book.</span></div>
+            <div class="configure-button">
+              <a [ngClass]="result.active && result.configured ? 'createBtn success' : !result.active && !result.configured ? 'createBtn': 'createBtn warning'"
+                (click)="onClickConfigure(result.code)">
+                <!-- <img class="pointer sda" src="../../../../assets/img/plus.png" title="create_tax_rate"> -->
+                <label>Configure</label>
+              </a>
+              <!-- <button nbButton size="small" outline>Configure</button> -->
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- <ng2-smart-table [settings]="settings" [source]="source" (custom)="route($event)" class="home-table">
+      </ng2-smart-table> -->
+
+      <!-- <ngx-paginator (changePage)="changePage($event)" [pagesToShow]="5" [currentPage]="currentPage" [perPage]="perPage"
+        [count]="totalCount">
+      </ngx-paginator> -->
+    </div>
+  </nb-card-body>
+</nb-card>

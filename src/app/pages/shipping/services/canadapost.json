@@ -1,0 +1,234 @@
+[
+    {
+        "type": "checkbox",
+        "label": "Enabled",
+        "placeholder": "",
+        "name": "active",
+        "objectKey": "",
+        "isRequired": false,
+        "optionData": [],
+        "value": false
+    },
+    {
+        "type": "checkbox",
+        "label": "Default",
+        "placeholder": "",
+        "name": "defaultSelected",
+        "objectKey": "",
+        "isRequired": false,
+        "optionData": [],
+        "value": false
+    },
+    {
+        "type": "dropdown",
+        "label": "Environment",
+        "placeholder": "Please select environment",
+        "name": "enviroment",
+        "objectKey": "",
+        "isRequired": false,
+        "optionData": [
+            {
+                "id": "test",
+                "label": "Test"
+            },
+            {
+                "id": "prod",
+                "label": "Prod"
+            }
+        ],
+        "value": ""
+    },
+    {
+        "type": "text",
+        "label": "Canada Post identifier (CPC number)",
+        "placeholder": "Enter a cpc number",
+        "name": "account",
+        "objectKey": "integrationKeys",
+        "isRequired": true,
+        "optionData": [],
+        "value": ""
+    },
+    {
+        "type": "text",
+        "label": "Canada Post user name (first part of the API key before semi column)",
+        "placeholder": "Enter a username",
+        "name": "username",
+        "objectKey": "integrationKeys",
+        "isRequired": true,
+        "optionData": [],
+        "value": ""
+    },
+    {
+        "type": "text",
+        "label": "Canada Post password (second part of the API key after semi column)",
+        "placeholder": "Enter a password",
+        "name": "password",
+        "objectKey": "integrationKeys",
+        "isRequired": true,
+        "optionData": [],
+        "value": ""
+    },
+    {
+        "type": "text",
+        "label": "Canada Post API key",
+        "placeholder": "Enter a post api key",
+        "name": "apikey",
+        "objectKey": "integrationKeys",
+        "isRequired": true,
+        "optionData": [],
+        "value": ""
+    },
+    {
+        "type": "groupcheckbox",
+        "label": "Services to be rated - Canada",
+        "placeholder": "",
+        "name": "services-domestic",
+        "objectKey": "integrationOptions",
+        "isRequired": false,
+        "optionData": [
+            {
+                "label": "Regular Parcel",
+                "value": "DOM.RP",
+                "checked": false
+            },
+            {
+                "label": "Expedited Parcel",
+                "value": "DOM.EP",
+                "checked": false
+            },
+            {
+                "label": "Xpresspost",
+                "value": "DOM.XP",
+                "checked": false
+            },
+            {
+                "label": "Xpresspost Certified",
+                "value": "DOM.XP.CERT",
+                "checked": false
+            },
+            {
+                "label": "Priority",
+                "value": "DOM.PC",
+                "checked": false
+            },
+            {
+                "label": "Delivered Tonight",
+                "value": "DOM.DT",
+                "checked": false
+            },
+            {
+                "label": "Library Books",
+                "value": "DOM.LIB",
+                "checked": false
+            }
+        ],
+        "value": ""
+    },
+    {
+        "type": "groupcheckbox",
+        "label": "Services to be rated - United states",
+        "placeholder": "",
+        "name": "services-usa",
+        "objectKey": "integrationOptions",
+        "isRequired": false,
+        "optionData": [
+            {
+                "label": "Expedited Parcel USA",
+                "value": "USA.EP",
+                "checked": false
+            },
+            {
+                "label": "Priority Worldwide Envelope USA",
+                "value": "USA.PW.ENV",
+                "checked": false
+            },
+            {
+                "label": "Priority Worldwide pak USA",
+                "value": "USA.PW.PAK",
+                "checked": false
+            },
+            {
+                "label": "Priority Worldwide Parcel USA",
+                "value": "USA.PW.PARCEL",
+                "checked": false
+            },
+            {
+                "label": "Small Packet USA Air",
+                "value": "USA.SP.AIR",
+                "checked": false
+            },
+            {
+                "label": "Tracked Packet - USA",
+                "value": "USA.TP",
+                "checked": false
+            },
+            {
+                "label": "USA.TP.LVW",
+                "value": "USA.TP.LVM",
+                "checked": false
+            },
+            {
+                "label": "Xpresspost USA",
+                "value": "USA.XP",
+                "checked": false
+            }
+        ],
+        "value": ""
+    },
+    {
+        "type": "groupcheckbox",
+        "label": "Services to be rated - International",
+        "placeholder": "",
+        "name": "services-intl",
+        "objectKey": "integrationOptions",
+        "isRequired": false,
+        "optionData": [
+            {
+                "label": "Xpresspost International",
+                "value": "USA.XP",
+                "checked": false
+            },
+            {
+                "label": "Priority Worldwide Envelope USA",
+                "value": "INT.IP.AIR",
+                "checked": false
+            },
+            {
+                "label": "International Parcel Surface",
+                "value": "INT.IP.SURF",
+                "checked": false
+            },
+            {
+                "label": "Priority Worldwide Envelope International",
+                "value": "INT.PW.ENV",
+                "checked": false
+            },
+            {
+                "label": "Priority Worldwide pak International",
+                "value": "INT.PW.PAK",
+                "checked": false
+            },
+            {
+                "label": "Priority Worldwide parcel International",
+                "value": "INT.PW.PARCEL",
+                "checked": false
+            },
+            {
+                "label": "Small Packet International Air",
+                "value": "INT.SP.AIR",
+                "checked": false
+            },
+            {
+                "label": "Small Packet International Surface",
+                "value": "INT.SP.SURF",
+                "checked": false
+            },
+            {
+                "label": "Tracked Packet - International",
+                "value": "INT.TP",
+                "checked": false
+            }
+        ],
+        "value": ""
+    }
+]

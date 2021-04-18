@@ -21,19 +21,15 @@ export class CatalogService {
     return this.crudService.get(`/v1/private/catalog/${id}`);
   }
 
-  createCatalog(category): Observable<any> {
-    return this.crudService.post(`/v1/private/catalog`, category);
+  createCatalog(catalog): Observable<any> {
+    return this.crudService.post(`/v1/private/catalog`, catalog);
   }
 
-  updateCategory(id, category): Observable<any> {
-    return this.crudService.patch(`/v1/private/catalog/${id}`, category);
+  updateCatalog(id, catalog): Observable<any> {
+    return this.crudService.patch(`/v1/private/catalog/${id}`, catalog);
   }
 
-  // updateCategory(id, category): Observable<any> {
-  //   return this.crudService.put(`/v1/private/category/${id}`, category);
-  // }
-
-  deleteCategory(id): Observable<any> {
+  deleteCatalog(id): Observable<any> {
     return this.crudService.delete(`/v1/private/catalog/${id}`);
   }
 

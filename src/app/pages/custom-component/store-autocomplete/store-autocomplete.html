@@ -1,0 +1,2 @@
+<p-autoComplete class="autoStore" placeholder="Search a store" name="merchant" [(ngModel)]="merchant" [suggestions]="_stores"
+    [dropdown]="true" (onSelect)="onSelectStore($event)" (completeMethod)="searchStore()">

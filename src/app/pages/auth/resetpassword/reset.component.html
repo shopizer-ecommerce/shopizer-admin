@@ -1,0 +1,84 @@
+<div class="limiter">
+  <div class="container-login100" [nbSpinner]="loadingList" nbSpinnerSize="large" nbSpinnerStatus="primary">
+    <div class="wrap-login100 p-l-85 p-r-85 p-t-55 p-b-55">
+      <form *ngIf="isValid" class="login100-form validate-form flex-sb flex-w" #forgotPasswordForm="ngForm" role="form">
+        <span style="width:100%;" class="titleClass">
+
+          <img src="assets/img/shopizer-logo.png" width="200" style="margin-top:-15px;">
+          <span class="login100-form-subtitle">
+            Reset your administration password.
+          </span>
+
+        </span>
+        <div class="form-group row alert-error" *ngIf="successMessage !== ''" style="width:100%;line-height: 2.5;color:green;font-size: 12px;margin-bottom:10px;">
+          {{successMessage}}
+        </div>
+        <div class="form-group row alert-error" *ngIf="errorMessage !== ''" style="width:100%;line-height: 2.5;color:#ff3d71;font-size: 12px;margin-bottom:10px;">
+          {{errorMessage}}
+        </div>
+
+        <div style="width:100%;">
+          <span class="txt1 p-b-11">
+            {{ 'USER_CHANGE_PASSWORD.NEW_PASSWORD' | translate}}
+          </span>
+          <div class="validate-input m-b-36">
+            <span class="btn-show-pass">
+              <i [class]="passwordType == 0  ? 'fa fa-eye' : 'fa fa-eye-slash'" (click)="showPassword()"></i>
+            </span>
+            <input class="inputLogin" [type]="passwordType == 0 ? 'password' : 'text'" [(ngModel)]="user.password" name="password"
+              placeholder="{{ 'USER_CHANGE_PASSWORD.NEW_PASSWORD' | translate}}" required pattern="^(?=[^A-Z]*[A-Z])(?=[^a-z]*[a-z])(?=[^0-9]*[0-9]).{6,12}$"
+              #password="ngModel">
+          </div>
+
+        </div>
+        <div [hidden]="password.valid || password.pristine" class="help-block" style="margin-top:-32px; color:#ff3d71;font-size: 12px;">
+          <span *ngIf="!password.value">{{ 'USER_CHANGE_PASSWORD.PASSWORD_ERROR_REQUIRED' |
+            translate}}</span>
+          <span *ngIf="password.value">{{ 'USER_CHANGE_PASSWORD.PASSWORD_ERROR_RULES' |
+            translate}}</span>
+        </div>
+        <div style="width:100%;">
+          <span class="txt1 p-b-11">
+            {{ 'USER_CHANGE_PASSWORD.REPEAT_NEW_PASSWORD' | translate}}
+          </span>
+          <div class="validate-input m-b-36">
+            <span class="btn-show-pass">
+              <i [class]="newPasswordType == 0  ? 'fa fa-eye' : 'fa fa-eye-slash'" (click)="showNewPassword()"></i>
+            </span>
+            <input class="inputLogin" [type]="newPasswordType == 0 ? 'password' : 'text'" [(ngModel)]="user.newpassword"
+              name="newpassword" placeholder="{{ 'USER_CHANGE_PASSWORD.REPEAT_NEW_PASSWORD' | translate }}" required
+              #newpassword="ngModel" validateEqual="password">
+          </div>
+        </div>
+        <div [hidden]="newpassword.valid || newpassword.pristine" class="help-block" style="margin-top:-32px; color:#ff3d71;font-size: 12px;">
+          <span>{{ 'USER_CHANGE_PASSWORD.PASSWORDS_NOT_MATCH' | translate }}</span>
+        </div>
+        <div style="width:100%;">
+          <div class="flex-sb-m w-full p-b-28 p-t-26">
+
+
+          </div>
+        </div>
+        <div class="container-login100-form-btn">
+          <button type="button" [disabled]="!forgotPasswordForm.form.valid" (click)="onClickSubmit()" nbButton class="login100-form-btn">
+            {{ 'COMMON.SUBMIT' | translate}}
+          </button>
+        </div>
+      </form>
+      <div *ngIf="!isValid" class="error-area">
+
+        <h1>400</h1>
+        <h2>Your reset password link is
+          invalid.</h2>
+        <p>
+          To reset your password, return to the login page and select 'Forgot Password' to send a new email
+        </p>
+        <a>Back to login page</a>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div id="dropDownSelect1"></div>

@@ -1,0 +1,37 @@
+<nb-card class="page-card inner_pages">
+  <nb-card-body [nbSpinner]="loadingList" nbSpinnerSize="large" nbSpinnerStatus="primary" class="list">
+    <div class="inner_pages_legacy">
+      <nb-card-header class="main_header">
+        <h1 class="page_title">{{ 'PRODUCT_TYPE.PRODUCT_TYPE_LIST' | translate}}</h1>
+        <div class="content_spacing_empty"></div>
+
+      </nb-card-header>
+      <form class="form-inline filter_section">
+        <div class="filter_left_section">
+          <!-- <div class="store-list">
+                    <p-dropdown *ngIf="stores.length> 0" [options]="stores" filter="true" (onChange)="onSelectStore($event)">
+                    <ng-template let-item pTemplate="selectedItem">{{item.label}}</ng-template>
+                    <ng-template let-car pTemplate="item">{{car.label}}</ng-template>
+                    </p-dropdown>
+               </div> -->
+        </div>
+        <div class="filter_right_section">
+          <ngx-store-autocomplete (onStore)="onSelectStore($event)"></ngx-store-autocomplete>
+          <a class="createBtn" [routerLink]="['/pages/catalogue/types/create-type']">
+            <img class="pointer sda" src="../../../../assets/img/plus.png" title="{{ 'COMPONENTS.PRODUCT_TYPES' | translate}}"
+              alt="">
+            <label>{{ 'PRODUCT_TYPE.PRODUCT_TYPE_CREATE' | translate}}</label>
+          </a>
+        </div>
+      </form>
+
+
+      <ng2-smart-table [settings]="settings" [source]="source" (custom)="onClickAction($event)" class="home-table">
+      </ng2-smart-table>
+
+      <ngx-paginator (changePage)="changePage($event)" [pagesToShow]="5" [currentPage]="currentPage" [perPage]="perPage"
+        [count]="totalCount"></ngx-paginator>
+
+    </div>
+  </nb-card-body>
+</nb-card>
