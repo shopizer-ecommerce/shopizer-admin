@@ -17,7 +17,7 @@ RUN ls -al
 
 FROM nginx:alpine
 
-VOLUME  /var/cache/nginx
+COPY --from=builder /dist /usr/share/nginx/html
 
 # Copy Nginx Files
 COPY --from=builder /app/docker/nginx.conf /etc/nginx/conf.d/default.conf

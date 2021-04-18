@@ -3,4 +3,6 @@
 npm i --yes
 ng serve -o
 
-http://15.223.64.6/
+docker run \
+-e "APP_BASE_URL=http://aws-demo.shopizer.com:8080/" \
+-it --rm -p 80:80 shopizerecomm/shopizer-admin
