@@ -14,7 +14,6 @@ import { ActivatedRoute } from '@angular/router';
   styleUrls: ['./store-branding.component.scss']
 })
 export class StoreBrandingComponent implements OnInit {
-  storeCode = '';
   store;
   loading = false;
   loadingButton = false;
@@ -65,6 +64,7 @@ export class StoreBrandingComponent implements OnInit {
   ngOnInit() {
     this.loading = true;
     const code = this.activatedRoute.snapshot.paramMap.get('code');
+    console.log('STORE CODE ' + code);
 
     forkJoin(
       //this.storeService.getBrandingDetails(code),
@@ -165,7 +165,7 @@ export class StoreBrandingComponent implements OnInit {
     } else {
       node.removeChild(node.getElementsByClassName('appendedImage')[0]);
     }
-    this.storeService.removeStoreLogo(this.storeCode)
+    this.storeService.removeStoreLogo(this.store.code)
       .subscribe(res => {
         this.toastr.success(this.translate.instant('STORE_BRANDING.LOGO_REMOVED'));
       });

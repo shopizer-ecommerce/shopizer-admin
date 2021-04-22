@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { TypesService } from '../services/types.service';
 import { LocalDataSource } from 'ng2-smart-table';
+import { ListingService } from '../../../shared/services/listing.service';
 
 @Component({
   selector: 'ngx-types-list',
@@ -18,13 +19,14 @@ import { LocalDataSource } from 'ng2-smart-table';
 export class TypesListComponent implements OnInit {
 
   source: LocalDataSource = new LocalDataSource();
+  listingService: ListingService;
   perPage = 15;
   totalCount = 0;
   loadingList = false;
   settings = {};
   stores: Array<any> = [];
   params = this.loadParams();
-  currentPage = 0;
+  currentPage = 1;
   types = [];
 
   constructor(
@@ -37,7 +39,7 @@ export class TypesListComponent implements OnInit {
     private storeService: StoreService,
     private typesService: TypesService,
   ) {
-
+    this.listingService = new ListingService();
   }
 
   loadParams() {
@@ -104,8 +106,9 @@ export class TypesListComponent implements OnInit {
 
   getList() {
     this.loadingList = true;
+    this.params.page = this.currentPage - 1;
     this.typesService.getListOfTypes(this.params).subscribe((res) => {
-      console.log(JSON.stringify(res));
+      //console.log(JSON.stringify(res));
       this.totalCount = res.recordsTotal;
       this.types = [...res.list];
       this.source.load(this.types);
@@ -116,6 +119,19 @@ export class TypesListComponent implements OnInit {
       this.setSettings();
     });
   }
+
+  private loadList(newParams: any) {
+    this.currentPage = 1; //back to page 1
+    this.params = newParams;
+    this.getList();
+  }
+
+  private resetList() {
+    this.currentPage = 1;//back to page 1
+    this.params = this.loadParams();
+    this.getList();
+  }
+
 
   // paginator
   changePage(event) {

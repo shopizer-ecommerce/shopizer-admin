@@ -149,11 +149,8 @@ export class CategoriesListComponent implements OnInit {
           title: this.translate.instant('STORE.MERCHANT_STORE'),
           type: 'string',
           filter: false,
-          //filterFunction(cell: any, search?: string): boolean {
-          //  return true;
-          //}
         },
-        description: {
+        name: {
           title: this.translate.instant('CATEGORY.CATEGORY_NAME'),
           type: 'string',
           filter: true,
