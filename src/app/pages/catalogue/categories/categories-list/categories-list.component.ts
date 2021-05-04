@@ -28,7 +28,7 @@ export class CategoriesListComponent implements OnInit {
 
   // paginator
   perPage = 15;
-  currentPage = 1;
+  currentPage = 1; //start base
   totalCount;
   roles;
   searchValue: string = '';
@@ -56,13 +56,14 @@ export class CategoriesListComponent implements OnInit {
       lang: this.storageService.getLanguage(),
       store: this.storageService.getMerchant(),
       count: this.perPage,
-      page: 0
+      filter: 'admin',//otherwise some category might be filtered out
+      page: 1
     };
   }
 
   /** callback methods for table list*/
   private loadList(newParams: any) {
-    this.currentPage = 1; //back to page 1
+    this.currentPage = 0; //back to page 1
     this.params = newParams;
     this.getList();
   }
@@ -76,7 +77,6 @@ export class CategoriesListComponent implements OnInit {
   ngOnInit() {
     this.getList();
 
-    //TODO
     this.translate.onLangChange.subscribe((lang) => {
       this.params.lang = this.storageService.getLanguage();
       this.getList();
@@ -108,14 +108,14 @@ export class CategoriesListComponent implements OnInit {
   getList() {
     this.categories = [];
 
-    this.params.page = this.currentPage - 1;
+    this.params.page = this.currentPage -1;
     this.loadingList = true;
     this.categoryService.getListOfCategories(this.params)
       .subscribe(categories => {
         categories.categories.forEach((el) => {
           this.getChildren(el);
         });
-        this.totalCount = categories.totalPages;
+        this.totalCount = categories.recordsTotal;
         this.source.load(this.categories);
         this.loadingList = false;
       });

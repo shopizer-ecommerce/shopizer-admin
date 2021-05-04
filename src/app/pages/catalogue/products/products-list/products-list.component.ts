@@ -28,7 +28,7 @@ export class ProductsListComponent implements OnInit {
   isSuperadmin: boolean;
   selectedStore: String = '';
   // paginator
-  perPage = 10;
+  perPage = 15;
   currentPage = 1;
   totalCount;
   merchant;
