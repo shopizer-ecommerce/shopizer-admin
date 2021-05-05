@@ -2,12 +2,7 @@
   <div class="" [nbSpinner]="loadingList" nbSpinnerSize="large" nbSpinnerStatus="primary">
     <nb-card-header class="main_header">
       <h1 class="page_title">Shipping Configure - {{shippingType}}</h1>
-      <!-- <div class="content_spacing">
-        <nb-select placeholder="Language" outline shape="rectangle" [(ngModel)]="language" (ngModelChange)="getTaxRateDetail()"
-          name="language" [selected]="'en'">
-          <nb-option *ngFor="let lan of langData" [value]="lan.code">{{ ('LANG.'+ lan.code) |translate }}</nb-option>
-        </nb-select>
-      </div> -->
+
       <div class="content_spacing">
         <button type="button" class="cancel_button" (click)="goBack()">{{'COMMON.CANCEL' | translate }}</button>
       </div>

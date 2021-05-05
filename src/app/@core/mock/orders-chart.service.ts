@@ -2,17 +2,23 @@ import { Injectable } from '@angular/core';
 import { PeriodsService } from './periods.service';
 import { OrdersChart, OrdersChartData } from '../data/orders-chart';
 
+/**
+ * This is simulation of orders data
+ * 
+ * Orders vs shopping carts
+ */
 @Injectable()
 export class OrdersChartService extends OrdersChartData {
 
+  /** back 4 years */
   private year = [
-    '2012',
-    '2013',
-    '2014',
     '2015',
     '2016',
     '2017',
     '2018',
+    '2019',
+    '2020',
+    '2021',
   ];
 
   private data = { };
@@ -26,8 +32,16 @@ export class OrdersChartService extends OrdersChartData {
     };
   }
 
+
   private getDataForWeekPeriod(): OrdersChart {
     return {
+      //current week
+      /**
+       * 
+       * Get points
+       * 7 days * (6 captures / day = every 4 hours)
+       * 
+       */
       chartLabel: this.getDataLabels(42, this.period.getWeeks()),
       linesData: [
         [
@@ -61,6 +75,7 @@ export class OrdersChartService extends OrdersChartData {
     };
   }
 
+  //current year
   private getDataForMonthPeriod(): OrdersChart {
     return {
       chartLabel: this.getDataLabels(47, this.period.getMonths()),

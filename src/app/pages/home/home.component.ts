@@ -35,7 +35,6 @@ export class HomeComponent implements OnInit {
     private crudService: CrudService,
     private storageService: StorageService
   ) {
-    //this.userService.getUser(this.userService.getUserId())
     this.userService.getUserProfile()
       .subscribe(user => {
         console.log(this.userService.roles);
@@ -48,7 +47,7 @@ export class HomeComponent implements OnInit {
     let lang = this.storageService.getLanguage()
     this.loading = true;
     const store = localStorage.getItem('merchant');
-    forkJoin(this.crudService.listCountriesByLanguage(lang), this.userService.getUserProfile()/**this.userService.getUser(this.userService.getUserId())*/, this.userService.getMerchant(store))
+    forkJoin([this.crudService.listCountriesByLanguage(lang), this.userService.getUserProfile(), this.userService.getMerchant(store)])
       .subscribe(([countries, user, merchant]) => {
         this._countryArray = countries;
         this.user.userName = user.userName;
@@ -60,10 +59,6 @@ export class HomeComponent implements OnInit {
         this.user.postalCode = merchant.address.postalCode;
         this.user.country = this.country(merchant.address.country)[0].name;
         this.user.phone = merchant.phone;
-
-        //require merchant supported language
-        //console.log("Supported languages " + JSON.stringify(merchant.supportedLanguages));
-
 
         localStorage.setItem('merchantLanguage', JSON.stringify(merchant.defaultLanguage));
         localStorage.setItem('supportedLanguages', JSON.stringify(merchant.supportedLanguages));

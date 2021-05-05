@@ -9,8 +9,7 @@ let customRulesData = require('../services/customrules.json');
 let storePickUpData = require('../services/storepickup.json');
 let weightBased = require('../services/weightbased.json');
 import { SharedService } from '../services/shared.service';
-import { async } from 'q';
-// let braintreeData = require('../services/braintree.json');
+
 @Component({
   selector: 'ngx-shipping-configure',
   templateUrl: './configure.component.html',
@@ -47,8 +46,7 @@ export class ShippingConfigureComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private sharedService: SharedService
   ) {
-    // this.getCountry();
-    // this.getLanguages();
+
   }
   ngOnInit() {
     let type = this.activatedRoute.snapshot.paramMap.get('id');
@@ -67,11 +65,11 @@ export class ShippingConfigureComponent implements OnInit {
     }
     else if (type == 'customQuotesRules') {
       this.formData = customRulesData;
-      this.shippingType = 'Shipping by Fresh Organics '
+      this.shippingType = 'Custom shipping'
     }
     else if (type == 'priceByDistance') {
       this.formData = customRulesData;
-      this.shippingType = 'Shipping by Fresh Organics'
+      this.shippingType = 'Price by distance'
     }
     else if (type == 'storePickUp') {
       this.formData = storePickUpData;

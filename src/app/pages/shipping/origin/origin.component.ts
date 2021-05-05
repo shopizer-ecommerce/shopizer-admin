@@ -80,7 +80,7 @@ export class OriginComponent implements OnInit {
   }
 
   getCountry() {
-    this.sharedService.getCountrys()
+    this.sharedService.getCountries()
       .subscribe(data => {
         data.forEach((item) => {
           this.countries.push({ 'code': item.id, 'label': item.name, 'countryCode': item.code })

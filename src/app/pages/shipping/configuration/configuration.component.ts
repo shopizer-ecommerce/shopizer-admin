@@ -1,11 +1,11 @@
 import { Component } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { LocalDataSource } from 'ng2-smart-table';
-// import { CrudService } from '../../shared/services/crud.service';
-import { Router } from '@angular/router';
+import { forkJoin } from 'rxjs';
 import { SharedService } from '../services/shared.service';
 import { StoreService } from '../../store-management/services/store.service';
 import { StorageService } from '../../shared/services/storage.service';
+import { TranslateService } from '@ngx-translate/core';
 @Component({
   selector: 'shipping-config',
   templateUrl: './configuration.component.html',
@@ -14,14 +14,14 @@ import { StorageService } from '../../shared/services/storage.service';
 export class ConfigurationComponent {
   leftAreaItems = [];
   rightAreaItems = [];
-  leftAreaLabel = "Available";
-  rightAreaLabel = "Selected";
+  leftAreaLabel = this.translate.instant('SHIPPING.COUNTRY_AVAILABLE');
+  rightAreaLabel = this.translate.instant('SHIPPING.COUNTRY_SELECTED');
 
   leftAreaId = "Available";
   rightAreaId = "Selected";
   code = "code";
   label = "label";
-  loadingList = false;
+  loading = false;
   expedition: boolean = false;
   taxOnShipping: boolean = false;
   stores: Array<any> = [];
@@ -33,65 +33,55 @@ export class ConfigurationComponent {
     private sharedService: SharedService,
     private storeService: StoreService,
     private storageService: StorageService,
+    private translate: TranslateService,
   ) {
-    this.getStoreList();
-    this.getCountry();
     this.isSuperAdmin = this.storageService.getUserRoles().isSuperadmin;
     this.selectedStore = this.storageService.getMerchant()
   }
 
 
-  fetchShipToCountries() {
-    this.loadingList = true;
-    this.sharedService.getExpedition(this.selectedStore)
-      .subscribe(data => {
-        this.expedition = data.iternationalShipping
-        this.taxOnShipping = data.taxOnShipping
-        this.rightAreaItems = data.shipToCountry;
-        this.loadingList = false;
-      }, error => {
-        this.loadingList = false;
-
-      });
-
+  ngOnInit() {
+    this.initService();
   }
-  getStoreList() {
-    this.storeService.getListOfMerchantStoreNames({ 'store': '' })
-      .subscribe(res => {
-        res.forEach((store) => {
+
+  initService() {
+    this.loading = true;
+    const store = localStorage.getItem('merchant');
+    forkJoin([this.sharedService.getExpedition(this.selectedStore), this.storeService.getListOfMerchantStoreNames({ 'store': '' }), this.sharedService.getCountry()])
+      .subscribe(([expedition, stores, countries]) => {
+
+        this.getCountry(countries);
+        this.expedition = expedition.iternationalShipping
+        this.taxOnShipping = expedition.taxOnShipping
+        this.rightAreaItems = expedition.shipToCountry;
+
+        stores.forEach((store) => {
           this.stores.push({ value: store.code, label: store.code });
         });
-        // this.stores = res;
-      });
-    this.fetchShipToCountries()
-  }
-  getCountry() {
-    // this.loadingList = true;
-    this.sharedService.getCountry()
-      .subscribe(data => {
-        // this.loadingList = false;
-        let value = [];
-        data.forEach((item) => {
-          value.push({ 'code': item.id, 'label': item.name, 'countryCode': item.code })
-        });
-        this.leftAreaItems = value;
-      }, error => {
-        // this.loadingList = false;
 
+
+        this.loading = false;
+    });
+  }
+
+  getCountry(values) {
+      values.forEach((item) => {
+        this.leftAreaItems.push({ 'code': item.id, 'label': item.name, 'countryCode': item.code })
       });
   }
+
 
   saveShipToCountries() {
-    // console.log(this.expedition);
     this.sharedService.sendClickEvent();
   }
+
+
   onSelectStore(e) {
-    // console.log(value)
+    this.loading = true;
     this.selectedStore = e.value;
-    this.fetchShipToCountries();
-    setTimeout(() => {
-      this.sharedService.selectStore(e.value)
-    }, 1000);
+    this.sharedService.selectStore(e.value);
+    this.initService();
+
 
   }
 }

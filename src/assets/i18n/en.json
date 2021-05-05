@@ -2,8 +2,8 @@
   "canadapost": "Canada Post",
   "ups": "UPS",
   "weightBased": "Weight Based Shipping Price",
-  "customQuotesRules": "Shipping by Fresh Organics",
-  "priceByDistance": "Shipping by Fresh Organics",
+  "customQuotesRules": "Custom shipping method",
+  "priceByDistance": "Shipping price by distance",
   "storePickUp": "Store Pick UP",
   "moneyorder": "Money Order",
   "paypal-express-checkout": "PayPal Express Checkout",
@@ -342,7 +342,9 @@
     "METHODS": "Shipping methods",
     "CREATE_ORIGIN": "Create Origin",
     "ORIGIN_UPDATE": "Origin has been updated",
-    "SHIP_TO_COUNTRIES": "Expedition has been updated"
+    "SHIP_TO_COUNTRIES": "Expedition has been updated",
+    "COUNTRY_AVAILABLE": "Country available",
+    "COUNTRY_SELECTED": "Country selected"
   },
   "EXPEDITION": {
     "SHIPPING_TYPE": "Shipping Type",

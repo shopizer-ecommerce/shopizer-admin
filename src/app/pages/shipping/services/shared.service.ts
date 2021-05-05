@@ -12,6 +12,7 @@ export class SharedService {
 
   private subject = new Subject<any>();
   private subject1 = new Subject<any>();
+
   sendClickEvent() {
     this.subject.next();
   }
@@ -39,7 +40,7 @@ export class SharedService {
   saveOrigin(storeCode, param): Observable<any> {
     return this.crudService.post('/v1/private/shipping/origin?store=' + storeCode, param);
   }
-  getCountrys(): Observable<any> {
+  getCountries(): Observable<any> {
     return this.crudService.get('/v1/country');
   }
   getStates(countryCode): Observable<any> {
@@ -60,20 +61,7 @@ export class SharedService {
   deletePackaging(code): Observable<any> {
     return this.crudService.delete('/v1/private/shipping/package/' + code);
   }
-  // ************ Shipping Rules API Services OLD start **************
-  // getRulesCondition(): Observable<any> {
-  //   return this.crudService.getShipping('/v2/shipping/rules/conditions');
-  // }
-  // getRulesResult(): Observable<any> {
-  //   return this.crudService.getShipping('/v2/shipping/rules/results');
-  // }
-  // getShippingRules(storeCode): Observable<any> {
-  //   return this.crudService.getShipping('/v2/shipping/rules/?store=' + storeCode);
-  // }
-  // getShippingRulesDetails(code): Observable<any> {
-  //   return this.crudService.getShipping('/v2/shipping/rules/' + code);
-  // }
-  // ************ Shipping Rules API Services OLD end **************
+
 
   // ************ Shipping Rules API NEW Start ***************
   getRulesCriterias(): Observable<any> {
