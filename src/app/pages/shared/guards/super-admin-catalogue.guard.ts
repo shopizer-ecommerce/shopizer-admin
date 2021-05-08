@@ -18,12 +18,9 @@ export class SuperAdminCatalogueGuard implements CanActivate {
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot):
     Observable<boolean> | Promise<boolean> | boolean {
     const roles = this.storageService.getUserRoles();
-    console.log('6');
     if (roles.isSuperadmin || roles.isAdmin || roles.isAdminCatalogue) {
       return true;
     }
-    console.log('6.1');
-
     this.router.navigate(['home']);
     return false;
   }}

@@ -548,8 +548,8 @@ input:focus {
 
 .has-error input[type="email"],
 .has-error input[type="password"] {
-    border-color: rgb(216, 12, 12);
-    color: rgb(230, 14, 14);
+    border-color: rgb(255, 1, 1);
+    color: rgb(255, 0, 0);
 }
 
 .alert-validate:hover:before {

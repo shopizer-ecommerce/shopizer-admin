@@ -128,9 +128,12 @@
   "USER": {
     "PASSWORD_CHANGED": "Password successfully changed",
     "PASSWORD_NOT_MATCH": "Actual password does not match for user",
-    "AVAILABILITY": "User availability updated"
+    "AVAILABILITY": "User availability updated",
+    "CANNOT_REMOVE_SELF": "Self user cannot be removed",
+    "CANNOT_REMOVE_SUPER": "Superadmin user cannot be removed"
   },
   "USER_CHANGE_PASSWORD": {
+    "CURRENT_PASSWORD": "Current password",
     "NEW_PASSWORD": "New password",
     "PASSWORD_ERROR_REQUIRED": "Password required.",
     "PASSWORD_ERROR_NOT_VALID": "Password not valid.",

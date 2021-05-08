@@ -2,17 +2,25 @@
   <!-- <div *ngIf="loader" [nbSpinner]="loader" nbSpinnerSize="large" nbSpinnerStatus="primary"></div> -->
   <nb-card-header class="main_header">
     <h1 class="page_title">{{ title | translate }}</h1>
+    <div class="content_spacing" *ngIf="selfEdit">
+      <nb-select [(selected)]="selectedItem" outline shape="rectangle">
+        <nb-option *ngFor="let item of sidemenuLinks" [value]="item.id" (click)="route(item.link)">{{ item.title | translate}}</nb-option>
+      </nb-select>
+    </div>
     <div class="content_spacing" *ngIf="title == 'COMPONENTS.USER_DETAILS'">
-      <button type="button" nbButton class="cancel_button" (click)="goToBack()">{{ 'ORDER_FORM.CANCLE'
+      <button type="button" nbButton class="cancel_button" (click)="goToBack()">{{ 'COMMON.CANCEL'
         | translate}}</button>
     </div>
     <div class="content_spacing">
-      <button type="submit" [disabled]="!form.valid" (click)="save()" nbButton class="success_button">{{'COMMON.SAVE'
-        |
-        translate }}</button>
+      <button type="button" nbButton class="error_button" [disabled]="selfEdit || !canEdit" (click)="delete()">{{'COMMON.REMOVE'
+        | translate }}</button>
+    </div>
+    <div class="content_spacing">
+        <button type="button" nbButton class="success_button" [disabled]="!form.valid || !canEdit" (click)="save()">{{'COMMON.SAVE'
+          | translate }}</button>
     </div>
   </nb-card-header>
-  <div [nbSpinner]="loader" nbSpinnerSize="large" nbSpinnerStatus="primary">
+   <div [nbSpinner]="loader" nbSpinnerSize="large" nbSpinnerStatus="primary">
     <nb-card class="nb-card inline-form-card">
       <nb-card-body>
         <form [formGroup]='form'>
@@ -42,7 +50,7 @@
           <div class="form-group">
             <label class="col-sm-3 col-form-label inputLabel">{{ 'STORE.MERCHANT_STORE' | translate }} *</label>
             <div class="col-sm-12">
-              <nb-select *ngIf="stores.length" [(selected)]="store" [disabled]="selfEdit" placeholder="{{ 'STORE.MERCHANT_STORE' | translate }}"
+              <nb-select *ngIf="stores.length" [(selected)]="store" [attr.disabled]="selfEdit" placeholder="{{ 'STORE.MERCHANT_STORE' | translate }}"
                 formControlName='store' outline shape="rectangle" class="fullWidth">
                 <nb-option *ngFor="let store of stores" [value]="store.code" (click)="chooseMerchant(store)">{{
                   store.code
@@ -70,7 +78,7 @@
             </div>
           </div>
 
-          <div class="form-group" *ngIf="!user?.id || canChangePassword">
+          <div class="form-group" *ngIf="!selfEdit && (!user?.id || canChangePassword)">
             <label for="password" class="col-sm-3 col-form-label inputLabel">{{ 'COMMON.PASSWORD' | translate }} *</label>
             <div class="col-sm-12">
               <input type="password" class="form-control inputText" id="password" formControlName='password'
@@ -86,7 +94,7 @@
               </span>
             </div>
           </div>
-          <div class="form-group" *ngIf="!user?.id || canChangePassword">
+          <div class="form-group" *ngIf="!selfEdit && (!user?.id || canChangePassword)">
             <label for="password" class="col-sm-3 col-form-label inputLabel">Repeat Password *</label>
             <div class="col-sm-12">
               <input type="password" class="form-control inputText" id="repeatPassword" formControlName='repeatPassword'
@@ -100,7 +108,7 @@
               </span>
               <span class="err-message" *ngIf="form.hasError('notSame')">
                 <span>
-                  Password do not match
+                  {{ 'USER_CHANGE_PASSWORD.PASSWORDS_NOT_MATCH' | translate }}
                 </span>
               </span>
 

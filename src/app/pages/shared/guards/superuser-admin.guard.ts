@@ -16,7 +16,7 @@ export class SuperuserAdminGuard implements CanActivate {
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot):
     Observable<boolean> | Promise<boolean> | boolean {
     const roles = JSON.parse(localStorage.getItem('roles'));
-    console.log('10');
+
     if (roles.isSuperadmin || roles.isAdminRetail ||  roles.isAdmin) {
       return true;
     }

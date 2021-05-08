@@ -1,4 +1,5 @@
 <div class="limiter">
+  <div [nbSpinner]="loading" nbSpinnerSize="large" nbSpinnerStatus="primary">
   <div class="container-login100">
     <div class="wrap-login100 p-l-85 p-r-85 p-t-55 p-b-55">
       <form class="login100-form validate-form flex-sb flex-w" [formGroup]='form' (ngSubmit)='onSubmit()'>
@@ -79,6 +80,7 @@
       </form>
     </div>
   </div>
+</div>
 </div>
 
 

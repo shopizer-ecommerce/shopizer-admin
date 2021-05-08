@@ -63,6 +63,14 @@ export class UsersListComponent implements OnInit {
   }
 
   getList() {
+
+    /**
+     * Rules
+     * 
+     * Can't remove superadmin
+     * Can't remove self
+     */
+
     this.params.page = this.currentPage - 1;
     this.loadingList = true;
     this.userService.getUsersList(this.storageService.getMerchant(), this.params)
@@ -87,8 +95,6 @@ export class UsersListComponent implements OnInit {
 
   /** callback methods for table list*/
   private loadList(newParams: any) {
-    //console.log('CallBack loadList');
-    //console.log(JSON.stringify(newParams));
     this.currentPage = 1; //back to page 1
     this.params = newParams;
     this.getList();
@@ -127,16 +133,13 @@ export class UsersListComponent implements OnInit {
 
 
   setSettings() {
-
     //nothing by default
     let customs = [];
     if (this.securityService.isAnAdmin()) {
       customs = [
         { name: 'details', title: '<i class="nb-edit"></i>' },
-        { name: 'remove', title: '<i class="nb-trash"></i>' }
       ]
     }
-
     this.settings = {
 
       actions: {

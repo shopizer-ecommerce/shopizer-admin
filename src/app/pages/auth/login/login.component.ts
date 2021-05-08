@@ -18,6 +18,7 @@ export class LoginComponent implements OnInit {
   errorMessage = '';
   showPass = 0;
   isSubmitted = false;
+  loading = false;
   user = {
     email: '',
     password: ''
@@ -32,7 +33,6 @@ export class LoginComponent implements OnInit {
     private toastr: ToastrService,
     private translate: TranslateService
   ) {
-    //this.createForm();
   }
 
   ngOnInit() {
@@ -42,19 +42,13 @@ export class LoginComponent implements OnInit {
       username: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required]
     });
-    console.log(localStorage.getItem('isRemember'));
     if (localStorage.getItem('isRemember') === 'true') {
       this.isRemember = true;
       let loginEmail = localStorage.getItem('loginEmail')
-      console.log(loginEmail)
-      console.log(this.form)
       this.form.patchValue({
         username: loginEmail
       });
-      // this.user.username
-      // setIsRemember(true)
-      // setLoginValue('username', getLocalData('`loginEmail`'))
-      // setLoginValue('loginPassword', '')
+
     }
   }
 
@@ -77,16 +71,13 @@ export class LoginComponent implements OnInit {
 
   onSubmit() {
     //console.log(this.form.value);
+    this.loading = true;
     this.isSubmitted = true;
     if (this.form.invalid) {
       //this.getFormValidationErrors();
       return;
     }
 
-
-
-    //alert('SUCCESS!! :-)\n\n' + JSON.stringify(this.form.value))
-    //return;
 
     this.errorMessage = '';
     const formData = this.form.value;
@@ -107,8 +98,10 @@ export class LoginComponent implements OnInit {
               localStorage.setItem('loginEmail', '')
             }
             this.router.navigate(['pages']);
+            this.loading = false;
           }, err => {
             this.toastr.error(err.error.message);
+            this.loading = false;
           });
       }, err => {
         if (err.status === 0) {
@@ -116,10 +109,11 @@ export class LoginComponent implements OnInit {
         } else {
           this.errorMessage = this.translate.instant('LOGIN.INVALID_DATA');
         }
+        this.loading = false;
       });
   }
   onCheckRemember(e) {
-    console.log(e.target.checked)
+    //console.log(e.target.checked)
     this.isRemember = e.target.checked;
     if (e.target.checked) {
       localStorage.setItem('isRemember', 'true')
