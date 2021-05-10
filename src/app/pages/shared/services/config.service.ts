@@ -76,7 +76,7 @@ export class ConfigService {
   //  return JSON.parse(localStorage.getItem('supportedLanguages'));
   //}
 
-  getListOfSupportedLanguages1() {
+  getListOfSystemSupportedLanguages() {
     return this.crudService.get(`/v1/languages`).subscribe((languages) => {
       this.languages = [...languages];
     });

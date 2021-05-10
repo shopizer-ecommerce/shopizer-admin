@@ -166,7 +166,8 @@
     "RETAILER_INFORMATION": "Retailer information",
     "STORE_INFORMATION": "Store information",
     "INFORMATION_TEXT": "Shop settings used for various functionality such us and store address. Various details also used for shipping costs and displayed in product details.",
-    "MERCHANT_STORE": "Merchant store"
+    "MERCHANT_STORE": "Merchant store",
+    "SEARCH": "Search a store"
   },
   "STORE_LANDING": {
     "LANDING_PAGE_TITLE": "Landing page title",

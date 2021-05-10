@@ -62,7 +62,6 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit() {
     this.localedMenu = this.translateMenu(this.localedMenu);
-    //this.userService.getUser(this.userService.getUserId())
     this.userService.getUserProfile()
       .subscribe((user: any) => {
         this.user = user.firstName + ' ' + user.lastName;
@@ -84,7 +83,6 @@ export class HeaderComponent implements OnInit {
   getLanguageArray () {
     environment.client.language.array.forEach(lg => {
       this.langMap[this.translateLang(lg)] = lg;
-      //this.languages = [...this.languages, {title: lg}];
       this.languages = [...this.languages, {title: this.translateLang(lg)}];
     });
   }

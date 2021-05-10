@@ -21,6 +21,7 @@ import { TreeTableModule } from 'primeng/treetable';
 import { ValidateNumberDirective } from './validation/validate-number.directive';
 // import { EqualValidator } from './validation/equal-validator';
 import { PasswordPromptComponent } from './components/password-prompt/password-prompt';
+import { ImageUploadingNextComponent } from './components/image-uploading-next/image-uploading-next.component';
 
 
 @NgModule({
@@ -34,6 +35,7 @@ import { PasswordPromptComponent } from './components/password-prompt/password-p
     PaginatorComponent,
     BackButtonComponent,
     ValidateNumberDirective,
+    ImageUploadingNextComponent,
     // EqualValidator
   ],
   imports: [

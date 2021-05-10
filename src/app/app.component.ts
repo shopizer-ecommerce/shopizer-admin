@@ -20,7 +20,7 @@ export class AppComponent implements OnInit {
     private translate: TranslateService,
     public configService: ConfigService
   ) {
-    this.configService.getListOfSupportedLanguages1();
+    this.configService.getListOfSystemSupportedLanguages();
     if (!localStorage.getItem('lang')) {
       localStorage.setItem('lang', environment.client.language.default);
     }

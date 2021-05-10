@@ -70,6 +70,7 @@
     "ng6-file-man": "^3.0.2",
     "ngx-dropzone": "^2.2.2",
     "ngx-echarts": "^4.2.2",
+    "ngx-image-uploader-next": "^1.0.4",
     "ngx-lightbox": "^2.1.2",
     "ngx-malihu-scrollbar": "^9.0.0",
     "ngx-smart-modal": "7.4.1",

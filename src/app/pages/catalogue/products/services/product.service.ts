@@ -37,6 +37,13 @@ export class ProductService {
     return this.crudService.get(`/v1/products/${id}`, params);
   }
 
+  getProductDefinitionById(id): Observable<any> {
+    const params = {
+      lang: '_all'
+    };
+    return this.crudService.get(`/v2/private/product/definition/${id}`, params);
+  }
+
   createProduct(product): Observable<any> {
     const params = {
       store: this.storageService.getMerchant()

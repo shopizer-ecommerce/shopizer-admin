@@ -37,21 +37,6 @@ export class AuthInterceptor implements HttpInterceptor {
         return event;
       }));
 
-    // old version with token refreshing
-    // const token = this.tokenService.getToken();
-    // const chechReq = req.url.indexOf('login') === -1 ? this.addTokenToRequest(req, token) : req;
-    // return next.handle(chechReq)
-    //   .pipe(
-    //     catchError(err => {
-    //
-    //       if (err.status === 0 || err.status === 401) {
-    //         return this.handle401Error(req, next);
-    //       } else {
-    //         console.log();
-    //         return throwError(err);
-    //       }
-    //     })
-    //   );
   }
 
 

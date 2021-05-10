@@ -312,7 +312,6 @@ export class StoreFormComponent implements OnInit {
       this.countryIsSelected(this.store.address.country);
     }
     this.isReadonlyCode = true;
-    console.log('Selected retailer code ' + this.form.controls['retailerStore'].value);
     this.cdr.markForCheck();
 
   }

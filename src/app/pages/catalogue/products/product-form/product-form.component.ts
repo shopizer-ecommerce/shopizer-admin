@@ -13,6 +13,7 @@ import { validators } from '../../../shared/validation/validators';
 import { environment } from '../../../../../environments/environment';
 import { slugify } from '../../../shared/utils/slugifying';
 import { forkJoin } from 'rxjs';
+import { TypesService } from '../../types/services/types.service';
 
 @Component({
   selector: 'ngx-product-form',
@@ -26,9 +27,12 @@ export class ProductFormComponent implements OnInit {
   loader = false;
   manufacturers = [];
   languages = [];
+  typesCount = 15;
   productTypes = [];
   selectedItem = '0';
-  defaultLanguage = environment.client.language.default;
+  defaultLanguage = localStorage.getItem('lang');
+  currentLanguage = localStorage.getItem('lang');
+  images = []
   sidemenuLinks = [
     {
       id: '0',
@@ -83,28 +87,26 @@ export class ProductFormComponent implements OnInit {
     private productService: ProductService,
     private productImageService: ProductImageService,
     private router: Router,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private typeService: TypesService
   ) {
   }
 
   ngOnInit() {
-    console.log('Lang ' + this.defaultLanguage);
     this.loader = true;
     const manufacture$ = this.manufactureService.getManufacturers();
-    const product$ = this.productService.getProductTypes();
+    const types$ = this.productService.getProductTypes();
     const config$ = this.configService.getListOfSupportedLanguages(localStorage.getItem('merchant'));
-    forkJoin(manufacture$, product$, config$)
+    forkJoin([manufacture$, types$, config$])
       .subscribe(([manufacturers, productTypes, languages]) => {
 
-        // console.log(manufacturers)
         manufacturers.manufacturers.forEach((option) => {
           this.manufacturers.push({ value: option.code, label: option.code });
         });
         productTypes.list.forEach((option) => {
           this.productTypes.push({ value: option.code, label: option.code });
         });
-        // this.manufacturers = [...manufacturers.manufacturers];
-        // this.productTypes = [...productTypes.list];
+
         this.languages = [...languages];
         this.createForm();
         this.addFormArray();
@@ -117,12 +119,10 @@ export class ProductFormComponent implements OnInit {
 
   private createForm() {
     this.form = this.fb.group({
-      identifier: ['', [Validators.required, Validators.pattern(validators.alphanumeric)]],
+      identifier: ['', [Validators.required]],
       visible: [false],
-      // preOrder: [false],
       dateAvailable: [new Date()],
-      //TODO
-      manufacturer: [''],
+      manufacturer: ['', [Validators.required]],
       type: [''],
       // price: [''],
       // quantity: ['', [Validators.required, Validators.pattern(validators.number)]],
@@ -151,7 +151,7 @@ export class ProductFormComponent implements OnInit {
           highlights: [''],
           friendlyUrl: ['', [Validators.required]],
           description: [''],
-          title: ['', [Validators.required]],
+          title: [''],
           keyWords: [''],
           metaDescription: [''],
         })
@@ -164,7 +164,6 @@ export class ProductFormComponent implements OnInit {
     this.form.patchValue({
       identifier: this.product.identifier,
       visible: this.product.visible,
-      // preOrder: this.product.preOrder,
       dateAvailable: new Date(this.product.dateAvailable),
       manufacturer: this.product.manufacturer == null ? '' : this.product.manufacturer.code,
       type: this.product.type == null ? '' : this.product.type.code,
@@ -178,6 +177,7 @@ export class ProductFormComponent implements OnInit {
       descriptions: [],
     });
     this.fillFormArray();
+    this.findInvalidControls();
     // const dimension = {
     //   weight: this.product.productSpecifications.weight,
     //   height: this.product.productSpecifications.height,
@@ -224,6 +224,7 @@ export class ProductFormComponent implements OnInit {
     this.form.patchValue({
       selectedLanguage: lang,
     });
+    this.currentLanguage = lang;
     this.fillFormArray();
   }
 
@@ -259,12 +260,14 @@ export class ProductFormComponent implements OnInit {
   //   }
   // }
 
+  /**
   checkSku(event) {
     this.productService.checkProductSku(event.target.value)
       .subscribe(res => {
         this.isCodeUnique = !(res.exists && (this.product.identifier !== event.target.value));
       });
   }
+  **/
 
   // removeImages(array) {
   //   array.forEach((el) => {
@@ -277,23 +280,30 @@ export class ProductFormComponent implements OnInit {
   // }
 
   save() {
-    if (!this.isCodeUnique) {
-      this.toastr.error(this.translate.instant('COMMON.CODE_EXISTS'));
+    //if (!this.isCodeUnique) {
+    //  this.toastr.error(this.translate.instant('COMMON.CODE_EXISTS'));
+    //  return;
+    //}
+    this.form.markAllAsTouched();
+
+    if(this.findInvalidControls().length > 0) {
+
       return;
     }
 
     const productObject = this.form.value;
     productObject.dateAvailable = moment(productObject.dateAvailable).format('yyyy-MM-DD');
     // productObject.productSpecifications.manufacturer = productObject.manufacturer;
-    // productObject.type = this.productTypes.find((type) => type.code === productObject.type); // TODO
 
     // save important values for filling empty field in result object
     const tmpObj = {
       name: '',
       friendlyUrl: '',
-      title: ''
+      title: '',
+      language: ''
     };
     productObject.descriptions.forEach((el) => {
+      tmpObj.language = el.language;
       if (tmpObj.name === '' && el.name !== '') {
         tmpObj.name = el.name;
       }
@@ -312,8 +322,10 @@ export class ProductFormComponent implements OnInit {
       }
     });
     // check required fields
-    if (tmpObj.name === '' || tmpObj.friendlyUrl === '' || productObject.identifier === '' || productObject.manufacturer === '' || productObject.type === '' || tmpObj.title === '') {
+    //object validations on the form
+    if (tmpObj.name === '' || tmpObj.friendlyUrl === '' || productObject.identifier === '' || productObject.manufacturer === '' || tmpObj.title === '') {
       this.toastr.error(this.translate.instant('COMMON.FILL_REQUIRED_FIELDS'));
+      //TODO missing descriptions fields
     } else {
       productObject.descriptions.forEach((el) => {
         // fill empty fields
@@ -368,5 +380,15 @@ export class ProductFormComponent implements OnInit {
   }
   goToback() {
     this.router.navigate(['pages/catalogue/products/products-list'])
+  }
+  public findInvalidControls() {
+    const invalid = [];
+    const controls = this.form.controls;
+    for (const name in controls) {
+      if (controls[name].invalid) {
+        invalid.push(name);
+      }
+    }
+    return invalid;
   }
 }
