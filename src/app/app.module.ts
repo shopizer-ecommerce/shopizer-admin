@@ -32,6 +32,7 @@ import { TinyMCEComponent } from './@theme/components/tiny-mce/tiny-mce.componen
 import { ManageAddComponent } from './pages/customers/manageoptions/add.component';
 import { OptionsAddComponent } from './pages/customers/options/add.component';
 import { ValueAddComponent } from './pages/customers/optionsvalue/add.component';
+import { FilePickerModule } from  'ngx-awesome-uploader';
 
 @NgModule({
   declarations: [

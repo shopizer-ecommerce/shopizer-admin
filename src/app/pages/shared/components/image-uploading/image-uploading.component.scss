@@ -1,3 +1,23 @@
+.uploader-wrapper {
+  position: relative;
+  height: 100vh;
+  padding-top: 0px;
+  display: flex;
+  align-items: center;
+  /**justify-content: center;**/
+
+}
+
+::ng-deep .file-drop-wrapper {
+  background: #ffffff !important;
+  padding-top: 0px !important;
+  width: 100%;
+}
+
+::ng-deep #dropZone {
+  border: 2px dashed #a9a9b1 !important;
+}
+
 #imageInput {
   display: none;
 }
@@ -11,24 +31,49 @@
 }
 
 
-.image-container {
+
+#dropZone .content{
+  align-items: center;
   display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
+  flex-direction: column;
+  justify-content: center;
+}
 
-  .image-item {
-    display: flex;
-    flex-direction: column;
-    margin-right: 20px;
-    margin-bottom: 20px;
+/** grid **/
 
-    span {
-      margin-top: 5px;
-      text-align: center;
+.grid-container {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  padding: 10px;
+}
+.grid-item {
+  background-color: rgba(255, 255, 255, 0.8);
+  border: 1px rgb(255, 255, 255) solid;
+  padding: 0px;
+  font-size: 30px;
+  text-align: center;
 
-      i {
-        cursor: pointer;
-      }
-    }
+  #clickableDeleteIcon {
+    cursor: pointer
+  }
+   
+  /**
+  img {
+    min-width: 8em;
+    max-width: 100%;
+    display: block;
+    background: #fff;
+  }
+  **/
+
+  img {
+    max-width: 75%;
+    max-height: 75%;
+  }
+
+  .square {
+    height: 100px;
+    width: 100px;
   }
 }
+

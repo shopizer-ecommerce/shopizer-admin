@@ -14,6 +14,7 @@ import { environment } from '../../../../../environments/environment';
 import { slugify } from '../../../shared/utils/slugifying';
 import { forkJoin } from 'rxjs';
 import { TypesService } from '../../types/services/types.service';
+import { Image } from '../../../shared/models/image';
 
 @Component({
   selector: 'ngx-product-form',
@@ -21,7 +22,7 @@ import { TypesService } from '../../types/services/types.service';
   styleUrls: ['./product-form.component.scss']
 })
 export class ProductFormComponent implements OnInit {
-  @Input() product;
+  @Input() product: any;
   @Input() _title: string;
   form: FormGroup;
   loader = false;
@@ -31,8 +32,10 @@ export class ProductFormComponent implements OnInit {
   productTypes = [];
   selectedItem = '0';
   defaultLanguage = localStorage.getItem('lang');
+  //changed from seo section
   currentLanguage = localStorage.getItem('lang');
-  images = []
+  images: Image[] = [];
+  addImageUrl = '';
   sidemenuLinks = [
     {
       id: '0',
@@ -94,8 +97,10 @@ export class ProductFormComponent implements OnInit {
 
   ngOnInit() {
     this.loader = true;
+    this.addImageUrl = this.productImageService.addImageUrl(this.product.id);
     const manufacture$ = this.manufactureService.getManufacturers();
     const types$ = this.productService.getProductTypes();
+    //TODO local cache
     const config$ = this.configService.getListOfSupportedLanguages(localStorage.getItem('merchant'));
     forkJoin([manufacture$, types$, config$])
       .subscribe(([manufacturers, productTypes, languages]) => {
@@ -113,7 +118,11 @@ export class ProductFormComponent implements OnInit {
         if (this.product.id) {
           this.fillForm();
         }
+        
+        this.refreshChilds();
+
         this.loader = false;
+
       });
   }
 
@@ -234,6 +243,50 @@ export class ProductFormComponent implements OnInit {
     });
   }
 
+  refreshProduct() {
+    this.loader = true;
+    console.log("Refresh product");
+    this.productService.getProductDefinitionById(this.product.id)
+    .subscribe(res => {
+      this.product = res;
+      console.log("Refresh product  " + JSON.stringify(this.product));
+      this.images = new Array();
+      this.refreshChilds();
+      this.loader = false;
+    }, error => {
+      this.toastr.error(error.error.message);
+      this.router.navigate(['pages/catalogue/products/products-list']);
+      this.loader = false;
+    });
+
+  }
+
+  refreshChilds() {
+    let productImages = this.product.images;
+    productImages.forEach(val => {
+      this.images.push( { // Return the new object structure
+        id: val.id,
+        name: val.imageName,
+        path: val.imageUrl
+      })
+    });
+  }
+
+  removeImage(event) {
+    this.loader = true;
+    this.productImageService.removeImage(this.product.id,event)
+       .subscribe(res1 => {
+        this.refreshProduct();
+        this.loader = false;
+        this.toastr.success(this.translate.instant('PRODUCT.PRODUCT_UPDATED'));
+    }, error => {
+         this.toastr.error(error.error.message);
+         this.loader = false;
+    });
+  }
+
+
+
   // onImageChanged(event) {
   //   console.log(event);
   //   switch (event.type) {
@@ -287,10 +340,10 @@ export class ProductFormComponent implements OnInit {
     this.form.markAllAsTouched();
 
     if(this.findInvalidControls().length > 0) {
-
       return;
     }
 
+    this.loader = true;
     const productObject = this.form.value;
     productObject.dateAvailable = moment(productObject.dateAvailable).format('yyyy-MM-DD');
     // productObject.productSpecifications.manufacturer = productObject.manufacturer;
@@ -325,7 +378,7 @@ export class ProductFormComponent implements OnInit {
     //object validations on the form
     if (tmpObj.name === '' || tmpObj.friendlyUrl === '' || productObject.identifier === '' || productObject.manufacturer === '' || tmpObj.title === '') {
       this.toastr.error(this.translate.instant('COMMON.FILL_REQUIRED_FIELDS'));
-      //TODO missing descriptions fields
+      this.loader = false;
     } else {
       productObject.descriptions.forEach((el) => {
         // fill empty fields
@@ -355,22 +408,23 @@ export class ProductFormComponent implements OnInit {
         // this.removeImages(this.removedImagesArray);
         this.productService.updateProduct(this.product.id, productObject)
           .subscribe(res => {
-            // this.uploadData.append('id', res.id);
-            // this.productImageService.createImage(res.id, this.uploadData)
-            // .subscribe(res1 => {
+            this.loader = false;
             this.toastr.success(this.translate.instant('PRODUCT.PRODUCT_UPDATED'));
-            // });
+          } , err => {
+            this.toastr.error(err.error.message);
+            this.loader = false;
           });
       } else {
         this.saved = true;
         this.productService.createProduct(productObject)
           .subscribe(res => {
-            // this.uploadData.append('id', res.id);
-            // this.productImageService.createImage(res.id, this.uploadData)
-            // .subscribe(res1 => {
+            this.loader = false;
             this.toastr.success(this.translate.instant('PRODUCT.PRODUCT_CREATED'));
             this.router.navigate(['pages/catalogue/products/products-list']);
-            // });
+          }
+          , err => {
+            this.toastr.error(err.error.message);
+            this.loader = false;
           });
       }
     }

@@ -1,12 +1,91 @@
-<div class="image-container" *ngIf="images.length">
-  <div *ngFor='let image of images' class="image-item">
-    <img [src]="image?.imageUrl" alt="Image" height="200">
-    <span><i class="fas fa-times" (click)="removeImage(image)"></i></span>
+<div class="row">
+  <div class="col-md-6">
+    <div class="uploader-wrapper">
+
+      <ngx-awesome-uploader [adapter]="adapter"
+
+      [fileMaxCount]="3" 
+      [fileMaxSize]="800" 
+      [uploadType]="'multi'"
+      (validationError)="onValidationError($event)" 
+      [fileExtensions]="['jpg', 'jpeg', 'png']"
+      [enableCropper]="false" 
+      (uploadSuccess)="onUploadSuccess($event)" 
+      (removeSuccess)="onRemoveSuccess($event)"
+      (fileAdded)="onFileAdded($event)" 
+      [itemTemplate]="uploadItemTemplate" 
+      [customValidator]="myCustomValidator"
+      [accept]="'.jpg, .png'">
+        <div class="dropzoneTemplate">
+          <div class="content">
+            IMAGE
+            <div class="content-top-text"> Drag and drop file here </div>
+            <div class="content-center-text"> or </div>
+            <button class="file-browse-button" type="button"> Browse Files </button>
+          </div>
+        </div>
+
+      </ngx-awesome-uploader>
+
+    </div>
+
+    <ng-template #uploadItemTemplate *ngIf="details == true" let-fileItem="fileItem" let-uploadProgress="uploadProgress">
+      <p>File Size: {{fileItem.file.size}}</p>
+      <p>File Name: {{fileItem.fileName}}</p>
+      <p> Upload Progress: {{uploadProgress}} % </p>
+    </ng-template>
+  </div>
+
+
+  <div class="col-md-6">
+    <div *ngIf="images.length">
+
+      <div class="grid-container">
+      <div *ngFor='let image of images' class="image-item">
+        
+            <div class="grid-item square">
+              <img [src]="image?.path" [alt]="image?.path">
+              <span id="clickableDeleteIcon">
+                <span><i class="fas fa-times" (click)="removeImage(image)"></i></span>
+              </span>
+            </div>
+
+      </div>  
+      </div>
+    </div>
+
+  <!--</div>-->
+</div>
+
+<!--
+<div class="col-md-6">
+  <div class="image-container" *ngIf="imageList.length">-- {{imageList.length}}
+    <div *ngFor='let image of imageList' class="image-item">
+      <img [src]="image?.path" [alt]="image?.path" height="200">
+      <span><i class="fas fa-times" (click)="removeImage(image)"></i></span>
+    </div>
   </div>
 </div>
 
-<input type="file" name="file[]" id="imageInput" #imageInput (change)='onSelectFile($event)' accept="image/jpeg,image/gif,image/png,image/jpg,"
-  multiple />
-<div class="image-actions" *ngIf="images.length < 10">
-  <button nbButton size="small" outline (click)='imageInput.click()'>{{ 'COMMON.ADD_IMAGES' | translate }}</button>
-</div>
+
+      [fileMaxCount]="3" 
+      [fileMaxSize]="800" 
+      [uploadType]="'multi'"
+      (validationError)="onValidationError($event)" 
+      [fileExtensions]="['jpg', 'jpeg', 'png']"
+      [enableCropper]="false" 
+      (uploadSuccess)="onUploadSuccess($event)" 
+      (removeSuccess)="onRemoveSuccess($event)"
+      (fileAdded)="onFileAdded($event)" 
+      [itemTemplate]="uploadItemTemplate" 
+      [customValidator]="myCustomValidator"
+      [accept]="'.jpg, .png'">
+        <div class="dropzoneTemplate">
+          <div class="content">
+            IMAGE
+            <div class="content-top-text"> Drag and drop file here </div>
+            <div class="content-center-text"> or </div>
+            <button class="file-browse-button" type="button"> Browse Files </button>
+          </div>
+        </div>
+-->

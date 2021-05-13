@@ -242,14 +242,9 @@
       <div class="row">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
           <nb-card class="nb-card inline-form-card">
-            <nb-card-header class="nb-card-header">{{ 'DESCRIPTION_FORM.DESCRIPTION' | translate}} - {{('LANG.'+ currentLanguage) |translate }}</nb-card-header>
+            <nb-card-header class="nb-card-header">{{ 'DESCRIPTION_FORM.IMAGE' | translate}}</nb-card-header>
             <nb-card-body class="nb-card-body">
-              <label for="height" class="col-sm-10 col-form-label inputLabel">{{ 'DESCRIPTION_FORM.IMAGE' | translate
-              }}</label>
-            <div class="col-sm-12">
-              <ngx-image-uploading [productImages]="images">
-              </ngx-image-uploading>
-            </div>
+             <ngx-image-uploading [images]="images" (remove)="removeImage($event)" [addImageUrl]="addImageUrl"></ngx-image-uploading>
             </nb-card-body>
           </nb-card>
         </div>

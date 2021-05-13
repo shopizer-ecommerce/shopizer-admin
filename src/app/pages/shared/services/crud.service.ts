@@ -31,6 +31,10 @@ export class CrudService {
     return this.http.get(`${this.url}${path}`, { responseType: 'json', params });
   }
 
+  getBaseUrl() {
+    return `${this.url}`;
+  }
+
   getWithEmpty(path, params?: { [param: string]: string | string[]; }): Observable<any> {
     return this.http.get(`${this.url}${path}`, { responseType: 'json', params }).pipe(catchError(error => of(error)))
   }

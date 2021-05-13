@@ -21,7 +21,8 @@ import { TreeTableModule } from 'primeng/treetable';
 import { ValidateNumberDirective } from './validation/validate-number.directive';
 // import { EqualValidator } from './validation/equal-validator';
 import { PasswordPromptComponent } from './components/password-prompt/password-prompt';
-import { ImageUploadingNextComponent } from './components/image-uploading-next/image-uploading-next.component';
+import { FilePickerModule } from  'ngx-awesome-uploader';
+
 
 
 @NgModule({
@@ -35,7 +36,6 @@ import { ImageUploadingNextComponent } from './components/image-uploading-next/i
     PaginatorComponent,
     BackButtonComponent,
     ValidateNumberDirective,
-    ImageUploadingNextComponent,
     // EqualValidator
   ],
   imports: [
@@ -46,7 +46,8 @@ import { ImageUploadingNextComponent } from './components/image-uploading-next/i
     ThemeModule,
     NbSpinnerModule,
     TranslateModule,
-    TreeTableModule
+    TreeTableModule,
+    FilePickerModule
   ],
   exports: [
     Ng2SmartTableModule,
@@ -67,7 +68,7 @@ import { ImageUploadingNextComponent } from './components/image-uploading-next/i
     DropdownModule,
     AutoCompleteModule,
     MultiSelectModule,
-    ValidateNumberDirective,
+    ValidateNumberDirective
     // EqualValidator
   ],
   providers: [CurrencyPipe],

@@ -51,7 +51,6 @@ import { CustomModule } from '../../custom-component/custom.module';
     InventoryRoutingModule,
     PriceRoutingModule,
     AttributeRoutingModule,
-
     SharedModule,
     CustomModule,
     NgxSummernoteModule
