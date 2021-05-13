@@ -6,6 +6,7 @@ import { HttpClient } from "@angular/common/http";
 import { ImageUploadingAdapter } from "./image-uploading-adapter";
 import { FilePickerComponent } from "ngx-awesome-uploader";
 import { FilePreviewModel } from "ngx-awesome-uploader";
+import { UploaderCaptions } from "ngx-awesome-uploader";
 import { ValidationError } from "ngx-awesome-uploader";
 import { Observable, of } from "rxjs";
 import { delay, map } from "rxjs/operators";
@@ -17,7 +18,7 @@ import { Image } from '../../../shared/models/image';
   templateUrl: './image-uploading.component.html',
   styleUrls: ['./image-uploading.component.scss']
 })
-export class ImageUploadingComponent implements OnInit, OnChanges {
+export class ImageUploadingComponent implements OnInit {
   
   @ViewChild("uploader", { static: false }) uploader: FilePickerComponent;
 
@@ -44,6 +45,8 @@ export class ImageUploadingComponent implements OnInit, OnChanges {
   maxSize = 10485760;
   details = false;
 
+  uploadItemTemplate: any;
+
   constructor(
     private toastr: ToastrService,
     private translate: TranslateService,
@@ -63,7 +66,7 @@ export class ImageUploadingComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges) {
-    console.log('On change');
+   //console.log('On change');
     //if (!changes.productImages.previousValue && changes.productImages.currentValue) {
       //this.imageList = this.images ? [...this.images
       //] : [];
