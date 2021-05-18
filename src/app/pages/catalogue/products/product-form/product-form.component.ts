@@ -35,7 +35,7 @@ export class ProductFormComponent implements OnInit {
   //changed from seo section
   currentLanguage = localStorage.getItem('lang');
   images: Image[] = [];
-  addImageUrl = '';
+  addImageUrlComponent = '';//add image url to be used by uploader
   sidemenuLinks = [
     {
       id: '0',
@@ -97,7 +97,8 @@ export class ProductFormComponent implements OnInit {
 
   ngOnInit() {
     this.loader = true;
-    this.addImageUrl = this.productImageService.addImageUrl(this.product.id);
+    this.addImageUrlComponent = this.productImageService.addImageUrl(this.product.id);
+    console.log('Add image url ' + this.addImageUrlComponent);
     const manufacture$ = this.manufactureService.getManufacturers();
     const types$ = this.productService.getProductTypes();
     //TODO local cache
@@ -272,6 +273,7 @@ export class ProductFormComponent implements OnInit {
     });
   }
 
+  /** image component */
   removeImage(event) {
     this.loader = true;
     this.productImageService.removeImage(this.product.id,event)
@@ -283,6 +285,18 @@ export class ProductFormComponent implements OnInit {
          this.toastr.error(error.error.message);
          this.loader = false;
     });
+  }
+
+  errorImage(event) {
+    this.toastr.error(this.translate.instant('COMMON.'+event));
+
+  }
+
+  addedImage(event) {
+    this.refreshProduct();
+    this.loader = false;
+    this.toastr.success(this.translate.instant('PRODUCT.PRODUCT_UPDATED'));
+
   }
 
 

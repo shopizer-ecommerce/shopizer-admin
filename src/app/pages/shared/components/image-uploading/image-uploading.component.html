@@ -2,25 +2,27 @@
   <div class="col-md-6">
     <div class="uploader-wrapper">
 
-      <ngx-awesome-uploader [adapter]="adapter"
-
-      [fileMaxCount]="3" 
-      [fileMaxSize]="800" 
+      <ngx-awesome-uploader
+      [enableCropper]="false"
+      [adapter]="adapter"
+      [fileMaxCount]="10" 
+      [fileMaxSize]="4"
       [uploadType]="'multi'"
       (validationError)="onValidationError($event)" 
-      [fileExtensions]="['jpg', 'jpeg', 'png']"
+      [fileExtensions]="['jpg', 'jpeg', 'png', 'gif']"
       [enableCropper]="false" 
-      (uploadSuccess)="onUploadSuccess($event)" 
+      (uploadSuccess)="onUploadSuccess($event)"
+      (uploadError)="onUploadError($event)" 
       (removeSuccess)="onRemoveSuccess($event)"
       (fileAdded)="onFileAdded($event)" 
       [itemTemplate]="uploadItemTemplate" 
-      [accept]="'.jpg, .png'">
+      [accept]="'.jpg, .png, .gif, .jpeg'">
         <div class="dropzoneTemplate">
           <div class="content">
-            IMAGE
-            <div class="content-top-text"> Drag and drop file here </div>
-            <div class="content-center-text"> or </div>
-            <button class="file-browse-button" type="button"> Browse Files </button>
+            <img src="../../../../../assets/img/cloud-computing.png" width="80">
+            <div class="content-top-text"> {{ 'COMMON.DRAG_DROP' | translate}} </div>
+            <div class="content-center-text"> {{ 'COMMON.OR' | translate}} </div>
+            <button class="file-browse-button" type="button"> {{ 'COMMON.BROWSE_FILES' | translate}} </button>
           </div>
         </div>
 

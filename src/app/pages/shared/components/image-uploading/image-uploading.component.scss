@@ -18,6 +18,10 @@
   border: 2px dashed #a9a9b1 !important;
 }
 
+::ng-deep .ngx-close-icon-wrapper {
+  visibility: hidden !important;
+}
+
 #imageInput {
   display: none;
 }
@@ -39,6 +43,13 @@
   justify-content: center;
 }
 
+.content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 /** grid **/
 
 .grid-container {
@@ -57,14 +68,6 @@
     cursor: pointer
   }
    
-  /**
-  img {
-    min-width: 8em;
-    max-width: 100%;
-    display: block;
-    background: #fff;
-  }
-  **/
 
   img {
     max-width: 75%;

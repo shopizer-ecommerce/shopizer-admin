@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange
 
 import { ToastrService } from 'ngx-toastr';
 import { TranslateService } from '@ngx-translate/core';
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { ImageUploadingAdapter } from "./image-uploading-adapter";
 import { FilePickerComponent } from "ngx-awesome-uploader";
 import { FilePreviewModel } from "ngx-awesome-uploader";
@@ -22,6 +22,8 @@ export class ImageUploadingComponent implements OnInit {
   
   @ViewChild("uploader", { static: false }) uploader: FilePickerComponent;
 
+  public adapter;
+
   //accept add api with params
   
   //send add and remove api with params
@@ -34,9 +36,9 @@ export class ImageUploadingComponent implements OnInit {
   //url to be used when deleting
   @Input() deleteImageUrl;
 
-  public adapter;
-
   @Output() remove = new EventEmitter<string>();
+  @Output() error = new EventEmitter<string>();
+  @Output() success = new EventEmitter<string>();
 
   imageList: Image[] = [];
 
@@ -51,27 +53,17 @@ export class ImageUploadingComponent implements OnInit {
     private toastr: ToastrService,
     private translate: TranslateService,
     private http: HttpClient
-  ) {
-    //this.addUrl = this.addImageUrl;
-    //this.removeUrl = this.deleteImageUrl;
-    //this.adapter = new ImageUploadingAdapter(this.http, this.addImageUrl, this.deleteImageUrl);
-  }
+  ) { }
 
   ngOnInit() {
-
+    this.addUrl = this.addImageUrl;
+    this.adapter = new ImageUploadingAdapter(this.http, this.addUrl);
   }
 
   refreshGrid() {
     this.imageList = this.images; 
   }
 
-  ngOnChanges(changes: SimpleChanges) {
-   //console.log('On change');
-    //if (!changes.productImages.previousValue && changes.productImages.currentValue) {
-      //this.imageList = this.images ? [...this.images
-      //] : [];
-    //}
-  }
 
   onSelectFile(event) {
     const quantity = event.target.files.length + this.images.length;
@@ -105,44 +97,37 @@ export class ImageUploadingComponent implements OnInit {
     this.details = false;
   }
 
+  errorImage(code) {
+    console.log("Error image " + code);
+    this.error.emit(code);
+
+    //hide upload status
+  }
+
   removeImage(image) {
-    //this.details = true;
-    console.log('Image remove ' + image.id);
     this.remove.emit(image.id);
-    console.log('After image remove ' + image.id);
-    //emit image remove
-    /**
-    if (!image.hasOwnProperty('newImage')) {
-      this.imageChanged.emit({ type: 'remove', data: image.id });
-    } else {
-      this.imageChanged.emit({ type: 'remove-one', data: image });
-    }
-    const index = this.images.findIndex((el) => el.id === image.id);
-    if (index !== -1) {
-      this.images.splice(index, 1);
-    }
-    this.details = false;
-    **/
   }
 
   public onValidationError(error: ValidationError): void {
-    alert(`Validation Error ${error.error} in ${error.file.name}`);
+    //alert(`Validation Error ${error.error} in ${error.file.name}`);
+    this.errorImage(error.error);
   }
+
   public onUploadSuccess(e: FilePreviewModel): void {
     console.log(e);
-    //console.log(this.myFiles);
+    this.success.emit(e.fileName);
   }
+
+  /* remove success */
   public onRemoveSuccess(e: FilePreviewModel) {
+    console.log('Remove ');
     console.log(e);
   }
+
   public onFileAdded(file: FilePreviewModel) {
+    console.log('File added ');
    // this.myFiles.push(file);
   }
-  public myCustomValidator(file: File): Observable<boolean> {
-    if (!file.name.includes("uploader")) {
-      return of(true).pipe(delay(2000));
-    }
-    return of(false).pipe(delay(2000));
-  }
+
 
 }

@@ -17,22 +17,24 @@ import {
 
     //add entity api
     //remove api - what is the id
+    addImage: string
 
     constructor(
-      private http: HttpClient,
-      private addUrl: string,
-      private removeUrl: string) {
+      private http: HttpClient, addImageUrl: string) {
         super();
+        this.addImage = addImageUrl;
     }
     public uploadFile(fileItem: FilePreviewModel): Observable<UploadResponse> {
       /** add api */
       //must parent class
+      console.log('UPLOAD ADAPT ' + this.addImage);
       const form = new FormData();
       form.append("file", fileItem.file);
-      const api = this.addUrl;
+      const api = this.addImage;
       const req = new HttpRequest("POST", api, form, { reportProgress: true });
       return this.http.request(req).pipe(
         map((res: HttpEvent<any>) => {
+          console.log(JSON.stringify(res));
           if (res.type === HttpEventType.Response) {
             const responseFromBackend = res.body;
             return {
@@ -50,7 +52,7 @@ import {
           }
         }),
         catchError(er => {
-          console.log(er);
+          console.log(JSON.stringify(er));
           return of({ status: UploadStatus.ERROR, body: er });
         })
       );
@@ -60,7 +62,7 @@ import {
       const id = 50;
       const responseFromBackend = fileItem.uploadResponse;
       console.log(fileItem);
-      const removeApi = this.removeUrl;
+      const removeApi = '';
       return this.http.post(removeApi, { id });
     }
   }
