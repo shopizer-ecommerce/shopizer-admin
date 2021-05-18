@@ -299,6 +299,13 @@ export class ProductFormComponent implements OnInit {
 
   }
 
+  checkSku(event) {
+    this.productService.checkProductSku(event.target.value)
+      .subscribe(res => {
+        this.isCodeUnique = !(res.exists && (this.product.identifier !== event.target.value));
+    });
+  }
+
 
 
   // onImageChanged(event) {
@@ -443,6 +450,9 @@ export class ProductFormComponent implements OnInit {
       }
     }
   }
+
+
+
   route(link) {
     this.router.navigate(['pages/catalogue/products/' + this.product.id + '/' + link]);
   }

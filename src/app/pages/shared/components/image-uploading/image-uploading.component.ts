@@ -64,18 +64,10 @@ export class ImageUploadingComponent implements OnInit {
     this.imageList = this.images; 
   }
 
+  onUploadError(file: FilePreviewModel) {
 
-  onSelectFile(event) {
-    const quantity = event.target.files.length + this.images.length;
-    if (event.target.files && quantity < 10) {
-      const filesAmount = event.target.files.length;
-      for (let i = 0; i < filesAmount; i++) {
-        this.readfiles(event.target.files[i]);
-      }
-    } else {
-      this.toastr.error(this.translate.instant('COMMON.ONLY_TEN_IMAGES'));
-    }
   }
+
 
   readfiles(files) {
     this.details = true;
