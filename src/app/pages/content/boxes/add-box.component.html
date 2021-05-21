@@ -4,13 +4,6 @@
     <h1 class="page_title" *ngIf="buttonText == 'Save'">{{'CONTENT.ADD_BOX_DETAILS' | translate}}</h1>
     <h1 class="page_title" *ngIf="buttonText == 'Update'">{{'CONTENT.UPDATE_BOX_DETAILS' | translate}}</h1>
     <div class="content_spacing">
-      <nb-select placeholder="Language" outline shape="rectangle" [(ngModel)]="language" name="language"
-        (ngModelChange)="getBoxDetails()" [selected]="language">
-        <nb-option *ngFor="let lan of languages" [value]="lan.code">{{
-          ('LANG.'+lan.code) | translate }}</nb-option>
-      </nb-select>
-    </div>
-    <div class="content_spacing">
       <button type="button" nbButton class="cancel_button" (click)="goToback()">{{ 'COMMON.CANCEL'
         | translate}}</button>
     </div>
@@ -43,7 +36,7 @@
                   <div class="form-group">
                     <label for="code" class="label inputLabel">{{ 'CONTENT.CODE' | translate}} <span>*</span></label>
                     <div>
-                      <input type="text" class="form-control inputText" id="code" formControlName='code' [readOnly]="content.id"
+                      <input type="text" class="form-control inputText" id="code" formControlName='code' [readOnly]="uniqueCode"
                         placeholder="{{ 'COMMON.CODE' | translate}}" (change)="checkCode($event)" required>
                         <div class="err-message" *ngIf="(code.dirty || code.touched) && code.invalid && code">
                           <span *ngIf="code.errors.required">
@@ -67,6 +60,11 @@
                         <label for="name" class="label inputLabel">{{ 'CONTENT.BOX_NAME' | translate}}<span>*</span></label>
                         <input type="text" formControlName='name' name="name" class="form-control inputText" id="name"
                           placeholder="{{ 'CONTENT.BOX_NAME' | translate}}" required>
+                          <span *ngIf="name.dirty || name.touched
+                          && name.invalid && name.errors.required"
+                           class="err-message">
+                              {{ 'COMMON.NAME_REQUIRED' | translate }}
+                          </span>
                       </div>
                 </div>
               </div>

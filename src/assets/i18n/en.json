@@ -517,6 +517,7 @@
     "ADDING_USER_GROUPS_ERROR": "User should belongs to at least one group",
     "CODE": "Code",
     "CODE_REQUIRED": "Сode is required.",
+    "NAME_REQUIRED": "Name is required.",
     "CODE_EXISTS": "This code already exists.",
     "SKU_EXISTS": "This sku already exists.",
     "FILL_REQUIRED_FIELDS": "Please, fill required fields.",
@@ -652,6 +653,8 @@
     "FRIENDLY_URL": "Search engine friendly url",
     "PRODUCT_GROUP": "Product Group",
     "METATAG": "Description metatag",
-    "PAGE_CONTENT": "Page content"
+    "PAGE_CONTENT": "Page content",
+    "CONTENT_ADDED": "Content added successfully",
+    "CONTENT_UPDATED": "Content updated successfully"
   }
 }

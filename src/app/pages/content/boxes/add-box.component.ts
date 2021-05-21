@@ -23,6 +23,7 @@ export class AddBoxComponent implements OnInit  {
   
   form: FormGroup;
   content: any;
+  uniqueCode: string;//identifier fromroute
 
   languages = [];
 
@@ -70,15 +71,8 @@ export class AddBoxComponent implements OnInit  {
     private dialogService: NbDialogService,
     private activatedRoute: ActivatedRoute,
     private translate: TranslateService
-  ) {
+  ) { }
 
-    if (localStorage.getItem('contentBoxID')) {
-      //this.contentBoxID = localStorage.getItem('contentBoxID')
-      //this.getBoxDetails();
-      // this.title = "Update Box Details"
-      this.buttonText = "Update"
-    }
-  }
   param() {
     return {
       store: localStorage.getItem('merchant'),
@@ -87,21 +81,17 @@ export class AddBoxComponent implements OnInit  {
   }
   ngOnInit() {
     this.loader = true;
-    const id = this.activatedRoute.snapshot.paramMap.get('code');
-    const languages = this.configService.getListOfSupportedLanguages(localStorage.getItem('merchant'));
-    const box = this.crudService.get('/v1/private/content/boxes/' + id, this.param());
-
-    forkJoin([box, languages])
-    .subscribe(([box, languages]) => {
-      console.log(box)
-      this.content = box;
+    this.uniqueCode = this.activatedRoute.snapshot.paramMap.get('code');
+    const languages = this.configService.getListOfSupportedLanguages(localStorage.getItem('merchant'))
+    .subscribe((languages) => {
+      console.log(JSON.stringify(languages));
       this.languages = [...languages];
       this.createForm();
       this.addFormArray();
-      if (this.content.id) {
+      if (this.uniqueCode != null) {
+        this.loadContent();
         this.fillForm();
       }
-      //console.log(this.selec);
       this.loader = false;
 
 
@@ -109,6 +99,14 @@ export class AddBoxComponent implements OnInit  {
       this.toastr.error(error.error.message);
       this.loader = false;
     });
+  }
+
+  private loadContent() {
+    this.loader = true;
+    const box = this.crudService.get('/v1/private/content/boxes/' + this.uniqueCode, this.param());
+    this.content = box;
+    this.loader = false;
+
   }
 
   private createForm() {
@@ -154,6 +152,7 @@ export class AddBoxComponent implements OnInit  {
             (<FormArray>this.form.get('descriptions')).at(index).patchValue({
               language: description.language,
               description: description.description,
+              name: this.content.name
             });
           }
         });
@@ -163,20 +162,22 @@ export class AddBoxComponent implements OnInit  {
 
 
   save() {
+
     this.form.markAllAsTouched();
     if(this.findInvalidControls().length > 0) {
       return;
     }
     this.loader = true;
     const object = this.form.value;
+    console.log('Content saved ' + JSON.stringify(object));
 
-    if (this.content.id) {
-      this.crudService.put('/v1/private/content/box/' + this.content.id, object)
+    /**
+    if (this.content.id) {//update
+      this.crudService.put('/v1/private/content/box/' + this.content.id, object, this.param())
         .subscribe(data => {
           console.log(data);
           this.loader = false;
-          this.toastr.success('Box updated successfully');
-          this.toastr.success(this.translate.instant('PRODUCT.PRODUCT_UPDATED'));
+          this.toastr.success(this.translate.instant('CONTENT.CONTENT_UPDATED'));
           this.router.navigate(['/pages/content/boxes/list']);
         }, error => {
           this.toastr.error(error.error.message);
@@ -193,8 +194,9 @@ export class AddBoxComponent implements OnInit  {
           this.loader = false;
         });
     }
+    **/
+    this.loader = false;
   }
-
 
 
   public findInvalidControls() {
@@ -212,6 +214,10 @@ export class AddBoxComponent implements OnInit  {
     return this.form.get('code');
   }
 
+  get name() {
+    return this.form.get('name');
+  }
+
   get descriptions(): FormArray {
     return <FormArray>this.form.get('descriptions');
   }
@@ -221,7 +227,6 @@ export class AddBoxComponent implements OnInit  {
   }
 
   
-
   selectLanguage(lang) {
     this.form.patchValue({
       selectedLanguage: lang,

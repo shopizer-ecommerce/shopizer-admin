@@ -34,6 +34,10 @@ const routes: Routes = [{
       component: AddBoxComponent,
     },
     {
+      path: 'boxes/add',
+      component: AddBoxComponent,
+    },
+    {
       path: 'images/list',
       component: ImagesComponent,
     },
