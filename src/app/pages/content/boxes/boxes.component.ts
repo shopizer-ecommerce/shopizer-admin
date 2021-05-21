@@ -48,7 +48,7 @@ export class BoxesComponent {
   loadParams() {
     return {
       store: this.storageService.getMerchant(),
-      lang: this.storageService.getLanguage(),
+      lang: '_all',
       count: this.perPage,
       page: 0
     };
@@ -64,7 +64,6 @@ export class BoxesComponent {
   }
 
   getBox() {
-    // let action = Action.CONTENT + Action.BOXES;
     this.params.page = this.currentPage - 1;
     this.crudService.get('/v1/private/content/boxes/', this.params)
       .subscribe(data => {
@@ -92,11 +91,7 @@ export class BoxesComponent {
           {
             name: 'delete',
             title: '<i class="nb-trash"></i>'
-          },
-          // {
-          //   name: 'delete',
-          //   title: '<i class="nb-info"></i>'
-          // }
+          }
         ]
       },
       columns: {
@@ -112,7 +107,6 @@ export class BoxesComponent {
           title: this.translate.instant('CONTENT.NAME'),
           type: 'string',
           valuePrepareFunction: (cell, row) => {
-            // console.log(row.description.name)
             return row.description.name
           }
         }
@@ -121,7 +115,6 @@ export class BoxesComponent {
 
   }
   addBoxes() {
-    localStorage.setItem('contentBoxID', '');
     this.router.navigate(['/pages/content/boxes/add']);
   }
   changePage(event) {
@@ -165,8 +158,8 @@ export class BoxesComponent {
   }
   onEdit(event) {
     console.log(event)
-    localStorage.setItem('contentBoxID', event.data.code);
-    this.router.navigate(['/pages/content/boxes/add']);
+    //localStorage.setItem('contentBoxID', event.data.code);
+    this.router.navigate(['/pages/content/boxes/add/' + event.data.code]);
   }
   onDelete(event) {
 

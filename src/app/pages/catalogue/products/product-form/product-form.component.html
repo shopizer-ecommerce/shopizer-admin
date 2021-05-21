@@ -237,7 +237,7 @@
 
 
       <!-- images-->
-      <div class="row">
+      <div class="row" *ngIf="product.id">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
           <nb-card class="nb-card inline-form-card">
             <nb-card-header class="nb-card-header">{{ 'DESCRIPTION_FORM.IMAGE' | translate}}</nb-card-header>

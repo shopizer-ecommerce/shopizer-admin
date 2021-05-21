@@ -15,14 +15,14 @@
         | translate}}</button>
     </div>
     <div class="content_spacing">
-      <button type="button" nbButton *ngIf="buttonText == 'Update'" class="success_button" (click)="createBoxes()">{{'COMMON.UPDATE'|
+      <button type="button" nbButton *ngIf="buttonText == 'Update'" class="success_button" (click)="save()">{{'COMMON.UPDATE'|
         translate }}</button>
-      <button type="button" nbButton *ngIf="buttonText == 'Save'" class="success_button" (click)="createBoxes()">{{'COMMON.SAVE'|
+      <button type="button" nbButton *ngIf="buttonText == 'Save'" class="success_button" (click)="save()">{{'COMMON.SAVE'|
         translate }}</button>
     </div>
   </nb-card-header>
   <div class="" [nbSpinner]="loadingList" nbSpinnerSize="large" nbSpinnerStatus="primary">
-    <form #boxForm="ngForm" role="form">
+    <form [formGroup]='form' #boxForm="ngForm" role="form" *ngIf="!loader">
 
       <div class="row">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
@@ -32,40 +32,42 @@
               <div class="row">
                 <div class="col-lg-12">
                   <div class="form-group">
-                    <nb-checkbox [(ngModel)]="page.visible" name="visible">{{ 'CONTENT.VISIBLE' | translate}}</nb-checkbox>
-                    <nb-checkbox [(ngModel)]="page.mainmenu" name="mainmenu">{{ 'CONTENT.MAINMENU' | translate}}</nb-checkbox>
+                    <nb-checkbox formControlName='visible' >{{ 'CONTENT.VISIBLE' | translate}}</nb-checkbox>
+                    <!--<nb-checkbox [(ngModel)]="page.mainmenu" name="mainmenu">{{ 'CONTENT.MAINMENU' | translate}}</nb-checkbox>-->
                   </div>
                 </div>
               </div>
+              
               <div class="row">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                   <div class="form-group">
-                    <label for="inputWebsite" class="label inputLabel">{{ 'CONTENT.CODE' | translate}} <span>*</span></label>
-                    <input type="text" [(ngModel)]="page.code" name="code" class="form-control inputText" id="code"
-                      placeholder="{{'CONTENT.CODE' | translate}}" required>
+                    <label for="code" class="label inputLabel">{{ 'CONTENT.CODE' | translate}} <span>*</span></label>
+                    <div>
+                      <input type="text" class="form-control inputText" id="code" formControlName='code' [readOnly]="content.id"
+                        placeholder="{{ 'COMMON.CODE' | translate}}" (change)="checkCode($event)" required>
+                        <div class="err-message" *ngIf="(code.dirty || code.touched) && code.invalid && code">
+                          <span *ngIf="code.errors.required">
+                            {{ 'COMMON.CODE_REQUIRED' | translate}}
+                          </span>
+                          <span *ngIf="code.errors.pattern">
+                            {{ 'COMMON.ALPHA_DECIMAL_RULE' | translate}}
+                          </span>
+                        </div>
+                        <span *ngIf="!isCodeUnique" class="err-message">
+                          {{ 'COMMON.CODE_EXISTS' | translate}}
+                        </span>
+                      </div>
                   </div>
                 </div>
               </div>
+
               <div class="row">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                  <div class="form-group">
-                    <label for="exampleInputPassword1" class="label inputLabel">{{ 'CONTENT.ORDER' | translate}}</label>
-                    <input type="number" [(ngModel)]="page.order" name="order" class="form-control inputText" id="order"
-                      placeholder="{{ 'CONTENT.ORDER' | translate}}">
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                  <div *ngFor="let descr of description; let j=index">
-                    <div *ngIf="descr.language === language">
                       <div class="form-group">
-                        <label for="exampleInputPassword1" class="label inputLabel">{{ 'CONTENT.BOX_NAME' | translate}}<span>*</span></label>
-                        <input type="text" [(ngModel)]="descr.name" name="name" class="form-control inputText" id="page_name"
+                        <label for="name" class="label inputLabel">{{ 'CONTENT.BOX_NAME' | translate}}<span>*</span></label>
+                        <input type="text" formControlName='name' name="name" class="form-control inputText" id="name"
                           placeholder="{{ 'CONTENT.BOX_NAME' | translate}}" required>
                       </div>
-                    </div>
-                  </div>
                 </div>
               </div>
             </nb-card-body>
@@ -73,20 +75,31 @@
         </div>
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
           <nb-card class="nb-card inline-form-card">
-            <nb-card-header class="nb-card-header">{{ 'CONTENT.BOX_CONTENT' | translate}}</nb-card-header>
+            <nb-card-header class="nb-card-header">{{ 'CONTENT.BOX_CONTENT' | translate}} - {{('LANG.'+ currentLanguage) |translate }}&nbsp;
+                <nb-select *ngIf="languages.length" placeholder="{{ 'COMMON.LANGUAGE' | translate}}" outline shape="rectangle"
+                name='selectedLanguage' [selected]="defaultLanguage">
+                <nb-option (click)="selectLanguage(language.code)" *ngFor="let language of languages" [value]="language.code">{{
+                  ('LANG.'+language.code) |translate }}</nb-option>
+              </nb-select>
+            </nb-card-header>            
             <nb-card-body class="nb-card-body">
-              <div *ngFor="let descr of description; let j=index">
-                <div *ngIf="descr.language === language">
-                  <div [ngxSummernote]="editorConfig" [(ngModel)]="descr.description" name="description">
+
+              <div *ngIf="selectedLanguage.value !== ''" formArrayName='descriptions'>
+                <div *ngFor="let descr of descriptions.controls; let j=index">
+                  <div *ngIf="descr.value.language === selectedLanguage.value">
+                    <div [formGroupName]="j" class="description-block">
+                      <div class="form-group">
+                        <div formControlName="description" [ngxSummernote]="config"></div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
+
             </nb-card-body>
           </nb-card>
         </div>
       </div>
-
-
     </form>
   </div>
 </div>

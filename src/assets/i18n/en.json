@@ -478,7 +478,9 @@
   },
   "ERROR": {
     "SYSTEM_ERROR": "System Error",
-    "SYSTEM_ERROR_TEXT": "An error occured with this request"
+    "SYSTEM_ERROR_TEXT": "An error occured with this request",
+    "SERVER_UNAVAILABLE": "Server unavailable",
+    "SERVER_RETRY": "This server has been deserted for a while. Please be patient or try again later."
   },
   "COMMON": {
     "LANGUAGE": "Language",

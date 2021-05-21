@@ -227,7 +227,7 @@ export class ProductsListComponent implements OnInit {
   }
 
   choseStore(event) {
-    console.log("Choosing store " + event);
+    //console.log("Choosing store " + event);
     this.params.store = event;
     this.getList();
 
@@ -260,7 +260,7 @@ export class ProductsListComponent implements OnInit {
     this.getList();
   }
   route(e) {
-    console.log(e)
+    //console.log(e)
     if (e.action == 'remove') {
       this.deleteRecord(e)
     } else {

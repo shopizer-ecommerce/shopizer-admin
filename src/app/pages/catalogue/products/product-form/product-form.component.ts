@@ -6,6 +6,7 @@ import { ManufactureService } from '../../../shared/services/manufacture.service
 import { ConfigService } from '../../../shared/services/config.service';
 import * as moment from 'moment';
 import { ToastrService } from 'ngx-toastr';
+import { NbDialogService } from '@nebular/theme';
 import { ProductService } from '../services/product.service';
 import { ProductImageService } from '../services/product-image.service';
 import { TranslateService } from '@ngx-translate/core';
@@ -15,6 +16,9 @@ import { slugify } from '../../../shared/utils/slugifying';
 import { forkJoin } from 'rxjs';
 import { TypesService } from '../../types/services/types.service';
 import { Image } from '../../../shared/models/image';
+import { ImageBrowserComponent } from '../../../../@theme/components/image-browser/image-browser.component';
+declare var jquery: any;
+declare var $: any;
 
 @Component({
   selector: 'ngx-product-form',
@@ -62,11 +66,14 @@ export class ProductFormComponent implements OnInit {
       link: 'category-association'
     }
   ];
+
+
+  //summernote
   config = {
     placeholder: '',
     tabsize: 2,
     height: 300,
-    uploadImagePath: '',
+
     //edit toolbar
     toolbar: [
       ['misc', ['codeview', 'undo', 'redo']],
@@ -74,8 +81,12 @@ export class ProductFormComponent implements OnInit {
       ['font', ['bold', 'italic', 'underline', 'strikethrough', 'superscript', 'subscript', 'clear']],
       ['fontsize', ['fontname', 'fontsize', 'color']],
       ['para', ['style', 'ul', 'ol', 'paragraph', 'height']],
-      ['insert', ['table', 'picture', 'link', 'video', 'hr']]
+      ['insert', ['table', 'link', 'video', 'hr']],
+      ['customButtons', ['testBtn']]
     ],
+    buttons: {
+      'testBtn': this.customButton.bind(this)
+    },
     fontNames: ['Helvetica', 'Arial', 'Arial Black', 'Comic Sans MS', 'Courier New', 'Roboto', 'Times']
   };
   isCodeUnique = true;
@@ -91,14 +102,14 @@ export class ProductFormComponent implements OnInit {
     private productImageService: ProductImageService,
     private router: Router,
     private translate: TranslateService,
-    private typeService: TypesService
+    private typeService: TypesService,
+    private dialogService: NbDialogService
   ) {
   }
 
   ngOnInit() {
     this.loader = true;
     this.addImageUrlComponent = this.productImageService.addImageUrl(this.product.id);
-    console.log('Add image url ' + this.addImageUrlComponent);
     const manufacture$ = this.manufactureService.getManufacturers();
     const types$ = this.productService.getProductTypes();
     //TODO local cache
@@ -119,8 +130,6 @@ export class ProductFormComponent implements OnInit {
         if (this.product.id) {
           this.fillForm();
         }
-        
-        this.refreshChilds();
 
         this.loader = false;
 
@@ -129,7 +138,7 @@ export class ProductFormComponent implements OnInit {
 
   private createForm() {
     this.form = this.fb.group({
-      identifier: ['', [Validators.required]],
+      identifier: ['', [Validators.required,Validators.pattern(validators.alphanumeric)]],
       visible: [false],
       dateAvailable: [new Date()],
       manufacturer: ['', [Validators.required]],
@@ -171,6 +180,8 @@ export class ProductFormComponent implements OnInit {
 
 
   fillForm() {
+    this.addImageUrlComponent = this.productImageService.addImageUrl(this.product.id);
+    this.refreshChilds();
     this.form.patchValue({
       identifier: this.product.identifier,
       visible: this.product.visible,
@@ -246,11 +257,10 @@ export class ProductFormComponent implements OnInit {
 
   refreshProduct() {
     this.loader = true;
-    console.log("Refresh product");
     this.productService.getProductDefinitionById(this.product.id)
     .subscribe(res => {
       this.product = res;
-      console.log("Refresh product  " + JSON.stringify(this.product));
+      //console.log("Refresh product  " + JSON.stringify(this.product));
       this.images = new Array();
       this.refreshChilds();
       this.loader = false;
@@ -262,6 +272,7 @@ export class ProductFormComponent implements OnInit {
 
   }
 
+  //images and other childs
   refreshChilds() {
     let productImages = this.product.images;
     productImages.forEach(val => {
@@ -289,7 +300,6 @@ export class ProductFormComponent implements OnInit {
 
   errorImage(event) {
     this.toastr.error(this.translate.instant('COMMON.'+event));
-
   }
 
   addedImage(event) {
@@ -298,6 +308,7 @@ export class ProductFormComponent implements OnInit {
     this.toastr.success(this.translate.instant('PRODUCT.PRODUCT_UPDATED'));
 
   }
+  /** end image component */
 
   checkSku(event) {
     this.productService.checkProductSku(event.target.value)
@@ -422,7 +433,6 @@ export class ProductFormComponent implements OnInit {
           }
         }
       });
-      console.log(productObject);
       delete productObject.selectedLanguage;
       if (this.product.id) {
         this.saved = true;
@@ -451,8 +461,6 @@ export class ProductFormComponent implements OnInit {
     }
   }
 
-
-
   route(link) {
     this.router.navigate(['pages/catalogue/products/' + this.product.id + '/' + link]);
   }
@@ -468,5 +476,23 @@ export class ProductFormComponent implements OnInit {
       }
     }
     return invalid;
+  }
+
+
+
+  customButton(context) {
+    const me = this;
+    const ui = $.summernote.ui;
+    const button = ui.button({
+      contents: '<i class="note-icon-picture"></i>',
+      tooltip: 'Gallery',
+      container: '.note-editor',
+      className: 'note-btn',
+      click: function () {
+        //console.log(me);
+        me.dialogService.open(ImageBrowserComponent, {}).onClose.subscribe(name => name && context.invoke('editor.pasteHTML', '<img src="' + name + '">'));
+      }
+    });
+    return button.render();
   }
 }

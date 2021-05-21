@@ -30,7 +30,7 @@ const routes: Routes = [{
       component: BoxesComponent,
     },
     {
-      path: 'boxes/add',
+      path: 'boxes/add/:code',
       component: AddBoxComponent,
     },
     {

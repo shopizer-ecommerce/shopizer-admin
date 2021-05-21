@@ -48,7 +48,7 @@ export class CategoryFormComponent implements OnInit {
       ['font', ['bold', 'italic', 'underline', 'strikethrough', 'superscript', 'subscript', 'clear']],
       ['fontsize', ['fontname', 'fontsize', 'color']],
       ['para', ['style', 'ul', 'ol', 'paragraph', 'height']],
-      ['insert', ['table', 'picture', 'link', 'video']],
+      ['insert', ['table', 'link', 'video']],
       ['customButtons', ['testBtn']]
     ],
     buttons: {
@@ -355,8 +355,7 @@ export class CategoryFormComponent implements OnInit {
       container: '.note-editor',
       className: 'note-btn',
       click: function () {
-        console.log(me);
-
+        //console.log(me);
         me.dialogService.open(ImageBrowserComponent, {}).onClose.subscribe(name => name && context.invoke('editor.pasteHTML', '<img src="' + name + '">'));
       }
     });
