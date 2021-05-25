@@ -125,14 +125,12 @@ export class ProductFormComponent implements OnInit {
         });
 
         this.languages = [...languages];
-        this.createForm();
-        this.addFormArray();
+        this.createForm();//init
+        this.addFormArray();//create array
         if (this.product.id) {
-          this.fillForm();
+          this.fillForm();//bind content to the form
         }
-
         this.loader = false;
-
       });
   }
 

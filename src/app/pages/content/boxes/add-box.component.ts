@@ -10,6 +10,7 @@ import { validators } from '../../shared/validation/validators';
 import { TranslateService } from '@ngx-translate/core';
 import { ConfigService } from '../../shared/services/config.service';
 import { forkJoin } from 'rxjs';
+import { Description } from '../../shared/models/description';
 
 declare var jquery: any;
 declare var $: any;
@@ -28,7 +29,7 @@ export class AddBoxComponent implements OnInit  {
   languages = [];
 
   isCodeUnique = true;
-  buttonText: any = 'Save'
+  action: any = 'save'
 
   defaultLanguage = localStorage.getItem('lang');
   //changed from seo section
@@ -84,16 +85,15 @@ export class AddBoxComponent implements OnInit  {
     this.uniqueCode = this.activatedRoute.snapshot.paramMap.get('code');
     const languages = this.configService.getListOfSupportedLanguages(localStorage.getItem('merchant'))
     .subscribe((languages) => {
-      console.log(JSON.stringify(languages));
       this.languages = [...languages];
       this.createForm();
-      this.addFormArray();
+      this.addFormArray();//create array
       if (this.uniqueCode != null) {
+        this.action = 'edit';
         this.loadContent();
-        this.fillForm();
+      } else {
+        this.loader = false;
       }
-      this.loader = false;
-
 
     }, error => {
       this.toastr.error(error.error.message);
@@ -101,19 +101,19 @@ export class AddBoxComponent implements OnInit  {
     });
   }
 
-  private loadContent() {
-    this.loader = true;
-    const box = this.crudService.get('/v1/private/content/boxes/' + this.uniqueCode, this.param());
-    this.content = box;
-    this.loader = false;
 
+  private loadContent() {
+    const box = this.crudService.get('/v1/private/content/boxes/' + this.uniqueCode, this.param()).subscribe(data => {
+      this.content = data;
+      this.fillForm();
+      this.loader = false;
+    });
   }
 
   private createForm() {
     this.form = this.fb.group({
       code: ['', [Validators.required,Validators.pattern(validators.alphanumeric)]],
       visible: [false],
-      name: ['', [Validators.required]],
       selectedLanguage: [this.defaultLanguage, [Validators.required]],
       descriptions: this.fb.array([]),
     });
@@ -125,7 +125,9 @@ export class AddBoxComponent implements OnInit  {
       control.push(
         this.fb.group({
           language: [lang.code, [Validators.required]],
-          description: ['']
+          description: [''],
+          name: [''],
+          id:0
         })
       );
     });
@@ -135,7 +137,6 @@ export class AddBoxComponent implements OnInit  {
     this.form.patchValue({
       code: this.content.code,
       visible: this.content.visible,
-      name: this.content.description.name,
       selectedLanguage: this.defaultLanguage,
       descriptions: [],
     });
@@ -150,9 +151,10 @@ export class AddBoxComponent implements OnInit  {
         this.content.descriptions.forEach((description) => {
           if (desc.language === description.language) {
             (<FormArray>this.form.get('descriptions')).at(index).patchValue({
+              id: description.id,
               language: description.language,
               description: description.description,
-              name: this.content.name
+              name: description.name
             });
           }
         });
@@ -160,9 +162,11 @@ export class AddBoxComponent implements OnInit  {
     });
   }
 
+  checkCode() {
+
+  }
 
   save() {
-
     this.form.markAllAsTouched();
     if(this.findInvalidControls().length > 0) {
       return;
@@ -171,11 +175,11 @@ export class AddBoxComponent implements OnInit  {
     const object = this.form.value;
     console.log('Content saved ' + JSON.stringify(object));
 
-    /**
     if (this.content.id) {//update
+
+      //set content name required field
       this.crudService.put('/v1/private/content/box/' + this.content.id, object, this.param())
         .subscribe(data => {
-          console.log(data);
           this.loader = false;
           this.toastr.success(this.translate.instant('CONTENT.CONTENT_UPDATED'));
           this.router.navigate(['/pages/content/boxes/list']);
@@ -183,7 +187,10 @@ export class AddBoxComponent implements OnInit  {
           this.toastr.error(error.error.message);
           this.loader = false;
         });
+     
     } else {
+      /**
+       * missing check code
       this.crudService.post('/v1/private/content/box', object)
         .subscribe(data => {
           this.loader = false;
@@ -193,8 +200,8 @@ export class AddBoxComponent implements OnInit  {
           this.toastr.error(error.error.message);
           this.loader = false;
         });
+        **/
     }
-    **/
     this.loader = false;
   }
 
@@ -214,10 +221,6 @@ export class AddBoxComponent implements OnInit  {
     return this.form.get('code');
   }
 
-  get name() {
-    return this.form.get('name');
-  }
-
   get descriptions(): FormArray {
     return <FormArray>this.form.get('descriptions');
   }
@@ -232,7 +235,6 @@ export class AddBoxComponent implements OnInit  {
       selectedLanguage: lang,
     });
     this.currentLanguage = lang;
-    this.fillFormArray();
   }
 
 

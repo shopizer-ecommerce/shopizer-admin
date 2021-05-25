@@ -1,20 +1,20 @@
 <div class="inner_pages create_box">
 
   <nb-card-header class="main_header">
-    <h1 class="page_title" *ngIf="buttonText == 'Save'">{{'CONTENT.ADD_BOX_DETAILS' | translate}}</h1>
-    <h1 class="page_title" *ngIf="buttonText == 'Update'">{{'CONTENT.UPDATE_BOX_DETAILS' | translate}}</h1>
+    <h1 class="page_title" *ngIf="action == 'save'">{{'CONTENT.ADD_BOX_DETAILS' | translate}}</h1>
+    <h1 class="page_title" *ngIf="action == 'edit'">{{'CONTENT.UPDATE_BOX_DETAILS' | translate}}</h1>
     <div class="content_spacing">
       <button type="button" nbButton class="cancel_button" (click)="goToback()">{{ 'COMMON.CANCEL'
         | translate}}</button>
     </div>
     <div class="content_spacing">
-      <button type="button" nbButton *ngIf="buttonText == 'Update'" class="success_button" (click)="save()">{{'COMMON.UPDATE'|
+      <button type="button" nbButton *ngIf="action == 'edit'" class="success_button" (click)="save()">{{'COMMON.UPDATE'|
         translate }}</button>
-      <button type="button" nbButton *ngIf="buttonText == 'Save'" class="success_button" (click)="save()">{{'COMMON.SAVE'|
+      <button type="button" nbButton *ngIf="action == 'save'" class="success_button" (click)="save()">{{'COMMON.SAVE'|
         translate }}</button>
     </div>
   </nb-card-header>
-  <div class="" [nbSpinner]="loadingList" nbSpinnerSize="large" nbSpinnerStatus="primary">
+  <div class="" [nbSpinner]="loader" nbSpinnerSize="large" nbSpinnerStatus="primary">
     <form [formGroup]='form' #boxForm="ngForm" role="form" *ngIf="!loader">
 
       <div class="row">
@@ -54,20 +54,6 @@
                 </div>
               </div>
 
-              <div class="row">
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                      <div class="form-group">
-                        <label for="name" class="label inputLabel">{{ 'CONTENT.BOX_NAME' | translate}}<span>*</span></label>
-                        <input type="text" formControlName='name' name="name" class="form-control inputText" id="name"
-                          placeholder="{{ 'CONTENT.BOX_NAME' | translate}}" required>
-                          <span *ngIf="name.dirty || name.touched
-                          && name.invalid && name.errors.required"
-                           class="err-message">
-                              {{ 'COMMON.NAME_REQUIRED' | translate }}
-                          </span>
-                      </div>
-                </div>
-              </div>
             </nb-card-body>
           </nb-card>
         </div>
@@ -81,19 +67,17 @@
               </nb-select>
             </nb-card-header>            
             <nb-card-body class="nb-card-body">
-
               <div *ngIf="selectedLanguage.value !== ''" formArrayName='descriptions'>
                 <div *ngFor="let descr of descriptions.controls; let j=index">
                   <div *ngIf="descr.value.language === selectedLanguage.value">
                     <div [formGroupName]="j" class="description-block">
                       <div class="form-group">
-                        <div formControlName="description" [ngxSummernote]="config"></div>
+                        <div formControlName="description" [ngxSummernote]="config" (change)="changeFn($event)"></div>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-
             </nb-card-body>
           </nb-card>
         </div>
