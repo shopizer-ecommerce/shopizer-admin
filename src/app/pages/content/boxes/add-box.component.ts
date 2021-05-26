@@ -28,7 +28,7 @@ export class AddBoxComponent implements OnInit  {
 
   languages = [];
 
-  isCodeUnique = true;
+  isCodeExists = false;
   action: any = 'save'
 
   defaultLanguage = localStorage.getItem('lang');
@@ -112,6 +112,7 @@ export class AddBoxComponent implements OnInit  {
 
   private createForm() {
     this.form = this.fb.group({
+      id:0,
       code: ['', [Validators.required,Validators.pattern(validators.alphanumeric)]],
       visible: [false],
       selectedLanguage: [this.defaultLanguage, [Validators.required]],
@@ -135,6 +136,7 @@ export class AddBoxComponent implements OnInit  {
   
   fillForm() {
     this.form.patchValue({
+      id: this.content.id,
       code: this.content.code,
       visible: this.content.visible,
       selectedLanguage: this.defaultLanguage,
@@ -162,7 +164,13 @@ export class AddBoxComponent implements OnInit  {
     });
   }
 
-  checkCode() {
+  checkCode(event) {
+    //check if box code already exists
+    const code = event.target.value.trim();
+    this.crudService.get('/v1/private/content/box/' + code + '/exists', this.param())
+      .subscribe(res => {
+        this.isCodeExists = res.exists;
+    });
 
   }
 
@@ -172,11 +180,68 @@ export class AddBoxComponent implements OnInit  {
       return;
     }
     this.loader = true;
-    const object = this.form.value;
-    console.log('Content saved ' + JSON.stringify(object));
 
-    if (this.content.id) {//update
+    //manouver resulting object
+    var object = this.form.value;
 
+    //remove un necessary
+    delete  object.selectedLanguage;
+
+
+    /**
+     * TODO revise put in utility
+     */
+    const tmpObj = {
+      name: '',
+      friendlyUrl: ''
+    };
+    object.descriptions.forEach((el) => {
+      if (el.name === '') {
+        el.name = object.code;
+      }
+    });
+
+    // check required fields
+    if (tmpObj.name === '' || tmpObj.friendlyUrl === '' || object.code === '') {
+
+    } else {
+      object.descriptions.forEach((el) => {
+        // fill empty fields
+        for (const elKey in el) {
+          if (el.hasOwnProperty(elKey)) {
+            if (el[elKey] === '' && tmpObj[elKey] !== '') {
+              el[elKey] = tmpObj[elKey];
+            }
+          }
+        }
+      });
+      // check for undefined
+      object.descriptions.forEach(el => {
+        for (const elKey in el) {
+          if (el.hasOwnProperty(elKey)) {
+            el.name = el.name.trim(); // trim name
+            if (typeof el[elKey] === 'undefined') {
+              el[elKey] = '';
+            }
+          }
+        }
+      });
+    }
+
+      /**
+      let errors = this.findInvalidControls();
+      if (errors.length > 0) {
+        this.toastr.error(this.translate.instant('COMMON.FILL_REQUIRED_FIELDS'));
+        return;
+      }
+      **/
+      //for debugging
+      //console.log(JSON.stringify(categoryObject));
+      //return;
+
+    //console.log('Content saved ' + JSON.stringify(object));
+
+    if (object.id > 0) {//update
       //set content name required field
       this.crudService.put('/v1/private/content/box/' + this.content.id, object, this.param())
         .subscribe(data => {
@@ -189,8 +254,7 @@ export class AddBoxComponent implements OnInit  {
         });
      
     } else {
-      /**
-       * missing check code
+
       this.crudService.post('/v1/private/content/box', object)
         .subscribe(data => {
           this.loader = false;
@@ -200,7 +264,7 @@ export class AddBoxComponent implements OnInit  {
           this.toastr.error(error.error.message);
           this.loader = false;
         });
-        **/
+
     }
     this.loader = false;
   }

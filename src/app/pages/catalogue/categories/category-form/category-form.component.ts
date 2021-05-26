@@ -135,7 +135,6 @@ export class CategoryFormComponent implements OnInit {
 
   addFormArray() {
     const control = <FormArray>this.form.controls.descriptions;
-    //console.log("Languages size " + this.languages.length);
     this.languages.forEach(lang => {
       control.push(
         this.fb.group({
@@ -255,6 +254,9 @@ export class CategoryFormComponent implements OnInit {
       this.form.patchValue({ store: this.merchant });
     }
 
+    /**
+     * TODO put in utility
+     */
     const tmpObj = {
       name: '',
       friendlyUrl: ''

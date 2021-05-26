@@ -30,7 +30,6 @@
                   </div>
                 </div>
               </div>
-              
               <div class="row">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                   <div class="form-group">
@@ -46,7 +45,7 @@
                             {{ 'COMMON.ALPHA_DECIMAL_RULE' | translate}}
                           </span>
                         </div>
-                        <span *ngIf="!isCodeUnique" class="err-message">
+                        <span *ngIf="isCodeExists" class="err-message">
                           {{ 'COMMON.CODE_EXISTS' | translate}}
                         </span>
                       </div>
