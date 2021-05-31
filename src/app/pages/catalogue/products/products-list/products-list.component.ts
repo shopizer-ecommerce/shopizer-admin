@@ -233,6 +233,7 @@ export class ProductsListComponent implements OnInit {
 
   }
 
+
   // paginator
   changePage(event) {
     switch (event.action) {
@@ -264,7 +265,6 @@ export class ProductsListComponent implements OnInit {
     if (e.action == 'remove') {
       this.deleteRecord(e)
     } else {
-      // localStorage.setItem('orderID', e.data.id);
       this.router.navigate(['pages/catalogue/products/product/' + e.data.id]);
     }
   }

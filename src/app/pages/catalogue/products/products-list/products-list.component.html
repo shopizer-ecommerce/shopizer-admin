@@ -25,6 +25,12 @@
               <ng-template let-car pTemplate="item">{{car.label}}</ng-template>
               -->
           <!-- </p-autoComplete> -->
+
+            <a class="createBtn" [routerLink]="['/pages/catalogue/products/create-product']">
+              <img class="pointer sda" src="../../../../assets/img/plus.png" title="{{ 'COMPONENTS.CREATE_PRODUCT' | translate}}"
+                alt="">
+              <label>{{ 'COMPONENTS.CREATE_PRODUCT' | translate}}</label>
+            </a>
         </div>
       </form>
 

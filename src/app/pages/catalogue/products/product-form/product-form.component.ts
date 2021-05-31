@@ -29,7 +29,8 @@ export class ProductFormComponent implements OnInit {
   @Input() product: any;
   @Input() _title: string;
   form: FormGroup;
-  loader = false;
+  loaded = false;
+  loading = false;
   manufacturers = [];
   languages = [];
   typesCount = 15;
@@ -92,7 +93,6 @@ export class ProductFormComponent implements OnInit {
   isCodeUnique = true;
   uploadData = new FormData();
   removedImagesArray = [];
-  saved = false;
   constructor(
     private fb: FormBuilder,
     private manufactureService: ManufactureService,
@@ -108,7 +108,6 @@ export class ProductFormComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.loader = true;
     this.addImageUrlComponent = this.productImageService.addImageUrl(this.product.id);
     const manufacture$ = this.manufactureService.getManufacturers();
     const types$ = this.productService.getProductTypes();
@@ -130,7 +129,7 @@ export class ProductFormComponent implements OnInit {
         if (this.product.id) {
           this.fillForm();//bind content to the form
         }
-        this.loader = false;
+        this.loaded = true;
       });
   }
 
@@ -196,7 +195,9 @@ export class ProductFormComponent implements OnInit {
       descriptions: [],
     });
     this.fillFormArray();
-    this.findInvalidControls();
+    
+    //this.findInvalidControls();
+    
     // const dimension = {
     //   weight: this.product.productSpecifications.weight,
     //   height: this.product.productSpecifications.height,
@@ -231,6 +232,10 @@ export class ProductFormComponent implements OnInit {
     return this.form.get('identifier');
   }
 
+  get manufacturer() {
+    return this.form.get('manufacturer');
+  }
+
   get selectedLanguage() {
     return this.form.get('selectedLanguage');
   }
@@ -254,18 +259,18 @@ export class ProductFormComponent implements OnInit {
   }
 
   refreshProduct() {
-    this.loader = true;
+    this.loaded = false;
     this.productService.getProductDefinitionById(this.product.id)
     .subscribe(res => {
       this.product = res;
       //console.log("Refresh product  " + JSON.stringify(this.product));
       this.images = new Array();
       this.refreshChilds();
-      this.loader = false;
+      this.loaded = true;
     }, error => {
       this.toastr.error(error.error.message);
       this.router.navigate(['pages/catalogue/products/products-list']);
-      this.loader = false;
+      this.loaded = true;
     });
 
   }
@@ -284,15 +289,15 @@ export class ProductFormComponent implements OnInit {
 
   /** image component */
   removeImage(event) {
-    this.loader = true;
+    this.loaded = true;
     this.productImageService.removeImage(this.product.id,event)
        .subscribe(res1 => {
         this.refreshProduct();
-        this.loader = false;
+        this.loaded = false;
         this.toastr.success(this.translate.instant('PRODUCT.PRODUCT_UPDATED'));
     }, error => {
          this.toastr.error(error.error.message);
-         this.loader = false;
+         this.loaded = false;
     });
   }
 
@@ -302,16 +307,17 @@ export class ProductFormComponent implements OnInit {
 
   addedImage(event) {
     this.refreshProduct();
-    this.loader = false;
     this.toastr.success(this.translate.instant('PRODUCT.PRODUCT_UPDATED'));
 
   }
   /** end image component */
 
   checkSku(event) {
+    this.loading = true;
     this.productService.checkProductSku(event.target.value)
       .subscribe(res => {
         this.isCodeUnique = !(res.exists && (this.product.identifier !== event.target.value));
+        this.loading = false;
     });
   }
 
@@ -363,17 +369,14 @@ export class ProductFormComponent implements OnInit {
   // }
 
   save() {
-    //if (!this.isCodeUnique) {
-    //  this.toastr.error(this.translate.instant('COMMON.CODE_EXISTS'));
-    //  return;
-    //}
+    console.log('Saved');
     this.form.markAllAsTouched();
 
     if(this.findInvalidControls().length > 0) {
       return;
     }
 
-    this.loader = true;
+    this.loading = true;
     const productObject = this.form.value;
     productObject.dateAvailable = moment(productObject.dateAvailable).format('yyyy-MM-DD');
     // productObject.productSpecifications.manufacturer = productObject.manufacturer;
@@ -408,7 +411,7 @@ export class ProductFormComponent implements OnInit {
     //object validations on the form
     if (tmpObj.name === '' || tmpObj.friendlyUrl === '' || productObject.identifier === '' || productObject.manufacturer === '' || tmpObj.title === '') {
       this.toastr.error(this.translate.instant('COMMON.FILL_REQUIRED_FIELDS'));
-      this.loader = false;
+      this.loading = false;
     } else {
       productObject.descriptions.forEach((el) => {
         // fill empty fields
@@ -433,27 +436,25 @@ export class ProductFormComponent implements OnInit {
       });
       delete productObject.selectedLanguage;
       if (this.product.id) {
-        this.saved = true;
-        // this.removeImages(this.removedImagesArray);
+        console.log('Updating product');
         this.productService.updateProduct(this.product.id, productObject)
           .subscribe(res => {
-            this.loader = false;
+            this.loading = false;
             this.toastr.success(this.translate.instant('PRODUCT.PRODUCT_UPDATED'));
           } , err => {
             this.toastr.error(err.error.message);
-            this.loader = false;
+            this.loading = false;
           });
       } else {
-        this.saved = true;
         this.productService.createProduct(productObject)
           .subscribe(res => {
-            this.loader = false;
+            this.loading = false;
             this.toastr.success(this.translate.instant('PRODUCT.PRODUCT_CREATED'));
             this.router.navigate(['pages/catalogue/products/products-list']);
           }
           , err => {
             this.toastr.error(err.error.message);
-            this.loader = false;
+            this.loading = false;
           });
       }
     }
@@ -472,6 +473,9 @@ export class ProductFormComponent implements OnInit {
       if (controls[name].invalid) {
         invalid.push(name);
       }
+    }
+    if(invalid.length > 0) {
+      this.toastr.error(this.translate.instant('COMMON.FILL_REQUIRED_FIELDS'));
     }
     return invalid;
   }
