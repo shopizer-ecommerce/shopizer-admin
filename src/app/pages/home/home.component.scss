@@ -7,6 +7,28 @@
   margin-top: 20px;
 }
 
+#draft{
+    position:absolute;
+    z-index:1000;
+    background:white;
+    display:block;
+    min-height:100%; 
+    min-width:100%;
+    color:yellow;
+    margin-top:50px;
+}
+
+#bg-text
+{
+    color:lightgrey;
+    font-size:120px;
+}
+
+.box-overlay {
+    color: #fff;
+    opacity: .5;
+}
+
 
 .home_page {
 
@@ -17,8 +39,9 @@
 
       }
 
-
 }
+
+
 
 .main_spacer {
   height:60px !important;
