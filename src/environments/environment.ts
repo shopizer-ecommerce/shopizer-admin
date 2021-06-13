@@ -18,6 +18,7 @@ export const environment = {
     mode: 'STANDARD',
     //API URL
     apiUrl: 'http://localhost:8080/api',
+    //apiUrl: 'http://aws-demo.shopizer.com:8080/api',
     shippingApi: 'http://15.223.64.6:9090/shipping/api/v1',
     client: {
         language: {

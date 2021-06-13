@@ -108,6 +108,7 @@ export class ProductFormComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.loadEvent();
     this.addImageUrlComponent = this.productImageService.addImageUrl(this.product.id);
     const manufacture$ = this.manufactureService.getManufacturers();
     const types$ = this.productService.getProductTypes();
@@ -129,8 +130,18 @@ export class ProductFormComponent implements OnInit {
         if (this.product.id) {
           this.fillForm();//bind content to the form
         }
-        this.loaded = true;
+        this.loadedEvent();
       });
+  }
+
+  private loadEvent() {
+    this.loading = true;
+    this.loaded = false;
+  }
+
+  private loadedEvent() {
+    this.loading = false;
+    this.loaded = true;
   }
 
   private createForm() {
@@ -268,9 +279,10 @@ export class ProductFormComponent implements OnInit {
       this.refreshChilds();
       this.loaded = true;
     }, error => {
+      this.loaded = true;
       this.toastr.error(error.error.message);
       this.router.navigate(['pages/catalogue/products/products-list']);
-      this.loaded = true;
+
     });
 
   }
@@ -289,15 +301,15 @@ export class ProductFormComponent implements OnInit {
 
   /** image component */
   removeImage(event) {
-    this.loaded = true;
+    this.loading = true;
     this.productImageService.removeImage(this.product.id,event)
        .subscribe(res1 => {
         this.refreshProduct();
-        this.loaded = false;
+        this.loading = false;
         this.toastr.success(this.translate.instant('PRODUCT.PRODUCT_UPDATED'));
     }, error => {
          this.toastr.error(error.error.message);
-         this.loaded = false;
+         this.loading = false;
     });
   }
 
@@ -369,9 +381,7 @@ export class ProductFormComponent implements OnInit {
   // }
 
   save() {
-    console.log('Saved');
     this.form.markAllAsTouched();
-
     if(this.findInvalidControls().length > 0) {
       return;
     }

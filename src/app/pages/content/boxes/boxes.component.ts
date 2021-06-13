@@ -163,8 +163,6 @@ export class BoxesComponent {
   }
   onDelete(event) {
 
-    // console.log(event);
-
     this.dialogService.open(ShowcaseDialogComponent, {
       context: 'Do you really want to remove this entity?'
       // context: {

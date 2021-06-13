@@ -1,5 +1,5 @@
 <div class="inner_pages product_create_page">
-  <form [formGroup]='form' *ngIf="loaded"><!-- only display once the query is terminated -->
+  <form [formGroup]='form'><!-- only display once the query is terminated -->
     <nb-card-header class="main_header">
       <h1 class="page_title">{{_title | translate}}</h1>
       <div class="content_spacing" *ngIf="product.id">
@@ -11,17 +11,11 @@
         <button type="button" nbButton class="cancel_button" (click)="goToback()">{{ 'ORDER_FORM.CANCLE'
           | translate}}</button>
       </div>
-      <!--
-      <div class="content_spacing">
-        <button type="button" nbButton class="success_button" (click)="save()">{{'COMMON.SAVE'
-          | translate }}</button>
-      </div>
-      -->
     </nb-card-header>
 
     <div [nbSpinner]="loading" nbSpinnerSize="large" nbSpinnerStatus="primary">
 
-      <div class="row">
+      <div class="row" *ngIf="loaded">
         <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
           <nb-card class="nb-card inline-form-card">
             <nb-card-header class="nb-card-header">{{ 'PRODUCT.DEFINITION' | translate}}</nb-card-header>
@@ -138,7 +132,6 @@
               <div formArrayName='descriptions'>
                 <div *ngFor="let descr of descriptions.controls; let j=index">
                   <div *ngIf="descr.value.language === selectedLanguage.value">
-
                     <div [formGroupName]="j" class="description-block">
                       <div class="form-group">
                         <label for="name" class="col-form-label inputLabel">{{ 'DESCRIPTION_FORM.NAME' | translate }} - {{('LANG.'+ currentLanguage) |translate }}
