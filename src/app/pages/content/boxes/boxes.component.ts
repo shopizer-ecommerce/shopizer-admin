@@ -147,7 +147,6 @@ export class BoxesComponent {
     this.getBox();
   }
   onClickAction(event) {
-    console.log(event);
     switch (event.action) {
       case 'edit':
         this.onEdit(event);
@@ -157,8 +156,6 @@ export class BoxesComponent {
     }
   }
   onEdit(event) {
-    console.log(event)
-    //localStorage.setItem('contentBoxID', event.data.code);
     this.router.navigate(['/pages/content/boxes/add/' + event.data.code]);
   }
   onDelete(event) {

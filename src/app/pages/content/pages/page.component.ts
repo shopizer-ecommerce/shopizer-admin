@@ -180,8 +180,7 @@ export class PageComponent {
 
   }
   onEdit(event) {
-    localStorage.setItem('contentpageid', event.data.code);
-    this.router.navigate(['/pages/content/pages/add']);
+    this.router.navigate(['/pages/content/pages/add/' + event.data.code]);
   }
   onDelete(event) {
 

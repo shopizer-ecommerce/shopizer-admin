@@ -274,7 +274,6 @@ export class ProductFormComponent implements OnInit {
     this.productService.getProductDefinitionById(this.product.id)
     .subscribe(res => {
       this.product = res;
-      //console.log("Refresh product  " + JSON.stringify(this.product));
       this.images = new Array();
       this.refreshChilds();
       this.loaded = true;

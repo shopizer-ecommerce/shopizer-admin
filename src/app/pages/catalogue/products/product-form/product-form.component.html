@@ -1,5 +1,5 @@
 <div class="inner_pages product_create_page">
-  <form [formGroup]='form'><!-- only display once the query is terminated -->
+  <!--<form [formGroup]='form'>-->
     <nb-card-header class="main_header">
       <h1 class="page_title">{{_title | translate}}</h1>
       <div class="content_spacing" *ngIf="product.id">
@@ -13,9 +13,10 @@
       </div>
     </nb-card-header>
 
-    <div [nbSpinner]="loading" nbSpinnerSize="large" nbSpinnerStatus="primary">
-
-      <div class="row" *ngIf="loaded">
+    <div [nbSpinner]="loading" nbSpinnerSize="large" nbSpinnerStatus="primary">   
+      <form [formGroup]='form'><!-- only display once the query is terminated -->
+        <span *ngIf="loaded">
+      <div class="row">
         <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
           <nb-card class="nb-card inline-form-card">
             <nb-card-header class="nb-card-header">{{ 'PRODUCT.DEFINITION' | translate}}</nb-card-header>
@@ -498,9 +499,8 @@
       </nb-card> -->
 
 
+    </span>
+    </form>
+      </div> 
 
-
-      <!-- </div> -->
-    </div>
-  </form>
 </div>

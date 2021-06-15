@@ -22,7 +22,7 @@ const routes: Routes = [{
       component: PageComponent,
     },
     {
-      path: 'pages/add',
+      path: 'pages/add/:code',
       component: AddPageComponent,
     },
     {

@@ -2,12 +2,7 @@
   <nb-card-header class="main_header">
     <h1 class="page_title" *ngIf="buttonText == 'Save'">{{'CONTENT.ADD_PAGE_DETAILS' | translate}}</h1>
     <h1 class="page_title" *ngIf="buttonText == 'Update'">{{'CONTENT.UPDATE_PAGE_DETAILS' | translate}}</h1>
-    <div class="content_spacing">
-      <nb-select placeholder="Language" outline shape="rectangle" [(ngModel)]="language" name="language" [selected]="language">
-        <nb-option *ngFor="let lan of languages" [value]="lan.code">{{
-          ('LANG.'+lan.code) | translate }}</nb-option>
-      </nb-select>
-    </div>
+
     <div class="content_spacing">
       <button type="button" nbButton class="cancel_button" (click)="goToback()">{{ 'COMMON.CANCEL'
         | translate}}</button>
@@ -19,6 +14,7 @@
         translate }}</button>
     </div>
   </nb-card-header>
+
   <div class="" [nbSpinner]="loadingList" nbSpinnerSize="large" nbSpinnerStatus="primary">
     <form #pagesForm="ngForm" role="form">
       <div class="row">
@@ -60,31 +56,38 @@
         </div>
         <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
           <nb-card class="nb-card inline-form-card">
+            <nb-card-header class="nb-card-header">{{ 'CONTENT.BOX_CONTENT' | translate}} - {{('LANG.'+ currentLanguage) |translate }}&nbsp;
+              <nb-select *ngIf="languages.length" placeholder="{{ 'COMMON.LANGUAGE' | translate}}" outline shape="rectangle"
+              name='selectedLanguage' [selected]="defaultLanguage">
+              <nb-option (click)="selectLanguage(language.code)" *ngFor="let language of languages" [value]="language.code">{{
+                ('LANG.'+language.code) |translate }}</nb-option>
+            </nb-select>
+            </nb-card-header>  
             <nb-card-header class="nb-card-header">{{ 'COMMON.SEO_DETAILS' | translate}}</nb-card-header>
             <nb-card-body class="nb-card-body">
               <div *ngFor="let descr of description; let j=index">
-
                 <div *ngIf="descr.language === language">
                   <div class="row">
                     <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                       <div class="form-group">
-                        <label for="exampleInputPassword1" class="label inputLabel">{{ 'CONTENT.TITLE' | translate}}</label>
+                        <label for="title" class="label inputLabel">{{ 'CONTENT.TITLE' | translate}}</label>
                         <input type="text" [(ngModel)]="descr.title" name="title" class="form-control inputText" id="title"
                           placeholder="{{ 'CONTENT.TITLE' | translate}}">
                       </div>
                     </div>
                     <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                       <div class="form-group">
-                        <label for="exampleInputPassword1" class="label inputLabel">{{ 'CONTENT.KEYWORDS' | translate}}</label>
-                        <input type="text" [(ngModel)]="descr.keyWords" name="keyWords" class="form-control inputText"
-                          id="keyword" placeholder="{{ 'CONTENT.KEYWORDS' | translate}}">
+                        <label for="description" class="label inputLabel">{{ 'CONTENT.METATAG' |
+                          translate}}</label>
+                        <input type="text" [(ngModel)]="descr.metaDescription" name="metaDescription" class="form-control inputText"
+                          id="description" placeholder="{{ 'CONTENT.METATAG' | translate}}">
                       </div>
                     </div>
                   </div>
                   <div class="row">
                     <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                       <div class="form-group">
-                        <label for="exampleInputPassword1" class="label inputLabel">{{ 'CONTENT.PAGE_NAME' |
+                        <label for="name" class="label inputLabel">{{ 'CONTENT.PAGE_NAME' |
                           translate}}<span>*</span></label>
                         <input type="text" [(ngModel)]="descr.name" name="name" class="form-control inputText" id="page_name"
                           placeholder="{{ 'CONTENT.PAGE_NAME' | translate}}" (keyup)="urlTitle($event, descr.language)"
@@ -93,29 +96,10 @@
                     </div>
                     <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                       <div class="form-group">
-                        <label for="exampleInputPassword1" class="label inputLabel">{{ 'CONTENT.FRIENDLY_URL' |
+                        <label for="friendlyUrl" class="label inputLabel">{{ 'CONTENT.FRIENDLY_URL' |
                           translate}} <span>*</span></label>
                         <input type="text" [(ngModel)]="descr.friendlyUrl" name="friendlyUrl" class="form-control inputText"
                           id="url" placeholder="{{ 'CONTENT.FRIENDLY_URL' | translate}}" required>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                      <div class="form-group">
-                        <label for="exampleInputPassword1" class="label inputLabel">{{ 'CONTENT.PRODUCT_GROUP' |
-                          translate}}</label>
-                        <input type="text" [(ngModel)]="descr.productGroup" name="productGroup" class="form-control inputText"
-                          id="product_group" placeholder="{{ 'CONTENT.PRODUCT_GROUP' |
-                          translate}}">
-                      </div>
-                    </div>
-                    <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                      <div class="form-group">
-                        <label for="exampleInputPassword1" class="label inputLabel">{{ 'CONTENT.METATAG' |
-                          translate}}</label>
-                        <input type="text" [(ngModel)]="descr.metaDescription" name="metaDescription" class="form-control inputText"
-                          id="description" placeholder="{{ 'CONTENT.METATAG' | translate}}">
                       </div>
                     </div>
                   </div>

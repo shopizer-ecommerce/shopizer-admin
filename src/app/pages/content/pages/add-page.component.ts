@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { LocalDataSource } from 'ng2-smart-table';
 import { CrudService } from '../../shared/services/crud.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { ConfigService } from '../../shared/services/config.service';
 import { ImageBrowserComponent } from '../../../@theme/components/image-browser/image-browser.component';
@@ -16,6 +16,9 @@ declare var $: any;
   styleUrls: ['./add-page.component.scss'],
 })
 export class AddPageComponent {
+
+  uniqueCode: string;//identifier fromroute
+
   loadingList = false;
   visible: any = false;
   descData: any;
@@ -27,7 +30,12 @@ export class AddPageComponent {
   // titleText: string = 'Add page details';
   language: string = 'en';
   description: Array<any> = []
-  languages: Array<any> = [];
+  languages = [];
+
+  defaultLanguage = localStorage.getItem('lang');
+  //changed from seo section
+  currentLanguage = localStorage.getItem('lang');
+
   codeExits: any;
   message: string = '';
 
@@ -39,14 +47,15 @@ export class AddPageComponent {
     tabsize: 2,
     height: 300,
     toolbar: [
-      ['misc', ['codeview', 'undo', 'redo']],
+      ['misc', ['codeview', 'fullscreen', 'undo', 'redo']],
       ['style', ['bold', 'italic', 'underline', 'clear']],
       ['font', ['bold', 'italic', 'underline', 'strikethrough', 'superscript', 'subscript', 'clear']],
       ['fontsize', ['fontname', 'fontsize', 'color']],
-      ['para', ['style', 'ul', 'ol', 'paragraph', 'height']],
-      ['insert', ['table', 'picture', 'link', 'video']],
+      ['para', ['style', 'ul', 'ol', 'height']],
+      ['insert', ['table', 'link', 'video']],
       ['customButtons', ['testBtn']]
     ],
+
     buttons: {
       'testBtn': this.customButton.bind(this)
     },
@@ -57,11 +66,11 @@ export class AddPageComponent {
     public router: Router,
     private toastr: ToastrService,
     private configService: ConfigService,
-    private dialogService: NbDialogService
+    private dialogService: NbDialogService,
+    private activatedRoute: ActivatedRoute,
   ) {
     this.configService.getListOfSupportedLanguages(localStorage.getItem('merchant'))
       .subscribe(res => {
-        console.log(res);
         this.languages = res;
         this.languages.forEach(lang => {
           this.description.push({
@@ -77,16 +86,18 @@ export class AddPageComponent {
           });
         });
       });
-    if (localStorage.getItem('contentpageid')) {
-      this.buttonText = 'Update';
-      // this.titleText = 'Update page details';
-      this.getContentDetails()
-    }
-
   }
-  getContentDetails() {
-    // console.log(this.language)
-    this.crudService.get('/v1/content/pages/' + localStorage.getItem('contentpageid') + '?lang=_all')
+
+  ngOnInit() {
+    console.log('init PAGE');
+    this.getPage();
+  }
+
+
+  getPage() {
+    console.log('GET PAGE');
+    this.uniqueCode = this.activatedRoute.snapshot.paramMap.get('code');
+    this.crudService.get('/v1/content/pages/' + this.uniqueCode + '?lang=_all')
       .subscribe(data => {
         // console.log(data, '************')
         // this.en = data;
