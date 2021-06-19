@@ -16,12 +16,11 @@
   </nb-card-header>
 
   <div class="" [nbSpinner]="loadingList" nbSpinnerSize="large" nbSpinnerStatus="primary">
-    <form #pagesForm="ngForm" role="form">
+    <form [formGroup]='form' #boxForm="ngForm" role="form" *ngIf="!loader">
       <div class="row">
         <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
           <nb-card class="nb-card inline-form-card">
-            <nb-card-header class="nb-card-header">{{ 'CONTENT.BASIC_DETAILS'
-              | translate}}</nb-card-header>
+            <nb-card-header class="nb-card-header">{{ 'CONTENT.BASIC_DETAILS' | translate}}</nb-card-header>
             <nb-card-body class="nb-card-body">
               <div class="row">
                 <div class="col-lg-12">
@@ -56,14 +55,13 @@
         </div>
         <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
           <nb-card class="nb-card inline-form-card">
-            <nb-card-header class="nb-card-header">{{ 'CONTENT.BOX_CONTENT' | translate}} - {{('LANG.'+ currentLanguage) |translate }}&nbsp;
+            <nb-card-header class="nb-card-header">{{ 'CONTENT.PAGE_CONTENT' | translate}} - {{('LANG.'+ currentLanguage) |translate }}&nbsp;
               <nb-select *ngIf="languages.length" placeholder="{{ 'COMMON.LANGUAGE' | translate}}" outline shape="rectangle"
               name='selectedLanguage' [selected]="defaultLanguage">
               <nb-option (click)="selectLanguage(language.code)" *ngFor="let language of languages" [value]="language.code">{{
                 ('LANG.'+language.code) |translate }}</nb-option>
             </nb-select>
             </nb-card-header>  
-            <nb-card-header class="nb-card-header">{{ 'COMMON.SEO_DETAILS' | translate}}</nb-card-header>
             <nb-card-body class="nb-card-body">
               <div *ngFor="let descr of description; let j=index">
                 <div *ngIf="descr.language === language">

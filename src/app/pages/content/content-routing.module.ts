@@ -26,6 +26,10 @@ const routes: Routes = [{
       component: AddPageComponent,
     },
     {
+      path: 'pages/add',
+      component: AddPageComponent,
+    },
+    {
       path: 'boxes/list',
       component: BoxesComponent,
     },

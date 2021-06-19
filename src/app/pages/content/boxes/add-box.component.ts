@@ -83,11 +83,12 @@ export class AddBoxComponent implements OnInit  {
   ngOnInit() {
     this.loader = true;
     this.uniqueCode = this.activatedRoute.snapshot.paramMap.get('code');
+    this.createForm();
+    this.addFormArray();//create array
     const languages = this.configService.getListOfSupportedLanguages(localStorage.getItem('merchant'))
     .subscribe((languages) => {
       this.languages = [...languages];
-      this.createForm();
-      this.addFormArray();//create array
+
       if (this.uniqueCode != null) {
         this.action = 'edit';
         this.loadContent();
@@ -128,6 +129,7 @@ export class AddBoxComponent implements OnInit  {
           language: [lang.code, [Validators.required]],
           description: [''],
           name: [''],
+          title: [''],
           id:0
         })
       );
@@ -156,7 +158,8 @@ export class AddBoxComponent implements OnInit  {
               id: description.id,
               language: description.language,
               description: description.description,
-              name: description.name
+              name: description.name,
+              title: description.title
             });
           }
         });

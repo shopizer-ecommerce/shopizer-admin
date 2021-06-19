@@ -1,12 +1,12 @@
-import { Component } from '@angular/core';
-import { LocalDataSource } from 'ng2-smart-table';
+import { Component, OnInit } from '@angular/core';
+import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CrudService } from '../../shared/services/crud.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { ConfigService } from '../../shared/services/config.service';
 import { ImageBrowserComponent } from '../../../@theme/components/image-browser/image-browser.component';
-// import { environment } from '../../../';
 import { NbDialogService } from '@nebular/theme';
+import { validators } from '../../shared/validation/validators';
 declare var jquery: any;
 declare var $: any;
 
@@ -15,9 +15,11 @@ declare var $: any;
   templateUrl: './add-page.component.html',
   styleUrls: ['./add-page.component.scss'],
 })
-export class AddPageComponent {
+export class AddPageComponent implements OnInit  {
 
   uniqueCode: string;//identifier fromroute
+  form: FormGroup;
+  content: any;
 
   loadingList = false;
   visible: any = false;
@@ -27,7 +29,6 @@ export class AddPageComponent {
   code: string = '';
   order: number = 0;
   buttonText: string = 'Save';
-  // titleText: string = 'Add page details';
   language: string = 'en';
   description: Array<any> = []
   languages = [];
@@ -68,6 +69,7 @@ export class AddPageComponent {
     private configService: ConfigService,
     private dialogService: NbDialogService,
     private activatedRoute: ActivatedRoute,
+    private fb: FormBuilder,
   ) {
     this.configService.getListOfSupportedLanguages(localStorage.getItem('merchant'))
       .subscribe(res => {
@@ -82,39 +84,84 @@ export class AddPageComponent {
             title: '',
             metaDescription: '',
             keyWords: '',
-            // highlights: ''
           });
         });
       });
   }
 
   ngOnInit() {
-    console.log('init PAGE');
     this.getPage();
   }
 
-
   getPage() {
-    console.log('GET PAGE');
     this.uniqueCode = this.activatedRoute.snapshot.paramMap.get('code');
+    this.createForm();
+    this.addFormArray();//create array
     this.crudService.get('/v1/content/pages/' + this.uniqueCode + '?lang=_all')
       .subscribe(data => {
-        // console.log(data, '************')
-        // this.en = data;
         this.updatedID = data.id;
         this.visible = data.visible;
         this.mainmenu = data.displayedInMenu;
         this.code = data.code;
         this.order = 0;
         this.descData = data.descriptions
-        setTimeout(() => {
-          this.fillForm();
-        }, 1000);
-
+        this.content = data;
+        this.buttonText = 'Update';
+        this.fillForm();
 
       }, error => {
       });
   }
+
+
+
+  private createForm() {
+    this.form = this.fb.group({
+      id:0,
+      code: ['', [Validators.required,Validators.pattern(validators.alphanumeric)]],
+      visible: [false],
+      selectedLanguage: [this.defaultLanguage, [Validators.required]],
+      descriptions: this.fb.array([]),
+    });
+  }
+
+  addFormArray() {
+    const control = <FormArray>this.form.controls.descriptions;
+    this.languages.forEach(lang => {
+      control.push(
+        this.fb.group({
+          language: [lang.code, [Validators.required]],
+          description: [''],
+          name: [''],
+          title: [''],
+          id:0
+        })
+      );
+    });
+  }
+  
+
+  fillFormArray() {
+    this.form.value.descriptions.forEach((desc, index) => {
+      if (this.content != null && this.content.descriptions) {
+        this.content.descriptions.forEach((description) => {
+          if (desc.language === description.language) {
+            (<FormArray>this.form.get('descriptions')).at(index).patchValue({
+              id: description.id,
+              language: description.language,
+              description: description.description,
+              name: description.name,
+              title: description.title
+            });
+          }
+        });
+      }
+    });
+  }
+
+
+
+
   fillForm() {
     this.descData.forEach((newvalue, index) => {
       this.description.forEach((value, index) => {
@@ -171,7 +218,6 @@ export class AddPageComponent {
     if (localStorage.getItem('contentpageid')) {
       this.crudService.put('/v1/private/content/page/' + this.updatedID, param)
         .subscribe(data => {
-          console.log(data);
           this.loadingList = false;
           this.toastr.success('Page updated successfully');
           // this.buttonText = 'Update';
@@ -195,6 +241,14 @@ export class AddPageComponent {
     }
 
   }
+
+  selectLanguage(lang) {
+    this.form.patchValue({
+      selectedLanguage: lang,
+    });
+    this.currentLanguage = lang;
+  }
+
   goToback() {
     this.router.navigate(['/pages/content/pages/list']);
   }
