@@ -124,7 +124,7 @@ export class BrandFormComponent implements OnInit {
     this.form.patchValue({
       selectedLanguage: lang,
     });
-    this.fillFormArray();
+    //this.fillFormArray();
   }
 
 

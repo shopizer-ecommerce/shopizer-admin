@@ -190,7 +190,7 @@ export class TypeDetailsComponent implements OnInit {
     this.form.patchValue({
       selectedLanguage: lang,
     });
-    this.fillFormArray();
+    //this.fillFormArray();
   }
 
   get descriptions(): FormArray {
