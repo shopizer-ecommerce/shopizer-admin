@@ -84,11 +84,11 @@ export class AddBoxComponent implements OnInit  {
     this.loader = true;
     this.uniqueCode = this.activatedRoute.snapshot.paramMap.get('code');
     this.createForm();
-    this.addFormArray();//create array
+    
     const languages = this.configService.getListOfSupportedLanguages(localStorage.getItem('merchant'))
     .subscribe((languages) => {
       this.languages = [...languages];
-
+      this.addFormArray();//create array
       if (this.uniqueCode != null) {
         this.action = 'edit';
         this.loadContent();
@@ -121,7 +121,7 @@ export class AddBoxComponent implements OnInit  {
     });
   }
 
-  addFormArray() {
+  private addFormArray() {
     const control = <FormArray>this.form.controls.descriptions;
     this.languages.forEach(lang => {
       control.push(
@@ -136,7 +136,7 @@ export class AddBoxComponent implements OnInit  {
     });
   }
   
-  fillForm() {
+  private fillForm() {
     this.form.patchValue({
       id: this.content.id,
       code: this.content.code,
@@ -149,7 +149,7 @@ export class AddBoxComponent implements OnInit  {
 
   }
 
-  fillFormArray() {
+  private fillFormArray() {
     this.form.value.descriptions.forEach((desc, index) => {
       if (this.content != null && this.content.descriptions) {
         this.content.descriptions.forEach((description) => {
@@ -167,7 +167,7 @@ export class AddBoxComponent implements OnInit  {
     });
   }
 
-  checkCode(event) {
+  private checkCode(event) {
     //check if box code already exists
     const code = event.target.value.trim();
     this.crudService.get('/v1/private/content/box/' + code + '/exists', this.param())
@@ -177,7 +177,7 @@ export class AddBoxComponent implements OnInit  {
 
   }
 
-  save() {
+  private save() {
     this.form.markAllAsTouched();
     if(this.findInvalidControls().length > 0) {
       return;
