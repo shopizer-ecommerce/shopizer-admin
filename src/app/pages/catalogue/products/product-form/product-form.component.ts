@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewChild  } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -16,6 +16,7 @@ import { slugify } from '../../../shared/utils/slugifying';
 import { forkJoin } from 'rxjs';
 import { TypesService } from '../../types/services/types.service';
 import { Image } from '../../../shared/models/image';
+import { ProductsImagesComponent } from './../products-images/products-images.component';
 import { ImageBrowserComponent } from '../../../../@theme/components/image-browser/image-browser.component';
 declare var jquery: any;
 declare var $: any;
@@ -28,6 +29,9 @@ declare var $: any;
 export class ProductFormComponent implements OnInit {
   @Input() product: any;
   @Input() _title: string;
+
+  @ViewChild("imagesManager", { static: false }) imagesManager: ProductsImagesComponent;
+
   form: FormGroup;
   loaded = false;
   loading = false;
@@ -39,6 +43,24 @@ export class ProductFormComponent implements OnInit {
   defaultLanguage = localStorage.getItem('lang');
   //changed from seo section
   currentLanguage = localStorage.getItem('lang');
+  tabs: any[] = [
+    {
+      title: 'Product images',
+      route: '/pages/catalogue/products/product/200/details',
+    },
+    {
+      title: 'Product to Category',
+      route: '/pages/layout/tabs/tab2',
+    },
+    {
+      title: 'Product options',
+      route: '/pages/catalogue/products/product/200/options',
+    },
+    {
+      title: 'Product properties',
+      route: '/pages/catalogue/products/product/200/properties',
+    },
+  ];
   images: Image[] = [];
   addImageUrlComponent = '';//add image url to be used by uploader
   sidemenuLinks = [
@@ -109,7 +131,8 @@ export class ProductFormComponent implements OnInit {
 
   ngOnInit() {
     this.loadEvent();
-    this.addImageUrlComponent = this.productImageService.addImageUrl(this.product.id);
+    console.log('Parent ' + this.product.id);
+
     const manufacture$ = this.manufactureService.getManufacturers();
     const types$ = this.productService.getProductTypes();
     //TODO local cache
@@ -120,6 +143,7 @@ export class ProductFormComponent implements OnInit {
         manufacturers.manufacturers.forEach((option) => {
           this.manufacturers.push({ value: option.code, label: option.code });
         });
+
         productTypes.list.forEach((option) => {
           this.productTypes.push({ value: option.code, label: option.code });
         });
@@ -132,6 +156,16 @@ export class ProductFormComponent implements OnInit {
         }
         this.loadedEvent();
       });
+  }
+
+  ngAfterViewInit() {
+
+    if(this.product != null) {
+      console.log(JSON.stringify(this.product.images));
+      this.images = this.product.images;
+      this.imagesManager.setImages(this.product.images);
+    }
+
   }
 
   private loadEvent() {
@@ -188,8 +222,8 @@ export class ProductFormComponent implements OnInit {
 
 
   fillForm() {
-    this.addImageUrlComponent = this.productImageService.addImageUrl(this.product.id);
-    this.refreshChilds();
+    //this.addImageUrlComponent = this.productImageService.addImageUrl(this.product.id);
+    //this.refreshChilds();
     this.form.patchValue({
       identifier: this.product.identifier,
       visible: this.product.visible,
@@ -275,7 +309,7 @@ export class ProductFormComponent implements OnInit {
     .subscribe(res => {
       this.product = res;
       this.images = new Array();
-      this.refreshChilds();
+      //this.refreshChilds();
       this.loaded = true;
     }, error => {
       this.loaded = true;
@@ -287,6 +321,7 @@ export class ProductFormComponent implements OnInit {
   }
 
   //images and other childs
+  /**
   refreshChilds() {
     let productImages = this.product.images;
     productImages.forEach(val => {
@@ -298,7 +333,7 @@ export class ProductFormComponent implements OnInit {
     });
   }
 
-  /** image component */
+
   removeImage(event) {
     this.loading = true;
     this.productImageService.removeImage(this.product.id,event)
@@ -445,7 +480,6 @@ export class ProductFormComponent implements OnInit {
       });
       delete productObject.selectedLanguage;
       if (this.product.id) {
-        console.log('Updating product');
         this.productService.updateProduct(this.product.id, productObject)
           .subscribe(res => {
             this.loading = false;

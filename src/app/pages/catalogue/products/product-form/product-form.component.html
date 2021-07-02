@@ -14,8 +14,7 @@
     </nb-card-header>
 
     <div [nbSpinner]="loading" nbSpinnerSize="large" nbSpinnerStatus="primary">   
-      <form [formGroup]='form'><!-- only display once the query is terminated -->
-        <span *ngIf="loaded">
+      <form *ngIf="loaded" [formGroup]='form'><!-- only display once the query is terminated -->
       <div class="row">
         <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
           <nb-card class="nb-card inline-form-card">
@@ -238,14 +237,22 @@
         </div>
       </nb-card-header>
 
-      <!-- images-->
+      <!-- images, options, properties ... -->
       <div class="row" *ngIf="product.id">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
           <nb-card class="nb-card inline-form-card">
-            <nb-card-header class="nb-card-header">{{ 'DESCRIPTION_FORM.IMAGE' | translate}}</nb-card-header>
-            <nb-card-body class="nb-card-body">
-             <ngx-image-uploading [images]="images" (remove)="removeImage($event)" (error)="errorImage($event)" (success)="addedImage($event)" [addImageUrl]="addImageUrlComponent"></ngx-image-uploading>
-            </nb-card-body>
+            <nb-route-tabset [tabs]="tabs"></nb-route-tabset>
+            <!--
+            <nb-tabset>
+              <nb-tab tabTitle="{{ 'COMPONENTS.PRODUCTS_IMAGES' | translate}}">
+              <nb-card-header class="nb-card-header">{{ 'DESCRIPTION_FORM.IMAGE' | translate}}</nb-card-header>
+              <nb-card-body class="nb-card-body">
+              <ngx-image-uploading [images]="images" (remove)="removeImage($event)" (error)="errorImage($event)" (success)="addedImage($event)" [addImageUrl]="addImageUrlComponent"></ngx-image-uploading>
+              </nb-card-body>
+              </nb-tab>
+            </nb-tabset>
+            -->
+            
           </nb-card>
         </div>
       </div>
@@ -498,8 +505,7 @@
         </nb-card-body>
       </nb-card> -->
 
-
-    </span>
+s
     </form>
       </div> 
 

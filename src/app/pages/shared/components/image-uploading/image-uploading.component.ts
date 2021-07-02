@@ -64,10 +64,7 @@ export class ImageUploadingComponent implements OnInit {
     this.imageList = this.images; 
   }
 
-  onUploadError(file: FilePreviewModel) {
-
-  }
-
+  onUploadError(file: FilePreviewModel) { }
 
   readfiles(files) {
     this.details = true;
@@ -82,8 +79,7 @@ export class ImageUploadingComponent implements OnInit {
         name: files.name
       };
       this.images.push(img);
-      console.log(files)
-      //this.imageChanged.emit({ type: 'add', data: files });
+      //console.log(files)
     };
     reader.readAsDataURL(files);
     this.details = false;

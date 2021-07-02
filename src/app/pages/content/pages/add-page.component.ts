@@ -17,6 +17,7 @@ declare var $: any;
 })
 export class AddPageComponent implements OnInit  {
 
+  loader = false;
   uniqueCode: string;//identifier fromroute
   form: FormGroup;
   content: any;
@@ -28,7 +29,7 @@ export class AddPageComponent implements OnInit  {
   mainmenu: any = false;
   code: string = '';
   order: number = 0;
-  buttonText: string = 'Save';
+  action: string = 'save';
   language: string = 'en';
   description: Array<any> = []
   languages = [];
@@ -90,13 +91,31 @@ export class AddPageComponent implements OnInit  {
   }
 
   ngOnInit() {
-    this.getPage();
-  }
-
-  getPage() {
+    this.loader = true;
     this.uniqueCode = this.activatedRoute.snapshot.paramMap.get('code');
     this.createForm();
-    this.addFormArray();//create array
+    
+    const languages = this.configService.getListOfSupportedLanguages(localStorage.getItem('merchant'))
+    .subscribe((languages) => {
+      this.languages = [...languages];
+      this.addFormArray();//create array
+      if (this.uniqueCode != null) {
+        this.action = 'edit';
+        this.getPage();
+      } else {
+        this.loader = false;
+      }
+
+    }, error => {
+      this.toastr.error(error.error.message);
+      this.loader = false;
+    });
+  }
+
+  private getPage() {
+    this.uniqueCode = this.activatedRoute.snapshot.paramMap.get('code');
+    this.createForm();
+    
     this.crudService.get('/v1/content/pages/' + this.uniqueCode + '?lang=_all')
       .subscribe(data => {
         this.updatedID = data.id;
@@ -106,8 +125,8 @@ export class AddPageComponent implements OnInit  {
         this.order = 0;
         this.descData = data.descriptions
         this.content = data;
-        this.buttonText = 'Update';
         this.fillForm();
+        this.loader = false;
 
       }, error => {
       });

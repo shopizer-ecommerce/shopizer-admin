@@ -1,7 +1,7 @@
 <div class="inner_pages create_page">
   <nb-card-header class="main_header">
-    <h1 class="page_title" *ngIf="buttonText == 'Save'">{{'CONTENT.ADD_PAGE_DETAILS' | translate}}</h1>
-    <h1 class="page_title" *ngIf="buttonText == 'Update'">{{'CONTENT.UPDATE_PAGE_DETAILS' | translate}}</h1>
+    <h1 class="page_title" *ngIf="action == 'save'">{{'CONTENT.ADD_PAGE_DETAILS' | translate}}</h1>
+    <h1 class="page_title" *ngIf="action == 'update'">{{'CONTENT.UPDATE_PAGE_DETAILS' | translate}}</h1>
 
     <div class="content_spacing">
       <button type="button" nbButton class="cancel_button" (click)="goToback()">{{ 'COMMON.CANCEL'
@@ -16,7 +16,7 @@
   </nb-card-header>
 
   <div class="" [nbSpinner]="loadingList" nbSpinnerSize="large" nbSpinnerStatus="primary">
-    <form [formGroup]='form' #boxForm="ngForm" role="form" *ngIf="!loader">
+    <form [formGroup]='form' #pageForm="ngForm" role="form" *ngIf="!loader">
       <div class="row">
         <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
           <nb-card class="nb-card inline-form-card">
@@ -25,9 +25,10 @@
               <div class="row">
                 <div class="col-lg-12">
                   <div class="form-group">
-                    <nb-checkbox [(ngModel)]="visible" name="visible">{{ 'CONTENT.VISIBLE' | translate}}</nb-checkbox>
-                    <nb-checkbox [(ngModel)]="mainmenu" name="mainmenu">{{ 'CONTENT.MAINMENU' | translate}}
-                    </nb-checkbox>
+                    <nb-checkbox formControlName='visible' >{{ 'CONTENT.VISIBLE' | translate}}</nb-checkbox>
+                    <!--<nb-checkbox [(ngModel)]="visible" name="visible">{{ 'CONTENT.VISIBLE' | translate}}</nb-checkbox>-->
+                    <!--<nb-checkbox [(ngModel)]="mainmenu" name="mainmenu">{{ 'CONTENT.MAINMENU' | translate}}-->
+                    <nb-checkbox formControlName='mainmenu' >{{ 'CONTENT.VISIBLE' | translate}}</nb-checkbox>
                   </div>
                 </div>
               </div>

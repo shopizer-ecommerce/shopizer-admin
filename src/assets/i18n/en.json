@@ -13,6 +13,7 @@
   "COMPONENTS": {
     "LOGIN": "Login",
     "HOME": "Home",
+    "TAKE_ME_HOME": "Take me home",
     "SEARCH": "Search",
     "USER_MANAGEMENT": "User management",
     "STORE_MANAGEMENT": "Store management",
@@ -70,6 +71,7 @@
     "BRAND": "Brand",
     "CREATE_BRAND": "Create brand",
     "BRANDS_LIST": "List of brands",
+    "PRODUCTS_IMAGES": "Product images",
     "PRODUCTS_GROUPS": "Products groups",
     "CREATE_PRODUCTS_GROUPS": "Create product group",
     "LIST_PRODUCTS_GROUPS": "List products groups",

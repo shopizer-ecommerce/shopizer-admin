@@ -24,17 +24,17 @@ export class AddBoxComponent implements OnInit  {
   
   form: FormGroup;
   content: any;
-  uniqueCode: string;//identifier fromroute
-
+  
   languages = [];
 
+  uniqueCode: string;//identifier fromroute
   isCodeExists = false;
   action: any = 'save'
 
+  //default selected lang
   defaultLanguage = localStorage.getItem('lang');
   //changed from seo section
   currentLanguage = localStorage.getItem('lang');
-  // title: any = 'Add Box Details'
   uploadData = new FormData();
   description: Array<any> = []
   page = {
