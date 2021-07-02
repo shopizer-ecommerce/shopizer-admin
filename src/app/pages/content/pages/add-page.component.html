@@ -8,9 +8,9 @@
         | translate}}</button>
     </div>
     <div class="content_spacing">
-      <button type="submit" nbButton class="success_button" *ngIf="buttonText == 'Save'" (click)="createPages()">{{'COMMON.SAVE'|
+      <button type="submit" nbButton class="success_button" *ngIf="action == 'Save'" (click)="createPages()">{{'COMMON.SAVE'|
         translate }}</button>
-      <button type="submit" nbButton class="success_button" *ngIf="buttonText == 'Update'" (click)="createPages()">{{'COMMON.UPDATE'|
+      <button type="submit" nbButton class="success_button" *ngIf="action == 'Update'" (click)="createPages()">{{'COMMON.UPDATE'|
         translate }}</button>
     </div>
   </nb-card-header>
