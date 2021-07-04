@@ -70,7 +70,7 @@ export class ProductsListComponent implements OnInit {
     });
 
 
-    //ng2-smart-table server side filter
+    //ng2-smart-table server side filter //list in field
     this.source.onChanged().subscribe((change) => {
       if (!this.loadingList) {//listing service
         this.listingService.filterDetect(this.params, change, this.loadList.bind(this), this.resetList.bind(this));

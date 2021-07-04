@@ -100,8 +100,8 @@ export class ListingService {
       filters.filters.forEach(function (filter) {
 
         if(!self.isNullOrWhiteSpace(filter.search)) {
-          //console.log('name ' + filter.field);
-          //console.log('value ' + filter.search);
+          console.log('---> name ' + filter.field);
+          console.log('---> value ' + filter.search);
           params.push({
             field: filter.field, 
             value:  filter.search
