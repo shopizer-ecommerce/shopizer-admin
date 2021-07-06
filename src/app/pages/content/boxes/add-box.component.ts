@@ -19,12 +19,12 @@ declare var $: any;
   templateUrl: './add-box.component.html',
   styleUrls: ['./add-box.component.scss'],
 })
-export class AddBoxComponent implements OnInit  {
+export class AddBoxComponent implements OnInit {
   loader = false;
-  
+
   form: FormGroup;
   content: any;
-  
+
   languages = [];
 
   uniqueCode: string;//identifier fromroute
@@ -84,22 +84,22 @@ export class AddBoxComponent implements OnInit  {
     this.loader = true;
     this.uniqueCode = this.activatedRoute.snapshot.paramMap.get('code');
     this.createForm();
-    
-    const languages = this.configService.getListOfSupportedLanguages(localStorage.getItem('merchant'))
-    .subscribe((languages) => {
-      this.languages = [...languages];
-      this.addFormArray();//create array
-      if (this.uniqueCode != null) {
-        this.action = 'edit';
-        this.loadContent();
-      } else {
-        this.loader = false;
-      }
 
-    }, error => {
-      this.toastr.error(error.error.message);
-      this.loader = false;
-    });
+    const languages = this.configService.getListOfSupportedLanguages(localStorage.getItem('merchant'))
+      .subscribe((languages) => {
+        this.languages = [...languages];
+        this.addFormArray();//create array
+        if (this.uniqueCode != null) {
+          this.action = 'edit';
+          this.loadContent();
+        } else {
+          this.loader = false;
+        }
+
+      }, error => {
+        this.toastr.error(error.error.message);
+        this.loader = false;
+      });
   }
 
 
@@ -113,8 +113,8 @@ export class AddBoxComponent implements OnInit  {
 
   private createForm() {
     this.form = this.fb.group({
-      id:0,
-      code: ['', [Validators.required,Validators.pattern(validators.alphanumeric)]],
+      id: 0,
+      code: ['', [Validators.required, Validators.pattern(validators.alphanumeric)]],
       visible: [false],
       selectedLanguage: [this.defaultLanguage, [Validators.required]],
       descriptions: this.fb.array([]),
@@ -130,12 +130,12 @@ export class AddBoxComponent implements OnInit  {
           description: [''],
           name: [''],
           title: [''],
-          id:0
+          id: 0
         })
       );
     });
   }
-  
+
   private fillForm() {
     this.form.patchValue({
       id: this.content.id,
@@ -173,13 +173,13 @@ export class AddBoxComponent implements OnInit  {
     this.crudService.get('/v1/private/content/box/' + code + '/exists', this.param())
       .subscribe(res => {
         this.isCodeExists = res.exists;
-    });
+      });
 
   }
 
   private save() {
     this.form.markAllAsTouched();
-    if(this.findInvalidControls().length > 0) {
+    if (this.findInvalidControls().length > 0) {
       return;
     }
     this.loader = true;
@@ -188,7 +188,7 @@ export class AddBoxComponent implements OnInit  {
     var object = this.form.value;
 
     //remove un necessary
-    delete  object.selectedLanguage;
+    delete object.selectedLanguage;
 
 
     /**
@@ -231,16 +231,16 @@ export class AddBoxComponent implements OnInit  {
       });
     }
 
-      /**
-      let errors = this.findInvalidControls();
-      if (errors.length > 0) {
-        this.toastr.error(this.translate.instant('COMMON.FILL_REQUIRED_FIELDS'));
-        return;
-      }
-      **/
-      //for debugging
-      //console.log(JSON.stringify(categoryObject));
-      //return;
+    /**
+    let errors = this.findInvalidControls();
+    if (errors.length > 0) {
+      this.toastr.error(this.translate.instant('COMMON.FILL_REQUIRED_FIELDS'));
+      return;
+    }
+    **/
+    //for debugging
+    //console.log(JSON.stringify(categoryObject));
+    //return;
 
     //console.log('Content saved ' + JSON.stringify(object));
 
@@ -255,7 +255,7 @@ export class AddBoxComponent implements OnInit  {
           this.toastr.error(error.error.message);
           this.loader = false;
         });
-     
+
     } else {
 
       this.crudService.post('/v1/private/content/box', object)
@@ -296,7 +296,7 @@ export class AddBoxComponent implements OnInit  {
     return this.form.get('selectedLanguage');
   }
 
-  
+
   selectLanguage(lang) {
     this.form.patchValue({
       selectedLanguage: lang,

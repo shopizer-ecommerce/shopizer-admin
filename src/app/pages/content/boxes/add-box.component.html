@@ -25,7 +25,7 @@
               <div class="row">
                 <div class="col-lg-12">
                   <div class="form-group">
-                    <nb-checkbox formControlName='visible' >{{ 'CONTENT.VISIBLE' | translate}}</nb-checkbox>
+                    <nb-checkbox formControlName='visible'>{{ 'CONTENT.VISIBLE' | translate}}</nb-checkbox>
                     <!--<nb-checkbox [(ngModel)]="page.mainmenu" name="mainmenu">{{ 'CONTENT.MAINMENU' | translate}}</nb-checkbox>-->
                   </div>
                 </div>
@@ -37,18 +37,18 @@
                     <div>
                       <input type="text" class="form-control inputText" id="code" formControlName='code' [readOnly]="uniqueCode"
                         placeholder="{{ 'COMMON.CODE' | translate}}" (change)="checkCode($event)" required>
-                        <div class="err-message" *ngIf="(code.dirty || code.touched) && code.invalid && code">
-                          <span *ngIf="code.errors.required">
-                            {{ 'COMMON.CODE_REQUIRED' | translate}}
-                          </span>
-                          <span *ngIf="code.errors.pattern">
-                            {{ 'COMMON.ALPHA_DECIMAL_RULE' | translate}}
-                          </span>
-                        </div>
-                        <span *ngIf="isCodeExists" class="err-message">
-                          {{ 'COMMON.CODE_EXISTS' | translate}}
+                      <div class="err-message" *ngIf="(code.dirty || code.touched) && code.invalid && code">
+                        <span *ngIf="code.errors.required">
+                          {{ 'COMMON.CODE_REQUIRED' | translate}}
+                        </span>
+                        <span *ngIf="code.errors.pattern">
+                          {{ 'COMMON.ALPHA_DECIMAL_RULE' | translate}}
                         </span>
                       </div>
+                      <span *ngIf="isCodeExists" class="err-message">
+                        {{ 'COMMON.CODE_EXISTS' | translate}}
+                      </span>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -58,13 +58,14 @@
         </div>
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
           <nb-card class="nb-card inline-form-card">
-            <nb-card-header class="nb-card-header">{{ 'CONTENT.PAGE_CONTENT' | translate}} - {{('LANG.'+ currentLanguage) |translate }}&nbsp;
-                <nb-select *ngIf="languages.length" placeholder="{{ 'COMMON.LANGUAGE' | translate}}" outline shape="rectangle"
+            <nb-card-header class="nb-card-header">{{ 'CONTENT.PAGE_CONTENT' | translate}} - {{('LANG.'+
+              currentLanguage) |translate }}&nbsp;
+              <nb-select *ngIf="languages.length" placeholder="{{ 'COMMON.LANGUAGE' | translate}}" outline shape="rectangle"
                 name='selectedLanguage' [selected]="defaultLanguage">
                 <nb-option (click)="selectLanguage(language.code)" *ngFor="let language of languages" [value]="language.code">{{
                   ('LANG.'+language.code) |translate }}</nb-option>
               </nb-select>
-            </nb-card-header>            
+            </nb-card-header>
             <nb-card-body class="nb-card-body">
               <div *ngIf="selectedLanguage.value !== ''" formArrayName='descriptions'>
                 <div *ngFor="let descr of descriptions.controls; let j=index">

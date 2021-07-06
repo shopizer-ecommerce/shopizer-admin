@@ -107,7 +107,13 @@ export class BoxesComponent {
           title: this.translate.instant('CONTENT.NAME'),
           type: 'string',
           valuePrepareFunction: (cell, row) => {
-            return row.description.name
+            // console.log(row.descriptions)
+            if (this.params.lang == '_all') {
+              return row.descriptions[0].name
+            } else {
+              let value = row.descriptions.find((a) => a.language == this.params.lang);
+              return value.name
+            }
           }
         }
       },
