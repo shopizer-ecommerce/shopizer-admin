@@ -14,34 +14,66 @@
   width: 100%;
 }
 
-::ng-deep #dropZone {
-  border: 2px dashed #a9a9b1 !important;
-}
+::ng-deep .files-preview-wrapper {
+  margin-top: 30px;
 
-::ng-deep .ngx-close-icon-wrapper {
-  visibility: hidden !important;
-}
+  .file-preview-actions {
+    .ngx-checkmark-wrapper {
+      .ngx-checkmark {
+        &::after {
+          top: 3px !important;
+          left: 2px !important;
+          width: 6px !important;
+          height: 12px !important;
+          border-top: 1px solid transparent !important;
+          border-left: 1px solid transparent !important;
+          border-right: 2px solid #fff !important;
+          border-bottom: 2px solid #fff !important;
+          -webkit-transform: rotateZ(37deg) !important;
+          transform: rotateZ(37deg);
+          -webkit-transform-origin: 20% 40% !important;
+          transform-origin: 100% 100% !important;
+        }
+      }
+    }
 
-#imageInput {
-  display: none;
-}
+  }
 
-.image-actions {
-  display: flex;
-  flex-direction: row;
-  button:first-child {
-    margin-right: 20px;
+  .ng-star-inserted {
+    background: transparent;
+    // border-bottom: 1px solid #ebeef1
   }
 }
 
+// ::ng-deep #dropZone {
+//   border: 2px dashed #a9a9b1 !important;
+// }
+
+// ::ng-deep .ngx-close-icon-wrapper {
+//   visibility: hidden !important;
+// }
+
+// #imageInput {
+//   display: none;
+// }
+
+// .image-actions {
+//   display: flex;
+//   flex-direction: row;
+
+//   button:first-child {
+//     margin-right: 20px;
+//   }
+// }
 
 
-#dropZone .content{
-  align-items: center;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-}
+
+// #dropZone .content {
+//   align-items: center;
+//   display: flex;
+//   flex-direction: column;
+//   justify-content: center;
+// }
 
 .content {
   display: flex;
@@ -50,33 +82,102 @@
   align-items: center;
 }
 
-/** grid **/
 
-.grid-container {
-  display: grid;
-  grid-template-columns: auto auto auto;
-  padding: 10px;
+
+// /** grid **/
+
+// .grid-container {
+//   display: grid;
+//   grid-template-columns: auto auto auto;
+//   padding: 10px;
+// }
+
+// .grid-item {
+//   background-color: rgba(255, 255, 255, 0.8);
+//   border: 1px rgb(255, 255, 255) solid;
+//   padding: 0px;
+//   font-size: 30px;
+//   text-align: center;
+
+//   #clickableDeleteIcon {
+//   cursor: pointer
+// }
+
+
+//   img {
+//     max-width: 75%;
+//     max-height: 75%;
+//   }
+
+//   .square {
+//     height: 100px;
+//     width: 100px;
+//   }
+// }
+
+.row.custom_file_image {
+  display: flex;
+
+  .file_part {
+    max-width: 440px;
+
+    .files-preview-wrapper {
+      margin-top: 20px;
+    }
+
+    //  .file-preview-actions {
+    //     .ngx-checkmark{
+    //       &::after{
+    //         top: 2px;
+    //         width: 6px;
+    //         height: 12px;
+    //         border-top: 1px solid transparent;
+    //         border-left: 1px solid transparent;
+    //         border-right: 1px solid red;
+    //         border-bottom: 1px solid red;
+    //         -webkit-transform: rotateZ(37deg);
+    //         transform: rotateZ(37deg);
+    //         -webkit-transform-origin: 20% 40%;
+    //         transform-origin: 100% 100%;
+    //       }
+    //     }
+
+    //   }
+  }
+
+  .image_part {
+    width: calc(100% - 440px);
+    max-width: none;
+    flex: none;
+
+    .grid-container {
+      display: inline-flex;
+      flex-wrap: wrap;
+      padding-top: 0px;
+
+      .image-item {
+        width: 25%;
+        float: left;
+        padding: 10px 10px;
+        position: relative;
+
+        .grid-item {
+          #clickableDeleteIcon {
+            position: absolute;
+            right: 20px;
+            top: 15px;
+
+            i {
+              font-size: 22px;
+            }
+          }
+
+          img {
+            max-width: 100%;
+            max-height: 100%;
+          }
+        }
+      }
+    }
+  }
 }
-.grid-item {
-  background-color: rgba(255, 255, 255, 0.8);
-  border: 1px rgb(255, 255, 255) solid;
-  padding: 0px;
-  font-size: 30px;
-  text-align: center;
-
-  #clickableDeleteIcon {
-    cursor: pointer
-  }
-   
-
-  img {
-    max-width: 75%;
-    max-height: 75%;
-  }
-
-  .square {
-    height: 100px;
-    width: 100px;
-  }
-}
-

@@ -41,7 +41,7 @@ export class AddPageComponent implements OnInit {
   //changed from seo section
   currentLanguage = localStorage.getItem('lang');
 
-  codeExits: any;
+  isCodeExists = false;
   message: string = '';
   public scrollbarOptions = { axis: 'y', theme: 'minimal-dark' };
 
@@ -214,20 +214,11 @@ export class AddPageComponent implements OnInit {
 
   focusOutFunction(event) {
     console.log(event)
-    // const code = event.target.value.trim();
-    // this.crudService.get('/v1/content/pages/' + code)
-    //   .subscribe(data => {
-    //     this.codeExits = true;
-    //     this.message = "This code already exist"
-    //   }, error => {
-    //     this.codeExits = false;
-    //     this.message = "This code is available"
-    //   });
-    // const code = event.target.value.trim();
-    // this.crudService.get('/v1/private/content/pages/' + code)
-    //   .subscribe(res => {
-    //     this.codeExits = res.exists;
-    //   });
+    const code = event.target.value.trim();
+    this.crudService.get('/v1/private/content/page/' + code + '/exists')
+      .subscribe(res => {
+        this.isCodeExists = res.exists;
+      });
   }
   urlTitle(event, index) {
     (<FormArray>this.form.get('descriptions')).at(index).patchValue({
@@ -254,24 +245,11 @@ export class AddPageComponent implements OnInit {
 
 
 
-
-
-    //   this.loadingList = true;
-    //   let param = {
-    //     "code": this.code,
-    //     // "contentType": "PAGE",
-    //     "descriptions": this.description,
-    //     "linkToMenu": this.mainmenu,
-    //     "visible": this.visible
-    //   }
     if (object.id) {
       this.crudService.put('/v1/private/content/page/' + object.id, object)
         .subscribe(data => {
           this.loadingList = false;
           this.toastr.success('Page updated successfully');
-          // this.buttonText = 'Update';
-          // this.titleText = 'Update page details';
-          // // this.getContentDetails();
           this.router.navigate(['/pages/content/pages/list']);
         }, error => {
           this.loadingList = false;
@@ -282,7 +260,6 @@ export class AddPageComponent implements OnInit {
           console.log(data);
           this.loadingList = false;
           this.toastr.success('Page added successfully');
-          // this.getContentDetails();
           this.router.navigate(['/pages/content/pages/list']);
         }, error => {
           this.loadingList = false;

@@ -1,22 +1,12 @@
-<div class="row">
-  <div class="col-md-6">
+<div class="row custom_file_image">
+  <div class="col-md-6 file_part">
     <div class="uploader-wrapper">
 
-      <ngx-awesome-uploader
-      [enableCropper]="false"
-      [adapter]="adapter"
-      [fileMaxCount]="10" 
-      [fileMaxSize]="4"
-      [uploadType]="'multi'"
-      (validationError)="onValidationError($event)" 
-      [fileExtensions]="['jpg', 'jpeg', 'png', 'gif']"
-      [enableCropper]="false" 
-      (uploadSuccess)="onUploadSuccess($event)"
-      (uploadError)="onUploadError($event)" 
-      (removeSuccess)="onRemoveSuccess($event)"
-      (fileAdded)="onFileAdded($event)" 
-      [itemTemplate]="uploadItemTemplate" 
-      [accept]="'.jpg, .png, .gif, .jpeg'">
+      <ngx-awesome-uploader [enableCropper]="false" [showPreviewContainer]="details" [adapter]="adapter" [fileMaxCount]="10"
+        [fileMaxSize]="4" [uploadType]="'multi'" (validationError)="onValidationError($event)" [fileExtensions]="['jpg', 'jpeg', 'png', 'gif']"
+        [enableCropper]="false" (uploadSuccess)="onUploadSuccess($event)" (uploadError)="onUploadError($event)"
+        (removeSuccess)="onRemoveSuccess($event)" (fileAdded)="onFileAdded($event)" [itemTemplate]="uploadItemTemplate"
+        [accept]="'.jpg, .png, .gif, .jpeg'">
         <div class="dropzoneTemplate">
           <div class="content">
             <img src="../../../../../assets/img/cloud-computing.png" width="80">
@@ -38,55 +28,20 @@
   </div>
 
 
-  <div class="col-md-6">
+  <div class="col-md-6 image_part">
     <div *ngIf="images.length">
 
       <div class="grid-container">
-      <div *ngFor='let image of images' class="image-item">
-        
-            <div class="grid-item square">
-              <img [src]="image?.path" [alt]="image?.path">
-              <span id="clickableDeleteIcon">
-                <span><i class="fas fa-times" (click)="removeImage(image)"></i></span>
-              </span>
-            </div>
+        <div *ngFor='let image of images' class="image-item">
 
-      </div>  
+          <div class="grid-item square">
+            <img [src]="image?.imageUrl" [alt]="image?.path">
+            <span id="clickableDeleteIcon">
+              <span><i class="fas fa-times" (click)="removeImage(image)"></i></span>
+            </span>
+          </div>
+
+        </div>
       </div>
     </div>
-
-  <!--</div>-->
-</div>
-
-<!--
-<div class="col-md-6">
-  <div class="image-container" *ngIf="imageList.length">-- {{imageList.length}}
-    <div *ngFor='let image of imageList' class="image-item">
-      <img [src]="image?.path" [alt]="image?.path" height="200">
-      <span><i class="fas fa-times" (click)="removeImage(image)"></i></span>
-    </div>
   </div>
-</div>
-
-
-      [fileMaxCount]="3" 
-      [fileMaxSize]="800" 
-      [uploadType]="'multi'"
-      (validationError)="onValidationError($event)" 
-      [fileExtensions]="['jpg', 'jpeg', 'png']"
-      [enableCropper]="false" 
-      (uploadSuccess)="onUploadSuccess($event)" 
-      (removeSuccess)="onRemoveSuccess($event)"
-      (fileAdded)="onFileAdded($event)" 
-      [itemTemplate]="uploadItemTemplate" 
-      [customValidator]="myCustomValidator"
-      [accept]="'.jpg, .png'">
-        <div class="dropzoneTemplate">
-          <div class="content">
-            IMAGE
-            <div class="content-top-text"> Drag and drop file here </div>
-            <div class="content-center-text"> or </div>
-            <button class="file-browse-button" type="button"> Browse Files </button>
-          </div>
-        </div>
--->
