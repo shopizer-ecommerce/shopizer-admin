@@ -1,11 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 import { CategoryService } from '../../categories/services/category.service';
 import { ProductService } from '../services/product.service';
-import { LocalDataSource } from 'ng2-smart-table';
 import { TranslateService } from '@ngx-translate/core';
 import { StorageService } from '../../../shared/services/storage.service';
-import { forkJoin } from 'rxjs';
+import { IDropdownSettings } from 'ng-multiselect-dropdown';
 
 @Component({
   selector: 'ngx-product-to-category',
@@ -13,134 +12,104 @@ import { forkJoin } from 'rxjs';
   styleUrls: ['./product-to-category.component.scss']
 })
 export class ProductToCategoryComponent implements OnInit {
-  source: LocalDataSource = new LocalDataSource();
-  loadingList = false;
-  categories = [];
-  settings = {};
-  loader: boolean = false;
-  // paginator
-  perPage = 10;
-  currentPage = 1;
-  totalCount;
+  @Input() product;
 
+  loading: boolean = false;
+  // categories: Array<any> = [];
+  perPage: number = 10;
+  currentPage: number = 1;
+  // totalCount: number;
+  dropdownList = [];
+  selectedItems = [];
+  dropdownSettings = {};
   // request params
   params = {
-    lang: this.storageService.getLanguage(),
+    // lang: this.storageService.getLanguage(),
     count: this.perPage,
     page: 0
   };
 
-  selectedCategory;
-  availableList: any[];
-  selectedList: any[];
-
   constructor(
     private translate: TranslateService,
     private categoryService: CategoryService,
-    private productService: ProductService,
     private storageService: StorageService,
+    private productService: ProductService,
   ) {
+    this.dropdownSettings = {
+      singleSelection: false,
+      idField: 'id',
+      textField: 'text',
+      enableCheckAll: false,
+      searchPlaceholderText: 'Search by code',
+      // unSelectAllText: 'UnSelect All',
+      itemsShowLimit: 8,
+      allowSearchFilter: true,
+      allowRemoteDataSearch: true
+
+    };
   }
 
   ngOnInit() {
-    this.getList();
-    this.productService.getListOfProducts({})
-      .subscribe(res => {
-        this.availableList = [...res.products];
-        this.selectedList = [];
+    // console.log(this.pro duct)
+    if (this.product.categories.length > 0) {
+      this.product.categories.forEach((data) => {
+        this.selectedItems.push({ 'id': data.id, 'text': data.descriptions[0].name })
       });
+    }
+    this.product
+    this.getList();
   }
 
   getList() {
-    this.categories = [];
     this.params.page = this.currentPage - 1;
-    this.loadingList = true;
+    this.loading = true;
     this.categoryService.getListOfCategories(this.params)
       .subscribe(categories => {
-        categories.categories.forEach((el) => {
-          this.getChildren(el);
-        });
-        this.totalCount = categories.totalPages;
-        this.source.load(this.categories);
-        this.loadingList = false;
+        // console.log(categories);
+        let tempArr = []
+        categories.categories.forEach((value) => {
+          tempArr.push({ 'id': value.id, 'text': value.description.name })
+        })
+        this.dropdownList = tempArr;
+        // this.selectedItems = categories.categories;
+        // this.totalCount = categories.totalPages;
+        this.loading = false;
       });
-    this.translate.onLangChange.subscribe((event) => {
-    });
+    // this.translate.onLangChange.subscribe((event) => {
+    // });
   }
 
-  getChildren(node) {
-    if (node.children && node.children.length !== 0) {
-      this.categories.push(node);
-      node.children.forEach((el) => {
-        this.getChildren(el);
-      });
-    } else {
-      this.categories.push(node);
-    }
+  onFilterChange(e) {
+    // console.log(e);
+    // this.loading = true;
   }
 
-  moveEvent(e, type) {
-    switch (type) {
-      case 'toTarget':
-        // this.addProductToGroup(e.items[0].id, this.selectedGroup);
-        this.productService.addProductToCategory(e.items[0].id, this.selectedCategory)
-          .subscribe(res => {
-            console.log(res);
-          });
-        break;
-      case 'toSource':
-        this.productService.removeProductFromCategory(e.items[0].id, this.selectedCategory)
-          .subscribe(res => {
-            console.log(res);
-          });
-        break;
-      case 'allToTarget':
-        // const addArray = [];
-        // e.items.forEach((el) => {
-        //   // const req = this.addProductToGroup(el.id, this.selectedGroup);
-        //   // addArray.push(req);
-        // });
-        // console.log(addArray);
-        // forkJoin(addArray).subscribe(res => {
-        //   console.log(res);
-        // });
-        break;
-      case 'allToSource':
-        // const removeArr = [];
-        // e.items.forEach((el) => {
-        //   // const req = this.removeProductFromGroup(el.id, this.selectedGroup);
-        //   // removeArr.push(req);
-        // });
-        // console.log(removeArr);
-        // forkJoin(removeArr).subscribe(res => {
-        //   console.log(res);
-        // });
-        break;
-    }
+  onItemSelect(item: any) {
+    // console.log(item);
+    this.loading = true;
+    this.addProductToCategory(this.product.id, item.id)
+    // this.loading = true;
   }
-
+  onItemDeSelect(item: any) {
+    // console.log(item)
+    this.loading = true;
+    this.removeProductFromCategory(this.product.id, item.id)
+  }
   addProductToCategory(productId, groupCode) {
-    // this.productGroupsService.addProductToGroup(productId, groupCode)
-    //   .subscribe(res => {
-    //     console.log(res);
-    //   });
+    this.productService.addProductToCategory(productId, groupCode)
+      .subscribe(res => {
+        console.log(res, '========');
+        this.loading = false;
+      });
   }
 
   removeProductFromCategory(productId, groupCode) {
-    // this.productGroupsService.removeProductFromGroup(productId, groupCode)
-    //   .subscribe(res => {
-    //     console.log(res);
-    //   });
-  }
-
-  selectGroup(categoryCode) {
-    this.selectedCategory = categoryCode;
-    this.productService.getListOfProducts({ category: this.selectedCategory })
+    this.productService.removeProductFromCategory(productId, groupCode)
       .subscribe(res => {
         console.log(res);
-        this.selectedList = [...res.products];
-        this.availableList = this.availableList.filter(n => !this.selectedList.some(n2 => n.id === n2.id));
+        this.loading = false;
       });
   }
+
 
 }

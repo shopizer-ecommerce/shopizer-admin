@@ -59,18 +59,18 @@ export class ProductFormComponent implements OnInit {
       key: 'COMPONENTS.MANAGE_INVENTORY',
       link: 'inventory-list'
     },
-    {
-      id: '2',
-      title: 'Product attributes',
-      key: 'PRODUCT_ATTRIBUTES',
-      link: 'product-attributes'
-    },
-    {
-      id: '3',
-      title: 'Product to category',
-      key: 'PRODUCT_TO_CATEGORY',
-      link: 'category-association'
-    }
+    // {
+    //   id: '2',
+    //   title: 'Product attributes',
+    //   key: 'PRODUCT_ATTRIBUTES',
+    //   link: 'product-attributes'
+    // },
+    // {
+    //   id: '3',
+    //   title: 'Product to category',
+    //   key: 'PRODUCT_TO_CATEGORY',
+    //   link: 'category-association'
+    // }
   ];
 
 

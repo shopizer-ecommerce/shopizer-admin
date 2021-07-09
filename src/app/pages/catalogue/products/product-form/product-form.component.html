@@ -251,21 +251,15 @@
 
             <nb-tabset>
               <nb-tab tabTitle="{{ 'COMPONENTS.PRODUCTS_IMAGES' | translate}}">
-                <!-- <nb-card-header class="nb-card-header">{{ 'DESCRIPTION_FORM.IMAGE' | translate}}</nb-card-header> -->
-                <!-- <nb-card-body class="nb-card-body"> -->
                 <ngx-products-images [images]="images" [product]="product" (refreshProduct)="refreshProduct()"></ngx-products-images>
-                <!-- </nb-card-body> -->
               </nb-tab>
               <nb-tab tabTitle="{{ 'COMPONENTS.PRODUCT_TO_CATEGORY' | translate}}">
-                <!-- <ngx-products-images [images]="images" [product]="product" (refreshProduct)="refreshProduct()"></ngx-products-images> -->
-
+                <ngx-product-to-category [product]="product"></ngx-product-to-category>
+              </nb-tab>
+              <nb-tab tabTitle="{{ 'COMPONENTS.OPTIONS' | translate}}">
+                <ngx-manage-inventory [productId]="product.id"></ngx-manage-inventory>
               </nb-tab>
               <nb-tab tabTitle="{{ 'COMPONENTS.PRODUCTS_PROPERTIES' | translate}}">
-                <!-- <ngx-products-images [images]="images" [product]="product" (refreshProduct)="refreshProduct()"></ngx-products-images> -->
-
-              </nb-tab>
-              <nb-tab tabTitle="{{ 'COMPONENTS.PRODUCTS_PROPERTIES' | translate}}">
-                <!-- <ngx-products-images [images]="images" [product]="product" (refreshProduct)="refreshProduct()"></ngx-products-images> -->
 
               </nb-tab>
             </nb-tabset>

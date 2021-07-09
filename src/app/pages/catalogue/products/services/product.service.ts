@@ -67,11 +67,11 @@ export class ProductService {
   }
 
   addProductToCategory(productId, categoryId): Observable<any> {
-    return this.crudService.post(`/api/v1/auth/product/${productId}/category/${categoryId}`, {});
+    return this.crudService.post(`/v1/private/product/${productId}/category/${categoryId}`, {});
   }
 
   removeProductFromCategory(productId, categoryId): Observable<any> {
-    return this.crudService.delete(`/api/v1/auth/product/${productId}/category/${categoryId}`);
+    return this.crudService.delete(`/v1/private/product/${productId}/category/${categoryId}`);
   }
 
 }

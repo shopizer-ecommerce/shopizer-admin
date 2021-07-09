@@ -24,7 +24,7 @@ import { PriceRoutingModule } from './routing/price-routing.module';
 import { InventoryRoutingModule } from './routing/inventory-routing.module';
 import { CustomModule } from '../../custom-component/custom.module';
 import { ProductsImagesComponent } from './products-images/products-images.component';
-
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 @NgModule({
   declarations: [
     ProductsComponent,
@@ -55,7 +55,8 @@ import { ProductsImagesComponent } from './products-images/products-images.compo
     AttributeRoutingModule,
     SharedModule,
     CustomModule,
-    NgxSummernoteModule
+    NgxSummernoteModule,
+    NgMultiSelectDropDownModule.forRoot()
 
   ],
   entryComponents: [AvailableButtonComponent]

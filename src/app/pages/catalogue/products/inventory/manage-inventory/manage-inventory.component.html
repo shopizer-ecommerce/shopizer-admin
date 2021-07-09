@@ -1,25 +1,25 @@
 <nb-card class="page-card inner_pages">
-  <nb-card-body [nbSpinner]="loadingList" nbSpinnerSize="large" nbSpinnerStatus="primary" class="product_inventory">
+  <div [nbSpinner]="loadingList" nbSpinnerSize="large" nbSpinnerStatus="primary" class="product_inventory">
     <div class="inner_pages_legacy">
-      <nb-card-header class="main_header">
+      <!-- <nb-card-header class="main_header">
         <h1 class="page_title">{{product?.description.name}}</h1>
         <div class="content_spacing_empty"></div>
 
-      </nb-card-header>
+      </nb-card-header> -->
 
       <form class="form-inline filter_section">
-        <div class="filter_left_section">
+        <!-- <div class="filter_left_section">
 
           <ngx-back-button></ngx-back-button>
-        </div>
+        </div> -->
 
-        <div class="filter_right_section">
+        <!-- <div class="filter_right_section">
 
           <a class="createBtn " [routerLink]="['/pages/catalogue/products/' + productId +'/inventory-creation']">
             <img class="pointer sda" src="../../../../assets/img/plus.png" title="{{ 'INVENTORY.ADD_TO_INVENTORY' | translate}}"
               alt="">
             <label>{{ 'INVENTORY.ADD_TO_INVENTORY' | translate}}</label></a>
-        </div>
+        </div> -->
 
       </form>
 
@@ -30,5 +30,5 @@
         [count]="totalCount">
       </ngx-paginator>
     </div>
-  </nb-card-body>
+  </div>
 </nb-card>
