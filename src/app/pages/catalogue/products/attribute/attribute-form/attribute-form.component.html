@@ -1,24 +1,17 @@
-<!-- <ngx-back-button></ngx-back-button>
-<nb-card size="small" class="page-card">
-  <nb-card-header>
-    {{ 'PRODUCT_ATTRIBUTES.OPTIONS_ATTRIBUTES' | translate}}
-  </nb-card-header>
-  <nb-card-body>
-    <div *ngIf="loader" [nbSpinner]="loader" nbSpinnerSize="large" nbSpinnerStatus="primary"></div> -->
 <div class="inner_pages attribute_create_page">
-
-  <nb-card-header class="main_header">
-    <h1 class="page_title">{{ 'PRODUCT_ATTRIBUTES.OPTIONS_ATTRIBUTES' | translate}}</h1>
-
-    <div class="content_spacing back_button">
-      <ngx-back-button></ngx-back-button>
-    </div>
-    <div class="content_spacing">
-      <button type="submit" nbButton class="success_button" (click)="save()" [disabled]="!form.valid">{{'COMMON.SAVE' |
-        translate }}</button>
-    </div>
-  </nb-card-header>
   <div [nbSpinner]="loader" nbSpinnerSize="large" nbSpinnerStatus="primary">
+    <nb-card-header class="main_header">
+      <h1 class="page_title">{{ 'PRODUCT_ATTRIBUTES.OPTIONS_ATTRIBUTES' | translate}}</h1>
+
+      <div class="content_spacing">
+        <button type="button" nbButton class="cancel_button" (click)="goToback()">{{ 'ORDER_FORM.CANCLE'
+          | translate}}</button>
+        <button type="submit" nbButton class="success_button" (click)="save()" [disabled]="!form.valid">{{'COMMON.SAVE'
+          |
+          translate }}</button>
+      </div>
+    </nb-card-header>
+
     <form [formGroup]='form'>
       <nb-card class="nb-card inline-form-card">
         <nb-card-body class="nb-card-body">
@@ -115,15 +108,8 @@
             </div>
           </div>
 
-          <!-- <hr />
-          <div class="form-group actions-button">
-            <button type="submit" class="btn btn-primary" (click)="save()" [disabled]="!form.valid">
-              {{ 'COMMON.SAVE' | translate }}
-            </button>
-          </div> -->
 
         </nb-card-body>
       </nb-card>
     </form>
-    <!-- </nb-card-body>
-    </nb-card> -->
+  </div>

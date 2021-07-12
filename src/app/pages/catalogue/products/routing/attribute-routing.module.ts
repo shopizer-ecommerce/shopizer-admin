@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { ProductsComponent } from '../products.component';
 import { ProductAttributesComponent } from '../attribute/product-attributes/product-attributes.component';
-import { AttributeFormComponent } from '../attribute/attribute-form/attribute-form.component';
+// import { AttributeFormComponent } from '../attribute/attribute-form/attribute-form.component';
 
 const routes: Routes = [
   {
@@ -14,14 +14,14 @@ const routes: Routes = [
         path: ':productId/product-attributes',
         component: ProductAttributesComponent,
       },
-      {
-        path: ':productId/create-attribute',
-        component: AttributeFormComponent,
-      },
-      {
-        path: ':productId/attribute/:attributeId',
-        component: AttributeFormComponent,
-      }
+      // {
+      //   path: ':productId/create-attribute',
+      //   component: AttributeFormComponent,
+      // },
+      // {
+      //   path: ':productId/attribute/:attributeId',
+      //   component: AttributeFormComponent,
+      // }
     ],
   }
 ];

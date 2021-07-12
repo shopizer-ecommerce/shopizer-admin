@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 
@@ -18,13 +18,11 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class ManageInventoryComponent implements OnInit {
 
-
-  @Input() productId;
-
   source: LocalDataSource = new LocalDataSource();
   loadingList = false;
   stores = [];
   product;
+  productId;
   // paginator
   perPage = 10;
   currentPage = 1;
@@ -50,16 +48,13 @@ export class ManageInventoryComponent implements OnInit {
     private toastr: ToastrService,
   ) {
 
-    // this.productId = this.activatedRoute.snapshot.paramMap.get('productId');
-    // this.productService.getProductById(this.productId).subscribe(product => {
-    //   this.product = product;
-    // });
+    this.productId = this.activatedRoute.snapshot.paramMap.get('productId');
+    this.productService.getProductById(this.productId).subscribe(product => {
+      this.product = product;
+    });
   }
 
   ngOnInit() {
-
-    // console.log(this.product)
-    console.log(this.productId)
     this.productService.getProductById(this.productId).subscribe(product => {
       this.product = product;
     });

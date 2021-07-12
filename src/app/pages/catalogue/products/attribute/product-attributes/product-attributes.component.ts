@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LocalDataSource } from 'ng2-smart-table';
 // import { TreeNode } from 'primeng/primeng';
 import { ProductAttributesService } from '../../services/product-attributes.service';
+import { AttributeFormComponent } from '../attribute-form/attribute-form.component';
 import { OptionService } from '../../../options/services/option.service';
 import { Attribute } from '../model/attribute';
 import { ToastrService } from 'ngx-toastr';
@@ -24,7 +25,7 @@ export interface TreeNode {
   styleUrls: ['./product-attributes.component.scss']
 })
 export class ProductAttributesComponent implements OnInit {
-  productId: any;
+  @Input() productId;
   loader = false;
   data: TreeNode[] = [];
   source: LocalDataSource = new LocalDataSource();
@@ -67,7 +68,7 @@ export class ProductAttributesComponent implements OnInit {
     };
   }
   ngOnInit() {
-    this.productId = this.activatedRoute.snapshot.paramMap.get('productId');
+    // this.productId = this.activatedRoute.snapshot.paramMap.get('productId');
     this.getList();
     this.translate.onLangChange.subscribe((lang) => {
       this.params.lang = this.storageService.getLanguage();
@@ -169,54 +170,35 @@ export class ProductAttributesComponent implements OnInit {
   }
 
 
-  // prepareData(basicArray) {
-  //   const parentArray = [];
-  //   // create options groups
-  //   this.options.forEach((option) => {
-  //     const parent: TreeNode = {
-  //       data: {
-  //         id: option.id,
-  //         parentName: option.code,
-  //         parent: true
-  //       },
-  //       expanded: true,
-  //       children: []
-  //     };
-  //     parentArray.push(parent);
-  //   });
-  //   // fill each group by data
-  //   parentArray.forEach((parent) => {
-  //     basicArray.forEach((attribute) => {
-  //       if (parent.data.parentName === attribute.option.code) {
-  //         parent.children.push({
-  //           data: {
-  //             ...attribute,
-  //             option: attribute.option.code,
-  //             optionValue: attribute.optionValue.code,
-  //           }
-  //         });
-  //       }
-  //     });
-  //   });
-  //   // find empty children's arrays
-  //   parentArray.forEach((parent) => {
-  //     if (parent.children.length === 0) {
-  //       parent.data.empty = true;
-  //     }
-  //   });
-  //   return parentArray;
-  // }
   route(event) {
     console.log(event)
     switch (event.action) {
       case 'edit':
-        this.router.navigate(['/pages/catalogue/products/' + this.productId + '/attribute/' + event.data.id]);
+        this.dialogService.open(AttributeFormComponent, {
+          context: {
+            productId: this.productId,
+            attributeId: event.data.id
+          }
+        }).onClose.subscribe(res => {
+          this.getList()
+        });
+        // this.router.navigate(['/pages/catalogue/products/' + this.productId + '/attribute/' + event.data.id]);
         break;
       case 'remove':
         this.removeAttribute(event.data.id);
         break;
 
     }
+  }
+  onClickAdd() {
+    console.log('jaimin')
+    this.dialogService.open(AttributeFormComponent, {
+      context: {
+        productId: this.productId
+      }
+    }).onClose.subscribe(res => {
+      this.getList()
+    });
   }
   removeAttribute(id) {
     this.loader = true;

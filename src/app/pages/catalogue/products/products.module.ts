@@ -25,7 +25,10 @@ import { InventoryRoutingModule } from './routing/inventory-routing.module';
 import { CustomModule } from '../../custom-component/custom.module';
 import { ProductsImagesComponent } from './products-images/products-images.component';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+import { NbDialogModule } from '@nebular/theme';
 @NgModule({
+
+
   declarations: [
     ProductsComponent,
     ProductsListComponent,
@@ -48,6 +51,7 @@ import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
     AttributeFormComponent,
     ProductsImagesComponent
   ],
+  entryComponents: [AvailableButtonComponent, AttributeFormComponent],
   imports: [
     ProductsRoutingModule,
     InventoryRoutingModule,
@@ -56,10 +60,10 @@ import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
     SharedModule,
     CustomModule,
     NgxSummernoteModule,
+    NbDialogModule.forChild(),
     NgMultiSelectDropDownModule.forRoot()
 
   ],
-  entryComponents: [AvailableButtonComponent]
 })
 
 export class ProductsModule {

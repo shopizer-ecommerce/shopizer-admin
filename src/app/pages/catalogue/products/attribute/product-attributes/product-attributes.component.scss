@@ -28,6 +28,7 @@ td {
 .page-card {
   background: transparent;
   border: none;
+  border-top: 0px !important;
 
   .product_attribute {
     .main_header {
@@ -50,6 +51,10 @@ td {
       background: #fff;
       padding: 10px 15px;
       margin: -10px 0 10px 0;
+
+      .filter_right_section {
+        width: 100% !important;
+      }
     }
   }
 }
