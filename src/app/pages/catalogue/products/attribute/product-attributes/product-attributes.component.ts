@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LocalDataSource } from 'ng2-smart-table';
 // import { TreeNode } from 'primeng/primeng';
@@ -26,7 +26,8 @@ export interface TreeNode {
 })
 export class ProductAttributesComponent implements OnInit {
   @Input() productId;
-  loader = false;
+  @Output() loading = new EventEmitter<any>();
+  // loader = false;
   data: TreeNode[] = [];
   source: LocalDataSource = new LocalDataSource();
   options = [];
@@ -77,7 +78,7 @@ export class ProductAttributesComponent implements OnInit {
   }
 
   getList() {
-    this.loader = true;
+    this.loading.emit(true);
     this.productAttributesService.getListOfProductsAttributes(this.productId, this.params)
       .subscribe(res => {
         // this.isEmpty = res.attributes.length === 0;
@@ -89,7 +90,7 @@ export class ProductAttributesComponent implements OnInit {
           this.source.load([]);
         }
         this.totalCount = res.recordsTotal;
-        this.loader = false;
+        this.loading.emit(false);
       });
     this.setSettings();
   }
@@ -201,7 +202,7 @@ export class ProductAttributesComponent implements OnInit {
     });
   }
   removeAttribute(id) {
-    this.loader = true;
+    this.loading.emit(true);
     this.dialogService.open(ShowcaseDialogComponent, {})
       .onClose.subscribe(res => {
         if (res) {
@@ -209,8 +210,9 @@ export class ProductAttributesComponent implements OnInit {
             this.getList();
             this.toastr.success(this.translate.instant('PRODUCT_ATTRIBUTES.PRODUCT_ATTRIBUTES_REMOVED'));
           });
+          this.loading.emit(false);
         } else {
-          this.loader = false;
+          this.loading.emit(true);
           // event.confirm.reject();
         }
       });

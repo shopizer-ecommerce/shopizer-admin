@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, EventEmitter, Output } from '@angular/core';
 
 import { CategoryService } from '../../categories/services/category.service';
 import { ProductService } from '../services/product.service';
@@ -13,8 +13,8 @@ import { IDropdownSettings } from 'ng-multiselect-dropdown';
 })
 export class ProductToCategoryComponent implements OnInit {
   @Input() product;
-
-  loading: boolean = false;
+  @Output() loading = new EventEmitter<any>();
+  // loading: boolean = false;
   // categories: Array<any> = [];
   perPage: number = 10;
   currentPage: number = 1;
@@ -23,12 +23,12 @@ export class ProductToCategoryComponent implements OnInit {
   selectedItems = [];
   dropdownSettings = {};
   // request params
-  params = {
-    // lang: this.storageService.getLanguage(),
-    count: this.perPage,
-    page: 0
-  };
-
+  // params = {
+  //   // lang: this.storageService.getLanguage(),
+  //   count: this.perPage,
+  //   page: 0
+  // };
+  params = this.loadParams();
   constructor(
     private translate: TranslateService,
     private categoryService: CategoryService,
@@ -48,7 +48,12 @@ export class ProductToCategoryComponent implements OnInit {
 
     };
   }
-
+  loadParams() {
+    return {
+      count: this.perPage,
+      page: 0
+    };
+  }
   ngOnInit() {
     // console.log(this.pro duct)
     if (this.product.categories.length > 0) {
@@ -62,7 +67,8 @@ export class ProductToCategoryComponent implements OnInit {
 
   getList() {
     this.params.page = this.currentPage - 1;
-    this.loading = true;
+    this.loading.emit(true);
+    // this.loading = true;
     this.categoryService.getListOfCategories(this.params)
       .subscribe(categories => {
         // console.log(categories);
@@ -73,33 +79,39 @@ export class ProductToCategoryComponent implements OnInit {
         this.dropdownList = tempArr;
         // this.selectedItems = categories.categories;
         // this.totalCount = categories.totalPages;
-        this.loading = false;
+        this.loading.emit(false);
       });
     // this.translate.onLangChange.subscribe((event) => {
     // });
   }
 
   onFilterChange(e) {
-    // console.log(e);
+    console.log(e);
+    if (e.length > 2) {
+      this.params["name"] = e;
+      this.getList();
+    }
+    if (e === '') {
+      this.params = this.loadParams();
+      this.getList();
+    }
     // this.loading = true;
   }
 
   onItemSelect(item: any) {
-    // console.log(item);
-    this.loading = true;
+    this.loading.emit(true);
     this.addProductToCategory(this.product.id, item.id)
     // this.loading = true;
   }
   onItemDeSelect(item: any) {
-    // console.log(item)
-    this.loading = true;
+    this.loading.emit(true);
     this.removeProductFromCategory(this.product.id, item.id)
   }
   addProductToCategory(productId, groupCode) {
     this.productService.addProductToCategory(productId, groupCode)
       .subscribe(res => {
         console.log(res, '========');
-        this.loading = false;
+        this.loading.emit(false);
       });
   }
 
@@ -107,7 +119,7 @@ export class ProductToCategoryComponent implements OnInit {
     this.productService.removeProductFromCategory(productId, groupCode)
       .subscribe(res => {
         console.log(res);
-        this.loading = false;
+        this.loading.emit(false);
       });
   }
 
