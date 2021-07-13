@@ -2,17 +2,11 @@
 
 
   <div [nbSpinner]="loading" nbSpinnerSize="large" nbSpinnerStatus="primary">
-    <div class="mainBody">
-      <ng-multiselect-dropdown [placeholder]="'Select Category'" [settings]="dropdownSettings" [data]="dropdownList"
+    <div class="mainBody" *ngIf="!loading">
+      <ng-multiselect-dropdown [placeholder]="'Select Category'" [settings]="dropdownSettings" [data]="categories"
         [(ngModel)]="selectedItems" (onSelect)="onItemSelect($event)" (onDeSelect)="onItemDeSelect($event)"
         (onFilterChange)="onFilterChange($event)">
       </ng-multiselect-dropdown>
     </div>
-    <!-- <nb-card class="nb-card inline-form-card">
-      <nb-card-body class="nb-card-body">
-
-
-      </nb-card-body>
-    </nb-card> -->
   </div>
 </div>

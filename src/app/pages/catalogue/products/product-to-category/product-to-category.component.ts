@@ -20,6 +20,7 @@ export class ProductToCategoryComponent implements OnInit {
   currentPage: number = 1;
   // totalCount: number;
   dropdownList = [];
+  categories = [];
   selectedItems = [];
   dropdownSettings = {};
   // request params
@@ -38,11 +39,11 @@ export class ProductToCategoryComponent implements OnInit {
     this.dropdownSettings = {
       singleSelection: false,
       idField: 'id',
-      textField: 'text',
+      textField: 'name',
       enableCheckAll: false,
       searchPlaceholderText: 'Search by code',
       // unSelectAllText: 'UnSelect All',
-      itemsShowLimit: 8,
+      itemsShowLimit: 10,
       allowSearchFilter: true,
       allowRemoteDataSearch: true
 
@@ -53,7 +54,9 @@ export class ProductToCategoryComponent implements OnInit {
     // console.log(this.pro duct)
     if (this.product.categories.length > 0) {
       this.product.categories.forEach((data) => {
-        this.selectedItems.push({ 'id': data.id, 'text': data.descriptions[0].name })
+        console.log('Current product has' + JSON.stringify(data));
+        //this.categories.push(data);
+        this.selectedItems.push({ 'id': data.id, 'name': data.code })
       });
     }
     this.product
@@ -65,22 +68,31 @@ export class ProductToCategoryComponent implements OnInit {
     this.loading = true;
     this.categoryService.getListOfCategories(this.params)
       .subscribe(categories => {
-        // console.log(categories);
-        let tempArr = []
         categories.categories.forEach((value) => {
-          tempArr.push({ 'id': value.id, 'text': value.description.name })
+          //console.log(JSON.stringify(value));
+          this.getChildren(value);
+
         })
-        this.dropdownList = tempArr;
-        // this.selectedItems = categories.categories;
-        // this.totalCount = categories.totalPages;
+
         this.loading = false;
       });
     // this.translate.onLangChange.subscribe((event) => {
     // });
   }
 
+  getChildren(node) {
+    if (node.children && node.children.length !== 0) {
+      this.categories.push({ 'id': node.id, 'name': node.description.name })
+      node.children.forEach((el) => {
+        this.getChildren(el);
+      });
+    } else {
+      this.categories.push({ 'id': node.id, 'name': node.description.name })
+    }
+  }
+
   onFilterChange(e) {
-    // console.log(e);
+    console.log('Filter change ->' + e);
     // this.loading = true;
   }
 

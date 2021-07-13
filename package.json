@@ -66,6 +66,7 @@
     "libphonenumber-js": "^1.7.53",
     "malihu-custom-scrollbar-plugin": "^3.1.5",
     "nebular-icons": "1.1.0",
+    "ng-multiselect-dropdown": "^0.3.4",
     "ng2-smart-table": "^1.5.0",
     "ng6-file-man": "^3.0.2",
     "ngx-awesome-uploader": "^10.0.4",
