@@ -19,9 +19,10 @@ export class ProductsImagesComponent implements OnInit {
   @Input() product;
 
   @Output() refreshProduct = new EventEmitter<string>();
+  @Output() loading = new EventEmitter<any>();
 
 
-  loading = false;
+  // loading = true;
   addImageUrlComponent = '';//add image url to be used by uploader
 
   // public setImages(mageList: Image[]) {
@@ -56,16 +57,16 @@ export class ProductsImagesComponent implements OnInit {
 
   /** image component */
   removeImage(event) {
-    this.loading = true;
+    this.loading.emit(true);
     this.productImageService.removeImage(this.product.id, event)
       .subscribe(res1 => {
         //this.refreshProduct();
         this.refreshProduct.emit();
-        this.loading = false;
+        this.loading.emit(false);
         this.toastr.success(this.translate.instant('PRODUCT.PRODUCT_UPDATED'));
       }, error => {
         this.toastr.error(error.error.message);
-        this.loading = false;
+        this.loading.emit(false);
       });
   }
 
@@ -76,8 +77,13 @@ export class ProductsImagesComponent implements OnInit {
   addedImage(event) {
     //this.refreshProduct();
     this.refreshProduct.emit();
+    this.loading.emit(false);
     this.toastr.success(this.translate.instant('PRODUCT.PRODUCT_UPDATED'));
 
+  }
+  fileAdded(e) {
+    console.log('eeeeeeee', e)
+    this.loading.emit(e);
   }
   /** end image component */
 

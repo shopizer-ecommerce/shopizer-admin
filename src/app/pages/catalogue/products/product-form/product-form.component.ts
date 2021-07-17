@@ -34,6 +34,7 @@ export class ProductFormComponent implements OnInit {
 
   form: FormGroup;
   loaded = false;
+  tabLoader = false;
   loading = false;
   manufacturers = [];
   languages = [];
@@ -533,5 +534,9 @@ export class ProductFormComponent implements OnInit {
       }
     });
     return button.render();
+  }
+  loadingTab(e) {
+    console.log(e, '---------------')
+    this.tabLoader = e;
   }
 }

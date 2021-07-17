@@ -39,6 +39,7 @@ export class ImageUploadingComponent implements OnInit {
   @Output() remove = new EventEmitter<string>();
   @Output() error = new EventEmitter<string>();
   @Output() success = new EventEmitter<string>();
+  @Output() fileAdded = new EventEmitter<any>();
 
   // imageList: Image[] = [];
 
@@ -125,6 +126,7 @@ export class ImageUploadingComponent implements OnInit {
 
   public onFileAdded(file: FilePreviewModel) {
     console.log('File added ', file);
+    this.fileAdded.emit(true)
     clearTimeout(this.timer);
     // this.myFiles.push(file);
   }
