@@ -89,6 +89,7 @@ export class ProductToCategoryComponent implements OnInit {
   }
 
   getChildren(node) {
+    console.log('CATEGORY ' + JSON.stringify(node));
     if (node.children && node.children.length !== 0) {
       this.categories.push({ 'id': node.id, 'name': node.description.name })
       node.children.forEach((el) => {
