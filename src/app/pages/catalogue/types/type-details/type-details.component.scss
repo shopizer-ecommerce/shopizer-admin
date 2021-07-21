@@ -1,1 +1,6 @@
 @import "../../../../@theme/styles/custom.scss";
+
+.fullWidth {
+    width: 100%;
+    max-width: 101rem !important;
+}

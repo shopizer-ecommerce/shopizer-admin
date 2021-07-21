@@ -12,6 +12,10 @@ const routes: Routes = [
     component: ProductsGroupsComponent,
     children: [
       {
+        path: 'create-products-group/:code',
+        component: ProductGroupFormComponent,
+      },
+      {
         path: 'create-products-group',
         component: ProductGroupFormComponent,
       },

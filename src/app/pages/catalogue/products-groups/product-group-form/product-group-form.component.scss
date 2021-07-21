@@ -61,7 +61,46 @@
         }
     }
 
+    .nb-card-body {
+        height: 500px;
+    }
 }
+
+::ng-deep .multiselect-dropdown {
+    .dropdown-list {
+        li {
+            padding: 10px 10px !important;
+            border-bottom: 1px solid lightgray;
+        }
+    }
+
+    .dropdown-btn {
+        font-weight: 600 !important;
+
+        .dropdown-multiselect__caret {
+            top: 11px !important;
+        }
+
+
+        .selected-item {
+            max-width: none !important;
+            width: auto;
+            height: 40px;
+
+            a {
+                padding-left: 15px !important;
+                // color: white;
+                padding-top: 7px;
+            }
+
+            span {
+                margin-top: 8px;
+            }
+        }
+
+    }
+}
+
 
 :host ::ng-deep .product_group__create_page {
     .nb-card-header {
@@ -117,7 +156,6 @@
     }
 
     .err-message {
-        margin-top: -8px;
         color: #ff3d71;
         font-size: 12px;
     }

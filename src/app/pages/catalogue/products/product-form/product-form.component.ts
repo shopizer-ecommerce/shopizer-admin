@@ -48,18 +48,18 @@ export class ProductFormComponent implements OnInit {
   images: Image[] = [];
   // addImageUrlComponent = '';//add image url to be used by uploader
   sidemenuLinks = [
-    {
-      id: '0',
-      title: 'Product details',
-      key: 'COMPONENTS.PRODUCT_DETAILS',
-      link: 'product-details'
-    },
-    {
-      id: '1',
-      title: 'Inventory management',
-      key: 'COMPONENTS.MANAGE_INVENTORY',
-      link: 'inventory-list'
-    },
+    // {
+    //   id: '0',
+    //   title: 'Product details',
+    //   key: 'COMPONENTS.PRODUCT_DETAILS',
+    //   link: 'product-details'
+    // },
+    // {
+    //   id: '1',
+    //   title: 'Inventory management',
+    //   key: 'COMPONENTS.MANAGE_INVENTORY',
+    //   link: 'inventory-list'
+    // },
     // {
     //   id: '2',
     //   title: 'Product attributes',
@@ -80,7 +80,6 @@ export class ProductFormComponent implements OnInit {
     placeholder: '',
     tabsize: 2,
     height: 300,
-
     //edit toolbar
     toolbar: [
       ['misc', ['codeview', 'undo', 'redo']],
@@ -190,12 +189,21 @@ export class ProductFormComponent implements OnInit {
       // quantity: ['', [Validators.required, Validators.pattern(validators.number)]],
       // sortOrder: ['', [Validators.required, Validators.pattern(validators.number)]],
       // productShipeable: [false, [Validators.required]],
-      // productSpecifications: this.fb.group({
-      //   weight: ['', [Validators.pattern(validators.number)]],
-      //   height: ['', [Validators.pattern(validators.number)]],
-      //   width: ['', [Validators.pattern(validators.number)]],
-      //   length: ['', [Validators.pattern(validators.number)]],
-      // }),
+      productSpecifications: this.fb.group({
+        weight: [''],
+        height: [''],
+        width: [''],
+        length: ['']
+      }),
+      productPrices: this.fb.group({
+        display: [true],
+        available: [false],
+        finalPrice: [''],
+        quantity: ['', [Validators.required, Validators.pattern(validators.number)]],
+        discountedPrice: [''],
+        startDate: [''],
+        endDate: ['']
+      }),
       // placementOrder: [0, [Validators.required]],  // ???
       // taxClass: [0, [Validators.required]], // ???
       selectedLanguage: [this.defaultLanguage, [Validators.required]],
