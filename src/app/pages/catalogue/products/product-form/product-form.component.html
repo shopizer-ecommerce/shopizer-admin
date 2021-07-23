@@ -268,10 +268,10 @@
         <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
           <nb-card class="nb-card inline-form-card">
             <nb-card-header class="nb-card-header">{{ 'COMPONENTS.INVENTORY' | translate}}</nb-card-header>
-            <nb-card-body class="nb-card-body" formGroupName='productPrices'>
+            <nb-card-body class="nb-card-body">
               <div class="form-group">
                 <div>
-                  <nb-checkbox formControlName='display'>
+                  <nb-checkbox formControlName='display' (change)="onChangeDisplay($event)">
                     {{ 'Display price' | translate}}
                   </nb-checkbox>
                 </div>
@@ -284,17 +284,25 @@
                 </div>
               </div>
               <div class="form-group">
-                <label for="finalPrice" class="col-form-label inputLabel">{{ 'PRICE.FINAL_PRICE' | translate}}</label>
+                <label class="col-form-label inputLabel">{{ 'PRICE.FINAL_PRICE' | translate}}<span class="mandatory">*</span></label>
                 <div>
-                  <input type="number" class="form-control inputText" id="finalPrice" formControlName='finalPrice'
-                    placeholder="{{ 'PRICE.FINAL_PRICE' | translate}}" required="display">
+                  <input type="number" class="form-control inputText" formControlName='price' placeholder="{{ 'PRODUCT.PRICE' | translate}}">
+                  <span *ngIf="(price.dirty || price.touched) && price.invalid" class="err-message">
+                    <span *ngIf="price.errors.required">
+                      {{ 'PRODUCT.PRICE' | translate}} {{ 'COMMON.IS_REQUIRED' | translate}}
+                    </span>
+                  </span>
                 </div>
               </div>
               <div class="form-group">
-                <label for="finalPrice" class="col-form-label inputLabel">{{ 'Quantity' | translate}}</label>
+                <label class="col-form-label inputLabel">{{ 'Quantity' | translate}}<span class="mandatory">*</span></label>
                 <div>
-                  <input type="number" class="form-control inputText" id="quantity" formControlName='quantity'
-                    placeholder="{{ 'Quantity' | translate}}">
+                  <input type="number" class="form-control inputText" formControlName='quantity' placeholder="{{ 'PRODUCT.QUANTITY' | translate}}">
+                  <span *ngIf="(quantity.dirty || quantity.touched) && quantity.invalid" class="err-message">
+                    <span *ngIf="quantity.errors.required">
+                      {{ 'PRODUCT.QUANTITY' | translate}} {{ 'COMMON.IS_REQUIRED' | translate}}
+                    </span>
+                  </span>
                 </div>
               </div>
               <!-- <div class="form-group">

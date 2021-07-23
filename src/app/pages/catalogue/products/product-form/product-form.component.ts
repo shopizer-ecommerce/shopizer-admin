@@ -185,8 +185,10 @@ export class ProductFormComponent implements OnInit {
       dateAvailable: [new Date()],
       manufacturer: ['', [Validators.required]],
       type: [''],
-      // price: [''],
-      // quantity: ['', [Validators.required, Validators.pattern(validators.number)]],
+      display: [true],
+      available: [false],
+      price: ['', [Validators.required]],
+      quantity: ['', [Validators.required, Validators.pattern(validators.number)]],
       // sortOrder: ['', [Validators.required, Validators.pattern(validators.number)]],
       // productShipeable: [false, [Validators.required]],
       productSpecifications: this.fb.group({
@@ -194,15 +196,6 @@ export class ProductFormComponent implements OnInit {
         height: [''],
         width: [''],
         length: ['']
-      }),
-      productPrices: this.fb.group({
-        display: [true],
-        available: [false],
-        finalPrice: [''],
-        quantity: ['', [Validators.required, Validators.pattern(validators.number)]],
-        discountedPrice: [''],
-        startDate: [''],
-        endDate: ['']
       }),
       // placementOrder: [0, [Validators.required]],  // ???
       // taxClass: [0, [Validators.required]], // ???
@@ -239,8 +232,14 @@ export class ProductFormComponent implements OnInit {
       dateAvailable: new Date(this.product.dateAvailable),
       manufacturer: this.product.manufacturer == null ? '' : this.product.manufacturer.code,
       type: this.product.type == null ? '' : this.product.type.code,
-      // price: this.product.price,
-      // quantity: this.product.quantity,
+      price: this.product.price,
+      quantity: this.product.quantity,
+      productSpecifications: {
+        weight: this.product.productSpecifications.weight,
+        height: this.product.productSpecifications.height,
+        width: this.product.productSpecifications.width,
+        length: this.product.productSpecifications.length
+      },
       // sortOrder: this.product.sortOrder,
       // productShipeable: this.product.productShipeable,
       // placementOrder: [0, [Validators.required]],  // ???
@@ -288,6 +287,25 @@ export class ProductFormComponent implements OnInit {
 
   get manufacturer() {
     return this.form.get('manufacturer');
+  }
+
+  onChangeDisplay(e) {
+    console.log(e.target.checked);
+    if (e.target.checked) {
+      this.form.controls['price'].setValidators([Validators.required]);
+    } else {
+      this.form.controls['price'].clearValidators();
+    }
+    this.form.controls['price'].updateValueAndValidity();
+    // return this.form.get('display').valueChanges.subscribe(val => {
+    //   console.log(val)
+    // });
+  }
+  get price() {
+    return this.form.get('price');
+  }
+  get quantity() {
+    return this.form.get('quantity');
   }
 
   get selectedLanguage() {
@@ -544,7 +562,7 @@ export class ProductFormComponent implements OnInit {
     return button.render();
   }
   loadingTab(e) {
-    console.log(e, '---------------')
+    // console.log(e, '---------------')
     this.tabLoader = e;
   }
 }

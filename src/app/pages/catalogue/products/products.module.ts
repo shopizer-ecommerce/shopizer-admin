@@ -24,6 +24,7 @@ import { PriceRoutingModule } from './routing/price-routing.module';
 import { InventoryRoutingModule } from './routing/inventory-routing.module';
 import { CustomModule } from '../../custom-component/custom.module';
 import { ProductsImagesComponent } from './products-images/products-images.component';
+import { ProductProperties } from './product-properties/product-properties.component';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { NbDialogModule } from '@nebular/theme';
 @NgModule({
@@ -49,7 +50,8 @@ import { NbDialogModule } from '@nebular/theme';
 
     ProductAttributesComponent,
     AttributeFormComponent,
-    ProductsImagesComponent
+    ProductsImagesComponent,
+    ProductProperties
   ],
   entryComponents: [AvailableButtonComponent, AttributeFormComponent],
   imports: [
