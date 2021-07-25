@@ -269,6 +269,7 @@
           <nb-card class="nb-card inline-form-card">
             <nb-card-header class="nb-card-header">{{ 'COMPONENTS.INVENTORY' | translate}}</nb-card-header>
             <nb-card-body class="nb-card-body">
+              <!--
               <div class="form-group">
                 <div>
                   <nb-checkbox formControlName='display' (change)="onChangeDisplay($event)">
@@ -276,9 +277,10 @@
                   </nb-checkbox>
                 </div>
               </div>
+              -->
               <div class="form-group">
                 <div>
-                  <nb-checkbox formControlName='available'>
+                  <nb-checkbox formControlName='canBePurchased'>
                     {{ 'Available for purchase' | translate}}
                   </nb-checkbox>
                 </div>

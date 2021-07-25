@@ -203,13 +203,6 @@ export const MENU_ITEMS: MenuItem[] = [
             link: '/pages/catalogue/products/products-list',
             hidden: false,
             guards: [IsAdminRetail]
-          },
-          {
-            title: 'COMPONENTS.CREATE_PRODUCT',
-            key: 'COMPONENTS.CREATE_PRODUCT',
-            link: '/pages/catalogue/products/create-product',
-            hidden: false,
-            guards: [IsAdminRetail]
           }
         ],
       },
@@ -311,7 +304,7 @@ export const MENU_ITEMS: MenuItem[] = [
         ]
       },
 
-
+      /**
       {
         title: 'COMPONENTS.CATALOGUES',
         key: 'COMPONENTS.CATALOGUES',
@@ -328,6 +321,7 @@ export const MENU_ITEMS: MenuItem[] = [
           }
         ],
       },
+      **/
 
     ]
   },
@@ -388,12 +382,14 @@ export const MENU_ITEMS: MenuItem[] = [
         title: 'SHIPPING.PACKAGING',
         key: 'SHIPPING.PACKAGING',
         link: '/pages/shipping/packaging',
-      },
+      }
+      /**
       {
         title: 'COMPONENTS.RULES',
         key: 'COMPONENTS.RULES',
         link: '/pages/shipping/rules',
       },
+      */
 
       // {
       //   title: 'Options',

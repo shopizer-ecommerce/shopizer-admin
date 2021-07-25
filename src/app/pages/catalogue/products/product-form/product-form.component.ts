@@ -186,7 +186,7 @@ export class ProductFormComponent implements OnInit {
       manufacturer: ['', [Validators.required]],
       type: [''],
       display: [true],
-      available: [false],
+      canBePurchased: [true],
       price: ['', [Validators.required]],
       quantity: ['', [Validators.required, Validators.pattern(validators.number)]],
       // sortOrder: ['', [Validators.required, Validators.pattern(validators.number)]],
@@ -229,6 +229,7 @@ export class ProductFormComponent implements OnInit {
     this.form.patchValue({
       identifier: this.product.identifier,
       visible: this.product.visible,
+      canBePurchased: this.product.canBePurchased,
       dateAvailable: new Date(this.product.dateAvailable),
       manufacturer: this.product.manufacturer == null ? '' : this.product.manufacturer.code,
       type: this.product.type == null ? '' : this.product.type.code,
