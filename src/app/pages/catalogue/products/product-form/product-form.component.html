@@ -378,7 +378,7 @@
                   <ngx-product-attributes [productId]="product.id" (loading)="loadingTab($event)"></ngx-product-attributes>
                 </nb-tab>
                 <nb-tab tabTitle="{{ 'COMPONENTS.PRODUCTS_PROPERTIES' | translate}}">
-                  <ngx-product-properties [product]="product" (loading)="loadingTab($event)"></ngx-product-properties>
+                  <ngx-product-property [product]="product" (loading)="loadingTab($event)"></ngx-product-property>
                 </nb-tab>
               </nb-tabset>
 

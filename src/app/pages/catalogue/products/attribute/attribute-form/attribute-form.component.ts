@@ -54,15 +54,14 @@ export class AttributeFormComponent implements OnInit {
   }
 
   ngOnInit() {
-    // this.productId = this.activatedRoute.snapshot.paramMap.get('productId');
-    // this.attributeId = this.activatedRoute.snapshot.paramMap.get('attributeId');
-    console.log(this.attributeId)
-    console.log(this.productId)
+
     this.createForm();
     if (this.attributeId) {
+      this.loader = true;
       this.productAttributesService.getAttributesById(this.productId, this.attributeId).subscribe(res => {
         this.attribute = res;
         this.fillForm();
+        this.loader = false;
       });
     }
   }

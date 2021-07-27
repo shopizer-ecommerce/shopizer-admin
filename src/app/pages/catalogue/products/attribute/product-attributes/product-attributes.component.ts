@@ -84,8 +84,11 @@ export class ProductAttributesComponent implements OnInit {
         // this.isEmpty = res.attributes.length === 0;
         // const newArr = this.prepareData(res.attributes);
         // this.data = [...newArr];
-        if (res.attributes && res.attributes.length !== 0) {
-          this.source.load(res.attributes);
+        var tempArray = res.attributes.filter((value) => {
+          return value.attributeDisplayOnly === false;
+        });
+        if (tempArray.length !== 0) {
+          this.source.load(tempArray);
         } else {
           this.source.load([]);
         }
