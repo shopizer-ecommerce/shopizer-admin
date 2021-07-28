@@ -345,12 +345,6 @@
         </div>
       </div>
 
-
-
-
-
-
-
       <nb-card-header class="main_header">
         <div class="content_spacing">
           <button type="button" nbButton class="success_button" (click)="save()">{{'COMMON.SAVE'
@@ -374,7 +368,7 @@
                 <nb-tab tabTitle="{{ 'COMPONENTS.PRODUCT_TO_CATEGORY' | translate}}">
                   <ngx-product-to-category [product]="product" (loading)="loadingTab($event)"></ngx-product-to-category>
                 </nb-tab>
-                <nb-tab tabTitle="{{ 'COMPONENTS.OPTIONS' | translate}}">
+                <nb-tab tabTitle="{{ 'COMPONENTS.OPTIONS_CONFIG' | translate}}">
                   <ngx-product-attributes [productId]="product.id" (loading)="loadingTab($event)"></ngx-product-attributes>
                 </nb-tab>
                 <nb-tab tabTitle="{{ 'COMPONENTS.PRODUCTS_PROPERTIES' | translate}}">
