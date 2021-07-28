@@ -6,7 +6,8 @@ import { StorageService } from '../../../../shared/services/storage.service';
 import { LocalDataSource } from 'ng2-smart-table';
 import { NbDialogService } from '@nebular/theme';
 import { ProductPropertyForm } from '../form/product-property-form.component';
-
+import { ToastrService } from 'ngx-toastr';
+import { ShowcaseDialogComponent } from '../../../../shared/components/showcase-dialog/showcase-dialog.component';
 @Component({
   selector: 'ngx-product-property',
   templateUrl: './product-property.component.html',
@@ -29,6 +30,7 @@ export class ProductProperties implements OnInit {
     private propertiesService: PropertiesService,
     private productAttributesService: ProductAttributesService,
     private translate: TranslateService,
+    private toastr: ToastrService,
     private storageService: StorageService,
     private dialogService: NbDialogService,
   ) {
@@ -107,15 +109,15 @@ export class ProductProperties implements OnInit {
           editable: false,
           filter: false,
           valuePrepareFunction: (name) => {
-            return name.code;
+            return name.description.name;
           }
         },
-        productAttributePrice: {
-          title: this.translate.instant('PRODUCT_ATTRIBUTES.PRICE'),
-          type: 'string',
-          editable: false,
-          filter: false
-        }
+        // productAttributePrice: {
+        //   title: this.translate.instant('PRODUCT_ATTRIBUTES.PRICE'),
+        //   type: 'string',
+        //   editable: false,
+        //   filter: false
+        // }
       }
     };
   }
@@ -127,6 +129,44 @@ export class ProductProperties implements OnInit {
     }).onClose.subscribe(res => {
       this.getProductProperties()
     });
+  }
+
+  route(event) {
+    console.log(event)
+    switch (event.action) {
+      case 'edit':
+        this.dialogService.open(ProductPropertyForm, {
+          context: {
+            product: this.product,
+            attributeId: event.data.id
+          }
+        }).onClose.subscribe(res => {
+          this.getProductProperties()
+        });
+        // this.router.navigate(['/pages/catalogue/products/' + this.productId + '/attribute/' + event.data.id]);
+        break;
+      case 'remove':
+        this.removeAttribute(event.data.id);
+        break;
+
+    }
+  }
+  removeAttribute(id) {
+
+    this.dialogService.open(ShowcaseDialogComponent, {})
+      .onClose.subscribe(res => {
+        if (res) {
+          this.loading.emit(true);
+          this.productAttributesService.deleteAttribute(this.product.id, id).subscribe(res => {
+            this.getProductProperties();
+            this.toastr.success(this.translate.instant('PROPERTY.PRODUCT_PROPERTY_REMOVED'));
+          });
+          this.loading.emit(false);
+        } else {
+          this.loading.emit(false);
+        }
+      });
+
   }
 
 }

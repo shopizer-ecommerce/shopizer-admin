@@ -58,7 +58,7 @@ export class AttributeFormComponent implements OnInit {
     this.createForm();
     if (this.attributeId) {
       this.loader = true;
-      this.productAttributesService.getAttributesById(this.productId, this.attributeId).subscribe(res => {
+      this.productAttributesService.getAttributesById(this.productId, this.attributeId, {}).subscribe(res => {
         this.attribute = res;
         this.fillForm();
         this.loader = false;
@@ -126,17 +126,21 @@ export class AttributeFormComponent implements OnInit {
       this.productAttributesService.updateAttribute(this.productId, this.attributeId, this.form.value)
         .subscribe(res => {
           this.loader = false;
-          this.attribute = res;
+          // this.attribute = res;
           this.goToback();
           this.toastr.success(this.translate.instant('PRODUCT_ATTRIBUTES.PRODUCT_ATTRIBUTES_UPDATED'));
-        });
+        }, error => {
+          this.loader = false;
+        });;
     } else {
       this.productAttributesService.createAttribute(this.productId, this.form.value).subscribe(res => {
         this.loader = false;
-        this.attribute = res;
+        // this.attribute = res;
         this.goToback();
         this.toastr.success(this.translate.instant('PRODUCT_ATTRIBUTES.PRODUCT_ATTRIBUTES_UPDATED'));
-      });
+      }, error => {
+        this.loader = false;
+      });;
     }
   }
   goToback() {

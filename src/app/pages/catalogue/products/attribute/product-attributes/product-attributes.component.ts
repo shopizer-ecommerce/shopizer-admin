@@ -205,17 +205,18 @@ export class ProductAttributesComponent implements OnInit {
     });
   }
   removeAttribute(id) {
-    this.loading.emit(true);
+    // this.loading.emit(true);
     this.dialogService.open(ShowcaseDialogComponent, {})
       .onClose.subscribe(res => {
         if (res) {
+          this.loading.emit(true);
           this.productAttributesService.deleteAttribute(this.productId, id).subscribe(res => {
             this.getList();
             this.toastr.success(this.translate.instant('PRODUCT_ATTRIBUTES.PRODUCT_ATTRIBUTES_REMOVED'));
           });
           this.loading.emit(false);
         } else {
-          this.loading.emit(true);
+          this.loading.emit(false);
           // event.confirm.reject();
         }
       });

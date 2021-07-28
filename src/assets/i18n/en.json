@@ -668,6 +668,9 @@
     "SELECT_PROPERTY": "Select Property",
     "VALUE": "Value",
     "SELECT_VALUE": "Select Value",
-    "REQUIRED": "Property is required"
+    "REQUIRED": "Property is required",
+    "PRODUCT_PROPERTY_UPDATED": "Product property has been updated.",
+    "PRODUCT_PROPERTY_CREATED": "Product property has been created.",
+    "PRODUCT_PROPERTY_REMOVED": "Product property has been removed."
   }
 }

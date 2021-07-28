@@ -15,6 +15,8 @@ import { TranslateService } from '@ngx-translate/core';
 })
 export class ProductPropertyForm implements OnInit {
   product: any;
+  attributeId: any;
+  attribute: any = {};
   form: FormGroup;
   loader: boolean = false;
   languages: Array<any> = [];
@@ -43,7 +45,17 @@ export class ProductPropertyForm implements OnInit {
   }
   ngOnInit() {
     this.getProductProperty();
-    this.createForm()
+    this.createForm();
+    if (this.attributeId) {
+      this.loader = true;
+      this.productAttributesService.getAttributesById(this.product.id, this.attributeId, { lang: '_all' }).subscribe(res => {
+        console.log('---------', res)
+        this.attribute = res;
+        this.onChangePropertyOption({ value: res.option.id })
+
+        this.loader = false;
+      });
+    }
   }
   getProductProperty() {
     this.propertiesService.getProductProperties("test")
@@ -86,7 +98,7 @@ export class ProductPropertyForm implements OnInit {
       let temp = [];
       if (record.values && record.values.length > 0) {
         record.values.map((data) => {
-          temp.push({ value: data.code, label: data.name })
+          temp.push({ value: data.id, label: data.name })
         });
         this.optionValues = temp;
       }
@@ -98,24 +110,36 @@ export class ProductPropertyForm implements OnInit {
       this.form.get('descriptions')['controls'].forEach(c => c.controls.name.setValidators([Validators.required]));
       this.form.controls['optionValue'].updateValueAndValidity();
     }
-
+    if (this.attributeId) {
+      this.fillForm();
+    }
   }
 
   fillForm() {
     // const priceSeparator = this.attribute.productAttributePrice.indexOf('$') + 1;
     // this.currency = this.attribute.productAttributePrice.slice(0, priceSeparator);
-    // this.form.patchValue({
-    //   option: this.attribute.option.code,
-    //   attributeDisplayOnly: this.attribute.attributeDisplayOnly,
-    //   optionValue: this.attribute.optionValue.code,
-    //   productAttributePrice: this.attribute.productAttributePrice.slice(priceSeparator),
-    //   sortOrder: this.attribute.sortOrder,
-    //   attributeDefault: this.attribute.attributeDefault,
-    //   requiredOption: this.attribute.requiredOption,
-    //   productAttributeWeight: this.attribute.productAttributeWeight,
-    // });
-  }
 
+    this.form.patchValue({
+      option: this.attribute.option.id,
+      optionValue: this.attribute.optionValue.id,
+      descriptions: []
+    });
+    this.fillFormArray()
+  }
+  fillFormArray() {
+    this.form.value.descriptions.forEach((desc, index) => {
+      this.attribute.optionValue.descriptions.forEach((description) => {
+        console.log(description)
+        if (desc.language === description.language) {
+
+          (<FormArray>this.form.get('descriptions')).at(index).patchValue({
+            language: description.language,
+            name: description.name
+          });
+        }
+      });
+    });
+  }
   get option() {
     return this.form.get('option');
   }
@@ -154,27 +178,25 @@ export class ProductPropertyForm implements OnInit {
       }
     }
     this.loader = true;
-    // const optionObj = this.form.value;
-    // optionObj.option = { code: optionObj.option };
-    // optionObj.optionValue = { code: optionObj.optionValue };
-    // optionObj.productAttributePrice = optionObj.productAttributePrice.replace(/,/g, '');
-    // if (this.attribute.id) {
-    //   this.productAttributesService.updateAttribute(this.productId, this.attributeId, this.form.value)
-    //     .subscribe(res => {
-    //       this.loader = false;
-    //       this.attribute = res;
-    //       this.goToback();
-    //       this.toastr.success(this.translate.instant('PRODUCT_ATTRIBUTES.PRODUCT_ATTRIBUTES_UPDATED'));
-    //     });
-    // } else {
-    this.productAttributesService.createAttribute(this.product.id, param).subscribe(res => {
-      this.loader = false;
-      this.goToback();
-      this.toastr.success(this.translate.instant('PRODUCT_ATTRIBUTES.PRODUCT_ATTRIBUTES_UPDATED'));
-    }, error => {
-      this.loader = false;
-    });
-    // }
+    if (this.attribute.id) {
+      this.productAttributesService.updateAttribute(this.product.id, this.attributeId, param)
+        .subscribe(res => {
+          this.loader = false;
+          // this.attribute = res;
+          this.goToback();
+          this.toastr.success(this.translate.instant('PROPERTY.PRODUCT_PROPERTY_UPDATED'));
+        }, error => {
+          this.loader = false;
+        });;
+    } else {
+      this.productAttributesService.createAttribute(this.product.id, param).subscribe(res => {
+        this.loader = false;
+        this.goToback();
+        this.toastr.success(this.translate.instant('PROPERTY.PRODUCT_PROPERTY_CREATED'));
+      }, error => {
+        this.loader = false;
+      });
+    }
   }
   goToback() {
     this.ref.close();
