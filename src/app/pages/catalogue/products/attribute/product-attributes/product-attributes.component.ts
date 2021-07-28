@@ -84,8 +84,11 @@ export class ProductAttributesComponent implements OnInit {
         // this.isEmpty = res.attributes.length === 0;
         // const newArr = this.prepareData(res.attributes);
         // this.data = [...newArr];
-        if (res.attributes && res.attributes.length !== 0) {
-          this.source.load(res.attributes);
+        var tempArray = res.attributes.filter((value) => {
+          return value.attributeDisplayOnly === false;
+        });
+        if (tempArray.length !== 0) {
+          this.source.load(tempArray);
         } else {
           this.source.load([]);
         }
@@ -202,17 +205,18 @@ export class ProductAttributesComponent implements OnInit {
     });
   }
   removeAttribute(id) {
-    this.loading.emit(true);
+    // this.loading.emit(true);
     this.dialogService.open(ShowcaseDialogComponent, {})
       .onClose.subscribe(res => {
         if (res) {
+          this.loading.emit(true);
           this.productAttributesService.deleteAttribute(this.productId, id).subscribe(res => {
             this.getList();
             this.toastr.success(this.translate.instant('PRODUCT_ATTRIBUTES.PRODUCT_ATTRIBUTES_REMOVED'));
           });
           this.loading.emit(false);
         } else {
-          this.loading.emit(true);
+          this.loading.emit(false);
           // event.confirm.reject();
         }
       });

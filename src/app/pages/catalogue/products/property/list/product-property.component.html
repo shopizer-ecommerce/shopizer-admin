@@ -1,0 +1,19 @@
+<nb-card class="page-card inner_pages">
+    <nb-card-body class="product_attribute">
+        <div class="inner_pages_legacy">
+            <form class="form-inline filter_section">
+                <div class="filter_right_section">
+
+                    <a class="createBtn" (click)="onClickAdd()">
+                        <img class="pointer sda" src="../../../../assets/img/plus.png" title="{{ 'COMPONENTS.CREATE_PRODUCTS_PROPERTIES' | translate}}"
+                            alt="">
+                        <label>{{ 'COMPONENTS.CREATE_PRODUCTS_PROPERTIES' | translate}}</label></a>
+                </div>
+            </form>
+            <ng2-smart-table [settings]="settings" [source]="source" (custom)="route($event)" class="home-table">
+            </ng2-smart-table>
+            <ngx-paginator [pagesToShow]="5" [currentPage]="currentPage" [perPage]="perPage" [count]="totalCount">
+            </ngx-paginator>
+        </div>
+    </nb-card-body>
+</nb-card>

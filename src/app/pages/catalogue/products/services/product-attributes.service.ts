@@ -30,8 +30,8 @@ export class ProductAttributesService {
     return this.crudService.delete(`/v1/private/product/${id}/attribute/${attributeId}`);
   }
 
-  getAttributesById(productId, attributeId): Observable<any> {
-    return this.crudService.get(`/v1/private/product/${productId}/attribute/${attributeId}`);
+  getAttributesById(productId, attributeId, params): Observable<any> {
+    return this.crudService.get(`/v1/private/product/${productId}/attribute/${attributeId}`, params);
   }
 
 }
