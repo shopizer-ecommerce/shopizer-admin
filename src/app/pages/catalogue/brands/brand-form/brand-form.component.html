@@ -6,14 +6,14 @@
     <!-- <div class="form-group">
         <label class="col-sm-10 col-form-label inputLabel">{{ 'COMMON.LANGUAGE' | translate}} *</label>
         <div class="col-sm-12"> -->
-    <div class="content_spacing">
+    <!-- <div class="content_spacing">
       <nb-select *ngIf="languages.length" placeholder="{{ 'COMMON.LANGUAGE' | translate}}" outline shape="rectangle"
         formControlName='selectedLanguage' [selected]="'en'" class="fullWidth">
         <nb-option *ngFor="let language of languages" (click)="selectLanguage(language.code)" [value]="language.code">{{
           ('LANG.'+language.code) |
           translate }}</nb-option>
       </nb-select>
-    </div>
+    </div> -->
     <!-- </div>
       </div> -->
     <div class="content_spacing">
@@ -59,7 +59,7 @@
             </div>
           </div>
 
-          <!-- <div class="form-group">
+          <div class="form-group">
             <label class="col-sm-10 col-form-label inputLabel">{{ 'COMMON.LANGUAGE' | translate}} *</label>
             <div class="col-sm-12">
               <nb-select *ngIf="languages.length" placeholder="{{ 'COMMON.LANGUAGE' | translate}}" outline shape="rectangle"
@@ -68,7 +68,7 @@
                   translate }}</nb-option>
               </nb-select>
             </div>
-          </div> -->
+          </div>
 
           <div *ngIf="selectedLanguage.value !== ''" formArrayName='descriptions'>
             <div *ngFor="let descr of descriptions.controls; let j=index">

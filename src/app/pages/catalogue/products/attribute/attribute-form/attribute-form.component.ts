@@ -90,13 +90,18 @@ export class AttributeFormComponent implements OnInit {
   }
 
   fillForm() {
-    const priceSeparator = this.attribute.productAttributePrice.indexOf('$') + 1;
-    this.currency = this.attribute.productAttributePrice.slice(0, priceSeparator);
+    // const priceSeparator = this.attribute.productAttributePrice.indexOf('USD') + 1;
+    // console.log(priceSeparator)
+    // this.currency = this.attribute.productAttributePrice.slice(0, 3);
+    // console.log(this.optionValues)
+    let index = this.optionValues.findIndex((a) => a.value === this.attribute.optionValue.code);
+    // console.log(index)
+
     this.form.patchValue({
       option: this.attribute.option.code,
       attributeDisplayOnly: this.attribute.attributeDisplayOnly,
-      optionValue: this.attribute.optionValue.code,
-      productAttributePrice: this.attribute.productAttributePrice.slice(priceSeparator),
+      optionValue: index === -1 ? '' : this.attribute.optionValue.code,
+      productAttributePrice: this.attribute.productAttributePrice,
       sortOrder: this.attribute.sortOrder,
       attributeDefault: this.attribute.attributeDefault,
       requiredOption: this.attribute.requiredOption,
