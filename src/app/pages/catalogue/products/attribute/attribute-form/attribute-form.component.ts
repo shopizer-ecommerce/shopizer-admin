@@ -71,7 +71,7 @@ export class AttributeFormComponent implements OnInit {
       option: ['', [Validators.required]],
       attributeDisplayOnly: [false],
       optionValue: ['', [Validators.required]],
-      productAttributePrice: ['', [Validators.required]],
+      productAttributeUnformattedPrice: ['', [Validators.required]],
       sortOrder: ['', [Validators.pattern(validators.number)]],
       attributeDefault: [false],
       requiredOption: [false],
@@ -80,9 +80,9 @@ export class AttributeFormComponent implements OnInit {
   }
 
   transformTotal() {
-    const value = '' + this.form.controls.productAttributePrice.value;
+    const value = '' + this.form.controls.productAttributeUnformattedPrice.value;
     if (value !== '') {
-      this.form.controls.productAttributePrice.setValue(
+      this.form.controls.productAttributeUnformattedPrice.setValue(
         formatMoney(value.replace(/,/g, '')),
         { emitEvent: false }
       );
@@ -90,10 +90,6 @@ export class AttributeFormComponent implements OnInit {
   }
 
   fillForm() {
-    // const priceSeparator = this.attribute.productAttributePrice.indexOf('USD') + 1;
-    // console.log(priceSeparator)
-    // this.currency = this.attribute.productAttributePrice.slice(0, 3);
-    // console.log(this.optionValues)
     let index = this.optionValues.findIndex((a) => a.value === this.attribute.optionValue.code);
     // console.log(index)
 
@@ -101,7 +97,7 @@ export class AttributeFormComponent implements OnInit {
       option: this.attribute.option.code,
       attributeDisplayOnly: this.attribute.attributeDisplayOnly,
       optionValue: index === -1 ? '' : this.attribute.optionValue.code,
-      productAttributePrice: this.attribute.productAttributePrice,
+      productAttributeUnformattedPrice: this.attribute.productAttributeUnformattedPrice,
       sortOrder: this.attribute.sortOrder,
       attributeDefault: this.attribute.attributeDefault,
       requiredOption: this.attribute.requiredOption,
@@ -117,8 +113,8 @@ export class AttributeFormComponent implements OnInit {
     return this.form.get('optionValue');
   }
 
-  get productAttributePrice() {
-    return this.form.get('productAttributePrice');
+  get productAttributeUnformattedPrice() {
+    return this.form.get('productAttributeUnformattedPrice');
   }
 
   save() {
@@ -126,7 +122,8 @@ export class AttributeFormComponent implements OnInit {
     const optionObj = this.form.value;
     optionObj.option = { code: optionObj.option };
     optionObj.optionValue = { code: optionObj.optionValue };
-    optionObj.productAttributePrice = optionObj.productAttributePrice.replace(/,/g, '');
+    //optionObj.productAttributePrice = optionObj.productAttributeUnformattedPrice.replace(/,/g, '');
+    optionObj.productAttributePrice = optionObj.productAttributeUnformattedPrice;
     if (this.attribute.id) {
       this.productAttributesService.updateAttribute(this.productId, this.attributeId, this.form.value)
         .subscribe(res => {

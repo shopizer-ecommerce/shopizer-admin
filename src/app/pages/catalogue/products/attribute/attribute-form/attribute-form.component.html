@@ -30,6 +30,7 @@
             </div>
           </div>
 
+          <!--
           <div class="form-group">
             <div class="col-sm-12 group-block">
               <nb-checkbox formControlName='attributeDisplayOnly'>
@@ -37,6 +38,7 @@
               </nb-checkbox>
             </div>
           </div>
+          -->
 
           <div class="form-group">
             <label class="col-sm-10 col-form-label inputLabel">{{ 'PRODUCT_ATTRIBUTES.PRODUCT_OPTION' | translate}} *</label>
@@ -56,15 +58,15 @@
 
 
           <div class="form-group">
-            <label for="productAttributePrice" class="col-sm-10 col-form-label inputLabel">
+            <label for="productAttributeUnformattedPrice" class="col-sm-10 col-form-label inputLabel">
               {{ 'PRODUCT_ATTRIBUTES.OPTION_PRICE' | translate}} *<span *ngIf="currency">({{currency}})</span>
             </label>
             <div class="col-sm-12">
-              <input type="text" class="form-control inputText" id="productAttributePrice" formControlName='productAttributePrice'
+              <input type="text" class="form-control inputText" id="productAttributeUnformattedPrice" formControlName='productAttributeUnformattedPrice'
                 ngxValidateNumber placeholder="{{ 'PRODUCT_ATTRIBUTES.OPTION_PRICE' | translate}}" (blur)="transformTotal()"
                 required>
-              <span *ngIf="(productAttributePrice.dirty || productAttributePrice.touched) && productAttributePrice.invalid
-              && productAttributePrice && productAttributePrice.errors.required"
+              <span *ngIf="(productAttributeUnformattedPrice.dirty || productAttributeUnformattedPrice.touched) && productAttributeUnformattedPrice.invalid
+              && productAttributeUnformattedPrice && productAttributeUnformattedPrice.errors.required"
                 class="err-message">
                 {{ 'COMMON.VALUE_REQUIRED' | translate}}
               </span>
