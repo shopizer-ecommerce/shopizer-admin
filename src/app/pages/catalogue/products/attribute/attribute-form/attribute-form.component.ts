@@ -62,6 +62,8 @@ export class AttributeFormComponent implements OnInit {
         this.attribute = res;
         this.fillForm();
         this.loader = false;
+      }, error => {
+        this.loader = false;
       });
     }
   }
@@ -142,7 +144,7 @@ export class AttributeFormComponent implements OnInit {
         this.toastr.success(this.translate.instant('PRODUCT_ATTRIBUTES.PRODUCT_ATTRIBUTES_UPDATED'));
       }, error => {
         this.loader = false;
-      });;
+      });
     }
   }
   goToback() {

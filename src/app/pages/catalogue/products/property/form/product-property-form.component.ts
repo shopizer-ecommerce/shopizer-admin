@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NbDialogRef } from '@nebular/theme';
 import { PropertiesService } from '../../services/product-properties';
@@ -30,9 +30,12 @@ export class ProductPropertyForm implements OnInit {
         private toastr: ToastrService,
         private translate: TranslateService,
         private fb: FormBuilder,
+        private cdr: ChangeDetectorRef,
         protected ref: NbDialogRef<ProductPropertyForm>
     ) {
-        this.getLanguages()
+        this.createForm();
+        this.getLanguages();
+        this.getProductProperty();
     }
     getLanguages() {
         this.configService.getListOfSupportedLanguages(localStorage.getItem('merchant'))
@@ -43,16 +46,23 @@ export class ProductPropertyForm implements OnInit {
 
             });
     }
+    ngAfterViewChecked() {
+        //your code to update the model
+        this.cdr.detectChanges();
+    }
     ngOnInit() {
-        this.getProductProperty();
-        this.createForm();
         if (this.attributeId) {
             this.loader = true;
             this.productAttributesService.getAttributesById(this.product.id, this.attributeId, { lang: '_all' }).subscribe(res => {
-                console.log('---------', res)
+                // console.log('---------', res)
                 this.attribute = res;
-                this.onChangePropertyOption({ value: res.option.id })
-
+                console.log(res.option)
+                setTimeout(() => {
+                    this.onChangePropertyOption({ value: res.option.id })
+                    this.fillForm();
+                }, 1000);
+                this.loader = false;
+            }, error => {
                 this.loader = false;
             });
         }
@@ -75,6 +85,7 @@ export class ProductPropertyForm implements OnInit {
             descriptions: this.fb.array([]),
         });
 
+
     }
     addFormArray() {
         const control = <FormArray>this.form.controls.descriptions;
@@ -89,16 +100,18 @@ export class ProductPropertyForm implements OnInit {
     }
 
     onChangePropertyOption(e) {
-        console.log('------------', e)
+        // console.log('------------', this.options)
+        // console.log(e)
         let record = this.options.find((a) => {
             return a.value === e.value
         })
+        // console.log(record)
         this.selectedType = record.type;
         if (record.type !== 'text') {
             let temp = [];
             if (record.values && record.values.length > 0) {
                 record.values.map((data) => {
-                    temp.push({ value: data.name, label: data.name })
+                    temp.push({ value: data.id, label: data.name })
                 });
                 this.optionValues = temp;
             }
@@ -110,18 +123,18 @@ export class ProductPropertyForm implements OnInit {
             this.form.get('descriptions')['controls'].forEach(c => c.controls.name.setValidators([Validators.required]));
             this.form.controls['optionValue'].updateValueAndValidity();
         }
-        if (this.attributeId) {
-            this.fillForm();
-        }
+
     }
 
     fillForm() {
         // const priceSeparator = this.attribute.productAttributePrice.indexOf('$') + 1;
         // this.currency = this.attribute.productAttributePrice.slice(0, priceSeparator);
-        console.log(this.attribute);
+        console.log(this.optionValues);
+        let index = this.optionValues.findIndex((a) => a.value === this.attribute.optionValue.id);
+        console.log(index);
         this.form.patchValue({
             option: this.attribute.option.id,
-            optionValue: this.attribute.optionValue.code,
+            optionValue: index === -1 ? '' : this.attribute.optionValue.id,
             descriptions: []
         });
         this.fillFormArray()
@@ -173,7 +186,7 @@ export class ProductPropertyForm implements OnInit {
                 "option": {
                     "id": this.form.value.option
                 },
-                "optionValue": [this.form.value.optionValue],
+                "optionValue": { id: this.form.value.optionValue },
                 "sortOrder": 1
             }
         }
