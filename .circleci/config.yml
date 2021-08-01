@@ -27,10 +27,10 @@ jobs:
        - run: |
             export NODE_OPTIONS=--max_old_space_size=4096
        - run: npm i
-       - run: node --version
-       - run: node ./node_modules/@angular/cli/bin/ng build --prod --progress
-       - run: |
-           ls -al
+       #- run: node --version
+       #- run: node ./node_modules/@angular/cli/bin/ng build --prod --progress
+       #- run: |
+       #    ls -al
        - slack/status:
            fail_only: false
            webhook: $SLACK_ADMIN_WEBHOOK
