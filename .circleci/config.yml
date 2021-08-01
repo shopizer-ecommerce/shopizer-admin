@@ -26,6 +26,7 @@ jobs:
           node-version: '12.8.0' 
        - run: |
             export NODE_OPTIONS=--max_old_space_size=4096
+       - run: npm i
        - run: node --version
        - run: node ./node_modules/@angular/cli/bin/ng build --prod --progress
        - run: |
