@@ -8,7 +8,8 @@ version: 2.1
 
 orbs:
   slack: circleci/slack@3.4.2
-  node: circleci/node@4.5.2
+  aws-cli: circleci/aws-cli@2.0.3
+  #node: circleci/node@4.5.2
      
 working_directory: ~/project
 
@@ -42,10 +43,28 @@ jobs:
        - run: node ./node_modules/@angular/cli/bin/ng build --prod --progress
        - run: |
            ls -al
-       - slack/status:
-           fail_only: false
-           webhook: $SLACK_ADMIN_WEBHOOK
+       #- run:
+       #     name: Linting
+       #     command: npm run lint
+        # Cache the dist folder for the deploy job
+        - save_cache:
+            key: dist-{{ .Environment.CIRCLE_BRANCH }}-{{ .Environment.CIRCLE_SHA1 }}
+            paths:
+                - dist
 
+
+  # The deploy job
+  deploy:
+    executor: aws-cli/default
+    steps:
+      - restore_cache:
+          key: dist-{{ .Environment.CIRCLE_BRANCH }}-{{ .Environment.CIRCLE_SHA1 }}
+      - aws-cli/setup:
+          profile-name: circleci
+      - run: echo "Run your code here"
+      - slack/status:
+          fail_only: false
+          webhook: $SLACK_ADMIN_WEBHOOK
 
 # Orchestrate our job run sequence
 workflows:
