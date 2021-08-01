@@ -10,23 +10,24 @@ orbs:
   slack: circleci/slack@3.4.2
   node: circleci/node@4.5.2
      
-working_directory: /tmp
+working_directory: ~/project
 
 # Define the jobs we want to run for this project
 jobs:
   build-job:
     docker:
       # replace with your preferred image
-      - image: cimg/base:stable
+      - image: cimg/node:16.6.0
     steps:
        - checkout
        - run: |
            ls -al
-       - node/install:
-          node-version: '12.8.0' 
-       - run: |
-            export NODE_OPTIONS=--max_old_space_size=4096
-       - run: npm i
+       - run: node --version
+       #- run: |
+       #     export NODE_OPTIONS=--max_old_space_size=4096
+       - run:
+            name: Install local dependencies
+            command: npm install
        #- run: node --version
        #- run: node ./node_modules/@angular/cli/bin/ng build --prod --progress
        #- run: |
