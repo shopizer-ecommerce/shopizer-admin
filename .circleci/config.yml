@@ -9,10 +9,7 @@ version: 2.1
 orbs:
   slack: circleci/slack@3.4.2
   node: circleci/node@12.8.0
-
-orbs:
-  
-      
+     
 working_directory: /tmp
 
 # Define the jobs we want to run for this project
