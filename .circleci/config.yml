@@ -8,20 +8,24 @@ version: 2.1
 
 orbs:
   slack: circleci/slack@3.4.2
-  node: circleci/node@12.8.0
+  node: circleci/node@4.5.2
      
 working_directory: /tmp
 
 # Define the jobs we want to run for this project
 jobs:
-  install_node:
+  build-job:
+    docker:
+      # replace with your preferred image
+      - image: cimg/base:stable
     steps:
        - checkout
        - run: |
            ls -al
+       - node/install:
+          node-version: '12.8.0' 
        - run: |
             export NODE_OPTIONS=--max_old_space_size=4096
-       - node/install
        - run: node --version
        - slack/status:
            fail_only: false
@@ -32,4 +36,4 @@ jobs:
 workflows:
   build_and_deploy:
     jobs:
-      - install_node
+      - build-job
