@@ -10,12 +10,11 @@ orbs:
   slack: circleci/slack@3.4.2
   aws-cli: circleci/aws-cli@2.0.3
   #node: circleci/node@4.5.2
-     
-working_directory: ~/project
 
 # Define the jobs we want to run for this project
 jobs:
   build-job:
+    working_directory: ~/project
     docker:
       # replace with your preferred image
       - image: node:12.8.0
@@ -54,6 +53,7 @@ jobs:
 
   # The deploy job
   deploy:
+    working_directory: ~/project
     executor: aws-cli/default
     steps:
       - restore_cache:
