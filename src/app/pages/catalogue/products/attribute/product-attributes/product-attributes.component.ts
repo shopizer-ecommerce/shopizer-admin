@@ -62,8 +62,7 @@ export class ProductAttributesComponent implements OnInit {
   }
   loadParams() {
     return {
-      // store: this.storageService.getMerchant(),
-      //lang: this.storageService.getLanguage(),
+      store: this.storageService.getMerchant(),
       lang: "_all",
       count: this.perPage,
       page: 0
