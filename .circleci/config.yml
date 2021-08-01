@@ -17,12 +17,11 @@ jobs:
   build-job:
     docker:
       # replace with your preferred image
-      - image: cimg/node:10.15.2
+      - image: cimg/node:15.0.0-browsers
     steps:
        - checkout
        - run: |
            ls -al
-       - run: sudo apt-get install g++ build-essential
        - run: node --version
        #- run: |
        #     export NODE_OPTIONS=--max_old_space_size=4096
