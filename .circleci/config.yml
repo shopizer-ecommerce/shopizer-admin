@@ -17,17 +17,18 @@ jobs:
   build-job:
     docker:
       # replace with your preferred image
-      - image: cimg/node:15.0.0-browsers
+      - image: node:12.8.0
     steps:
        - checkout
        - run: |
            ls -al
-       - run: node --version
+       #- run: node --version
+       - run: npm config list
        #- run: |
        #     export NODE_OPTIONS=--max_old_space_size=4096
        - run:
             name: Install local dependencies
-            command: yarn install
+            command: npm install
        #- run: node --version
        #- run: node ./node_modules/@angular/cli/bin/ng build --prod --progress
        #- run: |
