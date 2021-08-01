@@ -47,11 +47,10 @@ jobs:
        #     name: Linting
        #     command: npm run lint
         # Cache the dist folder for the deploy job
-        - save_cache:
-            key: dist-{{ .Environment.CIRCLE_BRANCH }}-{{ .Environment.CIRCLE_SHA1 }}
-            paths:
-                - dist
-
+       - save_cache:
+          key: dist-{{ .Environment.CIRCLE_BRANCH }}-{{ .Environment.CIRCLE_SHA1 }}
+          paths:
+              - dist
 
   # The deploy job
   deploy:
