@@ -24,11 +24,21 @@ jobs:
            ls -al
        #- run: node --version
        #- run: npm config list
+       # Restore local dependencies from cache
+      - restore_cache:
+          keys:
+            - dependencies-{{ checksum "package.json" }}
+            - dependencies-
        - run: |
             export NODE_OPTIONS=--max_old_space_size=4096
        - run:
             name: Install local dependencies
             command: npm install
+      # Cache local dependencies if they don't exist
+       - save_cache:
+            key: dependencies-{{ checksum "package.json" }}
+            paths:
+                - node_modules
        - run: node ./node_modules/@angular/cli/bin/ng build --prod --progress
        - run: |
            ls -al
