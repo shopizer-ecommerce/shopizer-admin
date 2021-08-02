@@ -48,7 +48,7 @@ jobs:
        #   key: dist-{{ .Environment.CACHE_VERSION }}-{{ .Environment.CIRCLE_BRANCH }}-{{ .Environment.CIRCLE_SHA1 }}
        #   paths:
        #       - dist
-      - persist_to_workspace:
+       - persist_to_workspace:
           root: .
           paths:
             - dist/*
