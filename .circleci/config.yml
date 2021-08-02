@@ -8,36 +8,74 @@ version: 2.1
 
 orbs:
   slack: circleci/slack@3.4.2
-  node: circleci/node@4.5.2
-     
-working_directory: /tmp
+  aws-cli: circleci/aws-cli@2.0.3
+  #node: circleci/node@4.5.2
 
 # Define the jobs we want to run for this project
 jobs:
   build-job:
+    working_directory: ~/project
     docker:
       # replace with your preferred image
-      - image: cimg/base:stable
+      - image: node:12.8.0
     steps:
        - checkout
        - run: |
            ls -al
-       - node/install:
-          node-version: '12.8.0' 
+       #- run: node --version
+       #- run: npm config list
+       # Restore local dependencies from cache
+       - restore_cache:
+          keys:
+            - dependencies-{{ .Environment.CACHE_VERSION }}-{{ checksum "package.json" }}
+            - dependencies-{{ .Environment.CACHE_VERSION }}
        - run: |
             export NODE_OPTIONS=--max_old_space_size=4096
-       - run: npm i
-       #- run: node --version
-       #- run: node ./node_modules/@angular/cli/bin/ng build --prod --progress
-       #- run: |
-       #    ls -al
-       - slack/status:
-           fail_only: false
-           webhook: $SLACK_ADMIN_WEBHOOK
+       - run:
+            name: Install local dependencies
+            command: npm install
+      # Cache local dependencies if they don't exist
+       - save_cache:
+            key: dependencies-{{ .Environment.CACHE_VERSION }}-{{ checksum "package.json" }}
+            paths:
+                - node_modules
+       - run: node ./node_modules/@angular/cli/bin/ng build --prod --progress
+       #- run:
+       #     name: Linting
+       #     command: npm run lint
+       # Cache the dist folder for the deploy job
+       - persist_to_workspace:
+          root: .
+          paths:
+            - dist/*
 
+  # The deploy job
+  deploy:
+    working_directory: ~/project
+    executor: aws-cli/default
+    steps:
+      - attach_workspace:
+          at: .
+       # start proprietary DB using private Docker image
+       # with credentials stored in the UI
+      - run: |
+          ls -al
+      - aws-cli/setup:
+          profile-name: circleci
+      - run: aws s3 sync dist s3://perfectogaz-admin/ --region ca-central-1 --delete
+      - slack/status:
+          fail_only: false
+          webhook: $SLACK_ADMIN_WEBHOOK
 
 # Orchestrate our job run sequence
 workflows:
   build_and_deploy:
     jobs:
       - build-job
+      - deploy:
+          requires:
+            - build-job
+          filters:
+              branches:
+                only:
+                  - perfecto
