@@ -43,19 +43,29 @@ jobs:
        #- run:
        #     name: Linting
        #     command: npm run lint
-        # Cache the dist folder for the deploy job
-       - save_cache:
-          key: dist-{{ .Environment.CACHE_VERSION }}-{{ .Environment.CIRCLE_BRANCH }}-{{ .Environment.CIRCLE_SHA1 }}
+       # Cache the dist folder for the deploy job
+       #- save_cache:
+       #   key: dist-{{ .Environment.CACHE_VERSION }}-{{ .Environment.CIRCLE_BRANCH }}-{{ .Environment.CIRCLE_SHA1 }}
+       #   paths:
+       #       - dist
+      - persist_to_workspace:
+          root: .
           paths:
-              - dist
+            - dist/*
 
   # The deploy job
   deploy:
     working_directory: ~/project
     executor: aws-cli/default
     steps:
-      - restore_cache:
-          key: dist-{{ .Environment.CACHE_VERSION }}-{{ .Environment.CIRCLE_BRANCH }}-{{ .Environment.CIRCLE_SHA1 }}
+      - attach_workspace:
+          at: .
+       # start proprietary DB using private Docker image
+       # with credentials stored in the UI
+      - run: |
+          ls -al
+      #- restore_cache:
+      #    key: dist-{{ .Environment.CACHE_VERSION }}-{{ .Environment.CIRCLE_BRANCH }}-{{ .Environment.CIRCLE_SHA1 }}
       - aws-cli/setup:
           profile-name: circleci
       - run: echo "Run your code here"
