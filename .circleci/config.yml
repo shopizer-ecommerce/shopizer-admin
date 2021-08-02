@@ -62,7 +62,7 @@ jobs:
           ls -al
       - aws-cli/setup:
           profile-name: circleci
-      - run: aws --region {{ .Environment.AWS_DEFAULT_REGION }} s3 sync dist s3://perfectogaz-admin/ --delete
+      - run: aws s3 sync dist s3://perfectogaz-admin/ --region ca-central-1 --delete
       - slack/status:
           fail_only: false
           webhook: $SLACK_ADMIN_WEBHOOK
