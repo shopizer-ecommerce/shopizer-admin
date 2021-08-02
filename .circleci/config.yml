@@ -22,7 +22,6 @@ jobs:
        - run: |
            ls -al
        #- run: node --version
-       #- run: npm config list
        # Restore local dependencies from cache
        - restore_cache:
           keys:
