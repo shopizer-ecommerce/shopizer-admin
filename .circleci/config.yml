@@ -21,7 +21,6 @@ jobs:
        - checkout
        - run: |
            ls -al
-       #- run: node --version
        # Restore local dependencies from cache
        - restore_cache:
           keys:
