@@ -9,7 +9,6 @@ version: 2.1
 orbs:
   slack: circleci/slack@3.4.2
   aws-cli: circleci/aws-cli@2.0.3
-  #node: circleci/node@4.5.2
 
 # Define the jobs we want to run for this project
 jobs:
@@ -62,7 +61,7 @@ jobs:
           ls -al
       - aws-cli/setup:
           profile-name: circleci
-      - run: aws s3 sync dist s3://perfectogaz-admin/ --region ca-central-1 --delete
+      - run: aws s3 sync dist s3://perfectogaz-admin/ --region ca-central-1 --delete --profile circleci
       - slack/status:
           fail_only: false
           webhook: $SLACK_ADMIN_WEBHOOK
