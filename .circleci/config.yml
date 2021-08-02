@@ -40,8 +40,6 @@ jobs:
             paths:
                 - node_modules
        - run: node ./node_modules/@angular/cli/bin/ng build --prod --progress
-       - run: |
-           ls -al
        #- run:
        #     name: Linting
        #     command: npm run lint
