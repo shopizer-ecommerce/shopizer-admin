@@ -44,10 +44,6 @@ jobs:
        #     name: Linting
        #     command: npm run lint
        # Cache the dist folder for the deploy job
-       #- save_cache:
-       #   key: dist-{{ .Environment.CACHE_VERSION }}-{{ .Environment.CIRCLE_BRANCH }}-{{ .Environment.CIRCLE_SHA1 }}
-       #   paths:
-       #       - dist
        - persist_to_workspace:
           root: .
           paths:
@@ -64,11 +60,9 @@ jobs:
        # with credentials stored in the UI
       - run: |
           ls -al
-      #- restore_cache:
-      #    key: dist-{{ .Environment.CACHE_VERSION }}-{{ .Environment.CIRCLE_BRANCH }}-{{ .Environment.CIRCLE_SHA1 }}
       - aws-cli/setup:
           profile-name: circleci
-      - run: echo "Run your code here"
+      - run: aws --region {{ .Environment.AWS_DEFAULT_REGION }} s3 sync dist s3://perfectogaz-admin/ --delete
       - slack/status:
           fail_only: false
           webhook: $SLACK_ADMIN_WEBHOOK
