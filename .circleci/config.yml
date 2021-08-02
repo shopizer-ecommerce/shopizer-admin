@@ -36,7 +36,7 @@ jobs:
             command: npm install
       # Cache local dependencies if they don't exist
        - save_cache:
-            key: dependencies-{{ checksum "package.json" }}
+            key: {{ .Environment.CACHE_VERSION }}-dependencies-{{ checksum "package.json" }}
             paths:
                 - node_modules
        - run: node ./node_modules/@angular/cli/bin/ng build --prod --progress
@@ -47,7 +47,7 @@ jobs:
        #     command: npm run lint
         # Cache the dist folder for the deploy job
        - save_cache:
-          key: dist-{{ .Environment.CIRCLE_BRANCH }}-{{ .Environment.CIRCLE_SHA1 }}
+          key: {{ .Environment.CACHE_VERSION }}--dist-{{ .Environment.CIRCLE_BRANCH }}-{{ .Environment.CIRCLE_SHA1 }}
           paths:
               - dist
 
@@ -57,7 +57,7 @@ jobs:
     executor: aws-cli/default
     steps:
       - restore_cache:
-          key: dist-{{ .Environment.CIRCLE_BRANCH }}-{{ .Environment.CIRCLE_SHA1 }}
+          key: {{ .Environment.CACHE_VERSION }}-dist-{{ .Environment.CIRCLE_BRANCH }}-{{ .Environment.CIRCLE_SHA1 }}
       - aws-cli/setup:
           profile-name: circleci
       - run: echo "Run your code here"
