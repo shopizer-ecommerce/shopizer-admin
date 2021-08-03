@@ -219,7 +219,7 @@ export class CategoryFormComponent implements OnInit {
     this.form.patchValue({
       selectedLanguage: lang,
     });
-    this.fillFormArray();
+    //this.fillFormArray();
   }
 
   changeName(event, index) {

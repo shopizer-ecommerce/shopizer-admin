@@ -322,7 +322,7 @@ export class ProductFormComponent implements OnInit {
       selectedLanguage: lang,
     });
     this.currentLanguage = lang;
-    this.fillFormArray();
+    //this.fillFormArray();
   }
 
   changeName(event, index) {
