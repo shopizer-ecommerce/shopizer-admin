@@ -37,7 +37,7 @@ jobs:
             paths:
                 - node_modules
        # Change url of environment
-       #TODO url in environment
+       #TODO url in environment #
        - run: |
             sed 's#http://localhost:8080/api#https://api.boutiquerufina.com/api#g' ./src/assets/env.js
        - run: |
