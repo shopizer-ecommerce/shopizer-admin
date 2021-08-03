@@ -40,9 +40,9 @@ jobs:
        #TODO url in environment
        - run: |
             sed 's#http://localhost:8080/api#https://api.boutiquerufina.com/api#g' ./src/assets/env.js
-      - run: |
+       - run: |
             sed 's#http://localhost:8080/api#https://api.boutiquerufina.com/api#g' ./src/environments/environment.ts
-      - run: |
+       - run: |
             sed 's#http://localhost:8080/api#https://api.boutiquerufina.com/api#g' ./src/environments/environment.prod.ts
        - run: node ./node_modules/@angular/cli/bin/ng build --prod --progress
        #- run:
