@@ -21,6 +21,9 @@ jobs:
        - checkout
        - run: |
            ls -al
+       # Change url of environment
+       - run: |
+            sed 's#http://localhost:8080/api#https://api.boutiquerufina.com/api#g' ./src/environments/environment.prod.ts
        # Restore local dependencies from cache
        - restore_cache:
           keys:
