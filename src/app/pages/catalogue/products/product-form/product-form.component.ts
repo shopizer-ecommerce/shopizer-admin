@@ -15,6 +15,7 @@ import { environment } from '../../../../../environments/environment';
 import { slugify } from '../../../shared/utils/slugifying';
 import { forkJoin } from 'rxjs';
 import { TypesService } from '../../types/services/types.service';
+import { StorageService } from '../../../shared/services/storage.service';
 import { Image } from '../../../shared/models/image';
 // import { ProductsImagesComponent } from './../products-images/products-images.component';
 import { ImageBrowserComponent } from '../../../../@theme/components/image-browser/image-browser.component';
@@ -47,32 +48,6 @@ export class ProductFormComponent implements OnInit {
   // tabs: any[];
   images: Image[] = [];
   // addImageUrlComponent = '';//add image url to be used by uploader
-  sidemenuLinks = [
-    // {
-    //   id: '0',
-    //   title: 'Product details',
-    //   key: 'COMPONENTS.PRODUCT_DETAILS',
-    //   link: 'product-details'
-    // },
-    // {
-    //   id: '1',
-    //   title: 'Inventory management',
-    //   key: 'COMPONENTS.MANAGE_INVENTORY',
-    //   link: 'inventory-list'
-    // },
-    // {
-    //   id: '2',
-    //   title: 'Product attributes',
-    //   key: 'PRODUCT_ATTRIBUTES',
-    //   link: 'product-attributes'
-    // },
-    // {
-    //   id: '3',
-    //   title: 'Product to category',
-    //   key: 'PRODUCT_TO_CATEGORY',
-    //   link: 'category-association'
-    // }
-  ];
 
 
   //summernote
@@ -108,31 +83,14 @@ export class ProductFormComponent implements OnInit {
     private router: Router,
     private translate: TranslateService,
     private typeService: TypesService,
-    private dialogService: NbDialogService
+    private dialogService: NbDialogService,
+    private storageService: StorageService
   ) {
   }
 
   ngOnInit() {
     this.loadEvent();
-    console.log('Parent ' + this.product.id);
-    // this.tabs = [
-    //   {
-    //     title: 'Product images',
-    //     route: `/pages/catalogue/products/product/${this.product.id}/details`,
-    //   },
-    //   {
-    //     title: 'Product to Category',
-    //     route: '/pages/layout/tabs/tab2',
-    //   },
-    //   {
-    //     title: 'Product options',
-    //     route: '/pages/catalogue/products/product/200/options',
-    //   },
-    //   {
-    //     title: 'Product properties',
-    //     route: '/pages/catalogue/products/product/200/properties',
-    //   },
-    // ];
+    //console.log('Parent ' + this.product.id);
     const manufacture$ = this.manufactureService.getManufacturers();
     const types$ = this.productService.getProductTypes();
     //TODO local cache
@@ -161,7 +119,7 @@ export class ProductFormComponent implements OnInit {
   ngAfterViewInit() {
 
     if (this.product != null) {
-      console.log(JSON.stringify(this.product.images));
+      //console.log(JSON.stringify(this.product.images));
       this.images = this.product.images;
       // this.imagesManager.setImages(this.product);
     }
@@ -291,7 +249,7 @@ export class ProductFormComponent implements OnInit {
   }
 
   onChangeDisplay(e) {
-    console.log(e.target.checked);
+    //console.log(e.target.checked);
     if (e.target.checked) {
       this.form.controls['price'].setValidators([Validators.required]);
     } else {
@@ -341,44 +299,6 @@ export class ProductFormComponent implements OnInit {
       });
 
   }
-
-  //images and other childs
-  /**
-  refreshChilds() {
-    let productImages = this.product.images;
-    productImages.forEach(val => {
-      this.images.push( { // Return the new object structure
-        id: val.id,
-        name: val.imageName,
-        path: val.imageUrl
-      })
-    });
-  }
-
-
-  removeImage(event) {
-    this.loading = true;
-    this.productImageService.removeImage(this.product.id,event)
-       .subscribe(res1 => {
-        this.refreshProduct();
-        this.loading = false;
-        this.toastr.success(this.translate.instant('PRODUCT.PRODUCT_UPDATED'));
-    }, error => {
-         this.toastr.error(error.error.message);
-         this.loading = false;
-    });
-  }
-
-  errorImage(event) {
-    this.toastr.error(this.translate.instant('COMMON.'+event));
-  }
-
-  addedImage(event) {
-    this.refreshProduct();
-    this.toastr.success(this.translate.instant('PRODUCT.PRODUCT_UPDATED'));
-
-  }
-  /** end image component */
 
   checkSku(event) {
     this.loading = true;
@@ -438,9 +358,6 @@ export class ProductFormComponent implements OnInit {
 
   save() {
     this.form.markAllAsTouched();
-    if (this.findInvalidControls().length > 0) {
-      return;
-    }
 
     this.loading = true;
     const productObject = this.form.value;
@@ -465,6 +382,9 @@ export class ProductFormComponent implements OnInit {
       if (tmpObj.title === '' && el.title !== '') {
         tmpObj.title = el.title;
       }
+      if (tmpObj.title === '' && el.title === '') {
+        tmpObj.title = this.storageService.getMerchantName + ' | ' + el.name ;
+      }
       for (const elKey in el) {
         if (el.hasOwnProperty(elKey)) {
           if (!tmpObj.hasOwnProperty(elKey) && el[elKey] !== '') {
@@ -473,9 +393,14 @@ export class ProductFormComponent implements OnInit {
         }
       }
     });
+    /** do the validation */
+    if (this.findInvalidControls().length > 0) {
+        this.loading = false;
+        return;
+    }
     // check required fields
     //object validations on the form
-    if (tmpObj.name === '' || tmpObj.friendlyUrl === '' || productObject.identifier === '' || productObject.manufacturer === '' || tmpObj.title === '') {
+    if (tmpObj.name === '' || tmpObj.friendlyUrl === '' || productObject.identifier === '' || productObject.manufacturer === '') {
       this.toastr.error(this.translate.instant('COMMON.FILL_REQUIRED_FIELDS'));
       this.loading = false;
     } else {
@@ -540,7 +465,7 @@ export class ProductFormComponent implements OnInit {
       }
     }
     if (invalid.length > 0) {
-      this.toastr.error(this.translate.instant('COMMON.FILL_REQUIRED_FIELDS'));
+      this.toastr.error(this.translate.instant('COMMON.FILL_REQUIRED_FIELDS') + " [" + invalid + " ]");
     }
     return invalid;
   }
@@ -563,7 +488,6 @@ export class ProductFormComponent implements OnInit {
     return button.render();
   }
   loadingTab(e) {
-    // console.log(e, '---------------')
     this.tabLoader = e;
   }
 }

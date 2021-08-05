@@ -37,6 +37,10 @@ export class StorageService {
     return merchant;
   }
 
+  getMerchantName() {
+    return localStorage.getItem('merchant');
+  }
+
   getMerchantCountry() {
     return localStorage.getItem('defaultCountry');
   }

@@ -1,12 +1,10 @@
 <div class="inner_pages inventory_create_page">
 
 
-  <!-- <div [nbSpinner]="loading" nbSpinnerSize="large" nbSpinnerStatus="primary"> -->
   <div class="mainBody">
-    <ng-multiselect-dropdown [placeholder]="'Select Category'" [settings]="dropdownSettings" [data]="categories"
+    <ng-multiselect-dropdown *ngIf="!categoryLoading" [placeholder]="'Select Category'" [settings]="dropdownSettings" [data]="categories"
       [(ngModel)]="selectedItems" (onSelect)="onItemSelect($event)" (onDeSelect)="onItemDeSelect($event)"
       (onFilterChange)="onFilterChange($event)">
     </ng-multiselect-dropdown>
-    <!-- </div> -->
   </div>
 </div>

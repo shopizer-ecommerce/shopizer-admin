@@ -66,6 +66,7 @@ export class HomeComponent implements OnInit {
         this.user.phone = merchant.phone;
 
         localStorage.setItem('merchantLanguage', this.user.defaultLanguage);
+        localStorage.setItem('merchantName', merchant.name);
         localStorage.setItem('supportedLanguages', JSON.stringify(merchant.supportedLanguages));
 
         //require merchant country

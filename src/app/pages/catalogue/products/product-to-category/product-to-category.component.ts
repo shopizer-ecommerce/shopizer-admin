@@ -16,19 +16,15 @@ export class ProductToCategoryComponent implements OnInit {
     @Output() loading = new EventEmitter<any>();
     // loading: boolean = false;
     // categories: Array<any> = [];
-    perPage: number = 10;
+    perPage: number = 15;
     currentPage: number = 1;
     // totalCount: number;
     dropdownList = [];
     categories = [];
     selectedItems = [];
     dropdownSettings = {};
-    // request params
-    // params = {
-    //   // lang: this.storageService.getLanguage(),
-    //   count: this.perPage,
-    //   page: 0
-    // };
+    categoryLoading = false;
+
     params = this.loadParams();
     constructor(
         private translate: TranslateService,
@@ -69,6 +65,7 @@ export class ProductToCategoryComponent implements OnInit {
     }
 
     getList() {
+        this.categoryLoading = true;
         this.params.page = this.currentPage - 1;
         this.loading.emit(true);
         // this.loading = true;
@@ -79,13 +76,10 @@ export class ProductToCategoryComponent implements OnInit {
                     this.getChildren(value);
 
                 })
-                // this.dropdownList = tempArr;
-                // this.selectedItems = categories.categories;
-                // this.totalCount = categories.totalPages;
+                //console.log(JSON.stringify(this.categories));
                 this.loading.emit(false);
+                this.categoryLoading = false;
             });
-        // this.translate.onLangChange.subscribe((event) => {
-        // });
     }
 
     getChildren(node) {
