@@ -8,7 +8,7 @@ export const environment = {
     //MARKETPLACE | BTB | STANDARD
     mode: 'STANDARD',
     //API URL
-    apiUrl: window["env"]["APP_BASE_URL"] || 'http://localhost:8080/api',
+    apiUrl: window["env"]["APP_BASE_URL"] || 'https://api.perfectopoelesetfoyers.com/api',
     shippingApi: window["env"]["APP_SHIPPING_URL"] || 'http://localhost:9090/api',
     client: {
         language: {
