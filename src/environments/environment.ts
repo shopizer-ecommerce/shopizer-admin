@@ -18,7 +18,6 @@ export const environment = {
     mode: 'STANDARD',
     //API URL
     apiUrl: 'https://api.perfectopoelesetfoyers.com/api',
-    //apiUrl: 'http://aws-demo.shopizer.com:8080/api',
     shippingApi: 'http://localhost:9090/shipping/api/v1',
     client: {
         language: {
