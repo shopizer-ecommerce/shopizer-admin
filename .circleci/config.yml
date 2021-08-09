@@ -39,11 +39,11 @@ jobs:
        # Change url of environment
        #TODO url in environment #
        - run: |
-            sed 's#http://localhost:8080/api#https://api.boutiquerufina.com/api#g' ./src/assets/env.js
+            sed 's#http://localhost:8080/api#https://api.perfectopoelesetfoyers.com/api#g' ./src/assets/env.js
        - run: |
-            sed 's#http://localhost:8080/api#https://api.boutiquerufina.com/api#g' ./src/environments/environment.ts
+            sed 's#http://localhost:8080/api#https://api.perfectopoelesetfoyers.com/api#g' ./src/environments/environment.ts
        - run: |
-            sed 's#http://localhost:8080/api#https://api.boutiquerufina.com/api#g' ./src/environments/environment.prod.ts
+            sed 's#http://localhost:8080/api#https://api.perfectopoelesetfoyers.com/api#g' ./src/environments/environment.prod.ts
        - run: node ./node_modules/@angular/cli/bin/ng build --prod --progress
        #- run:
        #     name: Linting
