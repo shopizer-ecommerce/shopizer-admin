@@ -49,8 +49,6 @@ export class StoresListComponent implements OnInit {
     this.listingService = new ListingService();
   }
 
-
-
   ngOnInit() {
     this.getList();
 
@@ -76,15 +74,12 @@ export class StoresListComponent implements OnInit {
 
     /** callback methods for table list*/
     private loadList(newParams:any) {
-      //console.log('CallBack loadList');
-      //console.log(JSON.stringify(newParams));
       this.currentPage = 1; //back to page 1
       this.params = newParams;
       this.getList();
     }
   
     private resetList() {
-      //console.log('CallBack resetList');
       this.currentPage = 1;//back to page 1
       this.params = this.loadParams();
       this.getList();
@@ -96,7 +91,6 @@ export class StoresListComponent implements OnInit {
     this.params.page = startFrom;
     this.params.store = this.merchant;
     this.loadingList = true;
-    //console.log(JSON.stringify(this.params));
     this.storeService.getListOfStores(this.params)
       .subscribe(res => {
         this.totalCount = res.recordsTotal;

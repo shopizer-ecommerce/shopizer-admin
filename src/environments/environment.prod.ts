@@ -14,11 +14,8 @@ export const environment = {
         language: {
             default: window["env"]["APP_DEFAULT_LANGUAGE"] || 'fr',
             array: [
-                'en',
-                'es',
                 'fr',
-                'ru',
-                'ar'
+                'en'
             ],
         },
     }

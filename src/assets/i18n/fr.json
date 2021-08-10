@@ -528,7 +528,7 @@
         "SKU_EXISTS":"Ce SKU existe déjà.",
         "FILL_REQUIRED_FIELDS":"Veuillez remplir les champs obligatoires.",
         "ALPHA_DECIMAL_RULE":"Seuls les lettres et les chiffres sont autorisés.",
-        "ORDER":"Commande",
+        "ORDER":"Ordre d'affichage",
         "SEARCH":"Rechercher",
         "SEARCH_BY_NAME":"Recherche par nom",
         "AVAILABLE":"Disponible",

@@ -56,7 +56,6 @@ export class CategoriesListComponent implements OnInit {
       lang: this.storageService.getLanguage(),
       store: this.storageService.getMerchant(),
       count: this.perPage,
-      filter: 'admin',//otherwise some category might be filtered out
       page: 1
     };
   }
@@ -94,6 +93,7 @@ export class CategoriesListComponent implements OnInit {
   // creating array of categories include children
   //specific to category
   getChildren(node) {
+    console.log(JSON.stringify(node));
     if (node.children && node.children.length !== 0) {
       this.categories.push(node);
       node.children.forEach((el) => {
@@ -150,7 +150,7 @@ export class CategoriesListComponent implements OnInit {
           type: 'string',
           filter: false,
         },
-        name: {
+        description: {
           title: this.translate.instant('CATEGORY.CATEGORY_NAME'),
           type: 'string',
           filter: true,
