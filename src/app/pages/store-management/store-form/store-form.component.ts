@@ -109,7 +109,9 @@ export class StoreFormComponent implements OnInit {
         this.supportedCurrency = [...currencies];
         this.weightList = [...measures.weights];
         this.sizeList = [...measures.measures];
-        this.supportedLanguages = this.store.supportedLanguages;
+
+        this.supportedLanguages = this.configService.getListOfGlobalLanguages();
+
         // use method for getting only retailer store
         //list of retailers
 

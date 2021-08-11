@@ -27,7 +27,7 @@ export class CategoriesListComponent implements OnInit {
   settings = {};
 
   // paginator
-  perPage = 15;
+  perPage = 30;
   currentPage = 1; //start base
   totalCount;
   roles;
@@ -75,7 +75,6 @@ export class CategoriesListComponent implements OnInit {
 
   ngOnInit() {
     this.getList();
-
     this.translate.onLangChange.subscribe((lang) => {
       this.params.lang = this.storageService.getLanguage();
       this.getList();
@@ -93,7 +92,6 @@ export class CategoriesListComponent implements OnInit {
   // creating array of categories include children
   //specific to category
   getChildren(node) {
-    console.log(JSON.stringify(node));
     if (node.children && node.children.length !== 0) {
       this.categories.push(node);
       node.children.forEach((el) => {

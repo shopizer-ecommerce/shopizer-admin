@@ -25,6 +25,8 @@ export class CategoryFormComponent implements OnInit {
   form: FormGroup;
   //category
   roots = [];
+
+  perPage = 100;
   //supported languages
   languages = [];
   //default language
@@ -62,6 +64,17 @@ export class CategoryFormComponent implements OnInit {
   //category code must be unique
   isCodeUnique = true;
 
+  params = this.loadParams();
+
+  loadParams() {
+    return {
+      lang: this.storageService.getLanguage(),
+      store: this.storageService.getMerchant(),
+      count: this.perPage,
+      page: 0
+    };
+  }
+
   constructor(
     private fb: FormBuilder,
     private categoryService: CategoryService,
@@ -90,9 +103,9 @@ export class CategoryFormComponent implements OnInit {
       });
 
     //for selecting parent category - root or child of a parent
-    this.categoryService.getListOfCategories()
+    this.categoryService.getListOfCategories(this.params)
       .subscribe(res => {
-        res.categories.push({ id: 0, code: 'root' });
+        res.categories.push({ id: 0, code: 'root', children: [] });
         res.categories.sort((a, b) => {
           if (a.code < b.code)
             return -1;
@@ -100,7 +113,11 @@ export class CategoryFormComponent implements OnInit {
             return 1;
           return 0;
         });
-        this.roots = [...res.categories];
+        res.categories.forEach((el) => {
+          this.getChildren(el);
+        });
+        //this.roots = [...res.categories];
+        console.log(JSON.stringify(this.roots));
       });
     this.loader = true;
  
@@ -118,12 +135,24 @@ export class CategoryFormComponent implements OnInit {
       });
   }
 
+  getChildren(node) {
+    console.log('---> ' + JSON.stringify(node));
+    if (node.children && node.children.length !== 0) {
+      this.roots.push(node);
+      node.children.forEach((el) => {
+        this.getChildren(el);
+      });
+    } else {
+      this.roots.push(node);
+    }
+  }
+
   private createForm() {
     this.form = this.fb.group({
       parent: ['root', [Validators.required]],
       store: [this.merchant],
       visible: [false],
-      code: ['', [Validators.required, Validators.pattern(validators.alphanumeric)]],
+      code: ['', [Validators.required, Validators.pattern(validators.alphanumericwithhyphen)]],
       sortOrder: [0, [Validators.required, Validators.pattern(validators.number)]],
       selectedLanguage: ['', [Validators.required]],
       descriptions: this.fb.array([]),
@@ -346,6 +375,7 @@ export class CategoryFormComponent implements OnInit {
       });
     }
     recursiveFunc(this.form);
+    console.log('Invalids ' + invalidControls);
     return invalidControls;
   }
   customButton(context) {
