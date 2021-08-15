@@ -5,6 +5,7 @@ import { ProductGroupsService } from '../services/product-groups.service';
 import { Router, ActivatedRoute } from '@angular/router';
 
 import { StorageService } from '../../../shared/services/storage.service';
+import { validators } from '../../../shared/validation/validators';
 
 import { ProductService } from '../../products/services/product.service';
 
@@ -15,7 +16,6 @@ import { ProductService } from '../../products/services/product.service';
 })
 export class ProductGroupFormComponent implements OnInit {
   form: FormGroup;
-  codePattern = '^[a-zA-Z0-9]+$';
   isCodeUnique = true;
   uniqueCode: string;
   loading: boolean = false;
@@ -105,7 +105,7 @@ export class ProductGroupFormComponent implements OnInit {
 
   private createForm() {
     this.form = this.fb.group({
-      code: ['', [Validators.required, Validators.pattern(this.codePattern)]],
+      code: ['', [Validators.required, Validators.pattern(validators.alphanumericwithhyphen)]],
       active: [true],
       product: [this.selectedItems]
     });

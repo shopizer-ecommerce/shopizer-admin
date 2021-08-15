@@ -48,7 +48,8 @@ export class ProductToCategoryComponent implements OnInit {
     loadParams() {
         return {
             count: this.perPage,
-            page: 0
+            page: 0,
+            lang: localStorage.getItem('lang')
         };
     }
     ngOnInit() {

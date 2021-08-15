@@ -59,7 +59,7 @@ export class BrandFormComponent implements OnInit {
           this.fillForm();
         }
         this.loader = false;
-      });
+    });
   }
 
   createForm() {

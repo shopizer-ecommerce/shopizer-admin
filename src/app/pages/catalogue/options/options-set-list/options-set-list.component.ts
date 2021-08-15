@@ -35,7 +35,6 @@ export class OptionsSetListComponent implements OnInit {
 
     this.loadingList = true;
     this.optionService.getListOfOptionsSet().subscribe((res) => {
-
       this.source.load(res);
       this.loadingList = false;
     });

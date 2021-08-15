@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectorRef, EventEmitter, Output } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NbDialogRef } from '@nebular/theme';
 import { PropertiesService } from '../../services/product-properties';
@@ -14,10 +14,13 @@ import { TranslateService } from '@ngx-translate/core';
     styleUrls: ['./product-property-form.component.scss']
 })
 export class ProductPropertyForm implements OnInit {
-    product: any;
+    //product: any;
+    @Input() product;
+    @Output() loading = new EventEmitter<any>();
     attributeId: any;
     attribute: any = {};
     form: FormGroup;
+    perPage: number = 15;
     loader: boolean = false;
     languages: Array<any> = [];
     options: Array<any> = [];
@@ -35,7 +38,6 @@ export class ProductPropertyForm implements OnInit {
     ) {
         this.createForm();
         this.getLanguages();
-        this.getProductProperty();
     }
     getLanguages() {
         this.configService.getListOfSupportedLanguages(localStorage.getItem('merchant'))
@@ -46,15 +48,20 @@ export class ProductPropertyForm implements OnInit {
 
             });
     }
+
+
     ngAfterViewChecked() {
         //your code to update the model
         this.cdr.detectChanges();
     }
     ngOnInit() {
+
+        this.getProductProperty();
+        
         if (this.attributeId) {
             this.loader = true;
+            
             this.productAttributesService.getAttributesById(this.product.id, this.attributeId, { lang: '_all' }).subscribe(res => {
-                // console.log('---------', res)
                 this.attribute = res;
                 console.log(res.option)
                 setTimeout(() => {
@@ -68,7 +75,7 @@ export class ProductPropertyForm implements OnInit {
         }
     }
     getProductProperty() {
-        this.propertiesService.getProductProperties("test")
+        this.propertiesService.getProductProperties(this.product.type.code, localStorage.getItem('lang'))
             .subscribe(property => {
                 // console.log(property);
                 let temp = []

@@ -2,25 +2,17 @@
   <form [formGroup]='form' class="optionDetailsForm">
     <nb-card-header class="main_header">
       <h1 class="page_title">{{ 'COMPONENTS.OPTIONS' | translate}}</h1>
-      <!-- <div class="content_spacing">
-        <nb-select *ngIf="languages.length" placeholder="{{ 'COMMON.LANGUAGE' | translate }}" outline shape="rectangle"
-          class="fullWidth" formControlName='selectedLanguage'>
-          <nb-option *ngFor="let language of languages" [value]="language.code">{{ ('LANG.'+language.code) |
-            translate }}</nb-option>
-        </nb-select>
-      </div> -->
       <div class="content_spacing">
         <button type="button" nbButton class="cancel_button" (click)="goToback()">{{ 'ORDER_FORM.CANCLE'
           | translate}}</button>
       </div>
-
       <div class="content_spacing">
-        <button nbButton type="submit" class="success_button" (click)="save()" [disabled]="!form.valid">{{'COMMON.SAVE'
+        <button *ngIf="!loader" nbButton type="submit" class="success_button" (click)="save()" [disabled]="!form.valid">{{'COMMON.SAVE'
           | translate }}</button>
       </div>
     </nb-card-header>
 
-    <div [nbSpinner]="loadingInfo" nbSpinnerSize="large" nbSpinnerStatus="primary">
+    <div *ngIf="!loader" [nbSpinner]="loadingInfo" nbSpinnerSize="large" nbSpinnerStatus="primary">
       <nb-card class="nb-card inline-form-card">
         <nb-card-body class="nb-card-body">
           <div class="form-group">
@@ -51,12 +43,10 @@
               </nb-select>
             </div>
           </div>
-          <div *ngIf="selectedLanguage.value !== ''" formArrayName='descriptions'>
+          <div *ngIf="!loader" formArrayName='descriptions'>
             <div *ngFor="let descr of descriptions.controls; let j=index">
               <div *ngIf="descr.value.language === selectedLanguage.value">
-
                 <div [formGroupName]="j">
-
                   <div class="form-group">
                     <label for="name" class="col-sm-10 col-form-label inputLabel">{{ 'DESCRIPTION_FORM.NAME' |
                       translate }}

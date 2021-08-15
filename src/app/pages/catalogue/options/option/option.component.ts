@@ -20,6 +20,7 @@ export class OptionComponent implements OnInit {
   loadingInfo: boolean = false;
   option = new Option();
   languages = [];
+  defaultLanguage = localStorage.getItem('lang');
   types = [
     'select', 'radio', 'checkbox', 'text'
   ];
@@ -34,20 +35,31 @@ export class OptionComponent implements OnInit {
     private translate: TranslateService,
     private router: Router,
   ) {
-    this.languages = [...this.configService.languages];
+    //this.languages = [...this.configService.languages];
+    //const config = this.configService.getListOfSupportedLanguages(localStorage.getItem('merchant'));
   }
 
   ngOnInit() {
+    this.loader = true;
     const optionId = this.activatedRoute.snapshot.paramMap.get('optionId');
+    
     this.createForm();
-    if (optionId) {
-      this.loader = true;
-      this.optionService.getOptionById(optionId).subscribe(res => {
-        this.option = res;
-        this.fillForm();
-        this.loader = false;
-      });
-    }
+    
+    this.configService.getListOfSupportedLanguages(localStorage.getItem('merchant'))
+       .subscribe(res => {
+        this.languages = [...res];
+        this.addFormArray();
+        if (optionId) {
+          this.optionService.getOptionById(optionId).subscribe(res => {
+            this.option = res;
+            this.fillForm();//bind content to the form
+            this.loader=false;
+         });
+        } else {
+          this.loader=false;
+        }
+        
+    });
   }
 
   get selectedLanguage() {
@@ -66,19 +78,19 @@ export class OptionComponent implements OnInit {
     this.form = this.fb.group({
       code: ['', [Validators.required, Validators.pattern(validators.alphanumeric)]],
       type: ['', [Validators.required]],
-      selectedLanguage: ['en'],
+      selectedLanguage: [this.defaultLanguage, [Validators.required]],
       descriptions: this.fb.array([])
     });
-    this.addFormArray();
   }
 
   addFormArray() {
     const control = <FormArray>this.form.controls.descriptions;
+    //console.log('Here ' + JSON.stringify(this.languages));
     this.languages.forEach(lang => {
       control.push(
         this.fb.group({
           language: [lang.code, []],
-          name: ['', []]
+           name: ['', []]
         })
       );
     });
@@ -88,14 +100,16 @@ export class OptionComponent implements OnInit {
     this.form.patchValue({
       code: this.option.code,
       type: this.option.type,
-      selectedLanguage: 'en',
+      selectedLanguage: this.defaultLanguage
     });
     this.fillFormArray();
   }
 
   fillFormArray() {
     this.form.value.descriptions.forEach((desc, index) => {
+      //console.log(JSON.stringify(desc));
       this.option.descriptions.forEach((description) => {
+        //console.log('Comparing ' + desc.language + ' - ' + description.language);
         if (desc.language === description.language) {
           (<FormArray>this.form.get('descriptions')).at(index).patchValue({
             language: description.language,
