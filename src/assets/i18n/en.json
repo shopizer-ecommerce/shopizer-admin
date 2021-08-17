@@ -580,6 +580,8 @@
     "es": "Spanish"
   },
   "filemanager": {
+    "title": "File Manager",
+    "drop_zone_label": "Drop images",
     "cancel": "Cancel",
     "close": "Close",
     "confirm": "Confirm",
