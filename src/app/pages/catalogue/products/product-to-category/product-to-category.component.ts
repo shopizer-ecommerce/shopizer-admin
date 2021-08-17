@@ -14,11 +14,10 @@ import { IDropdownSettings } from 'ng-multiselect-dropdown';
 export class ProductToCategoryComponent implements OnInit {
     @Input() product;
     @Output() loading = new EventEmitter<any>();
-    // loading: boolean = false;
-    // categories: Array<any> = [];
-    perPage: number = 15;
+
+    perPage: number = 50;//ideally display all category
     currentPage: number = 1;
-    // totalCount: number;
+
     dropdownList = [];
     categories = [];
     selectedItems = [];
