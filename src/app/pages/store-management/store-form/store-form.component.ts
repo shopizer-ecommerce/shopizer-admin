@@ -59,7 +59,7 @@ export class StoreFormComponent implements OnInit {
   parentRetailer: any;
   merchant = '';
   parent: any;
-  selectedItem = '2';
+  selectedItem = '1';
   sidemenuLinks = [
     {
       id: '0',
@@ -69,12 +69,6 @@ export class StoreFormComponent implements OnInit {
     },
     {
       id: '1',
-      title: 'Store home page',
-      key: 'COMPONENTS.STORE_LANDING',
-      link: 'store-landing'
-    },
-    {
-      id: '2',
       title: 'Store details',
       key: 'COMPONENTS.STORE_DETAILS',
       link: 'store'

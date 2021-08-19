@@ -259,8 +259,10 @@
     "CATALOG_CONTENT": "Catalogue content"
   },
   "PRODUCT": {
+    "UNIQUE_ID": "Unique identifier",
     "SKU": "Sku",
     "SKU_REQUIRED": "Sku is required.",
+    "ID_REQUIRED": "Unique id is required.",
     "PRODUCT_NAME": "Product name",
     "QTY": "Qty",
     "PRICE": "Price",
