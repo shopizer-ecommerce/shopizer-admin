@@ -5,6 +5,9 @@
 npm i --yes
 ng serve -o
 
+## Build app
+ng build 
+
 ## Run docker images
 
 docker run \
