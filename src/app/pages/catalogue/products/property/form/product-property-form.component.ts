@@ -184,7 +184,7 @@ export class ProductPropertyForm implements OnInit {
                 "optionValue": {
                     "descriptions": this.form.value.descriptions
                 },
-                "sortOrder": 0
+                "sortOrder": 0 //TODO option sort order
             }
         } else {
             param = {
@@ -194,7 +194,7 @@ export class ProductPropertyForm implements OnInit {
                     "id": this.form.value.option
                 },
                 "optionValue": { id: this.form.value.optionValue },
-                "sortOrder": 1
+                "sortOrder": 1 //TODO option sort order
             }
         }
         this.loader = true;
