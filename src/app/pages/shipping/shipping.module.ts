@@ -16,7 +16,6 @@ import { NgxSummernoteModule } from 'ngx-summernote';
     SharedModule,
     TransferBoxModule,
     MalihuScrollbarModule.forRoot(),
-    // ngfModule,
     QueryBuilderModule,
     CustomModule,
     NgxSummernoteModule

@@ -1,6 +1,4 @@
 import { Component } from '@angular/core';
-import { DomSanitizer } from '@angular/platform-browser';
-import { LocalDataSource } from 'ng2-smart-table';
 import { forkJoin } from 'rxjs';
 import { SharedService } from '../services/shared.service';
 import { StoreService } from '../../store-management/services/store.service';

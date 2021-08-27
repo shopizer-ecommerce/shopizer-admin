@@ -56,9 +56,16 @@
             <nb-card-header class="nb-card-header">{{ 'EXPEDITION.SELECT_COUNTRY' | translate}}</nb-card-header>
             <nb-card-body class="nb-card-body">
               <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12" *ngIf="leftAreaItems.length > 0">
-                <app-transferlistbox [code]="code" [label]="label" [leftAreaList]="leftAreaItems" [rightAreaList]="rightAreaItems"
-                  [leftAreaLabel]="leftAreaLabel" [rightAreaLabel]="rightAreaLabel" [leftAreaId]="leftAreaId"
-                  [rightAreaId]="rightAreaId"></app-transferlistbox>
+                <app-transferlistbox 
+                  [code]="code" 
+                  [label]="label" 
+                  [leftAreaList]="leftAreaItems" 
+                  [rightAreaList]="rightAreaItems"
+                  [leftAreaLabel]="leftAreaLabel" 
+                  [rightAreaLabel]="rightAreaLabel" 
+                  [leftAreaId]="leftAreaId"
+                  [rightAreaId]="rightAreaId">
+                </app-transferlistbox>
               </div>
             </nb-card-body>
           </nb-card>

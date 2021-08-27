@@ -1,18 +1,23 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { stringify } from '@angular/compiler/src/util';
 import { ToastrService } from 'ngx-toastr';
 import { TranslateService } from '@ngx-translate/core';
-import { StorageService } from '../../shared/services/storage.service';
-import { SharedService } from '../services/shared.service';
+import { StorageService } from '../../services/storage.service';
+//import { SharedService } from '../../services/';
 import { Subscription } from 'rxjs';
 
+/**
+ * Accepts from parent 
+ * left list (all selections)
+ * right list (saved selections)
+ * all labels to be displayed
+ */
 
 @Component({
   selector: 'app-transferlistbox',
   templateUrl: './transferlistbox.component.html',
   styleUrls: ['./transferlistbox.component.scss']
 })
-export class TransferlistboxComponent implements OnInit {
+export class TransferBoxesComponent implements OnInit {
 
   @Input("leftAreaList") leftAreaList: any[];
   @Input("rightAreaList") rightAreaList: any[];
@@ -25,7 +30,7 @@ export class TransferlistboxComponent implements OnInit {
   toggleButtonClicked = new EventEmitter<Object>();
   leftAreaMap: Map<string, any>;
   rightAreaMap: Map<string, any> = new Map<string, any>();
-  shipToCountries: string[] = [];
+  shipToCountries: string[] = []; //TODO remove
   store: string;
   clickEventsubscription: Subscription;
 
@@ -41,15 +46,12 @@ export class TransferlistboxComponent implements OnInit {
      *end of alerts component params 
      */
   showDelete: boolean = true;
-  constructor(private toastr: ToastrService, private translate: TranslateService, private storageService: StorageService, private sharedService: SharedService) {
-    this.clickEventsubscription = this.sharedService.getClickEvent().subscribe(() => {
-      this.saveShipToCountries();
-    })
-
-    this.clickEventsubscription = this.sharedService.getStoreEvent().subscribe(data => {
-      this.store = data;
-      this.generateLocalData();
-    })
+  constructor(
+    private toastr: ToastrService, 
+    private translate: TranslateService, 
+    private storageService: StorageService, 
+    //private sharedService: SharedService
+    ) {
   }
 
   /**
@@ -58,26 +60,10 @@ export class TransferlistboxComponent implements OnInit {
   ngOnInit() {
     this.store = this.storageService.getMerchant();
     this.generateLocalData();
-    // this.fetchShipToCountries();
-
-
 
   }
-  // Method to fetch selected shipToCountries
-  // fetchShipToCountries() {
-  //   this.sharedService.getExpedition(this.store)
-  //     .subscribe(data => {
-  //       console.log(data)
-  //       this.shipToCountries = data.shipToCountry;
-  //       // console.log(this.shipToCountries);
-  //       this.generateLocalData();
-  //     }, error => {
-  //       // this.loadingList = false;
 
-  //     });
-
-  // }
-  //save shipToCountries
+  /** TODO collback */
   saveShipToCountries() {
     let selectedCountries = Array.from(this.rightAreaMap.values());
     selectedCountries.forEach(item => {
@@ -87,6 +73,7 @@ export class TransferlistboxComponent implements OnInit {
       "iternationalShipping": true,
       "shipToCountry": this.shipToCountries
     }
+    /**
     this.sharedService.saveExpedition(this.store, param)
       .subscribe(data => {
         this.shipToCountries = [];
@@ -95,11 +82,13 @@ export class TransferlistboxComponent implements OnInit {
         // this.loadingList = false;
 
       });
+    **/
 
   }
 
   /**
-   * Creates a map based on the array information passed. addes additional properties required down the line
+   * Creates a map based on the array information passed. 
+   * adde additional properties required down the line
    */
   generateLocalData() {
     if (this.code == null) { throw Error("code attribute is required") };
@@ -124,16 +113,7 @@ export class TransferlistboxComponent implements OnInit {
     rightAreaListData.forEach((item) => {
       this.rightAreaMap.set(item[this.code], item);
     });
-    // console.log(this.leftAreaList);
-    // console.log(this.rightAreaList);
-    // this.shipToCountries = [];
-    // } else {
-    //   this.leftAreaList.forEach((item) => {
-    //     item.selected = false;
-    //     this.leftAreaMap.set(item[this.code], item);
-    //   });
-    //   this.rightAreaMap = new Map<string, any>();
-    // }
+
   }
   /**
    * Sets the items into map 
@@ -174,8 +154,8 @@ export class TransferlistboxComponent implements OnInit {
 
   }
   /**
-     * Toggles items from Right to Left
-     */
+   * Toggles items from Right to Left
+   */
   toggleRightToLeft() {
     let counter = 0;
     this.rightAreaMap.forEach((item: any, key: string) => {
