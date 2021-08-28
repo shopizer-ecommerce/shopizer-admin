@@ -8,6 +8,7 @@ import { KeywordsearchPipe } from './pipes/keywordsearch.pipe';
 
 /**
  * Generic transfer data from one box to another
+ * WIP
  */
 
 @NgModule({

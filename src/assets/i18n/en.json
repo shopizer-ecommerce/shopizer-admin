@@ -276,7 +276,8 @@
     "PRODUCT_UPDATED": "Product updated.",
     "PRODUCT_CREATED": "Product created.",
     "PRODUCT_REMOVED": "Product removed.",
-    "DEFINITION": "Product definition"
+    "DEFINITION": "Product definition",
+    "SELECT": "Select product"
   },
   "PRODUCT_ATTRIBUTES": {
     "PRODUCT_OPTIONS_ATTRIBUTES": "Product options / attributes",

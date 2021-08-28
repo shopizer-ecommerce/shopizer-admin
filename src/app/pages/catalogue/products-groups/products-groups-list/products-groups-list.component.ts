@@ -15,6 +15,7 @@ export class ProductsGroupsListComponent implements OnInit {
   selectedList = [];
   groups = [];
   selectedGroup;
+  itemsParams = this.loadItemsParams();
   loading: boolean = false;
   constructor(
     private productService: ProductService,
@@ -23,15 +24,25 @@ export class ProductsGroupsListComponent implements OnInit {
   ) {
     const params = {
       store: this.storageService.getMerchant(),
-      lang: 'en',
+      lang: this.storageService.getLanguage(),
       count: -1,
       start: 0
     };
-    forkJoin(this.productService.getListOfProducts(params), this.productGroupsService.getListOfProductGroups({ store: this.storageService.getMerchant() }))
+    
+    forkJoin(
+      this.productService.getListOfProducts(params), 
+      this.productGroupsService.getListOfProductGroups({ store: this.storageService.getMerchant() }))
       .subscribe(([products, groups]) => {
         this.availableList = [...products.products];
         this.groups = [...groups];
       });
+  }
+
+  loadItemsParams() {
+    return {
+      store: this.storageService.getMerchant(),
+      lang: this.storageService.getLanguage()
+    };
   }
 
   ngOnInit() {
@@ -71,20 +82,20 @@ export class ProductsGroupsListComponent implements OnInit {
   addProductToGroup(productId, groupCode) {
     this.productGroupsService.addProductToGroup(productId, groupCode)
       .subscribe(res => {
-        console.log(res);
+        //console.log(res);
       });
   }
 
   removeProductFromGroup(productId, groupCode) {
     this.productGroupsService.removeProductFromGroup(productId, groupCode)
       .subscribe(res => {
-        console.log(res);
+        //console.log(res);
       });
   }
 
   selectGroup(groupCode) {
     this.selectedGroup = groupCode;
-    this.productGroupsService.getProductsByGroup(this.selectedGroup)
+    this.productGroupsService.getProductsByGroup(this.selectedGroup, this.itemsParams)
       .subscribe(res => {
         this.selectedList = [...res.products];
         this.availableList = this.availableList.filter(n => !this.selectedList.some(n2 => n.id === n2.id));

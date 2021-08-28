@@ -13,9 +13,9 @@ import { Subscription } from 'rxjs';
  */
 
 @Component({
-  selector: 'app-transferlistbox',
-  templateUrl: './transferlistbox.component.html',
-  styleUrls: ['./transferlistbox.component.scss']
+  selector: 'app-transferboxes',
+  templateUrl: './transferboxes.component.html',
+  styleUrls: ['./transferboxes.component.scss']
 })
 export class TransferBoxesComponent implements OnInit {
 

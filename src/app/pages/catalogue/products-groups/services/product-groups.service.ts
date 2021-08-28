@@ -43,8 +43,8 @@ export class ProductGroupsService {
     return this.crudService.delete(`/v1/private/products/${productId}/group/${groupCode}`);
   }
 
-  getProductsByGroup(groupCode) {
-    return this.crudService.get(`/v1/products/group/${groupCode}`);
+  getProductsByGroup(groupCode, params) {
+    return this.crudService.get(`/v1/products/group/${groupCode}`, params);
   }
 
   removeProductGroup(groupCode) {

@@ -6,6 +6,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 
 import { StorageService } from '../../../shared/services/storage.service';
 import { validators } from '../../../shared/validation/validators';
+import { TranslateService } from '@ngx-translate/core';
 
 import { ProductService } from '../../products/services/product.service';
 
@@ -21,8 +22,9 @@ export class ProductGroupFormComponent implements OnInit {
   loading: boolean = false;
   selectedItems = [];
   dropdownSettings = {};
-  perPage = 15;
+  perPage = 50;
   params = this.loadParams();
+  itemsParams = this.loadItemsParams();
   products: Array<any> = [];
   constructor(
     private fb: FormBuilder,
@@ -30,7 +32,8 @@ export class ProductGroupFormComponent implements OnInit {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private storageService: StorageService,
-    private productService: ProductService
+    private productService: ProductService,
+    private translate: TranslateService,
   ) {
     this.uniqueCode = this.activatedRoute.snapshot.paramMap.get('code');
     if (this.uniqueCode) {
@@ -41,7 +44,7 @@ export class ProductGroupFormComponent implements OnInit {
       idField: 'id',
       textField: 'name',
       enableCheckAll: false,
-      searchPlaceholderText: 'Search',
+      searchPlaceholderText: this.translate.instant('COMMON.SEARCH'),
       // unSelectAllText: 'UnSelect All',
       itemsShowLimit: 7,
       allowSearchFilter: true,
@@ -55,6 +58,13 @@ export class ProductGroupFormComponent implements OnInit {
       lang: this.storageService.getLanguage(),
       count: this.perPage,
       page: 0
+    };
+  }
+
+  loadItemsParams() {
+    return {
+      store: this.storageService.getMerchant(),
+      lang: this.storageService.getLanguage()
     };
   }
 
@@ -73,7 +83,7 @@ export class ProductGroupFormComponent implements OnInit {
       });
   }
   getProductByCode() {
-    this.productGroupsService.getProductsByGroup(this.uniqueCode)
+    this.productGroupsService.getProductsByGroup(this.uniqueCode, this.itemsParams)
       .subscribe(res => {
         let temp = []
         res.products.map((value) => {

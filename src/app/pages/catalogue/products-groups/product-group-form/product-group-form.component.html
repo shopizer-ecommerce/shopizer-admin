@@ -48,7 +48,7 @@
           <div class="form-group" *ngIf="uniqueCode && products?.length > 0">
             <div class="col-sm-12">
               <div class="mainBody">
-                <ng-multiselect-dropdown name="product" [placeholder]="'Select Product'" [settings]="dropdownSettings"
+                <ng-multiselect-dropdown name="product" placeholder="{{ 'PRODUCT.SELECT' | translate}}" [settings]="dropdownSettings"
                   [data]="products" [formControl]="form.controls['product']" (onSelect)="onItemSelect($event)"
                   (onDeSelect)="onItemDeSelect($event)" (onFilterChange)="onFilterChange($event)">
                 </ng-multiselect-dropdown>
