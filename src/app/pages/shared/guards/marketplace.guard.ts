@@ -29,7 +29,7 @@ export class MarketplaceGuard implements CanActivate {
           return true;
         }
       } else {//B2C
-        if(this.securityService.isRetailAdmin()) {
+        if(this.securityService.isAnAdmin()) {
           return true;
         }
      }

@@ -49,7 +49,6 @@ const IsCustomer = () => {
 };
 
 const isCategoryManagementVisible = () => {
-
   if ('MARKETPLACE' === environment.mode) {
     if (IsSuperadmin()) {
       return true;
