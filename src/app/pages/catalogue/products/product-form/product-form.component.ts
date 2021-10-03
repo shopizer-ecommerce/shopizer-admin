@@ -147,7 +147,7 @@ export class ProductFormComponent implements OnInit {
       canBePurchased: [true],
       price: ['', [Validators.required]],
       quantity: ['', [Validators.required, Validators.pattern(validators.number)]],
-      // sortOrder: ['', [Validators.required, Validators.pattern(validators.number)]],
+      sortOrder: ['', [Validators.required, Validators.pattern(validators.number)]],
       // productShipeable: [false, [Validators.required]],
       productSpecifications: this.fb.group({
         weight: [''],
@@ -199,7 +199,7 @@ export class ProductFormComponent implements OnInit {
         width: this.product.productSpecifications.width,
         length: this.product.productSpecifications.length
       },
-      // sortOrder: this.product.sortOrder,
+      sortOrder: this.product.sortOrder,
       // productShipeable: this.product.productShipeable,
       // placementOrder: [0, [Validators.required]],  // ???
       // taxClass: [0, [Validators.required]], // ???
