@@ -13,3 +13,5 @@ ng build
 docker run \
 -e "APP_BASE_URL=http://localhost:8080/api" \
 -it --rm -p 80:80 shopizerecomm/shopizer-admin
+
+APP_BASE_URL is the api backend
