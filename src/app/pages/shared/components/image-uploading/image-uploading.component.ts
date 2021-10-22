@@ -1,25 +1,42 @@
-import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges,
+  ViewChild,
+} from "@angular/core";
+import {
+  CdkDragDrop,
+  moveItemInArray,
+  transferArrayItem,
+} from "@angular/cdk/drag-drop";
 
-import { ToastrService } from 'ngx-toastr';
-import { TranslateService } from '@ngx-translate/core';
+import { ToastrService } from "ngx-toastr";
+import { TranslateService } from "@ngx-translate/core";
 import { HttpClient, HttpErrorResponse } from "@angular/common/http";
 import { ImageUploadingAdapter } from "./image-uploading-adapter";
-import { FilePickerComponent, FilePreviewModel, UploaderCaptions, ValidationError } from "ngx-awesome-uploader";
+import {
+  FilePickerComponent,
+  FilePreviewModel,
+  UploaderCaptions,
+  ValidationError,
+} from "ngx-awesome-uploader";
 // import { FilePreviewModel } from "ngx-awesome-uploader";
 // import { UploaderCaptions } from "ngx-awesome-uploader";
 // import { ValidationError } from "ngx-awesome-uploader";
 import { Observable, of } from "rxjs";
 import { delay, map } from "rxjs/operators";
-import { Image } from '../../../shared/models/image';
-
+import { Image } from "../../../shared/models/image";
 
 @Component({
-  selector: 'ngx-image-uploading',
-  templateUrl: './image-uploading.component.html',
-  styleUrls: ['./image-uploading.component.scss']
+  selector: "ngx-image-uploading",
+  templateUrl: "./image-uploading.component.html",
+  styleUrls: ["./image-uploading.component.scss"],
 })
 export class ImageUploadingComponent implements OnInit {
-
   @ViewChild("uploader", { static: false }) uploader: FilePickerComponent;
 
   public adapter;
@@ -54,7 +71,11 @@ export class ImageUploadingComponent implements OnInit {
     private toastr: ToastrService,
     private translate: TranslateService,
     private http: HttpClient
-  ) { }
+  ) {}
+
+  drop(event: CdkDragDrop<any>) {
+    moveItemInArray(this.images, event.previousIndex, event.currentIndex);
+  }
 
   ngOnInit() {
     this.addUrl = this.addImageUrl;
@@ -66,7 +87,7 @@ export class ImageUploadingComponent implements OnInit {
   //   this.imageList = this.images;
   // }
 
-  onUploadError(file: FilePreviewModel) { }
+  onUploadError(file: FilePreviewModel) {}
 
   // readfiles(files) {
   //   this.details = true;
@@ -104,7 +125,6 @@ export class ImageUploadingComponent implements OnInit {
   }
 
   public onUploadSuccess(e: FilePreviewModel): void {
-
     var me = this;
     this.timer = setTimeout(() => {
       me.success.emit(e.fileName);
@@ -120,16 +140,14 @@ export class ImageUploadingComponent implements OnInit {
 
   /* remove success */
   public onRemoveSuccess(e: FilePreviewModel) {
-    console.log('Remove');
+    console.log("Remove");
     console.log(e);
   }
 
   public onFileAdded(file: FilePreviewModel) {
-    console.log('File added ', file);
-    this.fileAdded.emit(true)
+    console.log("File added ", file);
+    this.fileAdded.emit(true);
     clearTimeout(this.timer);
     // this.myFiles.push(file);
   }
-
-
 }
