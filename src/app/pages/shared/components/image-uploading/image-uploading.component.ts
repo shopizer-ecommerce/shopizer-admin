@@ -8,11 +8,7 @@ import {
   SimpleChanges,
   ViewChild,
 } from "@angular/core";
-import {
-  CdkDragDrop,
-  moveItemInArray,
-  transferArrayItem,
-} from "@angular/cdk/drag-drop";
+import { CdkDragDrop, moveItemInArray } from "@angular/cdk/drag-drop";
 
 import { ToastrService } from "ngx-toastr";
 import { TranslateService } from "@ngx-translate/core";
@@ -24,12 +20,11 @@ import {
   UploaderCaptions,
   ValidationError,
 } from "ngx-awesome-uploader";
-// import { FilePreviewModel } from "ngx-awesome-uploader";
-// import { UploaderCaptions } from "ngx-awesome-uploader";
-// import { ValidationError } from "ngx-awesome-uploader";
 import { Observable, of } from "rxjs";
 import { delay, map } from "rxjs/operators";
 import { Image } from "../../../shared/models/image";
+import { StoreService } from "../../../store-management/services/store.service";
+import { UserService } from "../../../../@core/mock/users.service";
 
 @Component({
   selector: "ngx-image-uploading",
@@ -54,6 +49,7 @@ export class ImageUploadingComponent implements OnInit {
   @Input() deleteImageUrl;
 
   @Output() remove = new EventEmitter<string>();
+  @Output() update = new EventEmitter<any>();
   @Output() error = new EventEmitter<string>();
   @Output() success = new EventEmitter<string>();
   @Output() fileAdded = new EventEmitter<any>();
@@ -70,11 +66,14 @@ export class ImageUploadingComponent implements OnInit {
   constructor(
     private toastr: ToastrService,
     private translate: TranslateService,
-    private http: HttpClient
-  ) {}
+    private http: HttpClient,
+    private storeService: UserService
+  ) { }
 
   drop(event: CdkDragDrop<any>) {
     moveItemInArray(this.images, event.previousIndex, event.currentIndex);
+    let imageId = event.currentIndex;
+    this.updateImage(event.currentIndex, this.images[imageId])
   }
 
   ngOnInit() {
@@ -87,26 +86,9 @@ export class ImageUploadingComponent implements OnInit {
   //   this.imageList = this.images;
   // }
 
-  onUploadError(file: FilePreviewModel) {}
+  onUploadError(file: FilePreviewModel) { }
 
-  // readfiles(files) {
-  //   this.details = true;
-  //   const reader = new FileReader();
-  //   reader.onload = (event) => {
-  //     const fileReader = event.target as FileReader;
-  //     const img = {
-  //       id: 'img' + Math.floor(Math.random() * 1000),
-  //       imageUrl: fileReader.result as string,
-  //       newImage: true,
-  //       bigSize: files.size > this.maxSize,
-  //       name: files.name
-  //     };
-  //     this.images.push(img);
-  //     //console.log(files)
-  //   };
-  //   reader.readAsDataURL(files);
-  //   this.details = false;
-  // }
+
 
   errorImage(code) {
     console.log("Error image " + code);
@@ -119,9 +101,19 @@ export class ImageUploadingComponent implements OnInit {
     this.remove.emit(image.id);
   }
 
+  updateImage(index, id) {
+    console.log("id::", id);
+    let newObj = { "index": index + 1, "id": id.id }
+    this.update.emit(newObj)
+  }
+
   public onValidationError(error: ValidationError): void {
-    //alert(`Validation Error ${error.error} in ${error.file.name}`);
     this.errorImage(error.error);
+  }
+
+  public onChangeimage(e: any): void {
+    console.log("function==>", e);
+
   }
 
   public onUploadSuccess(e: FilePreviewModel): void {
@@ -130,12 +122,6 @@ export class ImageUploadingComponent implements OnInit {
       me.success.emit(e.fileName);
       me.details = false;
     }, 2000);
-    // clearTimeout(this.timer);
-    //     var me = this;
-    //     this.timer = setTimeout(function () {
-    //         me.page = 1;
-    //         me.ngOnInit()
-    //     }, 500);
   }
 
   /* remove success */
@@ -148,6 +134,5 @@ export class ImageUploadingComponent implements OnInit {
     console.log("File added ", file);
     this.fileAdded.emit(true);
     clearTimeout(this.timer);
-    // this.myFiles.push(file);
   }
 }

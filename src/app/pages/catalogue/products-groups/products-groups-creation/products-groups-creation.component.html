@@ -4,7 +4,7 @@
     {{ 'PRODUCT_ATTRIBUTES.OPTIONS_ATTRIBUTES' | translate}}
   </nb-card-header>
   <nb-card-body>
-    <div *ngIf="loader" [nbSpinner]="loader" nbSpinnerSize="large" nbSpinnerStatus="primary"></div>
+    <!-- <div *ngIf="loader" [nbSpinner]="loader" nbSpinnerSize="large" nbSpinnerStatus="primary"></div> -->
     <form [formGroup]='form'>
       <div class="form-group">
         <label class="col-sm-10 col-form-label">{{ 'PRODUCT_ATTRIBUTES.ATTRIBUTE_NAME' | translate}}</label>
@@ -36,10 +36,11 @@
 
 
       <div class="form-group">
-        <label for="optionPrice" class="col-sm-10 col-form-label">{{ 'PRODUCT_ATTRIBUTES.OPTION_PRICE' | translate}}</label>
+        <label for="optionPrice" class="col-sm-10 col-form-label">{{ 'PRODUCT_ATTRIBUTES.OPTION_PRICE' |
+          translate}}</label>
         <div class="col-sm-12">
-          <input type="number" class="form-control" id="optionPrice" formControlName='optionPrice' placeholder="{{ 'PRODUCT.QUANTITY' | translate}}"
-            required>
+          <input type="number" class="form-control" id="optionPrice" formControlName='optionPrice'
+            placeholder="{{ 'PRODUCT.QUANTITY' | translate}}" required>
         </div>
       </div>
 
@@ -47,8 +48,8 @@
       <div class="form-group">
         <label for="order" class="col-sm-10 col-form-label">{{ 'COMMON.ORDER' | translate}}</label>
         <div class="col-sm-12">
-          <input type="number" class="form-control" id="order" formControlName='order' placeholder="{{ 'PRODUCT.QUANTITY' | translate}}"
-            required>
+          <input type="number" class="form-control" id="order" formControlName='order'
+            placeholder="{{ 'PRODUCT.QUANTITY' | translate}}" required>
         </div>
       </div>
 
@@ -82,7 +83,8 @@
       <hr />
 
       <div class="form-group actions-button">
-        <button type="submit" class="btn btn-primary" (click)="save()">{{ 'COMMON.SAVE' | translate }}</button>
+        <button type="submit" class="btn btn-primary" [nbSpinner]="loader" nbSpinnerSize="large"
+          nbSpinnerStatus="control" (click)="save()">{{ ( !loader ? 'COMMON.SAVE' : '' ) | translate }}</button>
       </div>
 
     </form>

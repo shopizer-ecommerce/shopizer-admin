@@ -21,12 +21,16 @@ export class ProductImageService {
     return this.crudService.getBaseUrl() + `/v1/private/products/${id}/images`;
   }
 
-  removeImage(productId,imageId): Observable<any> {
+  removeImage(productId, imageId): Observable<any> {
     return this.crudService.delete(`/v1/private/products/${productId}/image/${imageId}`);
   }
 
   createImage(id, uploadData): Observable<any> {
     return this.crudService.post(`/v1/private/products/${id}/images`, uploadData);
+  }
+
+  updateImage(productId, event): Observable<any> {
+    return this.crudService.patch(`/v1/private/products/${productId}/image/${event.id}?order=${event.index}`, []);
   }
 
 }

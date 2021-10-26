@@ -41,8 +41,6 @@ import { ManageAddComponent } from "./pages/customers/manageoptions/add.componen
 import { OptionsAddComponent } from "./pages/customers/options/add.component";
 import { ValueAddComponent } from "./pages/customers/optionsvalue/add.component";
 import { FilePickerModule } from "ngx-awesome-uploader";
-import { DragDropModule } from "@angular/cdk/drag-drop";
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -60,7 +58,6 @@ import { DragDropModule } from "@angular/cdk/drag-drop";
     BrowserAnimationsModule,
     HttpClientModule,
     AppRoutingModule,
-    DragDropModule,
     NbDateFnsDateModule.forRoot({
       format: "yyyy-MM-dd",
     }),
@@ -95,7 +92,7 @@ import { DragDropModule } from "@angular/cdk/drag-drop";
     TranslateService,
   ],
 })
-export class AppModule {}
+export class AppModule { }
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, "./assets/i18n/", ".json");

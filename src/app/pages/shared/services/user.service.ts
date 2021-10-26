@@ -88,7 +88,7 @@ export class UserService {
     return this.crudService.get(`/v1/private/users`, params);
   }
 
-  createUser(user : any, store: any): Observable<any> {
+  createUser(user: any, store: any): Observable<any> {
     const params = {
       'store': store
     };
@@ -99,18 +99,18 @@ export class UserService {
     const params = {
       'store': store
     };
-    return this.crudService.put(`/v1/private/user/${ id }`, user, { params });
+    return this.crudService.put(`/v1/private/user/${id}`, user, { params });
   }
 
   deleteUser(id: any, store: any): Observable<any> {
     const params = {
       'store': store
     };
-    return this.crudService.delete(`/v1/private/user/${ id }`, { params });
+    return this.crudService.delete(`/v1/private/user/${id}`, { params });
   }
 
   updatePassword(id: any, passwords: any): Observable<any> {
-    return this.crudService.patch(`/v1/private/user/${ id }/password`, passwords);
+    return this.crudService.patch(`/v1/private/user/${id}/password`, passwords);
   }
 
   getUserId(): string {

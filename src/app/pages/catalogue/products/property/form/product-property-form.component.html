@@ -1,71 +1,72 @@
 <div class="inner_pages attribute_create_page">
   <form [formGroup]='form'>
-    <div [nbSpinner]="loader" nbSpinnerSize="large" nbSpinnerStatus="primary">
-      <nb-card-header class="main_header">
-        <h1 class="page_title">{{ 'COMPONENTS.PRODUCTS_PROPERTIES' | translate}}</h1>
+    <!-- <div [nbSpinner]="loader" nbSpinnerSize="large" nbSpinnerStatus="primary"> -->
+    <nb-card-header class="main_header">
+      <h1 class="page_title">{{ 'COMPONENTS.PRODUCTS_PROPERTIES' | translate}}</h1>
 
-        <div class="content_spacing">
-          <button type="button" nbButton class="cancel_button" (click)="goToback()">{{ 'ORDER_FORM.CANCLE'
-            | translate}}</button>
-          <button type="submit" nbButton class="success_button" (click)="save()" [disabled]="!form.valid">{{'COMMON.SAVE'
-            |
-            translate }}</button>
+      <div class="content_spacing">
+        <button type="button" nbButton class="cancel_button" (click)="goToback()">{{ 'ORDER_FORM.CANCLE'
+          | translate}}</button>
+        <button type="submit" nbButton class="success_button" [nbSpinner]="loader" nbSpinnerSize="large"
+          nbSpinnerStatus="control" (click)="save()" [disabled]="!form.valid">{{ ( !loader ? 'COMMON.SAVE' : '' ) |
+          translate }}</button>
+      </div>
+    </nb-card-header>
+
+
+    <nb-card class="nb-card inline-form-card">
+      <nb-card-body class="nb-card-body">
+        <div class="form-group">
+          <label class="col-sm-10 col-form-label inputLabel">{{ 'PROPERTY.PROPERTY' | translate}} *</label>
+          <div class="col-sm-12">
+            <p-dropdown [options]="options" placeholder="{{ 'PROPERTY.SELECT_PROPERTY' | translate}}"
+              formControlName='option' filter="true" (onChange)="onChangePropertyOption($event)">
+              <ng-template let-item pTemplate="selectedItem">{{item.label}}</ng-template>
+              <ng-template let-el pTemplate="item">{{el.label}}</ng-template>
+            </p-dropdown>
+            <span *ngIf="(option.dirty || option.touched) && option.invalid && option && option.errors.required"
+              class="err-message">
+              {{ 'PROPERTY.REQUIRED' | translate}}
+            </span>
+          </div>
         </div>
-      </nb-card-header>
 
 
-      <nb-card class="nb-card inline-form-card">
-        <nb-card-body class="nb-card-body">
-          <div class="form-group">
-            <label class="col-sm-10 col-form-label inputLabel">{{ 'PROPERTY.PROPERTY' | translate}} *</label>
+        <div class="form-group" *ngIf="selectedType == 'text'" formArrayName='descriptions'>
+          <div *ngFor="let descr of descriptions.controls; let j=index" [formGroupName]="j">
+            <label class="col-sm-10 col-form-label inputLabel">{{ 'PROPERTY.VALUE' | translate}}
+              ({{descr.value.language}})</label>
             <div class="col-sm-12">
-              <p-dropdown [options]="options" placeholder="{{ 'PROPERTY.SELECT_PROPERTY' | translate}}" formControlName='option'
-                filter="true" (onChange)="onChangePropertyOption($event)">
-                <ng-template let-item pTemplate="selectedItem">{{item.label}}</ng-template>
-                <ng-template let-el pTemplate="item">{{el.label}}</ng-template>
-              </p-dropdown>
-              <span *ngIf="(option.dirty || option.touched) && option.invalid && option && option.errors.required"
+
+              <input type="text" class="form-control inputText" id="name" formControlName='name'
+                placeholder="{{ 'PROPERTY.VALUE' | translate}} ({{descr.value.language}})">
+              <span
+                *ngIf="(descr.get('name').dirty || descr.get('name').touched) && descr.get('name').invalid && descr.get('name').errors.required"
                 class="err-message">
-                {{ 'PROPERTY.REQUIRED' | translate}}
+                {{ 'DESCRIPTION_FORM.NAME_REQUIRED' | translate }} - {{('LANG.'+ descr.value.language)
+                |translate }}
               </span>
             </div>
           </div>
+        </div>
 
-
-          <div class="form-group" *ngIf="selectedType == 'text'" formArrayName='descriptions'>
-            <div *ngFor="let descr of descriptions.controls; let j=index" [formGroupName]="j">
-              <label class="col-sm-10 col-form-label inputLabel">{{ 'PROPERTY.VALUE' | translate}}
-                ({{descr.value.language}})</label>
-              <div class="col-sm-12">
-
-                <input type="text" class="form-control inputText" id="name" formControlName='name' placeholder="{{ 'PROPERTY.VALUE' | translate}} ({{descr.value.language}})">
-                <span *ngIf="(descr.get('name').dirty || descr.get('name').touched) && descr.get('name').invalid && descr.get('name').errors.required"
-                  class="err-message">
-                  {{ 'DESCRIPTION_FORM.NAME_REQUIRED' | translate }} - {{('LANG.'+ descr.value.language)
-                  |translate }}
-                </span>
-              </div>
-            </div>
+        <div class="form-group" *ngIf="selectedType !== 'text' && selectedType !== ''">
+          <label class="col-sm-10 col-form-label inputLabel">{{ 'PROPERTY.VALUE' | translate}} *</label>
+          <div class="col-sm-12">
+            <p-dropdown [options]="optionValues" placeholder="{{ 'PROPERTY.SELECT_VALUE' | translate}}"
+              formControlName='optionValue' filter="true">
+              <ng-template let-item pTemplate="selectedItem">{{item.label}}</ng-template>
+              <ng-template let-el pTemplate="item">{{el.label}}</ng-template>
+            </p-dropdown>
+            <span *ngIf="(optionValue.dirty || optionValue.touched) && optionValue.invalid
+              && optionValue && optionValue.errors.required" class="err-message">
+              {{ 'COMMON.VALUE_REQUIRED' | translate}}
+            </span>
           </div>
+        </div>
 
-          <div class="form-group" *ngIf="selectedType !== 'text' && selectedType !== ''">
-            <label class="col-sm-10 col-form-label inputLabel">{{ 'PROPERTY.VALUE' | translate}} *</label>
-            <div class="col-sm-12">
-              <p-dropdown [options]="optionValues" placeholder="{{ 'PROPERTY.SELECT_VALUE' | translate}}"
-                formControlName='optionValue' filter="true">
-                <ng-template let-item pTemplate="selectedItem">{{item.label}}</ng-template>
-                <ng-template let-el pTemplate="item">{{el.label}}</ng-template>
-              </p-dropdown>
-              <span *ngIf="(optionValue.dirty || optionValue.touched) && optionValue.invalid
-              && optionValue && optionValue.errors.required"
-                class="err-message">
-                {{ 'COMMON.VALUE_REQUIRED' | translate}}
-              </span>
-            </div>
-          </div>
-
-        </nb-card-body>
-      </nb-card>
-    </div>
+      </nb-card-body>
+    </nb-card>
+    <!-- </div> -->
   </form>
 </div>

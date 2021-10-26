@@ -8,10 +8,13 @@
         | translate}}</button>
     </div>
     <div class="content_spacing">
-      <button type="button" nbButton *ngIf="action == 'edit'" class="success_button" (click)="save()">{{'COMMON.UPDATE'|
-        translate }}</button>
-      <button type="button" nbButton *ngIf="action == 'save'" class="success_button" (click)="save()">{{'COMMON.SAVE'|
-        translate }}</button>
+      <button type="button" nbButton *ngIf="action == 'edit'" class="success_button" [nbSpinner]="loader"
+        nbSpinnerSize="large" nbSpinnerStatus="control" (click)="save()">
+        {{ ( !loader ? 'COMMON.UPDATE' : '' ) | translate }}
+      </button>
+      <button type="button" nbButton *ngIf="action == 'save'" class="success_button" [nbSpinner]="loader"
+        nbSpinnerSize="large" nbSpinnerStatus="control" (click)="save()">{{ ( !loader ? 'COMMON.SAVE' : '' ) | translate
+        }}</button>
     </div>
   </nb-card-header>
   <div class="" [nbSpinner]="loader" nbSpinnerSize="large" nbSpinnerStatus="primary">
@@ -35,8 +38,9 @@
                   <div class="form-group">
                     <label for="code" class="label inputLabel">{{ 'CONTENT.CODE' | translate}} <span>*</span></label>
                     <div>
-                      <input type="text" class="form-control inputText" id="code" formControlName='code' [readOnly]="uniqueCode"
-                        placeholder="{{ 'COMMON.CODE' | translate}}" (change)="checkCode($event)" required>
+                      <input type="text" class="form-control inputText" id="code" formControlName='code'
+                        [readOnly]="uniqueCode" placeholder="{{ 'COMMON.CODE' | translate}}"
+                        (change)="checkCode($event)" required>
                       <div class="err-message" *ngIf="(code.dirty || code.touched) && code.invalid && code">
                         <span *ngIf="code.errors.required">
                           {{ 'COMMON.CODE_REQUIRED' | translate}}
@@ -60,9 +64,10 @@
           <nb-card class="nb-card inline-form-card">
             <nb-card-header class="nb-card-header">{{ 'CONTENT.PAGE_CONTENT' | translate}} - {{('LANG.'+
               currentLanguage) |translate }}&nbsp;
-              <nb-select *ngIf="languages.length" placeholder="{{ 'COMMON.LANGUAGE' | translate}}" outline shape="rectangle"
-                name='selectedLanguage' [selected]="defaultLanguage">
-                <nb-option (click)="selectLanguage(language.code)" *ngFor="let language of languages" [value]="language.code">{{
+              <nb-select *ngIf="languages.length" placeholder="{{ 'COMMON.LANGUAGE' | translate}}" outline
+                shape="rectangle" name='selectedLanguage' [selected]="defaultLanguage">
+                <nb-option (click)="selectLanguage(language.code)" *ngFor="let language of languages"
+                  [value]="language.code">{{
                   ('LANG.'+language.code) |translate }}</nb-option>
               </nb-select>
             </nb-card-header>

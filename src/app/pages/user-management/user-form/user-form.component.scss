@@ -9,7 +9,7 @@
 
 
         .content_spacing {
-
+           
             .error_button {
                 border-color: rgb(255, 1, 1);
                 background-color: rgb(255, 0, 0);
@@ -40,9 +40,9 @@
                 text-transform: uppercase;
                 font-weight: 600;
                 font-size: 0.875rem;
-
+                height: 40px;
                 &:disabled {
-                    background-color: #598bff96;
+                    background-color: #598bff96;  
                 }
 
 
@@ -50,6 +50,7 @@
                     background-color: #598bff;
                     border-color: #598bff;
                     box-shadow: 0px 7px 15px rgba(165, 162, 162, 0.25), 1px 3px 8px rgba(165, 162, 162, 0.25);
+                    
                 }
             }
 

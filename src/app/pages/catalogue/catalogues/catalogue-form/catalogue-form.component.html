@@ -8,66 +8,68 @@
         | translate}}</button>
     </div>
     <div class="content_spacing">
-      <button type="button" nbButton class="success_button" (click)="save()">{{'COMMON.SAVE' | translate }}</button>
+      <button type="button" nbButton class="success_button" (click)="save()" [nbSpinner]="loader" nbSpinnerSize="large"
+        nbSpinnerStatus="control">{{ ( !loader ? 'COMMON.SAVE' : '' ) | translate }}</button>
     </div>
   </nb-card-header>
 
-  <div [nbSpinner]="loader" nbSpinnerSize="large" nbSpinnerStatus="primary">
+  <!-- <div [nbSpinner]="loader" nbSpinnerSize="large" nbSpinnerStatus="primary"> -->
 
-    <form [formGroup]='form' class="catalogueForm">
-      <nb-card class="nb-card inline-form-card">
-        <nb-card-body class="nb-card-body">
+  <form [formGroup]='form' class="catalogueForm">
+    <nb-card class="nb-card inline-form-card">
+      <nb-card-body class="nb-card-body">
 
-          <div class="form-group">
-            <label for="code" class="col-sm-10 col-form-label inputLabel">{{ 'COMMON.CODE' | translate}} *</label>
-            <div class="col-sm-12">
-              <input type="text" class="form-control inputText" id="code" formControlName='code' (change)="checkCode($event)"
-                placeholder="{{ 'COMMON.CODE' | translate}}" [readOnly]="catalog?.id" required>
-              <div class="err-message" *ngIf="(code.dirty || code.touched) && code.invalid && code">
-                <span *ngIf="code.errors.required">
-                  {{ 'COMMON.CODE_REQUIRED' | translate}}
-                </span>
-                <span *ngIf="code.errors.pattern">
-                  {{ 'COMMON.ALPHA_DECIMAL_RULE' | translate}}
-                </span>
-              </div>
-              <span *ngIf="!isCodeUnique" class="err-message">
-                {{ 'COMMON.CODE_EXISTS' | translate}}
+        <div class="form-group">
+          <label for="code" class="col-sm-10 col-form-label inputLabel">{{ 'COMMON.CODE' | translate}} *</label>
+          <div class="col-sm-12">
+            <input type="text" class="form-control inputText" id="code" formControlName='code'
+              (change)="checkCode($event)" placeholder="{{ 'COMMON.CODE' | translate}}" [readOnly]="catalog?.id"
+              required>
+            <div class="err-message" *ngIf="(code.dirty || code.touched) && code.invalid && code">
+              <span *ngIf="code.errors.required">
+                {{ 'COMMON.CODE_REQUIRED' | translate}}
+              </span>
+              <span *ngIf="code.errors.pattern">
+                {{ 'COMMON.ALPHA_DECIMAL_RULE' | translate}}
               </span>
             </div>
+            <span *ngIf="!isCodeUnique" class="err-message">
+              {{ 'COMMON.CODE_EXISTS' | translate}}
+            </span>
           </div>
+        </div>
 
-          <div class="form-group">
-            <div class="col-sm-12 group-block">
-              <nb-checkbox status="success" formControlName='visible'>
-                {{ 'COMMON.VISIBLE' | translate}}
-              </nb-checkbox>
-            </div>
+        <div class="form-group">
+          <div class="col-sm-12 group-block">
+            <nb-checkbox status="success" formControlName='visible'>
+              {{ 'COMMON.VISIBLE' | translate}}
+            </nb-checkbox>
           </div>
-        </nb-card-body>
-      </nb-card>
+        </div>
+      </nb-card-body>
+    </nb-card>
 
-      <nb-card class="nb-card inline-form-card" *ngIf="nodes.length !== 0">
-          <nb-card-body class="nb-card-body">
-              <p>{{ 'CATALOG.CATALOG_CONTENT' | translate}}</p>
-              <!--
+    <nb-card class="nb-card inline-form-card" *ngIf="nodes.length !== 0">
+      <nb-card-body class="nb-card-body">
+        <p>{{ 'CATALOG.CATALOG_CONTENT' | translate}}</p>
+        <!--
               <tree-root #tree [nodes]="category" [options]="options" (moveNode)="onMoveNode($event)">
                   <ng-template #treeNodeTemplate let-node let-index="index">              
                       <div>{{ node.description.name }}</div>
                   </ng-template>
               </tree-root>
             -->
-          </nb-card-body>
-      </nb-card>
+      </nb-card-body>
+    </nb-card>
 
 
 
-    </form>
-  </div>
+  </form>
+  <!-- </div> -->
 
 
 
 
 
-  
+
 </div>

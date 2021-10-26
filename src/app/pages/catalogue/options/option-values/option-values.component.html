@@ -14,85 +14,87 @@
           | translate}}</button>
       </div>
       <div class="content_spacing">
-        <button type="submit" nbButton class="success_button" (click)="save()" [disabled]="!form.valid">{{'COMMON.SAVE'
+        <button type="submit" nbButton class="success_button" (click)="save()" [nbSpinner]="loadingInfo"
+          nbSpinnerSize="large" nbSpinnerStatus="control" [disabled]="!form.valid">{{{ ( !loader ? 'COMMON.SAVE' : '' )
           | translate }}</button>
       </div>
     </nb-card-header>
 
-    <div [nbSpinner]="loadingInfo" nbSpinnerSize="large" nbSpinnerStatus="primary">
+    <!-- <div [nbSpinner]="loadingInfo" nbSpinnerSize="large" nbSpinnerStatus="primary"> -->
 
-      <!-- <div malihu-scrollbar [scrollbarOptions]="scrollbarOptions"> -->
+    <!-- <div malihu-scrollbar [scrollbarOptions]="scrollbarOptions"> -->
 
 
-      <nb-card class="nb-card inline-form-card">
-        <nb-card-body class="nb-card-body">
+    <nb-card class="nb-card inline-form-card">
+      <nb-card-body class="nb-card-body">
 
-          <div class="form-group">
-            <label for="code" class="col-sm-10 col-form-label inputLabel">{{ 'COMMON.CODE' | translate}}</label>
-            <div class="col-sm-12">
-              <input type="text" class="form-control inputText" id="code" formControlName='code' (change)="checkCode($event)"
-                [readOnly]="optionValue.id" placeholder="{{ 'COMMON.CODE' | translate}}" required>
-              <div *ngIf="(code.dirty || code.touched) && code.invalid && code">
-                <span *ngIf="code.errors.required" class="err-message">
-                  {{ 'COMMON.CODE_REQUIRED' | translate}}
-                </span>
-                <span *ngIf="code.errors.pattern" class="err-message">
-                  {{ 'COMMON.ALPHA_DECIMAL_RULE' | translate}}
-                </span>
-              </div>
-              <span *ngIf="!isCodeUnique" class="err-message">
-                {{ 'COMMON.CODE_EXISTS' | translate}}
+        <div class="form-group">
+          <label for="code" class="col-sm-10 col-form-label inputLabel">{{ 'COMMON.CODE' | translate}}</label>
+          <div class="col-sm-12">
+            <input type="text" class="form-control inputText" id="code" formControlName='code'
+              (change)="checkCode($event)" [readOnly]="optionValue.id" placeholder="{{ 'COMMON.CODE' | translate}}"
+              required>
+            <div *ngIf="(code.dirty || code.touched) && code.invalid && code">
+              <span *ngIf="code.errors.required" class="err-message">
+                {{ 'COMMON.CODE_REQUIRED' | translate}}
+              </span>
+              <span *ngIf="code.errors.pattern" class="err-message">
+                {{ 'COMMON.ALPHA_DECIMAL_RULE' | translate}}
               </span>
             </div>
+            <span *ngIf="!isCodeUnique" class="err-message">
+              {{ 'COMMON.CODE_EXISTS' | translate}}
+            </span>
           </div>
-          <div class="form-group">
-            <label for="code" class="col-sm-10 col-form-label inputLabel">{{ 'COMMON.LANGUAGE' | translate}} *</label>
-            <div class="col-sm-12">
-              <nb-select *ngIf="languages.length" placeholder="{{ 'COMMON.LANGUAGE' | translate }}" outline shape="rectangle"
-                class="fullWidth" formControlName='selectedLanguage'>
-                <nb-option *ngFor="let language of languages" [value]="language.code">{{ ('LANG.'+language.code) |
-                  translate }}</nb-option>
+        </div>
+        <div class="form-group">
+          <label for="code" class="col-sm-10 col-form-label inputLabel">{{ 'COMMON.LANGUAGE' | translate}} *</label>
+          <div class="col-sm-12">
+            <nb-select *ngIf="languages.length" placeholder="{{ 'COMMON.LANGUAGE' | translate }}" outline
+              shape="rectangle" class="fullWidth" formControlName='selectedLanguage'>
+              <nb-option *ngFor="let language of languages" [value]="language.code">{{ ('LANG.'+language.code) |
+                translate }}</nb-option>
 
-              </nb-select>
-            </div>
+            </nb-select>
           </div>
-          <div *ngIf="selectedLanguage.value !== ''" formArrayName='descriptions'>
-            <div *ngFor="let descr of descriptions.controls; let j=index">
-              <div *ngIf="descr.value.language === selectedLanguage.value">
+        </div>
+        <div *ngIf="selectedLanguage.value !== ''" formArrayName='descriptions'>
+          <div *ngFor="let descr of descriptions.controls; let j=index">
+            <div *ngIf="descr.value.language === selectedLanguage.value">
 
-                <div [formGroupName]="j">
+              <div [formGroupName]="j">
 
-                  <div class="form-group">
-                    <label for="name" class="col-sm-10 col-form-label inputLabel">{{ 'DESCRIPTION_FORM.NAME' |
-                      translate }}
-                      *</label>
-                    <div class="col-sm-12">
-                      <input type="text" class="form-control inputText" id="name" formControlName='name' placeholder="{{ 'DESCRIPTION_FORM.NAME' | translate }}">
-                      <span *ngIf="(descr.get('name').dirty || descr.get('name').touched)
-              && descr.get('name').invalid && descr.get('name').errors.required"
-                        class="err-message">
-                        {{ 'DESCRIPTION_FORM.NAME_REQUIRED' | translate }}
-                      </span>
-                    </div>
+                <div class="form-group">
+                  <label for="name" class="col-sm-10 col-form-label inputLabel">{{ 'DESCRIPTION_FORM.NAME' |
+                    translate }}
+                    *</label>
+                  <div class="col-sm-12">
+                    <input type="text" class="form-control inputText" id="name" formControlName='name'
+                      placeholder="{{ 'DESCRIPTION_FORM.NAME' | translate }}">
+                    <span *ngIf="(descr.get('name').dirty || descr.get('name').touched)
+              && descr.get('name').invalid && descr.get('name').errors.required" class="err-message">
+                      {{ 'DESCRIPTION_FORM.NAME_REQUIRED' | translate }}
+                    </span>
                   </div>
-
                 </div>
+
               </div>
             </div>
           </div>
+        </div>
 
-          <div class="form-group">
-            <label class="col-sm-10 col-form-label inputLabel">{{ 'DESCRIPTION_FORM.IMAGE' | translate }}</label>
-            <div class="col-sm-12">
-              <ngx-option-value-image [imageUrl]="optionValue.image" (imageChanged)="onImageChanged($event)">
-              </ngx-option-value-image>
-            </div>
+        <div class="form-group">
+          <label class="col-sm-10 col-form-label inputLabel">{{ 'DESCRIPTION_FORM.IMAGE' | translate }}</label>
+          <div class="col-sm-12">
+            <ngx-option-value-image [imageUrl]="optionValue.image" (imageChanged)="onImageChanged($event)">
+            </ngx-option-value-image>
           </div>
-        </nb-card-body>
-      </nb-card>
+        </div>
+      </nb-card-body>
+    </nb-card>
 
 
-      <!-- </div> -->
-    </div>
+    <!-- </div> -->
+    <!-- </div> -->
   </form>
 </div>

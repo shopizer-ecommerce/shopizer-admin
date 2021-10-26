@@ -33,8 +33,7 @@
                       <span class="mandatory">*</span></label>
                     <div>
                       <input type="text" class="form-control inputText" id="identifier" formControlName='identifier'
-                        placeholder="{{ 'Unique identifier' | translate}}" (change)="checkSku($event)"
-                        required>
+                        placeholder="{{ 'Unique identifier' | translate}}" (change)="checkSku($event)" required>
                       <span *ngIf="(identifier.dirty || identifier.touched) && identifier.invalid" class="err-message">
                         <span *ngIf="identifier.errors.required">
                           {{ 'PRODUCT.ID_REQUIRED' | translate }}
@@ -55,8 +54,8 @@
                   <div class="form-group">
                     <label class="col-form-label inputLabel">{{ 'PRODUCT.DATE_AVAILABLE' | translate}}</label>
                     <div>
-                      <input class="form-control has-person-icon inputText" placeholder="Form Picker" formControlName='dateAvailable'
-                        [nbDatepicker]="formpicker" [readOnly]="true">
+                      <input class="form-control has-person-icon inputText" placeholder="Form Picker"
+                        formControlName='dateAvailable' [nbDatepicker]="formpicker" [readOnly]="true">
                       <nb-datepicker #formpicker></nb-datepicker>
                     </div>
                   </div>
@@ -74,7 +73,8 @@
               <div class="row">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                   <div class="form-group">
-                    <label class="col-form-label inputLabel">{{ 'PRODUCT.MANUFACTURER' | translate}} <span class="mandatory">*</span></label>
+                    <label class="col-form-label inputLabel">{{ 'PRODUCT.MANUFACTURER' | translate}} <span
+                        class="mandatory">*</span></label>
                     <div>
                       <p-dropdown [options]="manufacturers" placeholder="{{ 'PRODUCT.MANUFACTURER' | translate}}"
                         formControlName='manufacturer' filter="true" required>
@@ -82,7 +82,8 @@
                         <ng-template let-el pTemplate="item">{{el.label}}</ng-template>
                       </p-dropdown>
                     </div>
-                    <span *ngIf="(manufacturer.dirty || manufacturer.touched) && manufacturer.invalid" class="err-message">
+                    <span *ngIf="(manufacturer.dirty || manufacturer.touched) && manufacturer.invalid"
+                      class="err-message">
                       <span *ngIf="manufacturer.errors.required">
                         {{ 'PRODUCT.MANUFACTURER' | translate}} {{ 'COMMON.IS_REQUIRED' | translate}}
                       </span>
@@ -115,9 +116,10 @@
               <nb-actions size="small" class="pull-right">
                 <nb-action class="card-header-title">{{'COMMON.SEO_DETAILS' | translate}}</nb-action>
                 <nb-action>
-                  <nb-select *ngIf="languages.length" placeholder="{{ 'COMMON.LANGUAGE' | translate}}" outline shape="rectangle"
-                    name='selectedLanguage' [selected]="defaultLanguage">
-                    <nb-option (click)="selectLanguage(language.code)" *ngFor="let language of languages" [value]="language.code">{{
+                  <nb-select *ngIf="languages.length" placeholder="{{ 'COMMON.LANGUAGE' | translate}}" outline
+                    shape="rectangle" name='selectedLanguage' [selected]="defaultLanguage">
+                    <nb-option (click)="selectLanguage(language.code)" *ngFor="let language of languages"
+                      [value]="language.code">{{
                       ('LANG.'+language.code) |translate }}</nb-option>
                   </nb-select>
 
@@ -136,9 +138,10 @@
                           <span class="mandatory">*</span></label>
                         <div>
                           <input type="text" class="form-control inputText" id="name" formControlName='name'
-                            placeholder="{{ 'DESCRIPTION_FORM.NAME' | translate }}" (ngModelChange)="changeName($event, j)"
-                            required>
-                          <span *ngIf="(descr.get('name').dirty || descr.get('name').touched) && descr.get('name').invalid && descr.get('name').errors.required"
+                            placeholder="{{ 'DESCRIPTION_FORM.NAME' | translate }}"
+                            (ngModelChange)="changeName($event, j)" required>
+                          <span
+                            *ngIf="(descr.get('name').dirty || descr.get('name').touched) && descr.get('name').invalid && descr.get('name').errors.required"
                             class="err-message">
                             {{ 'DESCRIPTION_FORM.NAME_REQUIRED' | translate }} - {{('LANG.'+ currentLanguage)
                             |translate }}
@@ -166,12 +169,14 @@
 
                       <div class="form-group">
                         <label for="friendlyUrl" class=" col-form-label inputLabel">{{
-                          'DESCRIPTION_FORM.FRIENDLY_URL' | translate }} - {{('LANG.'+ currentLanguage) |translate }}<span
-                            class="mandatory">*</span></label>
+                          'DESCRIPTION_FORM.FRIENDLY_URL' | translate }} - {{('LANG.'+ currentLanguage) |translate
+                          }}<span class="mandatory">*</span></label>
                         <div>
-                          <input type="text" class="form-control inputText" id="friendlyUrl" formControlName='friendlyUrl'
+                          <input type="text" class="form-control inputText" id="friendlyUrl"
+                            formControlName='friendlyUrl'
                             placeholder="{{ 'DESCRIPTION_FORM.FRIENDLY_URL' | translate }}" required>
-                          <span *ngIf="(descr.get('friendlyUrl').dirty || descr.get('friendlyUrl').touched)
+                          <span
+                            *ngIf="(descr.get('friendlyUrl').dirty || descr.get('friendlyUrl').touched)
                                                         && descr.get('friendlyUrl').invalid && descr.get('friendlyUrl').errors.required"
                             class="err-message">
                             {{ 'DESCRIPTION_FORM.FRIENDLY_URL_REQUIRED' | translate }}
@@ -194,7 +199,8 @@
                           'DESCRIPTION_FORM.META_DESCRIPTION' | translate }} - {{('LANG.'+ currentLanguage) |translate
                           }}</label>
                         <div>
-                          <input type="text" class="form-control inputText" id="metaDescription" formControlName='metaDescription'
+                          <input type="text" class="form-control inputText" id="metaDescription"
+                            formControlName='metaDescription'
                             placeholder="{{ 'DESCRIPTION_FORM.DESCRIPTION' | translate }}">
                         </div>
                       </div>
@@ -289,9 +295,11 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-form-label inputLabel">{{ 'PRICE.FINAL_PRICE' | translate}}<span class="mandatory">*</span></label>
+                <label class="col-form-label inputLabel">{{ 'PRICE.FINAL_PRICE' | translate}}<span
+                    class="mandatory">*</span></label>
                 <div>
-                  <input type="number" class="form-control inputText" formControlName='price' placeholder="{{ 'PRODUCT.PRICE' | translate}}">
+                  <input type="number" class="form-control inputText" formControlName='price'
+                    placeholder="{{ 'PRODUCT.PRICE' | translate}}">
                   <span *ngIf="(price.dirty || price.touched) && price.invalid" class="err-message">
                     <span *ngIf="price.errors.required">
                       {{ 'PRODUCT.PRICE' | translate}} {{ 'COMMON.IS_REQUIRED' | translate}}
@@ -300,9 +308,11 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-form-label inputLabel">{{ 'Quantity' | translate}}<span class="mandatory">*</span></label>
+                <label class="col-form-label inputLabel">{{ 'Quantity' | translate}}<span
+                    class="mandatory">*</span></label>
                 <div>
-                  <input type="number" class="form-control inputText" formControlName='quantity' placeholder="{{ 'PRODUCT.QUANTITY' | translate}}">
+                  <input type="number" class="form-control inputText" formControlName='quantity'
+                    placeholder="{{ 'PRODUCT.QUANTITY' | translate}}">
                   <span *ngIf="(quantity.dirty || quantity.touched) && quantity.invalid" class="err-message">
                     <span *ngIf="quantity.errors.required">
                       {{ 'PRODUCT.QUANTITY' | translate}} {{ 'COMMON.IS_REQUIRED' | translate}}
@@ -350,8 +360,10 @@
 
       <nb-card-header class="main_header">
         <div class="content_spacing">
-          <button type="button" nbButton class="success_button" (click)="save()">{{'COMMON.SAVE'
-            | translate }} {{ 'PRODUCT.DEFINITION' | translate}}</button>
+          <button type="button" nbButton class="success_button" [nbSpinner]="tabLoader" nbSpinnerSize="large"
+            nbSpinnerStatus="control" (click)="save()">
+            {{( !tabLoader ? 'COMMON.SAVE' : '' )| translate }} {{ 'PRODUCT.DEFINITION' | translate}}
+          </button>
         </div>
       </nb-card-header>
 
@@ -359,29 +371,30 @@
       <div class="row" *ngIf="product.id">
 
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-          <div [nbSpinner]="tabLoader" nbSpinnerSize="large" nbSpinnerStatus="primary">
-            <nb-card class="nb-card inline-form-card">
-              <!-- <nb-route-tabset [tabs]="tabs"></nb-route-tabset> -->
+          <!-- <div [nbSpinner]="tabLoader" nbSpinnerSize="large" nbSpinnerStatus="primary"> -->
+          <nb-card class="nb-card inline-form-card">
+            <!-- <nb-route-tabset [tabs]="tabs"></nb-route-tabset> -->
 
-              <nb-tabset>
-                <nb-tab tabTitle="{{ 'COMPONENTS.PRODUCTS_IMAGES' | translate}}">
-                  <ngx-products-images [images]="images" [product]="product" (refreshProduct)="refreshProduct()"
-                    (loading)="loadingTab($event)"></ngx-products-images>
-                </nb-tab>
-                <nb-tab tabTitle="{{ 'COMPONENTS.PRODUCT_TO_CATEGORY' | translate}}">
-                  <ngx-product-to-category [product]="product" (loading)="loadingTab($event)"></ngx-product-to-category>
-                </nb-tab>
-                <nb-tab tabTitle="{{ 'COMPONENTS.OPTIONS_CONFIG' | translate}}">
-                  <ngx-product-attributes [productId]="product.id" (loading)="loadingTab($event)"></ngx-product-attributes>
-                </nb-tab>
-                <nb-tab tabTitle="{{ 'COMPONENTS.PRODUCTS_PROPERTIES' | translate}}">
-                  <ngx-product-property [product]="product" (loading)="loadingTab($event)"></ngx-product-property>
-                </nb-tab>
-              </nb-tabset>
+            <nb-tabset>
+              <nb-tab tabTitle="{{ 'COMPONENTS.PRODUCTS_IMAGES' | translate}}">
+                <ngx-products-images [images]="images" [product]="product" (refreshProduct)="refreshProduct()"
+                  (loading)="loadingTab($event)"></ngx-products-images>
+              </nb-tab>
+              <nb-tab tabTitle="{{ 'COMPONENTS.PRODUCT_TO_CATEGORY' | translate}}">
+                <ngx-product-to-category [product]="product" (loading)="loadingTab($event)"></ngx-product-to-category>
+              </nb-tab>
+              <nb-tab tabTitle="{{ 'COMPONENTS.OPTIONS_CONFIG' | translate}}">
+                <ngx-product-attributes [productId]="product.id" (loading)="loadingTab($event)">
+                </ngx-product-attributes>
+              </nb-tab>
+              <nb-tab tabTitle="{{ 'COMPONENTS.PRODUCTS_PROPERTIES' | translate}}">
+                <ngx-product-property [product]="product" (loading)="loadingTab($event)"></ngx-product-property>
+              </nb-tab>
+            </nb-tabset>
 
 
-            </nb-card>
-          </div>
+          </nb-card>
+          <!-- </div> -->
         </div>
       </div>
 

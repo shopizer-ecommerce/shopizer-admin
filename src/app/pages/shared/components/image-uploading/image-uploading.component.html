@@ -37,9 +37,14 @@
 
   <div class="col-md-6 image_part">
     <div *ngIf="images.length">
-
-      <div class="grid-container">
-        <div *ngFor='let image of images' class="image-item">
+      <!-- <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)"
+        (onChangeOrder)="onChangeimage($images)">
+        <div class="example-box" *ngFor="let image of images" cdkDrag><img [src]="image?.imageUrl" [alt]="image?.path">
+        </div>
+      </div> -->
+      <div class="grid-container" cdkDropListOrientation="horizontal" cdkDropList (cdkDropListDropped)="drop($event)"
+        (onChangeOrder)="onChangeimage($images)">
+        <div *ngFor='let image of images' cdkDrag class="image-item">
           <div class="grid-item square">
             <img [src]="image?.imageUrl" [alt]="image?.path">
             <span id="clickableDeleteIcon">
