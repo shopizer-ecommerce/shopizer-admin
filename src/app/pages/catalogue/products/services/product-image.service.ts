@@ -30,7 +30,7 @@ export class ProductImageService {
   }
 
   updateImage(productId, event): Observable<any> {
-    return this.crudService.patch(`/v1/private/products/${productId}/image/${event.id}?order=${event.index}`, []);
+    return this.crudService.patch(`/v1/private/products/${productId}/image/${event.id}?order=${event.position}`, []);
   }
 
 }
