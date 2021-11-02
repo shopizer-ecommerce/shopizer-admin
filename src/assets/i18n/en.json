@@ -320,7 +320,9 @@
     "FINAL_PRICE": "Final price",
     "ORIGINAL_PRICE": "Original price",
     "DISCOUNTED_PRICE": "Discounted price",
-    "DISCOUNTED": "Discounted"
+    "DISCOUNTED": "Discounted",
+    "PERCENTAGE_OFF": "Percentage off",
+    "REBATE_PRICE": "Rebate price"
   },
   "PRODUCT_GROUP": {
     "CREATE_PRODUCT_GROUP": "Create group",

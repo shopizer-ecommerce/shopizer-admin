@@ -320,22 +320,48 @@
                   </span>
                 </div>
               </div>
-              <!-- <div class="form-group">
+              <div class="form-group">
                 <label for="discountedPrice" class="col-form-label inputLabel">{{ 'PRICE.DISCOUNTED_PRICE'
                   |translate}}</label>
                 <div>
-                  <input type="number" class="form-control inputText" id="discountedPrice" formControlName='discountedPrice'
-                    placeholder="{{ 'PRICE.DISCOUNTED_PRICE' | translate}}">
+                  <input type="number" class="form-control inputText" id="discountedPrice"
+                    formControlName='discountedPrice' placeholder="{{ 'PRICE.DISCOUNTED_PRICE' | translate}}">
                 </div>
-              </div> -->
+              </div>
 
-              <!-- <div class="row">
+              <div class="form-group">
+                <label for="percentageOff" class="col-form-label inputLabel">{{ 'PRICE.PERCENTAGE_OFF'
+                  |translate}}</label>
+                <div>
+                  <input type="number" class="form-control inputText" id="percentageOff" formControlName='percentageOff'
+                    placeholder="{{ 'PRICE.PERCENTAGE_OFF' | translate}}">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="rebatePrice" class="col-form-label inputLabel">{{ 'PRICE.REBATE_PRICE'
+                  |translate}}</label>
+                <div>
+                  <input type="number" class="form-control inputText" id="rebatePrice" formControlName='rebatePrice'
+                    placeholder="{{ 'PRICE.REBATE_PRICE' | translate}}">
+                </div>
+              </div>
+
+              <div class="form-group">
+                <div>
+                  <nb-checkbox formControlName='timeBound'>
+                    {{ 'Time bound promotion' | translate}}
+                  </nb-checkbox>
+                </div>
+              </div>
+
+              <div class="row" *ngIf="form.controls.timeBound.value == true">
                 <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                   <div class="form-group">
                     <label class="col-form-label inputLabel">{{ 'Start Date' | translate}}</label>
                     <div>
-                      <input class="form-control has-person-icon inputText" placeholder="Form Picker" formControlName='startDate'
-                        [nbDatepicker]="formpicker2" [readOnly]="true">
+                      <input class="form-control has-person-icon inputText" placeholder="Form Picker"
+                        formControlName='startDate' [nbDatepicker]="formpicker2" [readOnly]="true">
                       <nb-datepicker #formpicker2></nb-datepicker>
                     </div>
                   </div>
@@ -344,13 +370,13 @@
                   <div class="form-group">
                     <label class="col-form-label inputLabel">{{ 'End Date' | translate}}</label>
                     <div>
-                      <input class="form-control has-person-icon inputText" placeholder="Form Picker" formControlName='endDate'
-                        [nbDatepicker]="formpicker1" [readOnly]="true">
+                      <input class="form-control has-person-icon inputText" placeholder="Form Picker"
+                        formControlName='endDate' [nbDatepicker]="formpicker1" [readOnly]="true">
                       <nb-datepicker #formpicker1></nb-datepicker>
                     </div>
                   </div>
                 </div>
-              </div> -->
+              </div>
 
             </nb-card-body>
           </nb-card>
