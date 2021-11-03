@@ -70,12 +70,9 @@ export class ProductsImagesComponent implements OnInit {
       });
   }
   updateImage(event) {
-    console.log("parent==>", event);
     this.productImageService.updateImage(this.product.id, event).subscribe(res => {
-      console.log("response", res);
     }, error => {
-      console.log("error");
-
+      this.toastr.error(error.error.message);
     });
 
   }

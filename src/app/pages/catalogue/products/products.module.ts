@@ -28,6 +28,7 @@ import { ProductProperties } from './property/list/product-property.component';
 import { ProductPropertyForm } from './property/form/product-property-form.component';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { NbDialogModule } from '@nebular/theme';
+import { ProductDiscountComponent } from './product-discount/product-discount.component';
 @NgModule({
 
 
@@ -53,7 +54,8 @@ import { NbDialogModule } from '@nebular/theme';
     AttributeFormComponent,
     ProductsImagesComponent,
     ProductProperties,
-    ProductPropertyForm
+    ProductPropertyForm,
+    ProductDiscountComponent,
   ],
   entryComponents: [AvailableButtonComponent, AttributeFormComponent, ProductPropertyForm],
   imports: [

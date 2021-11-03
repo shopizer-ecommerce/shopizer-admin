@@ -320,7 +320,7 @@
                   </span>
                 </div>
               </div>
-              <div class="form-group">
+              <!-- <div class="form-group">
                 <label for="discountedPrice" class="col-form-label inputLabel">{{ 'PRICE.DISCOUNTED_PRICE'
                   |translate}}</label>
                 <div>
@@ -376,7 +376,7 @@
                     </div>
                   </div>
                 </div>
-              </div>
+              </div> -->
 
             </nb-card-body>
           </nb-card>
@@ -415,6 +415,9 @@
               </nb-tab>
               <nb-tab tabTitle="{{ 'COMPONENTS.PRODUCTS_PROPERTIES' | translate}}">
                 <ngx-product-property [product]="product" (loading)="loadingTab($event)"></ngx-product-property>
+              </nb-tab>
+              <nb-tab tabTitle="{{ 'COMPONENTS.PRODUCTS_DISCOUNT' | translate}}">
+                <ngx-product-discount (loading)="loadingTab($event)"> </ngx-product-discount>
               </nb-tab>
             </nb-tabset>
 

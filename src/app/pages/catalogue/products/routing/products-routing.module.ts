@@ -7,6 +7,7 @@ import { ProductsListComponent } from '../products-list/products-list.component'
 import { ProductDetailsComponent } from '../product-details/product-details.component';
 import { ProductToCategoryComponent } from '../product-to-category/product-to-category.component';
 import { ProductsImagesComponent } from './../products-images/products-images.component';
+import { ProductDiscountComponent } from '../product-discount/product-discount.component';
 
 const routes: Routes = [
   {
@@ -46,6 +47,10 @@ const routes: Routes = [
           {
             path: 'properties',
             component: ProductsImagesComponent,
+          },
+           {
+            path: 'discount',
+            component: ProductDiscountComponent,
           },
         ],
       },
