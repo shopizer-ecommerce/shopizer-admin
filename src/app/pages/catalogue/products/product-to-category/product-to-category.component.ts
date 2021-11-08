@@ -23,6 +23,7 @@ export class ProductToCategoryComponent implements OnInit {
     selectedItems = [];
     dropdownSettings = {};
     categoryLoading = false;
+    filteredCategories = [];
 
     params = this.loadParams();
     constructor(
@@ -98,11 +99,12 @@ export class ProductToCategoryComponent implements OnInit {
         console.log(e);
         if (e.length > 2) {
             this.params["name"] = e;
-            this.getList();
-        }
-        if (e === '') {
-            this.params = this.loadParams();
-            this.getList();
+            this.categoryService.filterCategory(this.params).subscribe(res => {
+            }, error => {
+
+            }
+            )
+            // this.getList();
         }
         // this.loading = true;
     }
