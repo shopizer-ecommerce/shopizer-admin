@@ -59,6 +59,7 @@
     "PRODUCT": "Product",
     "CREATE_PRODUCT": "Create product",
     "PRODUCTS_LIST": "List of products",
+    "PRODUCT_ORDERING": "Product ordering",
     "PRODUCT_DETAILS": "Product details",
     "LIST_INVENTORY": "List inventory",
     "PRODUCT_TO_CATEGORY": "Product to category",

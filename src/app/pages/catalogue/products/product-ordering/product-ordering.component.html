@@ -1,0 +1,18 @@
+<nb-card class="page-card inner_pages">
+    <div [nbSpinner]="loading" nbSpinnerSize="large" nbSpinnerStatus="primary">
+        <nb-card-body class="productList">
+            <div class="inner_pages_legacy">
+                <nb-card-header class="main_header">
+                    <h1 class="page_title">{{ 'COMPONENTS.PRODUCT_ORDERING' | translate }}</h1>
+                    <div class="content_spacing_empty"></div>
+                </nb-card-header>
+
+                <ng2-smart-table [settings]="settings" [source]="source" (custom)="route($event)" class="home-table">
+                </ng2-smart-table>
+                <ngx-paginator (changePage)="changePage($event)" [pagesToShow]="5" [currentPage]="currentPage"
+                    [perPage]="perPage" [count]="totalCount">
+                </ngx-paginator>
+            </div>
+        </nb-card-body>
+    </div>
+</nb-card>

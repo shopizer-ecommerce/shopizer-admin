@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductService } from '../services/product.service';
 import { LocalDataSource } from 'ng2-smart-table';
-import { AvailableButtonComponent } from './available-button.component';
+import { AvailableButtonComponent } from '../products-list/available-button.component';
 import { ShowcaseDialogComponent } from '../../../shared/components/showcase-dialog/showcase-dialog.component';
 import { NbDialogService } from '@nebular/theme';
 import { StoreService } from '../../../store-management/services/store.service';
@@ -12,13 +12,12 @@ import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 import { ListingService } from '../../../shared/services/listing.service';
 
-
 @Component({
-  selector: 'ngx-products-list',
-  templateUrl: './products-list.component.html',
-  styleUrls: ['./products-list.component.scss']
+  selector: 'ngx-product-ordering',
+  templateUrl: './product-ordering.component.html',
+  styleUrls: ['./product-ordering.component.scss']
 })
-export class ProductsListComponent implements OnInit {
+export class ProductOrderingComponent implements OnInit {
   products = [];
   source: LocalDataSource = new LocalDataSource();
   listingService: ListingService;
@@ -35,6 +34,7 @@ export class ProductsListComponent implements OnInit {
 
   // server params
   params = this.loadParams();
+
   settings = {};
 
   constructor(
@@ -51,7 +51,6 @@ export class ProductsListComponent implements OnInit {
     this.isSuperadmin = this.storageService.getUserRoles().isSuperadmin;
     this.listingService = new ListingService();
   }
-
   loadParams() {
     return {
       store: this.storageService.getMerchant(),
@@ -60,8 +59,7 @@ export class ProductsListComponent implements OnInit {
       page: 0
     };
   }
-
-  ngOnInit() {
+  ngOnInit(): void {
     this.getStore();
     this.getList();
     this.translate.onLangChange.subscribe((lang) => {
@@ -77,7 +75,6 @@ export class ProductsListComponent implements OnInit {
       }
     });
   }
-
   /** callback methods for table list*/
   private loadList(newParams: any) {
     //console.log('CallBack loadList');
@@ -130,10 +127,10 @@ export class ProductsListComponent implements OnInit {
         delete: false,
         position: 'right',
         sort: true,
-        custom: [
-          { name: 'edit', title: '<i class="nb-edit"></i>' },
-          { name: 'remove', title: '<i class="nb-trash"></i>' }
-        ],
+        // custom: [
+        //   { name: 'edit', title: '<i class="nb-edit"></i>' },
+        //   { name: 'remove', title: '<i class="nb-trash"></i>' }
+        // ],
       },
       pager: {
         display: false
@@ -149,12 +146,12 @@ export class ProductsListComponent implements OnInit {
           title: this.translate.instant('PRODUCT.SKU'),
           type: 'string',
           editable: false,
-          filter: true
+          filter: false
         },
         name: {
           title: this.translate.instant('PRODUCT.PRODUCT_NAME'),
           type: 'html',
-          filter: true,
+          filter: false,
           editable: false,
           valuePrepareFunction: (name) => {
             const id = this.products.find(el => el.name === name).id;
@@ -167,17 +164,17 @@ export class ProductsListComponent implements OnInit {
           editable: true,
           filter: false
         },
-        available: {
-          filter: false,
-          title: this.translate.instant('COMMON.AVAILABLE'),
-          type: 'custom',
-          renderComponent: AvailableButtonComponent,
-          defaultValue: false,
-          editable: true,
-          editor: {
-            type: 'checkbox'
-          }
-        },
+        // available: {
+        //   filter: false,
+        //   title: this.translate.instant('COMMON.AVAILABLE'),
+        //   type: 'custom',
+        //   renderComponent: AvailableButtonComponent,
+        //   defaultValue: false,
+        //   editable: true,
+        //   editor: {
+        //     type: 'checkbox'
+        //   }
+        // },
         price: {
           title: this.translate.instant('PRODUCT.PRICE'),
           type: 'string',
