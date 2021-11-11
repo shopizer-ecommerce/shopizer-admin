@@ -21,9 +21,38 @@ export class ProductDiscountComponent implements OnInit {
       timeBound: [false],
       startDate: [new Date()],
       endDate: [new Date()],
+      discountedRadio: [null],
+      percentageOffRadio: [null],
+      rebateRadio: [null]
     })
   }
 
-
-
+  discountSelected(e) {
+    if (e == 1) {
+      this.discountForm.controls['discountedPrice'].setValidators([Validators.required]);
+      // this.discountForm.controls['discountedPrice'].setValue([Validators.pattern(validators.)]);
+    }
+    else {
+      this.discountForm.controls['discountedRadio'].updateValueAndValidity()
+      this.discountForm.controls['discountedPrice'].clearValidators();
+    }
+  }
+  percentageSelected(e) {
+    if (e == 2) {
+      this.discountForm.controls['percentageOff'].setValidators([Validators.required]);
+    }
+    else {
+      this.discountForm.controls['percentageOffRadio'].updateValueAndValidity()
+      this.discountForm.controls['percentageOff'].clearValidators();
+    }
+  }
+  rebateSelected(e) {
+    if (e == 3) {
+      this.discountForm.controls['rebatePrice'].setValidators([Validators.required]);
+    }
+    else {
+      this.discountForm.controls['rebateRadio'].updateValueAndValidity()
+      this.discountForm.controls['rebatePrice'].clearValidators();
+    }
+  }
 }

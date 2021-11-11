@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ProductService } from '../services/product.service';
 import { LocalDataSource } from 'ng2-smart-table';
 import { AvailableButtonComponent } from '../products-list/available-button.component';
@@ -11,6 +11,7 @@ import { StorageService } from '../../../shared/services/storage.service';
 import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 import { ListingService } from '../../../shared/services/listing.service';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'ngx-product-ordering',
@@ -31,6 +32,7 @@ export class ProductOrderingComponent implements OnInit {
   currentPage = 1;
   totalCount;
   merchant;
+  data = [];
 
   // server params
   params = this.loadParams();
@@ -60,7 +62,6 @@ export class ProductOrderingComponent implements OnInit {
     };
   }
   ngOnInit(): void {
-    this.getStore();
     this.getList();
     this.translate.onLangChange.subscribe((lang) => {
       this.params.lang = this.storageService.getLanguage();
@@ -90,16 +91,6 @@ export class ProductOrderingComponent implements OnInit {
     this.params = this.loadParams();
     // this.getList();
   }
-  getStore() {
-    this.storeService.getListOfStores({ code: 'DEFAULT' })
-      .subscribe(res => {
-        let storeData = []
-        res.data.forEach((store) => {
-          storeData.push(store.code);
-        });
-        this.stores = storeData;
-      });
-  }
   getList() {
     const startFrom = this.currentPage - 1;
     this.params.page = startFrom;
@@ -114,10 +105,22 @@ export class ProductOrderingComponent implements OnInit {
         this.products = [...products];
         this.source.load(products);
         this.loadingList = false;
-      });
-    this.setSettings();
-  }
+        this.products.map((item) => {
+          console.log("item:", item);
 
+          this.data.push({
+            id: item.id,
+            name: item.name,
+            sku: item.sku,
+            quantity: item.quantity,
+            price: item.price,
+            creationDate: item.creationDate
+          })
+        })
+        console.log("products::", typeof (this.data));
+        this.setSettings();
+      });
+  }
   setSettings() {
     this.settings = {
       actions: {
@@ -127,10 +130,10 @@ export class ProductOrderingComponent implements OnInit {
         delete: false,
         position: 'right',
         sort: true,
-        // custom: [
-        //   { name: 'edit', title: '<i class="nb-edit"></i>' },
-        //   { name: 'remove', title: '<i class="nb-trash"></i>' }
-        // ],
+        custom: [
+          { name: 'edit', title: '<i class="nb-edit"></i>' },
+          { name: 'remove', title: '<i class="nb-trash"></i>' }
+        ],
       },
       pager: {
         display: false
@@ -146,12 +149,12 @@ export class ProductOrderingComponent implements OnInit {
           title: this.translate.instant('PRODUCT.SKU'),
           type: 'string',
           editable: false,
-          filter: false
+          filter: true
         },
         name: {
           title: this.translate.instant('PRODUCT.PRODUCT_NAME'),
           type: 'html',
-          filter: false,
+          filter: true,
           editable: false,
           valuePrepareFunction: (name) => {
             const id = this.products.find(el => el.name === name).id;
@@ -164,17 +167,17 @@ export class ProductOrderingComponent implements OnInit {
           editable: true,
           filter: false
         },
-        // available: {
-        //   filter: false,
-        //   title: this.translate.instant('COMMON.AVAILABLE'),
-        //   type: 'custom',
-        //   renderComponent: AvailableButtonComponent,
-        //   defaultValue: false,
-        //   editable: true,
-        //   editor: {
-        //     type: 'checkbox'
-        //   }
-        // },
+        available: {
+          filter: false,
+          title: this.translate.instant('COMMON.AVAILABLE'),
+          type: 'custom',
+          renderComponent: AvailableButtonComponent,
+          defaultValue: false,
+          editable: true,
+          editor: {
+            type: 'checkbox'
+          }
+        },
         price: {
           title: this.translate.instant('PRODUCT.PRICE'),
           type: 'string',
@@ -190,6 +193,7 @@ export class ProductOrderingComponent implements OnInit {
       },
     };
   }
+
 
   updateRecord(event) {
     const product = {
@@ -264,5 +268,8 @@ export class ProductOrderingComponent implements OnInit {
     } else {
       this.router.navigate(['pages/catalogue/products/product/' + e.data.id]);
     }
+  }
+  drop(event: CdkDragDrop<string[]>) {
+    moveItemInArray(this.data, event.previousIndex, event.currentIndex);
   }
 }

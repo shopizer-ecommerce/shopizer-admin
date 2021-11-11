@@ -6,12 +6,25 @@
                     <h1 class="page_title">{{ 'COMPONENTS.PRODUCT_ORDERING' | translate }}</h1>
                     <div class="content_spacing_empty"></div>
                 </nb-card-header>
+                <ul class='list-header'>
+                    <li>{{'COMMON.ID' | translate}}</li>
+                    <li>{{'PRODUCT.SKU' | translate }}</li>
+                    <li>{{'PRODUCT.PRODUCT_NAME' | translate}}</li>
+                    <li>{{'PRODUCT.QTY' | translate}}</li>
+                    <li>{{'PRODUCT.PRICE' | translate}}</li>
+                    <li>{{'PRODUCT.CREATION_DATE' | translate}}</li>
+                </ul>
+                <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
+                    <div class="product-order-list" *ngFor="let item of data | keyvalue" cdkDrag>
+                        <label>{{item.value.id}} </label>
+                        <label>{{item.value.sku}}</label>
+                        <label>{{item.value.name}} </label>
+                        <label>{{item.value.quantity}} </label>
+                        <label>{{item.value.price}} </label>
+                        <label>{{item.value.creationDate}}</label>
+                    </div>
+                </div>
 
-                <ng2-smart-table [settings]="settings" [source]="source" (custom)="route($event)" class="home-table">
-                </ng2-smart-table>
-                <ngx-paginator (changePage)="changePage($event)" [pagesToShow]="5" [currentPage]="currentPage"
-                    [perPage]="perPage" [count]="totalCount">
-                </ngx-paginator>
             </div>
         </nb-card-body>
     </div>

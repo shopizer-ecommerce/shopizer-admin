@@ -14,8 +14,8 @@
 
     <div class="content_spacing">
       <button type="submit" class="success_button" [nbSpinner]="loadingList" nbSpinnerSize="large"
-        nbSpinnerStatus="control" (click)="save()" [disabled]="!configureForm.form.valid">{{{ ( !loadinglist ?
-        'COMMON.SAVE' : '' ) | translate}}</button>
+        nbSpinnerStatus="control" (click)="save()" [disabled]="!configureForm.form.valid">{{'COMMON.SAVE'|
+        translate}}</button>
     </div>
   </nb-card-header>
 
