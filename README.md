@@ -1,4 +1,4 @@
-# shopizer-admin
+# shopizer-admin Angular web app
 
 ## Run locally
 

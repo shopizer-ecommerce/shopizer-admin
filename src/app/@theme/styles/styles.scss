@@ -1,23 +1,23 @@
-@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,600,700&display=swap');
+@import url("https://fonts.googleapis.com/css?family=Open+Sans:400,600,700&display=swap");
 
 // themes - our custom or/and out of the box themes
-@import 'themes';
+@import "themes";
 
 // framework component themes (styles tied to theme variables)
-@import '~@nebular/theme/styles/globals';
-@import '~@nebular/auth/styles/all';
+@import "~@nebular/theme/styles/globals";
+@import "~@nebular/auth/styles/all";
 
-@import '~bootstrap/scss/functions';
-@import '~bootstrap/scss/variables';
-@import '~bootstrap/scss/mixins';
-@import '~bootstrap/scss/grid';
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/mixins";
+@import "~bootstrap/scss/grid";
 
 // loading progress bar theme
-@import './pace.theme';
+@import "./pace.theme";
 
-@import './layout';
-@import './overrides';
-@import 'custom';
+@import "./layout";
+@import "./overrides";
+@import "custom";
 
 .nb-theme-corporate nb-checkbox .text:not(:empty) {
   padding-left: 6px;
@@ -26,7 +26,6 @@
 
 // install the framework and custom global styles
 @include nb-install() {
-
   // framework global styles
   @include nb-theme-global();
   @include nb-auth-global();
@@ -51,9 +50,7 @@
 
   @if $hasAnimations {
     $transition-duration: 500ms;
-  }
-
-  @else {
+  } @else {
     $transition-duration: 0ms;
   }
 
@@ -70,7 +67,7 @@
     box-shadow: 0 2px 3px #eee;
   }
 
-  @mixin effects($property:false, $time:false) {
+  @mixin effects($property: false, $time: false) {
     @if $hasAnimations {
       transition: $property $time ease;
     }
@@ -130,7 +127,7 @@
 
     &:hover {
       @include effects(background-color, 0.3s);
-      @include contrast
+      @include contrast;
     }
 
     &.big {
@@ -206,10 +203,9 @@
     display: none !important;
   }
 
-
   .new .file-manager-item {
     &:hover {
-      background: transparent !important
+      background: transparent !important;
     }
   }
 
@@ -217,16 +213,15 @@
     color: #36f !important;
 
     &:hover {
-      color: #598bff !important
+      color: #598bff !important;
     }
   }
 
   .upload-background {
     .buttons:nth-of-type(1) {
-      display: none
+      display: none;
     }
   }
-
 
   .file-manager-node {
     user-select: none;
@@ -306,17 +301,15 @@
     border-color: $main-color;
 
     i {
-      color: $contrast-color
+      color: $contrast-color;
     }
 
     @include effects(border-color, 0.3s);
     @include effects(background-color, 0.3s);
-
   }
 
   .file-manager-item:hover {
-    @extend .file-manager-item,
-    .highlighted;
+    @extend .file-manager-item, .highlighted;
     border: 1px solid white;
 
     transition: background-color 0s;
@@ -395,7 +388,7 @@
 
   .qq-upload-delete {
     background-color: #e65c47;
-    color: #FAFAFA;
+    color: #fafafa;
     border-color: #dc523d;
 
     @include borders;
@@ -409,7 +402,7 @@
   }
 
   .qq-upload-cancel {
-    background-color: #F5D7D7;
+    background-color: #f5d7d7;
     border-color: #e6c8c8;
 
     @include borders;
@@ -423,7 +416,7 @@
   }
 
   .qq-upload-retry {
-    background-color: #EBF6E0;
+    background-color: #ebf6e0;
     border-color: #d2ddc7;
 
     @include borders;
@@ -438,8 +431,8 @@
 
   .qq-upload-pause,
   .qq-upload-continue {
-    background-color: #00ABC7;
-    color: #FAFAFA;
+    background-color: #00abc7;
+    color: #fafafa;
     border-color: #2dadc2;
 
     @include borders;
@@ -509,7 +502,7 @@
     font-size: 13px;
 
     &:focus,
-    &:focus+.navigation-search-icon {
+    &:focus + .navigation-search-icon {
       outline: none;
       border-color: $main-color;
     }
@@ -598,7 +591,6 @@
     margin-bottom: 10px;
     padding: 5px;
   }
-
 
   ////////////
   // upload //

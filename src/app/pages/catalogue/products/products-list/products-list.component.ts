@@ -84,14 +84,14 @@ export class ProductsListComponent implements OnInit {
     //console.log(JSON.stringify(newParams));
     this.currentPage = 1; //back to page 1
     this.params = newParams;
-    this.getList();
+    // this.getList();
   }
 
   private resetList() {
     //console.log('CallBack resetList');
     this.currentPage = 1;//back to page 1
     this.params = this.loadParams();
-    this.getList();
+    // this.getList();
   }
   getStore() {
     this.storeService.getListOfStores({ code: 'DEFAULT' })

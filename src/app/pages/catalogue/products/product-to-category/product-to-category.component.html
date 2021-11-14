@@ -2,9 +2,9 @@
 
 
   <div class="mainBody">
-    <ng-multiselect-dropdown *ngIf="!categoryLoading" [placeholder]="'Select Category'" [settings]="dropdownSettings" [data]="categories"
-      [(ngModel)]="selectedItems" (onSelect)="onItemSelect($event)" (onDeSelect)="onItemDeSelect($event)"
-      (onFilterChange)="onFilterChange($event)">
+    <ng-multiselect-dropdown *ngIf="!categoryLoading" [placeholder]="'Select Category'" [settings]="dropdownSettings"
+      [data]="categories" [(ngModel)]="selectedItems" (onSelect)="onItemSelect($event)"
+      (onDeSelect)="onItemDeSelect($event)" (onFilterChange)="onFilterChange($event)">
     </ng-multiselect-dropdown>
   </div>
 </div>

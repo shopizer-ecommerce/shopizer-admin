@@ -4,7 +4,8 @@
     <h1 class="page_title">{{ title | translate }}</h1>
     <div class="content_spacing" *ngIf="selfEdit">
       <nb-select [(selected)]="selectedItem" outline shape="rectangle">
-        <nb-option *ngFor="let item of sidemenuLinks" [value]="item.id" (click)="route(item.link)">{{ item.title | translate}}</nb-option>
+        <nb-option *ngFor="let item of sidemenuLinks" [value]="item.id" (click)="route(item.link)">{{ item.title |
+          translate}}</nb-option>
       </nb-select>
     </div>
     <div class="content_spacing" *ngIf="title == 'COMPONENTS.USER_DETAILS'">
@@ -12,144 +13,153 @@
         | translate}}</button>
     </div>
     <div class="content_spacing">
-      <button type="button" nbButton class="error_button" [disabled]="selfEdit || !canEdit" (click)="delete()">{{'COMMON.REMOVE'
+      <button type="button" nbButton class="error_button" [disabled]="selfEdit || !canEdit"
+        (click)="delete()">{{'COMMON.REMOVE'
         | translate }}</button>
     </div>
     <div class="content_spacing">
-        <button type="button" nbButton class="success_button" [disabled]="!form.valid || !canEdit" (click)="save()">{{'COMMON.SAVE'
-          | translate }}</button>
+      <button type="button" nbButton class="success_button" [disabled]="!form.valid || !canEdit || loader"
+        (click)="save()" [nbSpinner]="loader" nbSpinnerSize="large" nbSpinnerStatus="control">
+        {{ ( !loader ? 'COMMON.SAVE' : '' ) | translate }}
+      </button>
     </div>
   </nb-card-header>
-   <div [nbSpinner]="loader" nbSpinnerSize="large" nbSpinnerStatus="primary">
-    <nb-card class="nb-card inline-form-card">
-      <nb-card-body>
-        <form [formGroup]='form'>
+  <!-- <div [nbSpinner]="loader" nbSpinnerSize="large" nbSpinnerStatus="primary"> -->
+  <nb-card class="nb-card inline-form-card">
+    <nb-card-body>
+      <form [formGroup]='form'>
 
-          <div class="form-group">
-            <label for="firstname" class="col-sm-3 col-form-label inputLabel"> {{ 'USER_FORM.FIRST_NAME' | translate }}
-              *</label>
-            <div class="col-sm-12">
-              <input type="text" class="form-control inputText" id="firstname" formControlName='firstName' placeholder="{{ 'USER_FORM.FIRST_NAME' | translate }}"
-                required>
-              <span *ngIf="(firstName.dirty || firstName.touched) && firstName.invalid && firstName.errors.required"
-                class="err-message">
-                {{ 'USER_FORM.FIRST_NAME_ERROR_REQUIRED' | translate }}
-              </span>
-            </div>
+        <div class="form-group">
+          <label for="firstname" class="col-sm-3 col-form-label inputLabel"> {{ 'USER_FORM.FIRST_NAME' | translate }}
+            *</label>
+          <div class="col-sm-12">
+            <input type="text" class="form-control inputText" id="firstname" formControlName='firstName'
+              placeholder="{{ 'USER_FORM.FIRST_NAME' | translate }}" required>
+            <span *ngIf="(firstName.dirty || firstName.touched) && firstName.invalid && firstName.errors.required"
+              class="err-message">
+              {{ 'USER_FORM.FIRST_NAME_ERROR_REQUIRED' | translate }}
+            </span>
           </div>
-          <div class="form-group">
-            <label for="lastname" class="col-sm-3 col-form-label inputLabel">{{ 'USER_FORM.LAST_NAME' | translate }} *</label>
-            <div class="col-sm-12">
-              <input type="text" class="form-control inputText" id="lastname" formControlName='lastName' placeholder="{{ 'USER_FORM.LAST_NAME' | translate }}"
-                required>
-              <span *ngIf="(lastName.dirty || lastName.touched) && lastName.invalid && lastName.errors.required" class="err-message">
-                {{ 'USER_FORM.LAST_NAME_ERROR_REQUIRED' | translate }}
-              </span>
-            </div>
+        </div>
+        <div class="form-group">
+          <label for="lastname" class="col-sm-3 col-form-label inputLabel">{{ 'USER_FORM.LAST_NAME' | translate }}
+            *</label>
+          <div class="col-sm-12">
+            <input type="text" class="form-control inputText" id="lastname" formControlName='lastName'
+              placeholder="{{ 'USER_FORM.LAST_NAME' | translate }}" required>
+            <span *ngIf="(lastName.dirty || lastName.touched) && lastName.invalid && lastName.errors.required"
+              class="err-message">
+              {{ 'USER_FORM.LAST_NAME_ERROR_REQUIRED' | translate }}
+            </span>
           </div>
-          <div class="form-group">
-            <label class="col-sm-3 col-form-label inputLabel">{{ 'STORE.MERCHANT_STORE' | translate }} *</label>
-            <div class="col-sm-12">
-              <nb-select *ngIf="stores.length" [(selected)]="store" [attr.disabled]="selfEdit" placeholder="{{ 'STORE.MERCHANT_STORE' | translate }}"
-                formControlName='store' outline shape="rectangle" class="fullWidth">
-                <nb-option *ngFor="let store of stores" [value]="store.code" (click)="chooseMerchant(store)">{{
-                  store.code
-                  }}
-                </nb-option>
-              </nb-select>
-            </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-3 col-form-label inputLabel">{{ 'STORE.MERCHANT_STORE' | translate }} *</label>
+          <div class="col-sm-12">
+            <nb-select *ngIf="stores.length" [(selected)]="store" [attr.disabled]="selfEdit"
+              placeholder="{{ 'STORE.MERCHANT_STORE' | translate }}" formControlName='store' outline shape="rectangle"
+              class="fullWidth">
+              <nb-option *ngFor="let store of stores" [value]="store.code" (click)="chooseMerchant(store)">{{
+                store.code
+                }}
+              </nb-option>
+            </nb-select>
           </div>
-          <div class="form-group">
-            <label for="email" class="col-sm-3 col-form-label inputLabel">{{ 'USER_FORM.EMAIL_ADDRESS' | translate }} *</label>
-            <div class="col-sm-12">
-              <input type="email" class="form-control inputText" id="email" formControlName='emailAddress' (change)="checkEmail($event)"
-                placeholder="{{ 'USER_FORM.EMAIL_ADDRESS' | translate }}" required>
-              <span *ngIf="(emailAddress.dirty || emailAddress.touched) && emailAddress.invalid && emailAddress" class="err-message">
-                <span *ngIf="emailAddress.errors.email || emailAddress.errors.pattern">
-                  {{ 'USER_FORM.EMAIL_ADDRESS_ERROR_REQUIRED' | translate }}
-                </span>
-                <span *ngIf="emailAddress.errors.required">
-                  {{ 'USER_FORM.EMAIL_ADDRESS_ERROR_NOT_VALID' | translate }}
-                </span>
+        </div>
+        <div class="form-group">
+          <label for="email" class="col-sm-3 col-form-label inputLabel">{{ 'USER_FORM.EMAIL_ADDRESS' | translate }}
+            *</label>
+          <div class="col-sm-12">
+            <input type="email" class="form-control inputText" id="email" formControlName='emailAddress'
+              (change)="checkEmail($event)" placeholder="{{ 'USER_FORM.EMAIL_ADDRESS' | translate }}" required>
+            <span *ngIf="(emailAddress.dirty || emailAddress.touched) && emailAddress.invalid && emailAddress"
+              class="err-message">
+              <span *ngIf="emailAddress.errors.email || emailAddress.errors.pattern">
+                {{ 'USER_FORM.EMAIL_ADDRESS_ERROR_REQUIRED' | translate }}
               </span>
-              <span *ngIf="!isEmailUnique" class="err-message">
-                {{ 'USER_FORM.EMAIL_EXISTS' | translate }}
+              <span *ngIf="emailAddress.errors.required">
+                {{ 'USER_FORM.EMAIL_ADDRESS_ERROR_NOT_VALID' | translate }}
               </span>
-            </div>
+            </span>
+            <span *ngIf="!isEmailUnique" class="err-message">
+              {{ 'USER_FORM.EMAIL_EXISTS' | translate }}
+            </span>
           </div>
+        </div>
 
-          <div class="form-group" *ngIf="!selfEdit && (!user?.id || canChangePassword)">
-            <label for="password" class="col-sm-3 col-form-label inputLabel">{{ 'COMMON.PASSWORD' | translate }} *</label>
-            <div class="col-sm-12">
-              <input type="password" class="form-control inputText" id="password" formControlName='password'
-                placeholder="{{ 'COMMON.PASSWORD' | translate }}" required>
-              <span *ngIf="(password.dirty || password.touched) && password.invalid && password" class="err-message">
-                <span *ngIf="password.errors.required">
-                  {{ 'USER_FORM.PASSWORD_ERROR_REQUIRED' | translate }}
-                </span>
-                <span *ngIf="password.errors.pattern">
-                  {{ 'USER_FORM.PASSWORD_ERROR_NOT_VALID' | translate }} <br />
-                  {{ 'USER_FORM.PASSWORD_ERROR_RULES' | translate }}
-                </span>
+        <div class="form-group" *ngIf="!selfEdit && (!user?.id || canChangePassword)">
+          <label for="password" class="col-sm-3 col-form-label inputLabel">{{ 'COMMON.PASSWORD' | translate }}
+            *</label>
+          <div class="col-sm-12">
+            <input type="password" class="form-control inputText" id="password" formControlName='password'
+              placeholder="{{ 'COMMON.PASSWORD' | translate }}" required>
+            <span *ngIf="(password.dirty || password.touched) && password.invalid && password" class="err-message">
+              <span *ngIf="password.errors.required">
+                {{ 'USER_FORM.PASSWORD_ERROR_REQUIRED' | translate }}
               </span>
-            </div>
+              <span *ngIf="password.errors.pattern">
+                {{ 'USER_FORM.PASSWORD_ERROR_NOT_VALID' | translate }} <br />
+                {{ 'USER_FORM.PASSWORD_ERROR_RULES' | translate }}
+              </span>
+            </span>
           </div>
-          <div class="form-group" *ngIf="!selfEdit && (!user?.id || canChangePassword)">
-            <label for="password" class="col-sm-3 col-form-label inputLabel">Repeat Password *</label>
-            <div class="col-sm-12">
-              <input type="password" class="form-control inputText" id="repeatPassword" formControlName='repeatPassword'
-                placeholder="Repeat Password" required>
-              <span *ngIf="(repeatPassword.dirty || repeatPassword.touched) && repeatPassword.invalid && repeatPassword"
-                class="err-message">
-                <span *ngIf="repeatPassword.errors.required">
-                  {{ 'USER_FORM.PASSWORD_ERROR_REQUIRED' | translate }}<br />
-                </span>
-
-              </span>
-              <span class="err-message" *ngIf="form.hasError('notSame')">
-                <span>
-                  {{ 'USER_CHANGE_PASSWORD.PASSWORDS_NOT_MATCH' | translate }}
-                </span>
+        </div>
+        <div class="form-group" *ngIf="!selfEdit && (!user?.id || canChangePassword)">
+          <label for="password" class="col-sm-3 col-form-label inputLabel">Repeat Password *</label>
+          <div class="col-sm-12">
+            <input type="password" class="form-control inputText" id="repeatPassword" formControlName='repeatPassword'
+              placeholder="Repeat Password" required>
+            <span *ngIf="(repeatPassword.dirty || repeatPassword.touched) && repeatPassword.invalid && repeatPassword"
+              class="err-message">
+              <span *ngIf="repeatPassword.errors.required">
+                {{ 'USER_FORM.PASSWORD_ERROR_REQUIRED' | translate }}<br />
               </span>
 
+            </span>
+            <span class="err-message" *ngIf="form.hasError('notSame')">
+              <span>
+                {{ 'USER_CHANGE_PASSWORD.PASSWORDS_NOT_MATCH' | translate }}
+              </span>
+            </span>
 
-            </div>
+
           </div>
+        </div>
 
-          <div class="
+        <div class="
                 form-group">
-            <nb-checkbox class="col-sm-4" formControlName='active'>{{ 'USER_FORM.ACTIVE' | translate
-              }}
+          <nb-checkbox class="col-sm-4" formControlName='active'>{{ 'USER_FORM.ACTIVE' | translate
+            }}
+          </nb-checkbox>
+        </div>
+
+        <div class="form-group">
+          <label class="col-sm-3 col-form-label inputLabel">{{ 'COMMON.DEFAULT_LANGUAGE' | translate }} *</label>
+          <div class="col-sm-12">
+            <nb-select *ngIf="languages.length" placeholder="{{ 'COMMON.SELECT_LANGUAGE' | translate }}"
+              formControlName='defaultLanguage' outline shape="rectangle" class="fullWidth">
+              <nb-option *ngFor="let language of languages" [value]="language.code">{{ ('LANG.'+language.code) |
+                translate
+                }}
+              </nb-option>
+            </nb-select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-sm-3 col-form-label inputLabel">{{ 'USER_FORM.GROUPS' | translate }} *</label>
+          <div class="col-sm-12 group-block">
+            <nb-checkbox *ngFor="let group of groups" [value]="group.checked" (change)="group.checked = !group.checked"
+              [disabled]="group.disabled">
+              {{ group.name }}
             </nb-checkbox>
           </div>
+        </div>
 
-          <div class="form-group">
-            <label class="col-sm-3 col-form-label inputLabel">{{ 'COMMON.DEFAULT_LANGUAGE' | translate }} *</label>
-            <div class="col-sm-12">
-              <nb-select *ngIf="languages.length" placeholder="{{ 'COMMON.SELECT_LANGUAGE' | translate }}"
-                formControlName='defaultLanguage' outline shape="rectangle" class="fullWidth">
-                <nb-option *ngFor="let language of languages" [value]="language.code">{{ ('LANG.'+language.code) |
-                  translate
-                  }}
-                </nb-option>
-              </nb-select>
-            </div>
-          </div>
+      </form>
 
-          <div class="form-group">
-            <label class="col-sm-3 col-form-label inputLabel">{{ 'USER_FORM.GROUPS' | translate }} *</label>
-            <div class="col-sm-12 group-block">
-              <nb-checkbox *ngFor="let group of groups" [value]="group.checked" (change)="group.checked = !group.checked"
-                [disabled]="group.disabled">
-                {{ group.name }}
-              </nb-checkbox>
-            </div>
-          </div>
-
-        </form>
-
-      </nb-card-body>
-    </nb-card>
-  </div>
+    </nb-card-body>
+  </nb-card>
+  <!-- </div> -->
 
 </div>

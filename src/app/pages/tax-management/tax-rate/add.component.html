@@ -1,126 +1,130 @@
 <div class="inner_pages packages_add_box">
-  <div class="" [nbSpinner]="loadingList" nbSpinnerSize="large" nbSpinnerStatus="primary">
-    <nb-card-header class="main_header">
-      <h1 class="page_title" *ngIf="!isUpdate">{{'TAX.ADD_TAX_RATE' | translate}}</h1>
-      <h1 class="page_title" *ngIf="isUpdate">{{'TAX.UPDATE_TAX_RATE' | translate}}</h1>
-      <!-- <div class="content_spacing">
+  <!-- <div class="" [nbSpinner]="loadingList" nbSpinnerSize="large" nbSpinnerStatus="primary"> -->
+  <nb-card-header class="main_header">
+    <h1 class="page_title" *ngIf="!isUpdate">{{'TAX.ADD_TAX_RATE' | translate}}</h1>
+    <h1 class="page_title" *ngIf="isUpdate">{{'TAX.UPDATE_TAX_RATE' | translate}}</h1>
+    <!-- <div class="content_spacing">
         <ngx-store-autocomplete class="searchDropdown" (onStore)="onSelectStore($event)"></ngx-store-autocomplete>
       </div> -->
-      <div class="content_spacing">
-        <nb-select placeholder="Language" outline shape="rectangle" [(ngModel)]="language" (ngModelChange)="getTaxRateDetail()"
-          name="language" [selected]="'en'">
-          <nb-option *ngFor="let lan of langData" [value]="lan.code">{{ ('LANG.'+ lan.code) |translate }}</nb-option>
-        </nb-select>
-      </div>
-      <div class="content_spacing">
-        <button type="button" class="cancel_button" (click)="goBack()">{{'COMMON.CANCEL' | translate }}</button>
-      </div>
+    <div class="content_spacing">
+      <nb-select placeholder="Language" outline shape="rectangle" [(ngModel)]="language"
+        (ngModelChange)="getTaxRateDetail()" name="language" [selected]="'en'">
+        <nb-option *ngFor="let lan of langData" [value]="lan.code">{{ ('LANG.'+ lan.code) |translate }}</nb-option>
+      </nb-select>
+    </div>
+    <div class="content_spacing">
+      <button type="button" class="cancel_button" (click)="goBack()">{{'COMMON.CANCEL' | translate }}</button>
+    </div>
 
-      <div class="content_spacing">
-        <button type="button" *ngIf="isUpdate" nbButton class="success_button" [disabled]="!taxRateForm.form.valid"
-          (click)="update()">{{'CUSTOMERS.UPDATE'|translate }}</button>
+    <div class="content_spacing">
+      <button type="button" *ngIf="isUpdate" nbButton class="success_button" [disabled]="!taxRateForm.form.valid"
+        (click)="update()">{{'CUSTOMERS.UPDATE'|translate }}</button>
 
-        <button type="submit" *ngIf="!isUpdate" class="success_button" (click)="save()" [disabled]="!taxRateForm.form.valid || codeExits">{{'COMMON.SAVE'
-          | translate }}</button>
-      </div>
-    </nb-card-header>
+      <button type="submit" *ngIf="!isUpdate" class="success_button" [nbSpinner]="loadingList" nbSpinnerSize="large"
+        nbSpinnerStatus="control" (click)="save()" [disabled]="!taxRateForm.form.valid || codeExits">{{ ( !loadingList ?
+        'COMMON.SAVE' : '' ) | translate
+        }}</button>
+    </div>
+  </nb-card-header>
 
-    <form #taxRateForm="ngForm" role="form">
-      <div class="row">
-        <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-          <nb-card class="nb-card inline-form-card">
-            <nb-card-body class="nb-card-body">
+  <form #taxRateForm="ngForm" role="form">
+    <div class="row">
+      <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <nb-card class="nb-card inline-form-card">
+          <nb-card-body class="nb-card-body">
 
-              <div class="row">
+            <div class="row">
 
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                  <div class="form-group">
-                    <label class="label inputLabel">{{'ORDER_FORM.COUNTRY' | translate}}<span>*</span></label>
-                    <nb-select *ngIf="countryData.length > 0" placeholder="{{'ORDER_FORM.SELECT_COUNTRY' | translate}}"
-                      outline shape="rectangle" (selectedChange)="onCountryChange($event)" [(ngModel)]="formValue.country"
-                      class="select_fields" name="country" required>
-                      <nb-option *ngFor="let country of countryData" [value]="country.code">{{
-                        country.name }}</nb-option>
-                    </nb-select>
-                  </div>
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="form-group">
+                  <label class="label inputLabel">{{'ORDER_FORM.COUNTRY' | translate}}<span>*</span></label>
+                  <nb-select *ngIf="countryData.length > 0" placeholder="{{'ORDER_FORM.SELECT_COUNTRY' | translate}}"
+                    outline shape="rectangle" (selectedChange)="onCountryChange($event)" [(ngModel)]="formValue.country"
+                    class="select_fields" name="country" required>
+                    <nb-option *ngFor="let country of countryData" [value]="country.code">{{
+                      country.name }}</nb-option>
+                  </nb-select>
                 </div>
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                  <div class="form-group" *ngIf="stateData.length > 0">
-                    <label class="label inputLabel">{{'ORDER_FORM.STATE' | translate}}<span>*</span></label>
-                    <nb-select placeholder="{{'ORDER_FORM.SELECT_STATE' | translate}}" outline shape="rectangle" class="select_fields"
-                      [(ngModel)]="formValue.zone" name="zone" required>
-                      <nb-option *ngFor="let state of stateData" [value]="state.code">{{ state.name }}
-                      </nb-option>
-                    </nb-select>
-                  </div>
-                  <div class="form-group" *ngIf="stateData.length == 0">
-                    <label class="label inputLabel">{{'ORDER_FORM.STATE' | translate}}<span>*</span></label>
-                    <input type="text" class="form-control inputText" placeholder="{{'ORDER_FORM.ENTER_STATE' | translate}}"
-                      [(ngModel)]="formValue.zone" name="zone" required>
-                  </div>
+              </div>
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="form-group" *ngIf="stateData.length > 0">
+                  <label class="label inputLabel">{{'ORDER_FORM.STATE' | translate}}<span>*</span></label>
+                  <nb-select placeholder="{{'ORDER_FORM.SELECT_STATE' | translate}}" outline shape="rectangle"
+                    class="select_fields" [(ngModel)]="formValue.zone" name="zone" required>
+                    <nb-option *ngFor="let state of stateData" [value]="state.code">{{ state.name }}
+                    </nb-option>
+                  </nb-select>
                 </div>
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                  <div class="form-group">
-                    <label class="label inputLabel">{{'TAX.TAX_RATE_NAME' | translate}}<span>*</span></label>
-                    <input type="text" class="form-control inputText" placeholder="{{'TAX.TAX_RATE_NAME' | translate}}"
-                      [(ngModel)]="formValue.name" name="name" required>
-                  </div>
+                <div class="form-group" *ngIf="stateData.length == 0">
+                  <label class="label inputLabel">{{'ORDER_FORM.STATE' | translate}}<span>*</span></label>
+                  <input type="text" class="form-control inputText"
+                    placeholder="{{'ORDER_FORM.ENTER_STATE' | translate}}" [(ngModel)]="formValue.zone" name="zone"
+                    required>
                 </div>
-                <!-- <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+              </div>
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="form-group">
+                  <label class="label inputLabel">{{'TAX.TAX_RATE_NAME' | translate}}<span>*</span></label>
+                  <input type="text" class="form-control inputText" placeholder="{{'TAX.TAX_RATE_NAME' | translate}}"
+                    [(ngModel)]="formValue.name" name="name" required>
+                </div>
+              </div>
+              <!-- <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                   <div class="form-group">
                     <label class="label inputLabel">{{'TAX.TAX_RATE_NAME_FR' | translate}}<span>*</span></label>
                     <input type="text" class="form-control inputText" placeholder="{{'TAX.TAX_RATE_NAME_FR' | translate}}"
                       [(ngModel)]="formValue.namefr" name="name" required>
                   </div>
                 </div> -->
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                  <div class="form-group">
-                    <label class="label inputLabel">{{'TAX.TAX_RATE_CODE' | translate}}<span>*</span></label>
-                    <input type="text" class="form-control inputText" [disabled]="isUpdate" placeholder="{{'TAX.TAX_RATE_CODE' | translate}}"
-                      [(ngModel)]="formValue.code" name="code" (focusout)="focusOutFunction()" required>
-                    <span *ngIf="codeExits" class="err-message">{{'PACKAGING.CODE_EXITS' | translate}}</span>
-                  </div>
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="form-group">
+                  <label class="label inputLabel">{{'TAX.TAX_RATE_CODE' | translate}}<span>*</span></label>
+                  <input type="text" class="form-control inputText" [disabled]="isUpdate"
+                    placeholder="{{'TAX.TAX_RATE_CODE' | translate}}" [(ngModel)]="formValue.code" name="code"
+                    (focusout)="focusOutFunction()" required>
+                  <span *ngIf="codeExits" class="err-message">{{'PACKAGING.CODE_EXITS' | translate}}</span>
                 </div>
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                  <div class="form-group">
-                    <label class="label inputLabel">{{'TAX.TAX_RATE' | translate}}<span>*</span></label>
-                    <input type="text" class="form-control inputText" placeholder="{{'TAX.TAX_RATE' | translate}}"
-                      [(ngModel)]="formValue.rate" name="rate" required>
-                  </div>
-                </div>
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                  <div class="form-group">
-                    <nb-checkbox [(ngModel)]="formValue.compound" name="compound">
-                      {{'TAX.COMPOUND' | translate}}
-                    </nb-checkbox>
-                  </div>
-                </div>
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                  <div class="form-group">
-                    <label class="label inputLabel">{{'TAX.ORDER' | translate}}<span>*</span></label>
-                    <input type="number" class="form-control inputText" placeholder="{{'TAX.ORDER' | translate}}"
-                      [(ngModel)]="formValue.priority" name="priority" required>
-                  </div>
-                </div>
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                  <div class="form-group">
-                    <label class="label inputLabel">{{'TAX.TAX_CLASS_NAME' | translate}}<span>*</span></label>
-                    <nb-select placeholder="{{'TAX.SELECT_CLASS_NAME' | translate}}" outline shape="rectangle"
-                      [(ngModel)]="formValue.taxClass" class="select_fields" name="taxClass" required>
-                      <nb-option *ngFor="let country of taxClassData" [value]="country.code">{{
-                        country.name }}</nb-option>
-                    </nb-select>
-                  </div>
-                </div>
-
-
               </div>
-            </nb-card-body>
-          </nb-card>
-        </div>
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="form-group">
+                  <label class="label inputLabel">{{'TAX.TAX_RATE' | translate}}<span>*</span></label>
+                  <input type="text" class="form-control inputText" placeholder="{{'TAX.TAX_RATE' | translate}}"
+                    [(ngModel)]="formValue.rate" name="rate" required>
+                </div>
+              </div>
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="form-group">
+                  <nb-checkbox [(ngModel)]="formValue.compound" name="compound">
+                    {{'TAX.COMPOUND' | translate}}
+                  </nb-checkbox>
+                </div>
+              </div>
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="form-group">
+                  <label class="label inputLabel">{{'TAX.ORDER' | translate}}<span>*</span></label>
+                  <input type="number" class="form-control inputText" placeholder="{{'TAX.ORDER' | translate}}"
+                    [(ngModel)]="formValue.priority" name="priority" required>
+                </div>
+              </div>
+              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="form-group">
+                  <label class="label inputLabel">{{'TAX.TAX_CLASS_NAME' | translate}}<span>*</span></label>
+                  <nb-select placeholder="{{'TAX.SELECT_CLASS_NAME' | translate}}" outline shape="rectangle"
+                    [(ngModel)]="formValue.taxClass" class="select_fields" name="taxClass" required>
+                    <nb-option *ngFor="let country of taxClassData" [value]="country.code">{{
+                      country.name }}</nb-option>
+                  </nb-select>
+                </div>
+              </div>
+
+
+            </div>
+          </nb-card-body>
+        </nb-card>
       </div>
+    </div>
 
 
-    </form>
-  </div>
+  </form>
+  <!-- </div> -->
 </div>
