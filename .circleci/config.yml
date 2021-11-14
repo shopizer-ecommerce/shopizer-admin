@@ -16,7 +16,7 @@ jobs:
     working_directory: ~/project
     docker:
       # replace with your preferred image
-      - image: node:12.8.0
+      - image: node:17.1.0
     steps:
        - checkout
        - run: |
