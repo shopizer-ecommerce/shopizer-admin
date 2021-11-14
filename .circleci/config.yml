@@ -68,7 +68,7 @@ jobs:
       - aws-cli/setup:
           profile-name: circleci
       #TODO bucket in environment
-      - run: aws s3 sync dist s3://perfectogaz-admin/ --region ca-central-1 --delete --profile circleci
+      - run: aws s3 sync dist s3://shopizer-admin/ --region ca-central-1 --delete --profile circleci
       - slack/status:
           fail_only: false
           webhook: $SLACK_ADMIN_WEBHOOK
@@ -84,4 +84,4 @@ workflows:
           filters:
               branches:
                 only:
-                  - perfecto
+                  - main
