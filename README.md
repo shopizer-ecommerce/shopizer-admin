@@ -4,6 +4,7 @@
 
 npm i --yes
 ng serve -o
+http://localhost:4200
 
 ## Build app
 ng build 
