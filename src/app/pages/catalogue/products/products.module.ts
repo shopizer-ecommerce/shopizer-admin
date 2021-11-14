@@ -28,6 +28,10 @@ import { ProductProperties } from './property/list/product-property.component';
 import { ProductPropertyForm } from './property/form/product-property-form.component';
 import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 import { NbDialogModule } from '@nebular/theme';
+import { ProductDiscountComponent } from './product-discount/product-discount.component';
+import { ProductOrderingComponent } from './product-ordering/product-ordering.component';
+
+import { DragDropModule } from '@angular/cdk/drag-drop';
 @NgModule({
 
 
@@ -53,7 +57,9 @@ import { NbDialogModule } from '@nebular/theme';
     AttributeFormComponent,
     ProductsImagesComponent,
     ProductProperties,
-    ProductPropertyForm
+    ProductPropertyForm,
+    ProductDiscountComponent,
+    ProductOrderingComponent,
   ],
   entryComponents: [AvailableButtonComponent, AttributeFormComponent, ProductPropertyForm],
   imports: [
@@ -65,7 +71,8 @@ import { NbDialogModule } from '@nebular/theme';
     CustomModule,
     NgxSummernoteModule,
     NbDialogModule.forChild(),
-    NgMultiSelectDropDownModule.forRoot()
+    NgMultiSelectDropDownModule.forRoot(),
+    DragDropModule
 
   ],
 })

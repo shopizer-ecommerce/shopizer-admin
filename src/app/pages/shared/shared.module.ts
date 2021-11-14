@@ -21,8 +21,9 @@ import { TreeTableModule } from 'primeng/treetable';
 import { ValidateNumberDirective } from './validation/validate-number.directive';
 // import { EqualValidator } from './validation/equal-validator';
 import { PasswordPromptComponent } from './components/password-prompt/password-prompt';
-import { FilePickerModule } from  'ngx-awesome-uploader';
+import { FilePickerModule } from 'ngx-awesome-uploader';
 
+import { DragDropModule } from "@angular/cdk/drag-drop";
 
 
 @NgModule({
@@ -47,7 +48,8 @@ import { FilePickerModule } from  'ngx-awesome-uploader';
     NbSpinnerModule,
     TranslateModule,
     TreeTableModule,
-    FilePickerModule
+    FilePickerModule,
+    DragDropModule
   ],
   exports: [
     Ng2SmartTableModule,

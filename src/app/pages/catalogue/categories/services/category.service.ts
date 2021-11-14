@@ -21,7 +21,7 @@ export class CategoryService {
     const params = {
       lang: '_all'
     };
-    return this.crudService.get(`/v1/category/${ id }`, params);
+    return this.crudService.get(`/v1/category/${id}`, params);
   }
 
   addCategory(category): Observable<any> {
@@ -37,7 +37,7 @@ export class CategoryService {
   }
 
   deleteCategory(id): Observable<any> {
-    return this.crudService.delete(`/v1/private/category/${ id }`);
+    return this.crudService.delete(`/v1/private/category/${id}`);
   }
 
   checkCategoryCode(code): Observable<any> {
@@ -47,8 +47,13 @@ export class CategoryService {
     return this.crudService.get(`/v1/private/category/unique`, params);
   }
 
-  updateHierarchy (childId, parentId): Observable<any> {
+  updateHierarchy(childId, parentId): Observable<any> {
     return this.crudService.put(`/v1/private/category/${childId}/move/${parentId}`, {});
+  }
+
+  filterCategory(data): Observable<any> {
+    // console.log("data", data);
+    return this.crudService.get(`/v1/category?count=${data.count}&page=${data.page}&name=${data.name}`);
   }
 
 }

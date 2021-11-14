@@ -1,9 +1,10 @@
-# shopizer-admin
+# shopizer-admin Angular web app
 
 ## Run locally
 
 npm i --yes
 ng serve -o
+http://localhost:4200
 
 ## Build app
 ng build 

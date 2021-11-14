@@ -69,6 +69,13 @@ export class ProductsImagesComponent implements OnInit {
         this.loading.emit(false);
       });
   }
+  updateImage(event) {
+    this.productImageService.updateImage(this.product.id, event).subscribe(res => {
+    }, error => {
+      this.toastr.error(error.error.message);
+    });
+
+  }
 
   errorImage(event) {
     this.toastr.error(this.translate.instant('COMMON.' + event));
@@ -85,6 +92,7 @@ export class ProductsImagesComponent implements OnInit {
     console.log('eeeeeeee', e)
     this.loading.emit(e);
   }
+
   /** end image component */
 
 }

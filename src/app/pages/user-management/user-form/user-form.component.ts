@@ -128,7 +128,7 @@ export class UserFormComponent implements OnInit {
           this.canRemove = false;
           this.canEdit = true;
           this.superAdmin = true;
-          if(!this.roles.isSuperadmin) {
+          if (!this.roles.isSuperadmin) {
             this.groupEdit = false;
             this.canEdit = false;
           }
@@ -226,7 +226,7 @@ export class UserFormComponent implements OnInit {
             if (this.selfEdit) {//self cannot edit its own group
               group.disabled = true;
             }
-            if(!this.groupEdit) {
+            if (!this.groupEdit) {
               group.disabled = true;
             }
           });
@@ -389,21 +389,21 @@ export class UserFormComponent implements OnInit {
 
     //cannot remove superadmin
     //cannot remove self
-    if(this.selfEdit) {
+    if (this.selfEdit) {
       this.toastr.error(this.translate.instant('USER.CANNOT_REMOVE_SELF'));
       return;
     }
 
-    if(this.superAdmin) {
+    if (this.superAdmin) {
       this.toastr.error(this.translate.instant('USER.CANNOT_REMOVE_SELF'));
       return;
     }
 
     this.userService.deleteUser(this._user.id, this.storageService.getMerchant())
-    .subscribe(data => {
-      this.toastr.success(this.translate.instant('USER_FORM.USER_REMOVED'));
-      this.router.navigate(['pages/user-management/users']);
-    });
+      .subscribe(data => {
+        this.toastr.success(this.translate.instant('USER_FORM.USER_REMOVED'));
+        this.router.navigate(['pages/user-management/users']);
+      });
   }
 
   checkEmail(event) {
