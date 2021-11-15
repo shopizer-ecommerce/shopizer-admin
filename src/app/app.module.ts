@@ -97,3 +97,14 @@ export class AppModule { }
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, "./assets/i18n/", ".json");
 }
+
+/**
+ * Angular 10
+ * Error ModuleWithProviders<T> requires 1 type argument(s)
+ */
+declare module "@angular/core" {
+  interface ModuleWithProviders<T = any> {
+    ngModule: Type<T>;
+    providers?: Provider[];
+  }
+}
