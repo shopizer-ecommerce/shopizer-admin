@@ -48,7 +48,7 @@ export class ProductOrderingComponent implements OnInit {
     this.getCategory();
     this.translate.onLangChange.subscribe((lang) => {
       this.params.lang = this.storageService.getLanguage();
-      this.getList();
+      // this.getList();
     });
   }
 
@@ -57,16 +57,11 @@ export class ProductOrderingComponent implements OnInit {
   }
   onSelectCategory(event) {
     this.categoryTemp.map((item) => {
-      console.log("item", item.name);
-      if (event == item.name) {
-        console.log("in");
-
+      if (event === item.name) {
         this.productService.getProductOrderById(item.id).subscribe(res => {
-          if (res.products.length == 0) {
+          if (res.products.length > 0) {
             this.data = []
-          }
-          else {
-            res.products.map((item) => {
+            return res.products.map((item) => {
               this.data.push({
                 id: item.id,
                 name: item.name,
@@ -77,20 +72,15 @@ export class ProductOrderingComponent implements OnInit {
               })
             })
           }
-
+          else {
+            this.data = []
+          }
         })
       }
     })
-
-
-  }
-
-
-  getList() {
-    this.loadingList = true;
-    this.productService.getProductByOrder()
-      .subscribe(res => {
-        this.loadingList = false;
+    if (event === "All category") {
+      this.data = []
+      this.productService.getProductByOrder().subscribe(res => {
         res.products.map((item) => {
           this.data.push({
             id: item.id,
@@ -101,20 +91,56 @@ export class ProductOrderingComponent implements OnInit {
             creationDate: item.creationDate
           })
         })
+      })
+    }
+  }
+
+
+  getList() {
+    this.loadingList = true;
+    this.productService.getProductByOrder()
+      .subscribe(res => {
+        this.loadingList = false;
+        res.products.map((item) => {
+          console.log("data::", item);
+          this.data.push({
+            id: item.id,
+            name: item.description.name,
+            sku: item.sku,
+            quantity: item.quantity,
+            price: item.price,
+            creationDate: item.creationDate
+          })
+        })
       });
+
   }
   getCategory() {
     this.categoryService.getListOfCategories(this.params)
       .subscribe(categories => {
-        console.log(categories)
         let tempValue = [];
+        let tempCategories = [];
         categories.categories.forEach((value) => {
+          if (value.children.length > 0) {
+            value.children.forEach((item) => {
+              tempValue.push(item.code);
+              tempCategories.push({ 'id': item.id, 'name': item.description.name.toLowerCase() })
+            })
+          }
           tempValue.push(value.code);
-          this.categoryTemp.push({ 'id': value.id, 'name': value.description.name.toLowerCase() })
+          tempCategories.push({ 'id': value.id, 'name': value.description.name.toLowerCase() })
         })
+        tempValue.push('All category');
+        tempValue.sort()
+        this.categoryTemp = tempCategories
         this.categoryData = tempValue
       });
-    console.log("data::", this.categoryTemp);
+  }
+  onDetails(category) {
+    console.log("click", category);
+    this.productService.getProductDefinitionById(category).subscribe(res => {
+      this.router.navigate(['pages/catalogue/products/product/', category]);
+    })
 
   }
 

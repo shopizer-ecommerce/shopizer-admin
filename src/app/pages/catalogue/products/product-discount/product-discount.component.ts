@@ -9,11 +9,11 @@ import { validators } from '../../../shared/validation/validators';
 })
 export class ProductDiscountComponent implements OnInit {
   discountForm: FormGroup;
+  discountValue = null
 
   constructor(private dfb: FormBuilder) { }
 
   ngOnInit(): void {
-    // this.createForm()
     this.discountForm = this.dfb.group({
       discountedPrice: [Validators.pattern(validators.number)],
       percentageOff: [Validators.pattern(validators.number)],
@@ -22,37 +22,29 @@ export class ProductDiscountComponent implements OnInit {
       startDate: [new Date()],
       endDate: [new Date()],
       discountedRadio: [null],
-      percentageOffRadio: [null],
-      rebateRadio: [null]
     })
   }
   save() { }
+
+  onselectDiscountValue(data) {
+    this.discountValue = data
+  }
 
   discountSelected(e) {
     if (e == 1) {
       this.discountForm.controls['discountedPrice'].setValidators([Validators.required]);
       // this.discountForm.controls['discountedPrice'].setValue([Validators.pattern(validators.)]);
     }
-    else {
-      this.discountForm.controls['discountedRadio'].updateValueAndValidity()
-      this.discountForm.controls['discountedPrice'].clearValidators();
-    }
-  }
-  percentageSelected(e) {
-    if (e == 2) {
+    else if (e == 2) {
       this.discountForm.controls['percentageOff'].setValidators([Validators.required]);
     }
-    else {
-      this.discountForm.controls['percentageOffRadio'].updateValueAndValidity()
-      this.discountForm.controls['percentageOff'].clearValidators();
-    }
-  }
-  rebateSelected(e) {
     if (e == 3) {
       this.discountForm.controls['rebatePrice'].setValidators([Validators.required]);
     }
     else {
-      this.discountForm.controls['rebateRadio'].updateValueAndValidity()
+      this.discountForm.controls['discountedRadio'].updateValueAndValidity()
+      this.discountForm.controls['discountedPrice'].clearValidators();
+      this.discountForm.controls['percentageOff'].clearValidators();
       this.discountForm.controls['rebatePrice'].clearValidators();
     }
   }

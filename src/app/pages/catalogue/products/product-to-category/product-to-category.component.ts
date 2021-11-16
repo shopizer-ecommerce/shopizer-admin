@@ -81,6 +81,8 @@ export class ProductToCategoryComponent implements OnInit {
                 this.loading.emit(false);
                 this.categoryLoading = false;
             });
+        console.log("categories", this.categories);
+
     }
 
     getChildren(node) {

@@ -64,6 +64,14 @@
         -ms-box-shadow: 0 0.5rem 1rem 0 rgba(44, 51, 73, 0.1);
         -o-box-shadow: 0 0.5rem 1rem 0 rgba(44, 51, 73, 0.1);
         box-shadow: 0 0.5rem 1rem 0 rgb(44 51 73 / 10%);
+        .editData{
+          margin-right: 170px !important;
+          color: #ffbe00;
+          font-size: 24px;
+          &:hover{
+            cursor: pointer;
+          }
+        }
         label{
           display: flex;
           cursor: move;

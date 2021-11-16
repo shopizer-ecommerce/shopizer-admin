@@ -22,17 +22,20 @@
                     <li>{{'PRODUCT.QTY' | translate}}</li>
                     <li>{{'PRODUCT.PRICE' | translate}}</li>
                     <li>{{'PRODUCT.CREATION_DATE' | translate}}</li>
+                    <li>{{'COMMON.ACTIONS' | translate}}</li>
                 </ul>
                 <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
                     <div class="product-order-list" *ngFor="let item of data | keyvalue" cdkDrag>
                         <span cdkDragPlaceholder
-                            style=" width:100%;cursor: move;border-radius: 5px;background-color: white;padding: 20px;align-items: center;display: flex;justify-content: space-between">
+                            style="width:100%;cursor: move;border-radius: 5px;background-color: white;padding: 20px;align-items: center;display: flex;justify-content: space-between">
                             <label>{{item.value.id}}</label>
                             <label>{{item.value.sku}}</label>
                             <label>{{item.value.name}}</label>
                             <label>{{item.value.quantity}}</label>
                             <label>{{item.value.price}}</label>
                             <label>{{item.value.creationDate}}</label>
+                            <i style="color:#ffbe00;margin-right: 170px;font-size: 24px;" class="nb-edit editData"
+                                (click)="onDetails(item.value.id)"></i>
                         </span>
                     </div>
                 </div>

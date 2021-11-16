@@ -6,6 +6,11 @@
             color: #fff;
             border: none;
         }
+        .disabled_button{
+            background-color: lightgray;
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
     }
    .discount{
        border: 2px solid gray;
@@ -34,7 +39,7 @@
     .ng-star-inserted{
         color:red;
         position: relative;
-        margin-left: -20px;
+        margin-left: 0px;
     }
     
 }

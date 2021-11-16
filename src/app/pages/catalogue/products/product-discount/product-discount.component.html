@@ -5,40 +5,35 @@
       <nb-radio-group formControlName="discountedRadio" name="discountedRadio" (valueChange)="discountSelected($event)">
         <nb-radio class="shipping-radio" [value]="1">{{
           'PRICE.DISCOUNTED_PRICE'|translate}}</nb-radio>
-      </nb-radio-group>
-      <span *ngIf="discountForm.controls.discountedRadio.value==1">*</span>
-    </div>
-    <div [ngClass]="discountForm.controls.discountedRadio.value==1 ? 'discount': 'disabled-discount'">
-      <input type="number" class="form-control inputText" id="discountedPrice" formControlName='discountedPrice'
-        placeholder="{{ 'PRICE.DISCOUNTED_PRICE' | translate}}">
-    </div>
-
-
-    <div class="form-group">
-      <nb-radio-group formControlName="percentageOffRadio" name="percentageOffRadio"
-        (valueChange)="percentageSelected($event)">
         <nb-radio class="shipping-radio" [value]="2">{{
           'PRICE.PERCENTAGE_OFF'|translate}}</nb-radio>
-      </nb-radio-group>
-      <span *ngIf="discountForm.controls.percentageOffRadio.value==2">*</span>
-    </div>
-    <div [ngClass]="discountForm.controls.percentageOffRadio.value==2 ? 'percentage': 'disabled-percentage'">
-      <input type="number" class="form-control inputText" id="percentageOff" formControlName='percentageOff'
-        placeholder="{{ 'PRICE.PERCENTAGE_OFF'|translate}}">
-    </div>
-
-    <div class="form-group">
-      <nb-radio-group formControlName="rebateRadio" name="rebateRadio" (valueChange)="rebateSelected($event)">
         <nb-radio class="shipping-radio" [value]="3">{{ 'PRICE.REBATE_PRICE'|translate}}</nb-radio>
       </nb-radio-group>
-      <label *ngIf="discountForm.controls.rebateRadio.value==3"
-        [ngClass]="discountForm.controls.rebateRadio.value==3 && 'mandatory'">*</label>
     </div>
-    <div [ngClass]="discountForm.controls.rebateRadio.value==3 ? 'rebate': 'disabled-rebate'">
+    <!-- <span
+      *ngIf="discountForm.controls.discountedRadio.value==1 || discountForm.controls.discountedRadio.value==2 || discountForm.controls.discountedRadio.value==3">*
+      Required <br />
+    </span> -->
+    <div *ngIf="discountForm.controls.discountedRadio.value==1"
+      [ngClass]="discountForm.controls.discountedRadio.value==1 ? 'discount': 'disabled-discount'">
+      <input type="number" class="form-control inputText" id="discountedPrice" formControlName='discountedPrice'
+        placeholder="{{ 'PRICE.DISCOUNTED_PRICE' | translate}}" (ngModelChange)="onselectDiscountValue($event)"
+        [(ngModel)]="discountValue">
+    </div>
+    <div *ngIf="discountForm.controls.discountedRadio.value==2"
+      [ngClass]="discountForm.controls.discountedRadio.value==2 ? 'percentage': 'disabled-percentage'">
+      <input type="number" class="form-control inputText" id="percentageOff" formControlName='percentageOff'
+        placeholder="{{ 'PRICE.PERCENTAGE_OFF'|translate}}" (ngModelChange)="onselectDiscountValue($event)"
+        [(ngModel)]="discountValue">
+    </div>
+    <div *ngIf="discountForm.controls.discountedRadio.value==3"
+      [ngClass]="discountForm.controls.discountedRadio.value==3 ? 'rebate': 'disabled-rebate'">
       <input type="number" class="form-control inputText" id="rebatePrice" formControlName='rebatePrice'
-        placeholder="{{ 'PRICE.REBATE_PRICE'|translate}}">
+        placeholder="{{ 'PRICE.REBATE_PRICE'|translate}}" [(ngModel)]="discountValue"
+        (ngModelChange)="onselectDiscountValue($event)">
     </div>
     <br />
+
     <div class="form-group">
       <div>
         <nb-checkbox formControlName='timeBound'>
@@ -46,9 +41,7 @@
         </nb-checkbox>
       </div>
     </div>
-
     <div class="row" *ngIf="discountForm.controls.timeBound.value == true">
-
       <div class="col-lg-3 col-md-6 col-sm-12 col-xs-12">
         <div class="form-group">
           <label class="col-form-label inputLabel">{{ 'Start Date' | translate}}</label>
@@ -59,7 +52,6 @@
           </div>
         </div>
       </div>
-
       <div class="col-lg-3 col-md-6 col-sm-12 col-xs-12">
         <div class="form-group">
           <label class="col-form-label inputLabel">{{ 'End Date' | translate}}</label>
@@ -72,8 +64,8 @@
       </div>
     </div>
     <div class="formSave">
-      <button type="button" nbButton class="success_button" nbSpinnerSize="large" nbSpinnerStatus="control"
-        (click)="save()">
+      <button type=" button" nbButton [ngClass]="  discountValue>0 ? 'success_button' : 'disabled_button'"
+        nbSpinnerSize="large" nbSpinnerStatus="control" (click)="save()">
         {{'COMMON.SAVE' | translate }}
       </button>
     </div>
