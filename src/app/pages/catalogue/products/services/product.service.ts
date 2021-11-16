@@ -73,5 +73,11 @@ export class ProductService {
   removeProductFromCategory(productId, categoryId): Observable<any> {
     return this.crudService.delete(`/v1/private/product/${productId}/category/${categoryId}`);
   }
+  getProductByOrder(): Observable<any> {
+    return this.crudService.get(`/v1/products?count=200&lang=en&page=0`)
+  }
+  getProductOrderById(id): Observable<any> {
+    return this.crudService.get(`/v1/products?category=${id}&count=200&lang=en&page=0`)
+  }
 
 }

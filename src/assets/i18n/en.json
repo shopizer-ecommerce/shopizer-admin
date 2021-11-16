@@ -60,6 +60,7 @@
     "CREATE_PRODUCT": "Create product",
     "PRODUCTS_LIST": "List of products",
     "PRODUCT_ORDERING": "Product ordering",
+    "PRODUCT_ORDERING_DETAILS": "Select a category of products in the dropdown menu, then drag and drop products to re-organize placement",
     "PRODUCT_DETAILS": "Product details",
     "LIST_INVENTORY": "List inventory",
     "PRODUCT_TO_CATEGORY": "Product to category",

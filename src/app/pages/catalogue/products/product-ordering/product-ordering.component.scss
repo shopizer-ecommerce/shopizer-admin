@@ -18,6 +18,17 @@
         font-weight: 600;
       }
     }
+    .sub_header{
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-right: 20px;
+      padding-bottom: 20px;
+      p{
+       padding: 0px 0px 0px 20px !important; 
+       margin: 0;
+       }
+    }
 
   .list-header{
      width: 100%;
