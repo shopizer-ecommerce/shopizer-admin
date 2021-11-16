@@ -26,6 +26,7 @@ export class ProductDiscountComponent implements OnInit {
       rebateRadio: [null]
     })
   }
+  save() { }
 
   discountSelected(e) {
     if (e == 1) {

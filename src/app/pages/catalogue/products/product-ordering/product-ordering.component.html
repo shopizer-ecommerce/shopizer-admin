@@ -6,6 +6,15 @@
                     <h1 class="page_title">{{ 'COMPONENTS.PRODUCT_ORDERING' | translate }}</h1>
                     <div class="content_spacing_empty"></div>
                 </nb-card-header>
+                <div class="sub_header">
+                    <p>
+                        {{ 'COMPONENTS.PRODUCT_ORDERING_DETAILS' | translate}}
+                    </p>
+                    <p-autoComplete class="autoStore" placeholder="{{ 'CATEGORY.CATEGORY_NAME' | translate }}"
+                        name="category" [(ngModel)]="category" [suggestions]="categoryData" [dropdown]="true"
+                        (onSelect)="onSelectCategory($event)" (completeMethod)="searchCategory()">
+                    </p-autoComplete>
+                </div>
                 <ul class='list-header'>
                     <li>{{'COMMON.ID' | translate}}</li>
                     <li>{{'PRODUCT.SKU' | translate }}</li>

@@ -72,9 +72,9 @@
       </div>
     </div>
     <div class="formSave">
-      <button type="button" nbButton class="success_button" [nbSpinner]="tabLoader" nbSpinnerSize="large"
-        nbSpinnerStatus="control" (click)="save()">
-        {{( !tabLoader ? 'COMMON.SAVE' : '' )| translate }}
+      <button type="button" nbButton class="success_button" nbSpinnerSize="large" nbSpinnerStatus="control"
+        (click)="save()">
+        {{'COMMON.SAVE' | translate }}
       </button>
     </div>
   </div>

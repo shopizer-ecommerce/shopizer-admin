@@ -119,6 +119,7 @@ export class ProductToCategoryComponent implements OnInit {
         this.removeProductFromCategory(this.product.id, item.id)
     }
     addProductToCategory(productId, groupCode) {
+        this.loading.emit(true);
         this.productService.addProductToCategory(productId, groupCode)
             .subscribe(res => {
                 console.log(res, '========');
@@ -127,6 +128,7 @@ export class ProductToCategoryComponent implements OnInit {
     }
 
     removeProductFromCategory(productId, groupCode) {
+        this.loading.emit(true);
         this.productService.removeProductFromCategory(productId, groupCode)
             .subscribe(res => {
                 console.log(res);
