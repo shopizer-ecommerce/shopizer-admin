@@ -35,7 +35,7 @@ jobs:
        - run: |
             sed 's#http://localhost:8080/api#http://localhost:8080/api#g' ./src/environments/environment.prod.ts
 
-       - run: node --max_old_space_size=8192 ./node_modules/@angular/cli/bin/ng build --prod --progress
+       - run: node --max_old_space_size=4096 ./node_modules/@angular/cli/bin/ng build --prod --progress
 
        - persist_to_workspace:
           root: .
