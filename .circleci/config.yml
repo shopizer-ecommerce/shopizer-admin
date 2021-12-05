@@ -29,17 +29,38 @@ jobs:
             name: Install local dependencies
             command: npm install
        - run: |
-            sed 's#http://localhost:8080/api#https://api.perfectogaz.com/api#g' ./src/assets/env.js
+            sed 's#http://localhost:8080/api#http://localhost:8080/api#g' ./src/assets/env.js
        - run: |
-            sed 's#http://localhost:8080/api#https://api.perfectogaz.com/api#g' ./src/environments/environment.ts
+            sed 's#http://localhost:8080/api#http://localhost:8080/api#g' ./src/environments/environment.ts
        - run: |
-            sed 's#http://localhost:8080/api#https://api.perfectogaz.com/api#g' ./src/environments/environment.prod.ts
+            sed 's#http://localhost:8080/api#http://localhost:8080/api#g' ./src/environments/environment.prod.ts
        - run: node ./node_modules/@angular/cli/bin/ng build --prod --progress
 
        - persist_to_workspace:
           root: .
           paths:
             - dist/*
+
+  image:
+    machine: true
+    steps:
+       - attach_workspace:
+          at: .
+       # start proprietary DB using private Docker image
+       # with credentials stored in the UI
+       - run: |
+           ls -al
+       - run: |
+           docker login -u shopizerecomm -p $DOCKERHUB_PASSWORD
+       - run: |
+           docker build . -t shopizerecomm/shopizer-admin:latest
+       - run: |
+           docker push shopizerecomm/shopizer-admin:latest
+       #- run: |
+       #    docker login -u shopizerecomm  -p $DOCKERHUB_PASSWORD  | ls -al | echo "build docker" | cd sm-shop | ls -al | docker build . -t shopizerecomm/shopizer:latest
+       
+       # deploy the image
+       #- run: docker push shopizerecomm/shopizer:latest
 
   # The deploy job
   deploy:
