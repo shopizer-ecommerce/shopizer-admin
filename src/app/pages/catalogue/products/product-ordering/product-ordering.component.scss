@@ -1,0 +1,203 @@
+@import "../../../../@theme/styles/themes";
+
+@include nb-install-component() {
+  nb-card {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.page-card {
+  background: transparent;
+  border: none;
+
+  .productList {
+    .main_header {
+      padding: 0px 30px 10px 0px;
+      .page_title {
+        margin-top: -25px;
+        font-weight: 600;
+      }
+    }
+    .sub_header{
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-right: 20px;
+      padding-bottom: 20px;
+      p{
+       padding: 0px 0px 0px 20px !important; 
+       margin: 0;
+       }
+    }
+
+  .list-header{
+     width: 100%;
+    list-style: none;
+    margin: 0px;
+    padding: 0px;
+    display: flex;
+    background: #ffffff !important;
+    background: #ffffff !important;
+    -ms-box-shadow: 0 0.5rem 1rem 0 rgba(44, 51, 73, 0.1);
+    -o-box-shadow: 0 0.5rem 1rem 0 rgba(44, 51, 73, 0.1);
+    box-shadow: 0 0.5rem 1rem 0 rgb(44 51 73 / 10%);
+      li{
+        font-weight: 600;
+        float: left;
+        list-style: none;
+        margin-top: 15px;
+        margin-bottom: 15px;
+        width: 258px;
+        padding-left: 20px;
+        max-width: 100%;
+      }
+  }
+  .example-list{
+    width: 100%;
+    background: white;
+    
+      .product-order-list{
+        list-style: none;
+        margin-top: 5px;
+        display: flex;
+        background: #ffffff !important;
+        -ms-box-shadow: 0 0.5rem 1rem 0 rgba(44, 51, 73, 0.1);
+        -o-box-shadow: 0 0.5rem 1rem 0 rgba(44, 51, 73, 0.1);
+        box-shadow: 0 0.5rem 1rem 0 rgb(44 51 73 / 10%);
+        label{
+          display: flex;
+          cursor: move;
+          width: 100%;
+          list-style: none;
+          // padding: 20px 20px;
+          align-items: center;
+        }  
+      }
+      .cdk-drag-preview {
+          width: 100%;
+          background-color: #ffffff !important; 
+          border-radius: 4px;
+          border:1px solid black;
+          box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
+                      0 8px 10px 1px rgba(0, 0, 0, 0.14),
+                      0 3px 14px 2px rgba(0, 0, 0, 0.12);
+      }
+        .cdk-drag-placeholder {
+         opacity: 0;
+      }
+      .cdk-drag-animating {
+        transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+      }
+  }
+      .example-list .cdk-drop-list-dragging .product-order-list:not(.cdk-drag-placeholder) {
+      transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+      }
+    .pointer {
+      height: 18px;
+      width: 18px;
+      margin-left: 20px;
+      cursor: pointer;
+    }
+
+    .filter_section {
+      background: #fff;
+      padding: 10px 15px;
+      margin: -10px 0 10px 0;
+    }
+  }
+}
+
+:host ::ng-deep .productList {
+  .filter_section {
+    .filter_right_section {
+      button {
+        font-weight: 600 !important;
+        font-size: 14px !important;
+      }
+    }
+  }
+
+  .home-table {
+    thead {
+      .ng2-smart-titles {
+        th {
+          a {
+            font-weight: 600;
+          }
+        }
+      }
+    }
+
+    tbody {
+      tr {
+        cursor: pointer;
+
+        &:hover,
+        &.selected {
+          background: #e6f3ff !important;
+        }
+
+        a.ng2-smart-action:not(:last-child) {
+          padding-right: 0px !important;
+          margin-right: 0px !important;
+        }
+      }
+    }
+  }
+}
+
+.buttons-row {
+  float: right;
+}
+
+.filter_section {
+  width: 100%;
+
+  .filter_right_section {
+    width: 100%;
+    text-align: right;
+    display: flex;
+    justify-content: flex-end;
+    padding-left: 0px;
+    padding-right: 0px;
+
+    .createBtn {
+      padding: 8px 10px 9.5px 10px;
+      background-color: #f7f9fc !important;
+      color: #000 !important;
+      border: 1px solid #edf1f7 !important;
+      border-radius: 5px;
+      margin-left: 20px;
+
+      label {
+        display: inline-block;
+        font-weight: 600 !important;
+        font-size: 14px !important;
+      }
+
+      .sda {
+        margin-right: 20px;
+        cursor: pointer;
+        margin-left: 0 !important;
+      }
+    }
+
+    .store_select {
+      width: 29% !important
+    }
+  }
+}
+
+thead,
+tbody {
+  display: block;
+}
+
+tbody {
+  height: 100px;
+  /* Just for the demo          */
+  overflow-y: auto;
+  /* Trigger vertical scroll    */
+  overflow-x: hidden;
+  /* Hide the horizontal scroll */
+}

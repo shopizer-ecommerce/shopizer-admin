@@ -16,28 +16,18 @@ jobs:
     working_directory: ~/project
     docker:
       # replace with your preferred image
-      - image: node:12.8.0
+      - image: node:10.15.2
     steps:
        - checkout
        - run: |
            ls -al
-       # Restore local dependencies from cache
-       - restore_cache:
-          keys:
-            - dependencies-{{ .Environment.CACHE_VERSION }}-{{ checksum "package.json" }}
-            - dependencies-{{ .Environment.CACHE_VERSION }}
        - run: |
             export NODE_OPTIONS=--max_old_space_size=8048
+       - run: |
+            rm package-lock.json
        - run:
             name: Install local dependencies
             command: npm install
-       # Cache local dependencies if they don't exist
-       - save_cache:
-            key: dependencies-{{ .Environment.CACHE_VERSION }}-{{ checksum "package.json" }}
-            paths:
-                - node_modules
-       # Change url of environment
-       #TODO url in environment #
        - run: |
             sed 's#http://localhost:8080/api#https://api.perfectogaz.com/api#g' ./src/assets/env.js
        - run: |
@@ -45,10 +35,7 @@ jobs:
        - run: |
             sed 's#http://localhost:8080/api#https://api.perfectogaz.com/api#g' ./src/environments/environment.prod.ts
        - run: node ./node_modules/@angular/cli/bin/ng build --prod --progress
-       #- run:
-       #     name: Linting
-       #     command: npm run lint
-       # Cache the dist folder for the deploy job
+
        - persist_to_workspace:
           root: .
           paths:
@@ -68,7 +55,7 @@ jobs:
       - aws-cli/setup:
           profile-name: circleci
       #TODO bucket in environment
-      - run: aws s3 sync dist s3://perfectogaz-admin/ --region ca-central-1 --delete --profile circleci
+      - run: aws s3 sync dist s3://shopizer-admin/ --region ca-central-1 --delete --profile circleci
       - slack/status:
           fail_only: false
           webhook: $SLACK_ADMIN_WEBHOOK
@@ -84,4 +71,4 @@ workflows:
           filters:
               branches:
                 only:
-                  - perfecto
+                  - main

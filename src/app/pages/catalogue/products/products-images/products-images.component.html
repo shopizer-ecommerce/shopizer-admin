@@ -1,4 +1,5 @@
 <p>
-    <ngx-image-uploading [images]="images" (remove)="removeImage($event)" (error)="errorImage($event)" (success)="addedImage($event)"
-        [addImageUrl]="addImageUrlComponent" (fileAdded)="fileAdded($event)"></ngx-image-uploading>
+    <ngx-image-uploading [images]="images" (update)="updateImage($event)" (remove)="removeImage($event)"
+        (error)="errorImage($event)" (success)="addedImage($event)" [addImageUrl]="addImageUrlComponent"
+        (fileAdded)="fileAdded($event)"></ngx-image-uploading>
 </p>

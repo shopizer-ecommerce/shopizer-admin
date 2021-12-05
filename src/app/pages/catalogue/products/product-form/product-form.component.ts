@@ -145,8 +145,14 @@ export class ProductFormComponent implements OnInit {
       type: [''],
       display: [true],
       canBePurchased: [true],
+      timeBound: [false],
       price: ['', [Validators.required]],
       quantity: ['', [Validators.required, Validators.pattern(validators.number)]],
+      // discountedPrice: [Validators.pattern(validators.number)],
+      // percentageOff: [Validators.pattern(validators.number)],
+      // rebatePrice: [Validators.required, Validators.pattern(validators.number)],
+      // startDate: [new Date()],
+      // endDate: [new Date()],
       sortOrder: ['', [Validators.required, Validators.pattern(validators.number)]],
       // productShipeable: [false, [Validators.required]],
       productSpecifications: this.fb.group({
@@ -280,7 +286,7 @@ export class ProductFormComponent implements OnInit {
       selectedLanguage: lang,
     });
     this.currentLanguage = lang;
-    this.fillFormArray();
+    //this.fillFormArray();
   }
 
   changeName(event, index) {
@@ -383,7 +389,7 @@ export class ProductFormComponent implements OnInit {
         tmpObj.title = el.title;
       }
       if (tmpObj.title === '' && el.title === '') {
-        tmpObj.title = this.storageService.getMerchantName + ' | ' + el.name ;
+        tmpObj.title = this.storageService.getMerchantName + ' | ' + el.name;
       }
       for (const elKey in el) {
         if (el.hasOwnProperty(elKey)) {
@@ -395,8 +401,8 @@ export class ProductFormComponent implements OnInit {
     });
     /** do the validation */
     if (this.findInvalidControls().length > 0) {
-        this.loading = false;
-        return;
+      this.loading = false;
+      return;
     }
     // check required fields
     //object validations on the form

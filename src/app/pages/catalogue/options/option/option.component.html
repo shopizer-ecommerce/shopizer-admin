@@ -7,8 +7,10 @@
           | translate}}</button>
       </div>
       <div class="content_spacing">
-        <button *ngIf="!loader" nbButton type="submit" class="success_button" (click)="save()" [disabled]="!form.valid">{{'COMMON.SAVE'
-          | translate }}</button>
+        <button *ngIf="!loader" nbButton type="submit" class="success_button" (click)="save()"
+          [disabled]="!form.valid">{{ 'COMMON.SAVE'
+          |
+          translate }}</button>
       </div>
     </nb-card-header>
 
@@ -18,8 +20,9 @@
           <div class="form-group">
             <label for="code" class="col-sm-10 col-form-label inputLabel">{{ 'COMMON.CODE' | translate}} *</label>
             <div class="col-sm-12">
-              <input type="text" class="form-control inputText" id="code" formControlName='code' (change)="checkCode($event)"
-                [readOnly]="option.id" placeholder="{{ 'COMMON.CODE' | translate}}" required>
+              <input type="text" class="form-control inputText" id="code" formControlName='code'
+                (change)="checkCode($event)" [readOnly]="option.id" placeholder="{{ 'COMMON.CODE' | translate}}"
+                required>
               <div *ngIf="(code.dirty || code.touched) && code.invalid && code">
                 <span *ngIf="code.errors.required" class="err-message">
                   {{ 'COMMON.CODE_REQUIRED' | translate}}
@@ -36,8 +39,8 @@
           <div class="form-group">
             <label for="code" class="col-sm-10 col-form-label inputLabel">{{ 'COMMON.LANGUAGE' | translate}} *</label>
             <div class="col-sm-12">
-              <nb-select *ngIf="languages.length" placeholder="{{ 'COMMON.LANGUAGE' | translate }}" outline shape="rectangle"
-                class="fullWidth" formControlName='selectedLanguage'>
+              <nb-select *ngIf="languages.length" placeholder="{{ 'COMMON.LANGUAGE' | translate }}" outline
+                shape="rectangle" class="fullWidth" formControlName='selectedLanguage'>
                 <nb-option *ngFor="let language of languages" [value]="language.code">{{ ('LANG.'+language.code) |
                   translate }}</nb-option>
               </nb-select>
@@ -52,11 +55,10 @@
                       translate }}
                       *</label>
                     <div class="col-sm-12">
-                      <input type="text" class="form-control inputText" id="name" formControlName='name' placeholder="{{ 'DESCRIPTION_FORM.NAME' | translate }}"
-                        required>
+                      <input type="text" class="form-control inputText" id="name" formControlName='name'
+                        placeholder="{{ 'DESCRIPTION_FORM.NAME' | translate }}" required>
                       <span *ngIf="(descr.get('name').dirty || descr.get('name').touched) && descr.get('name').invalid
-                                    && descr.get('name').errors.required"
-                        class="err-message">
+                                    && descr.get('name').errors.required" class="err-message">
                         {{ 'DESCRIPTION_FORM.NAME_REQUIRED' | translate }}
                       </span>
                     </div>
@@ -71,8 +73,8 @@
           <div class="form-group">
             <label for="type" class="col-sm-10 col-form-label inputLabel">{{ 'COMMON.TYPE' | translate}} *</label>
             <div class="col-sm-12">
-              <nb-select *ngIf="types.length" placeholder="{{ 'COMMON.TYPE' | translate}}" id="type" formControlName='type'
-                outline shape="rectangle" class="fullWidth" required>
+              <nb-select *ngIf="types.length" placeholder="{{ 'COMMON.TYPE' | translate}}" id="type"
+                formControlName='type' outline shape="rectangle" class="fullWidth" required>
                 <nb-option *ngFor="let type of types" [value]="type">{{ 'COMMON.' + type | translate}}</nb-option>
               </nb-select>
             </div>

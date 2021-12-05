@@ -1,0 +1,40 @@
+
+.column{
+    .formSave{
+        .success_button{
+            background-color: #36f;
+            color: #fff;
+            border: none;
+        }
+    }
+   .discount{
+       border: 2px solid gray;
+       border-radius: 5px;
+    }
+    .disabled-discount{
+        border:none !important;
+    }
+   .percentage{
+       border: 2px solid gray;
+       border-radius: 5px;
+    }
+    .disabled-percentage{
+        border:none !important;
+    }
+   .rebate{
+       border: 2px solid gray;
+       border-radius: 5px;
+    }
+    .disabled-rebate{
+        border:none !important;
+    }
+    .formSave{
+        float: right;
+    }
+    .ng-star-inserted{
+        color:red;
+        position: relative;
+        margin-left: -20px;
+    }
+    
+}

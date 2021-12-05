@@ -60,18 +60,20 @@ export class CategoriesListComponent implements OnInit {
     };
   }
 
-  /** callback methods for table list*/
-  private loadList(newParams: any) {
-    this.currentPage = 0; //back to page 1
-    this.params = newParams;
-    this.getList();
-  }
+    /** callback methods for table list*/
+    private loadList(newParams: any) {
+      this.currentPage = 1; //back to page 1
+      this.params = newParams;
+      this.fetchTableData();
+    }
+  
+    private resetList() {
+      this.currentPage = 1;//back to page 1
+      this.params = this.loadParams();
+      this.getList();
+    }
+    /** */
 
-  private resetList() {
-    this.currentPage = 1;//back to page 1
-    this.params = this.loadParams();
-    this.getList();
-  }
 
   ngOnInit() {
     this.getList();
@@ -92,6 +94,7 @@ export class CategoriesListComponent implements OnInit {
   // creating array of categories include children
   //specific to category
   getChildren(node) {
+    node.name = node.description.name;
     if (node.children && node.children.length !== 0) {
       this.categories.push(node);
       node.children.forEach((el) => {
@@ -105,19 +108,24 @@ export class CategoriesListComponent implements OnInit {
   //specific to category
   getList() {
     this.categories = [];
-
     this.params.page = this.currentPage -1;
+    this.fetchTableData()  
+    this.setSettings();
+  }
+
+  fetchTableData(){
     this.loadingList = true;
     this.categoryService.getListOfCategories(this.params)
       .subscribe(categories => {
         categories.categories.forEach((el) => {
+          el.name = el.description.name;
           this.getChildren(el);
+
         });
         this.totalCount = categories.recordsTotal;
         this.source.load(this.categories);
         this.loadingList = false;
       });
-    this.setSettings();
   }
 
   setSettings() {
@@ -148,15 +156,10 @@ export class CategoriesListComponent implements OnInit {
           type: 'string',
           filter: false,
         },
-        description: {
+        name: {
           title: this.translate.instant('CATEGORY.CATEGORY_NAME'),
           type: 'string',
-          filter: true,
-          valuePrepareFunction: (description) => {
-            if (description) {
-              return description.name;
-            }
-          }
+          filter: true
         },
         code: {
           title: this.translate.instant('COMMON.CODE'),

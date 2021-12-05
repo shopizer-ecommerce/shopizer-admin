@@ -23,6 +23,7 @@ export class ProductToCategoryComponent implements OnInit {
     selectedItems = [];
     dropdownSettings = {};
     categoryLoading = false;
+    filteredCategories = [];
 
     params = this.loadParams();
     constructor(
@@ -98,11 +99,12 @@ export class ProductToCategoryComponent implements OnInit {
         console.log(e);
         if (e.length > 2) {
             this.params["name"] = e;
-            this.getList();
-        }
-        if (e === '') {
-            this.params = this.loadParams();
-            this.getList();
+            this.categoryService.filterCategory(this.params).subscribe(res => {
+            }, error => {
+
+            }
+            )
+            // this.getList();
         }
         // this.loading = true;
     }
@@ -117,6 +119,7 @@ export class ProductToCategoryComponent implements OnInit {
         this.removeProductFromCategory(this.product.id, item.id)
     }
     addProductToCategory(productId, groupCode) {
+        this.loading.emit(true);
         this.productService.addProductToCategory(productId, groupCode)
             .subscribe(res => {
                 console.log(res, '========');
@@ -125,6 +128,7 @@ export class ProductToCategoryComponent implements OnInit {
     }
 
     removeProductFromCategory(productId, groupCode) {
+        this.loading.emit(true);
         this.productService.removeProductFromCategory(productId, groupCode)
             .subscribe(res => {
                 console.log(res);

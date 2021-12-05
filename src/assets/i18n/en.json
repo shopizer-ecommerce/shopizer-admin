@@ -59,6 +59,8 @@
     "PRODUCT": "Product",
     "CREATE_PRODUCT": "Create product",
     "PRODUCTS_LIST": "List of products",
+    "PRODUCT_ORDERING": "Product ordering",
+    "PRODUCT_ORDERING_DETAILS": "Select a category of products in the dropdown menu, then drag and drop products to re-organize placement",
     "PRODUCT_DETAILS": "Product details",
     "LIST_INVENTORY": "List inventory",
     "PRODUCT_TO_CATEGORY": "Product to category",
@@ -73,6 +75,7 @@
     "BRANDS_LIST": "List of brands",
     "PRODUCTS_IMAGES": "Product images",
     "PRODUCTS_PROPERTIES": "Product property",
+    "PRODUCTS_DISCOUNT": "Product discount",
     "CREATE_PRODUCTS_PROPERTIES": "Create product property",
     "PRODUCTS_GROUPS": "Products groups",
     "CREATE_PRODUCTS_GROUPS": "Create product group",
@@ -320,7 +323,9 @@
     "FINAL_PRICE": "Final price",
     "ORIGINAL_PRICE": "Original price",
     "DISCOUNTED_PRICE": "Discounted price",
-    "DISCOUNTED": "Discounted"
+    "DISCOUNTED": "Discounted",
+    "PERCENTAGE_OFF": "Percentage off",
+    "REBATE_PRICE": "Rebate price"
   },
   "PRODUCT_GROUP": {
     "CREATE_PRODUCT_GROUP": "Create group",

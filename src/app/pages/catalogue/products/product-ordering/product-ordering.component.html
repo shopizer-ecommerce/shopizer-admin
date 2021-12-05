@@ -1,0 +1,42 @@
+<nb-card class="page-card inner_pages">
+    <div [nbSpinner]="loading" nbSpinnerSize="large" nbSpinnerStatus="primary">
+        <nb-card-body class="productList">
+            <div class="inner_pages_legacy">
+                <nb-card-header class="main_header">
+                    <h1 class="page_title">{{ 'COMPONENTS.PRODUCT_ORDERING' | translate }}</h1>
+                    <div class="content_spacing_empty"></div>
+                </nb-card-header>
+                <div class="sub_header">
+                    <p>
+                        {{ 'COMPONENTS.PRODUCT_ORDERING_DETAILS' | translate}}
+                    </p>
+                    <p-autoComplete class="autoStore" placeholder="{{ 'CATEGORY.CATEGORY_NAME' | translate }}"
+                        name="category" [(ngModel)]="category" [suggestions]="categoryData" [dropdown]="true"
+                        (onSelect)="onSelectCategory($event)" (completeMethod)="searchCategory()">
+                    </p-autoComplete>
+                </div>
+                <ul class='list-header'>
+                    <li>{{'COMMON.ID' | translate}}</li>
+                    <li>{{'PRODUCT.SKU' | translate }}</li>
+                    <li>{{'PRODUCT.PRODUCT_NAME' | translate}}</li>
+                    <li>{{'PRODUCT.QTY' | translate}}</li>
+                    <li>{{'PRODUCT.PRICE' | translate}}</li>
+                    <li>{{'PRODUCT.CREATION_DATE' | translate}}</li>
+                </ul>
+                <div cdkDropList class="example-list" (cdkDropListDropped)="drop($event)">
+                    <div class="product-order-list" *ngFor="let item of data | keyvalue" cdkDrag>
+                        <span cdkDragPlaceholder
+                            style=" width:100%;cursor: move;border-radius: 5px;background-color: white;padding: 20px;align-items: center;display: flex;justify-content: space-between">
+                            <label>{{item.value.id}}</label>
+                            <label>{{item.value.sku}}</label>
+                            <label>{{item.value.name}}</label>
+                            <label>{{item.value.quantity}}</label>
+                            <label>{{item.value.price}}</label>
+                            <label>{{item.value.creationDate}}</label>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </nb-card-body>
+    </div>
+</nb-card>
