@@ -78,21 +78,36 @@ export class ProductsListComponent implements OnInit {
     });
   }
 
+  fetchTableData(){
+    this.loadingList = true;
+    this.productService.getListOfProducts(this.params)
+      .subscribe(res => {
+        const products = res.products;
+        this.totalCount = res.recordsTotal;
+        products.forEach(el => {
+          el.name = el.description.name;
+        });
+        this.products = [...products];
+        this.source.load(products);
+        this.loadingList = false;
+      });
+
+ }
+
   /** callback methods for table list*/
   private loadList(newParams: any) {
-    //console.log('CallBack loadList');
-    //console.log(JSON.stringify(newParams));
     this.currentPage = 1; //back to page 1
     this.params = newParams;
-    // this.getList();
+    this.fetchTableData();
   }
 
   private resetList() {
-    //console.log('CallBack resetList');
     this.currentPage = 1;//back to page 1
     this.params = this.loadParams();
-    // this.getList();
+    this.getList();
   }
+  /** */
+
   getStore() {
     this.storeService.getListOfStores({ code: 'DEFAULT' })
       .subscribe(res => {
@@ -106,18 +121,7 @@ export class ProductsListComponent implements OnInit {
   getList() {
     const startFrom = this.currentPage - 1;
     this.params.page = startFrom;
-    this.loadingList = true;
-    this.productService.getListOfProducts(this.params)
-      .subscribe(res => {
-        const products = res.products;
-        this.totalCount = res.recordsTotal;
-        products.forEach(el => {
-          el.name = el.description.name;
-        });
-        this.products = [...products];
-        this.source.load(products);
-        this.loadingList = false;
-      });
+    this.fetchTableData();
     this.setSettings();
   }
 
@@ -155,11 +159,7 @@ export class ProductsListComponent implements OnInit {
           title: this.translate.instant('PRODUCT.PRODUCT_NAME'),
           type: 'html',
           filter: true,
-          editable: false,
-          valuePrepareFunction: (name) => {
-            const id = this.products.find(el => el.name === name).id;
-            return `<a href="#/pages/catalogue/products/product/${id}">${name}</a>`;
-          }
+          editable: false
         },
         quantity: {
           title: this.translate.instant('PRODUCT.QTY'),
@@ -220,14 +220,11 @@ export class ProductsListComponent implements OnInit {
               this.getList();
               // event.confirm.resolve();
             });
-        } else {
-          // event.confirm.reject();
-        }
+        } else {}
       });
   }
 
   choseStore(event) {
-    //console.log("Choosing store " + event);
     this.params.store = event;
     this.getList();
 

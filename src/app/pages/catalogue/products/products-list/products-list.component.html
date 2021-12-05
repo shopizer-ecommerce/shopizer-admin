@@ -1,6 +1,5 @@
 <nb-card class="page-card inner_pages">
-  <div [nbSpinner]="loading" nbSpinnerSize="large" nbSpinnerStatus="primary">
-  <nb-card-body class="productList">
+  <nb-card-body [nbSpinner]="loadingList" nbSpinnerSize="large" nbSpinnerStatus="primary" class="userList">
     <div class="inner_pages_legacy">
       <nb-card-header class="main_header">
         <h1 class="page_title">{{ 'COMPONENTS.PRODUCTS' | translate }}</h1>
@@ -27,7 +26,7 @@
           <!-- </p-autoComplete> -->
 
             <a class="createBtn" [routerLink]="['/pages/catalogue/products/create-product']">
-              <img class="pointer sda" src="../../../../assets/img/plus.png" title="{{ 'COMPONENTS.CREATE_PRODUCT' | translate}}"
+              <img class="pointer sda add" src="../../../../assets/img/plus.png" title="{{ 'COMPONENTS.CREATE_PRODUCT' | translate}}"
                 alt="">
               <label>{{ 'COMPONENTS.CREATE_PRODUCT' | translate}}</label>
             </a>
@@ -40,5 +39,4 @@
       </ngx-paginator>
     </div>
   </nb-card-body>
-  </div>
 </nb-card>
