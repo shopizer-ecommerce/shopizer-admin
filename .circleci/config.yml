@@ -22,7 +22,7 @@ jobs:
        - run: |
            ls -al
        - run: |
-            export NODE_OPTIONS=--max_old_space_size=8048
+            export NODE_OPTIONS=--max_old_space_size=8192
        - run: |
             rm package-lock.json
        - run:
@@ -34,7 +34,8 @@ jobs:
             sed 's#http://localhost:8080/api#http://localhost:8080/api#g' ./src/environments/environment.ts
        - run: |
             sed 's#http://localhost:8080/api#http://localhost:8080/api#g' ./src/environments/environment.prod.ts
-       - run: node ./node_modules/@angular/cli/bin/ng build --prod --progress
+
+       - run: node --max_old_space_size=8192 ./node_modules/@angular/cli/bin/ng build --prod --progress
 
        - persist_to_workspace:
           root: .
