@@ -21,11 +21,6 @@ jobs:
        - checkout
        - run: |
            ls -al
-       # Restore local dependencies from cache
-       #- restore_cache:
-       #   keys:
-       #     - dependencies-{{ .Environment.CACHE_VERSION }}-{{ checksum "package.json" }}
-       #     - dependencies-{{ .Environment.CACHE_VERSION }}
        - run: |
             export NODE_OPTIONS=--max_old_space_size=8048
        - run: |
@@ -33,13 +28,6 @@ jobs:
        - run:
             name: Install local dependencies
             command: npm install
-       # Cache local dependencies if they don't exist
-       #- save_cache:
-       #     key: dependencies-{{ .Environment.CACHE_VERSION }}-{{ checksum "package.json" }}
-       #     paths:
-       #         - node_modules
-       # Change url of environment
-       #TODO url in environment #
        - run: |
             sed 's#http://localhost:8080/api#https://api.perfectogaz.com/api#g' ./src/assets/env.js
        - run: |
@@ -47,10 +35,7 @@ jobs:
        - run: |
             sed 's#http://localhost:8080/api#https://api.perfectogaz.com/api#g' ./src/environments/environment.prod.ts
        - run: node ./node_modules/@angular/cli/bin/ng build --prod --progress
-       #- run:
-       #     name: Linting
-       #     command: npm run lint
-       # Cache the dist folder for the deploy job
+
        - persist_to_workspace:
           root: .
           paths:
