@@ -9,7 +9,7 @@ COPY . .
 
 # Build Angular Application in Production
 RUN export NODE_OPTIONS=--max-old-space-size=4096
-RUN node --max-old-space-size=4096  ./node_modules/@angular/cli/bin/ng build --prod --build-optimizer --output-hashing=none
+RUN node --max_old_space_size=8192 ./node_modules/@angular/cli/bin/ng build --prod",
 RUN ls -al
 
 #### STAGE 2
