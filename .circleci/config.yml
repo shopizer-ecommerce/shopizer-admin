@@ -90,7 +90,7 @@ workflows:
       - image:
           requires:
             - build-job
-            filters:
+          filters:
               branches:
                 only:
                   - main
