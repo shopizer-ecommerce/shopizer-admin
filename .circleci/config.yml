@@ -87,6 +87,7 @@ workflows:
   build_and_deploy:
     jobs:
       - build-job
+      - image
       - deploy:
           requires:
             - build-job

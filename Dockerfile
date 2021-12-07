@@ -8,8 +8,8 @@ RUN npm install
 COPY . .
 
 # Build Angular Application in Production
-RUN export NODE_OPTIONS=--max_old_space_size=8048
-RUN node ./node_modules/@angular/cli/bin/ng build --prod --progress
+RUN export NODE_OPTIONS=--max-old-space-size=4096
+RUN node --max-old-space-size=4096  ./node_modules/@angular/cli/bin/ng build --prod --build-optimizer --output-hashing=none
 RUN ls -al
 
 #### STAGE 2
