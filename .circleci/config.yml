@@ -87,7 +87,13 @@ workflows:
   build_and_deploy:
     jobs:
       - build-job
-      - image
+      - image:
+          requires:
+            - build-job
+            filters:
+              branches:
+                only:
+                  - main
       - deploy:
           requires:
             - build-job
