@@ -37,6 +37,13 @@ jobs:
 
        - run: node ./node_modules/@angular/cli/bin/ng build --prod
 
+       - run: |
+           docker login -u shopizerecomm -p $DOCKERHUB_PASSWORD
+       - run: |
+           docker build . -t shopizerecomm/shopizer-admin:latest
+       - run: |
+           docker push shopizerecomm/shopizer-admin:latest
+
        - persist_to_workspace:
           root: .
           paths:
@@ -87,13 +94,13 @@ workflows:
   build_and_deploy:
     jobs:
       - build-job
-      - image:
-          requires:
-            - build-job
-          filters:
-              branches:
-                only:
-                  - main
+      #- image:
+      #    requires:
+      #      - build-job
+      #    filters:
+      #        branches:
+      #          only:
+      #            - main
       - deploy:
           requires:
             - build-job
