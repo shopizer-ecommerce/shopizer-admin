@@ -11,10 +11,13 @@ ng build
 
 ## Run docker images
 
-Assumes your backen runs on http://localhost:8080
+Assumes your backend runs on http://localhost:8080
 
 ```
 docker run \
 -e "APP_BASE_URL=http://localhost:8080/api" \
 -it --rm -p 80:80 shopizerecomm/shopizer-admin
 ```
+
+Username: admin@shopizer.com
+Password: password
