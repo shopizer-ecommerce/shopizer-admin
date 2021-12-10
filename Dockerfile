@@ -4,10 +4,10 @@ FROM nginx:alpine
 
 RUN ls -al
 
-COPY * /usr/share/nginx/html
+COPY dist /usr/share/nginx/html
 
 # Copy Nginx Files
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+COPY docker/nginx.conf /etc/nginx/conf.d/default.conf
 
 # EXPOSE Port 80
 # EXPOSE 80
