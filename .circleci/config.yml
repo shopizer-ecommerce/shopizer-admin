@@ -48,6 +48,7 @@ jobs:
           root: .
           paths:
             - dist/*
+            - docker/nginx.conf
 
   image:
     machine: true
@@ -64,11 +65,6 @@ jobs:
            docker build . -t shopizerecomm/shopizer-admin:latest
        - run: |
            docker push shopizerecomm/shopizer-admin:latest
-       #- run: |
-       #    docker login -u shopizerecomm  -p $DOCKERHUB_PASSWORD  | ls -al | echo "build docker" | cd sm-shop | ls -al | docker build . -t shopizerecomm/shopizer:latest
-       
-       # deploy the image
-       #- run: docker push shopizerecomm/shopizer:latest
 
   # The deploy job
   deploy:
@@ -94,13 +90,13 @@ workflows:
   build_and_deploy:
     jobs:
       - build-job
-      #- image:
-      #    requires:
-      #      - build-job
-      #    filters:
-      #        branches:
-      #          only:
-      #            - main
+      - image:
+          requires:
+            - build-job
+          filters:
+              branches:
+                only:
+                  - main
       - deploy:
           requires:
             - build-job
