@@ -19,7 +19,6 @@ import { AutoCompleteModule } from 'primeng/autocomplete';
 import { BackButtonComponent } from './components/back-button/back-button.component';
 import { TreeTableModule } from 'primeng/treetable';
 import { ValidateNumberDirective } from './validation/validate-number.directive';
-// import { EqualValidator } from './validation/equal-validator';
 import { PasswordPromptComponent } from './components/password-prompt/password-prompt';
 import { FilePickerModule } from 'ngx-awesome-uploader';
 
@@ -37,7 +36,7 @@ import { DragDropModule } from "@angular/cdk/drag-drop";
     PaginatorComponent,
     BackButtonComponent,
     ValidateNumberDirective,
-    // EqualValidator
+
   ],
   imports: [
     CommonModule,
