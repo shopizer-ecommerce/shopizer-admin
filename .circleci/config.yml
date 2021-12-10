@@ -42,6 +42,7 @@ jobs:
           paths:
             - dist/*
             - docker/nginx.conf
+            - Dockerfile
 
   image:
     machine: true
