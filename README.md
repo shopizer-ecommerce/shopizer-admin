@@ -1,5 +1,9 @@
 # Shopizer Administration (shopizer-admin) Angular web app
 
+## Tested with node v12.22.7
+
+Requires Angular cli installed (npm install -g @angular/cli@latest)
+
 ## Run locally
 
 npm i --yes
