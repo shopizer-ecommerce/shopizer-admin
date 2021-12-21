@@ -5,7 +5,7 @@
     <h1 class="page_title" *ngIf="buttonText == 'Update'">{{'CUSTOMERS.UPDATE_CUSTOMER' | translate}}</h1>
     <div class="content_spacing">
       <div *ngIf="buttonText == 'Update'">
-        <nb-select placeholder="More Options...." outline shape="rectangle" (selectedChange)="showDialog($event)">
+        <nb-select placeholder="{{'ORDER_FORM.MORE_OPTIONS' | translate}}" outline shape="rectangle" (selectedChange)="showDialog($event)">
           <nb-option value="1">Reset Password</nb-option>
           <nb-option value="2">Set Credentials</nb-option>
         </nb-select>
@@ -28,7 +28,7 @@
     </div>
   </nb-card-header>
 
-  <div class="" [nbSpinner]="loadingList" nbSpinnerSize="large" nbSpinnerStatus="primary">
+  <div class="" [nbSpinner]="loading" nbSpinnerSize="large" nbSpinnerStatus="primary">
     <form #customerForm="ngForm" role="form">
 
       <div class="row">
@@ -141,17 +141,20 @@
                       [(ngModel)]="billing.phone" name="phone" required #phone="ngModel" minlength=10 maxlength=13>
                   </div>
                 </div>
+
                 <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                  <div class="form-group">
+                  <div class="form-group" *ngIf="languages.length">
                     <label class="label inputLabel">{{'CUSTOMERS.DEFAULT_LANGUAGE' | translate}}</label>
-                    <nb-select placeholder="{{'CUSTOMERS.SELECT_LANGUAGE' | translate}}" outline shape="rectangle"
-                      [(ngModel)]="info.language" name="language" class="select_fields" [selected]="'en'">
-                      <nb-option *ngFor="let lan of languages" [value]="lan.code">{{ lan.name }}</nb-option>
+
+                    <nb-select placeholder="{{'CUSTOMERS.SELECT_LANGUAGE' | translate}}" class="select_fields" outline
+                    shape="rectangle" [(ngModel)]="info.language" required name='language'>
+                      <nb-option *ngFor="let language of languages"
+                      [value]="language.code">{{
+                      ('LANG.'+language.code) |translate }}</nb-option>
                     </nb-select>
                   </div>
                 </div>
               </div>
-
 
 
             </nb-card-body>
@@ -243,6 +246,20 @@
                   </div>
                 </div>
               </div>
+
+
+              <div class="form-group">
+                <label class="col-sm-3 col-form-label inputLabel">{{ 'CUSTOMERS.GROUPS' | translate }} *</label>
+                <div class="col-sm-12 group-block">
+                  <nb-checkbox *ngFor="let group of groups" (change)="addRole(group)"
+                    [disabled]="group.disabled">
+                    {{ group.name }}
+                  </nb-checkbox>
+                </div>
+              </div>
+
+
+              <!---
               <div class="row">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                   <div class="form-group">
@@ -255,6 +272,7 @@
                   </div>
                 </div>
               </div>
+            -->
             </nb-card-body>
           </nb-card>
         </div>

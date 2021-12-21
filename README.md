@@ -7,7 +7,9 @@ Requires Angular cli installed (npm install -g @angular/cli@latest)
 ## Run locally
 
 npm i --yes
+
 ng serve -o
+
 http://localhost:4200
 
 ## Build app
@@ -24,4 +26,5 @@ docker run \
 ```
 
 Username: admin@shopizer.com
+
 Password: password

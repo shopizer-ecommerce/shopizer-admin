@@ -31,8 +31,6 @@ export class ProductFormComponent implements OnInit {
   @Input() product: any;
   @Input() _title: string;
 
-  // @ViewChild("imagesManager", { static: false }) imagesManager: ProductsImagesComponent;
-
   form: FormGroup;
   loaded = false;
   tabLoader = false;
@@ -93,7 +91,6 @@ export class ProductFormComponent implements OnInit {
     //console.log('Parent ' + this.product.id);
     const manufacture$ = this.manufactureService.getManufacturers();
     const types$ = this.productService.getProductTypes();
-    //TODO local cache
     const config$ = this.configService.getListOfSupportedLanguages(localStorage.getItem('merchant'));
     forkJoin([manufacture$, types$, config$])
       .subscribe(([manufacturers, productTypes, languages]) => {

@@ -434,7 +434,7 @@
         "SHOWALL": "Tout"
     },
     "ORDER_FORM": {
-        "MORE_OPTIONS": "Plus d'actions",
+        "MORE_OPTIONS": "Plus d'options ...",
         "TRANSACTIONS_LIST": "Liste des transactions",
         "VIEW_INVOICE": "Afficher la facture",
         "INVOICE": "Facture",

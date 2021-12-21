@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-// import { CrudService } from '../../shared/services/crud.service';
 import { CustomersService } from '../services/customer.service';
 import { ToastrService } from 'ngx-toastr';
 import { NbDialogService } from '@nebular/theme';
 import { ShowcaseDialogComponent } from '../../shared/components/showcase-dialog/showcase-dialog.component';
 import { PasswordPromptComponent } from '../../shared/components/password-prompt/password-prompt';
+import { ConfigService } from '../../shared/services/config.service';
 import { Router } from '@angular/router';
+import { forkJoin } from 'rxjs';
 @Component({
   selector: 'ngx-add',
   templateUrl: './add.component.html',
@@ -18,7 +19,8 @@ export class AddComponent implements OnInit {
   billingCountry: Array<any> = []
   groups: Array<any> = []
   selectedGroups: Array<any> = []
-  loadingList = false;
+  loading = false;
+  languages = [];
   public scrollbarOptions = { axis: 'y', theme: 'minimal-dark' };
   info = {
     userName: '',
@@ -51,24 +53,26 @@ export class AddComponent implements OnInit {
   defaultCountry: any;
   title: any = 'Create Customer'
   buttonText: any = 'Save'
-  languages: Array<any> = [{ 'code': 'en', 'name': 'English' }, { 'code': 'fr', 'name': 'French' }]
   constructor(
-    // private crudService: CrudService,
     private customersService: CustomersService,
+    private configService: ConfigService,
     private toastr: ToastrService,
     public router: Router,
     private dialogService: NbDialogService
   ) {
-    this.getCountry();
-    this.getGroups();
+
+      this.getCountry();
+      this.getLanguages();
+      this.getGroups();
 
   }
+
   getCustomerDetails() {
-    this.loadingList = true;
+    this.loading = true;
     this.customersService.getCustomerDetails(this.customerID)
       .subscribe(data => {
-        // console.log(data, '*************')
-        this.loadingList = false;
+
+        this.loading = false;
         this.onBillingChange(data.billing.country, 0)
 
 
@@ -82,10 +86,12 @@ export class AddComponent implements OnInit {
         }
 
       }, error => {
-        this.loadingList = false;
+        this.loading = false;
       });
   }
+
   ngOnInit() {
+
     if (localStorage.getItem('customerid')) {
       this.customerID = localStorage.getItem('customerid')
       this.getCustomerDetails();
@@ -95,22 +101,48 @@ export class AddComponent implements OnInit {
   }
 
   getCountry() {
+    this.loading=true;
     this.customersService.getCountry()
       .subscribe(data => {
         this.shippingCountry = data;
         this.billingCountry = data;
+        this.loading=false;
       }, error => {
-
+        this.loading=false;
       });
   }
+
+  getLanguages() {
+    this.loading=true;
+    this.configService.getListOfSupportedLanguages(localStorage.getItem('merchant'))
+    .subscribe(langs => {
+      this.languages = [...langs];
+      this.loading=false;
+    });
+
+  }
+
   getGroups() {
+    this.loading=true;
     this.customersService.getGroup()
       .subscribe(data => {
         this.groups = data;
-      }, error => {
 
+        this.loading=false;
+      }, error => {
+        this.loading=false;
       });
   }
+
+
+  //this.groups.forEach((element,index)=>{
+    //if(element.type=='ADMIN') {
+    //  this.groups.splice(index,1);
+    //} 
+  //});
+
+
+
   onBillingChange(value, flag) {
     console.log(flag)
     this.customersService.getBillingZone(value)
@@ -155,7 +187,7 @@ export class AddComponent implements OnInit {
   }
   onAddCustomer() {
     if (this.buttonText == 'Save') {
-      this.loadingList = true;
+      this.loading = true;
       let param = {
         "billing": {
           "company": this.billing.company,
@@ -189,14 +221,14 @@ export class AddComponent implements OnInit {
       this.customersService.addCustomers(param)
         .subscribe(data => {
           // console.log(data);
-          this.loadingList = false;
+          this.loading = false;
           this.toastr.success('Customer has been added successfully');
           this.goToback()
         }, error => {
-          this.loadingList = false;
+          this.loading = false;
         });
     } else {
-      this.loadingList = true;
+      this.loading = true;
       let param = {
         "id": this.customerID,
         "billing": {
@@ -231,11 +263,11 @@ export class AddComponent implements OnInit {
       this.customersService.updateCustomers(param, this.customerID)
         .subscribe(data => {
           // console.log(data);
-          this.loadingList = false;
+          this.loading = false;
           this.toastr.success('Customer has been updated successfully');
           this.goToback()
         }, error => {
-          this.loadingList = false;
+          this.loading = false;
         });
     }
   }
