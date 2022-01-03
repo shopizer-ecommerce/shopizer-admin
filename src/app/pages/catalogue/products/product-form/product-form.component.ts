@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -11,13 +11,11 @@ import { ProductService } from '../services/product.service';
 import { ProductImageService } from '../services/product-image.service';
 import { TranslateService } from '@ngx-translate/core';
 import { validators } from '../../../shared/validation/validators';
-import { environment } from '../../../../../environments/environment';
 import { slugify } from '../../../shared/utils/slugifying';
 import { forkJoin } from 'rxjs';
 import { TypesService } from '../../types/services/types.service';
 import { StorageService } from '../../../shared/services/storage.service';
 import { Image } from '../../../shared/models/image';
-// import { ProductsImagesComponent } from './../products-images/products-images.component';
 import { ImageBrowserComponent } from '../../../../@theme/components/image-browser/image-browser.component';
 declare var jquery: any;
 declare var $: any;

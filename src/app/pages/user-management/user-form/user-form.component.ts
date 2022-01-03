@@ -203,7 +203,7 @@ export class UserFormComponent implements OnInit {
         }
 
       });
-      this.groups = [...groups];
+      this.groups = [...groups].filter(t => t.type === 'ADMIN');
       if (this._user) {
         const roleRetail = this._user.groups.find((el: any) => el.name === 'ADMIN_RETAIL');
         const roleStore = this._user.groups.find((el: any) => el.name === 'ADMIN_STORE');

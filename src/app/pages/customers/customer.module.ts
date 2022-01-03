@@ -7,7 +7,6 @@ import { CustomModule } from '../custom-component/custom.module';
 @NgModule({
   declarations: [
     ...routedComponents
-
   ],
   imports: [
     CustomersRoutingModule,

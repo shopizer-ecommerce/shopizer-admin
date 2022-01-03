@@ -122,7 +122,8 @@
         "USER_NOT_FOUND": "Votre adresse e-mail n'est pas enregistrée.",
         "SENT_LINK": "Lien de réinitialisation du mot de passe envoyé avec succès",
         "SUCCESS": "Vous avez bien réinitialisé votre mot de passe. Vous pouvez maintenant vous connecter comme d'habitude avec votre adresse e-mail et votre nouveau mot de passe.",
-        "FAIL": "Le mot de passe ne correspond pas"
+        "FAIL": "Le mot de passe ne correspond pas",
+        "RESET": "Réinitialiser le mot de passe"
     },
     "HEADER": {
         "PROFILE": "Profil",
@@ -483,7 +484,8 @@
         "COMPANY": "Entreprise",
         "DEFAULT_LANGUAGE": "Langue par défaut",
         "SELECT_LANGUAGE": "Sélectionner la langue",
-        "GROUPS": "Groupes"
+        "GROUPS": "Groupes",
+        "DETAILS": "Détails du client"
     },
     "NOT_FOUND": {
         "PAGE_NOT_FOUND": "Page introuvable",
@@ -566,7 +568,9 @@
         "text": "Texte",
         "INTERNAL_SERVER_ERROR": "La connexion au serveur a été perdue.",
         "SEO_DETAILS": "Détails du référencement",
-        "IS_REQUIRED": "est requis"
+        "IS_REQUIRED": "est requis",
+        "SUCCESS_REMOVE": "Données mises à jour avec succès",
+        "SUCCESS_ADDED": "Données ajoutées avec succès"
     },
     "DESCRIPTION_FORM": {
         "NAME": "Nom",

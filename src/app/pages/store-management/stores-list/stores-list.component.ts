@@ -106,7 +106,6 @@ export class StoresListComponent implements OnInit {
 
 
   setSettings() {
-
     let customs = [];
     if (this.securityService.isAnAdmin()) {
       customs = [
@@ -182,7 +181,7 @@ export class StoresListComponent implements OnInit {
               text: event.data.name + ' ? '
             }
           })
-            .onClose.subscribe(res => {
+          .onClose.subscribe(res => {
               if (res) {
                 this.storeService.deleteStore(event.data.code)
                   .subscribe(data => {

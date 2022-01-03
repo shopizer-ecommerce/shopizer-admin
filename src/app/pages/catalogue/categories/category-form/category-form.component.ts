@@ -136,7 +136,6 @@ export class CategoryFormComponent implements OnInit {
   }
 
   getChildren(node) {
-    console.log('---> ' + JSON.stringify(node));
     if (node.children && node.children.length !== 0) {
       this.roots.push(node);
       node.children.forEach((el) => {

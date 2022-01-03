@@ -4,12 +4,11 @@
     <h1 class="page_title" *ngIf="buttonText == 'Save'">{{'CUSTOMERS.CREATE_CUSTOMER' | translate}}</h1>
     <h1 class="page_title" *ngIf="buttonText == 'Update'">{{'CUSTOMERS.UPDATE_CUSTOMER' | translate}}</h1>
     <div class="content_spacing">
-      <div *ngIf="buttonText == 'Update'">
-        <nb-select placeholder="{{'ORDER_FORM.MORE_OPTIONS' | translate}}" outline shape="rectangle" (selectedChange)="showDialog($event)">
-          <nb-option value="1">Reset Password</nb-option>
-          <nb-option value="2">Set Credentials</nb-option>
-        </nb-select>
-      </div>
+      <nb-select [(selected)]="selectedItem" outline shape="rectangle" class="headerDropdown">
+        <nb-option *ngFor="let item of sidemenuLinks" [value]="item.id" (click)="onClickRoute(item.link)">{{ item.title
+          }}
+        </nb-option>
+      </nb-select>
     </div>
     <div class="content_spacing">
       <button type="button" nbButton class="cancel_button" (click)="goToback()">{{ 'ORDER_FORM.CANCLE'
@@ -251,7 +250,7 @@
               <div class="form-group">
                 <label class="col-sm-3 col-form-label inputLabel">{{ 'CUSTOMERS.GROUPS' | translate }} *</label>
                 <div class="col-sm-12 group-block">
-                  <nb-checkbox *ngFor="let group of groups" (change)="addRole(group)"
+                  <nb-checkbox *ngFor="let group of groups" (change)="addRole(group)" [value]="group.checked"
                     [disabled]="group.disabled">
                     {{ group.name }}
                   </nb-checkbox>
@@ -259,20 +258,6 @@
               </div>
 
 
-              <!---
-              <div class="row">
-                <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                  <div class="form-group">
-                    <label class="label inputLabel">{{ 'CUSTOMERS.GROUPS' | translate }}</label>
-                    <div>
-                      <nb-checkbox *ngFor="let group of groups" (change)="addRole(group)">
-                        {{ group.name }}
-                      </nb-checkbox>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            -->
             </nb-card-body>
           </nb-card>
         </div>
