@@ -30,7 +30,7 @@ export class CategoryFormComponent implements OnInit {
   //supported languages
   languages = [];
   //default language
-  defaultLanguage = environment.client.language.default;
+  defaultLanguage = localStorage.getItem('lang');
   //select store
   stores = [];
   isSuperAdmin = false;
@@ -60,6 +60,7 @@ export class CategoryFormComponent implements OnInit {
   };
   //loader image
   loader = false;
+  loading = false;
 
   //category code must be unique
   isCodeUnique = true;
@@ -117,7 +118,7 @@ export class CategoryFormComponent implements OnInit {
           this.getChildren(el);
         });
         //this.roots = [...res.categories];
-        console.log(JSON.stringify(this.roots));
+        //console.log(JSON.stringify(this.roots));
       });
     this.loader = true;
  
@@ -276,6 +277,7 @@ export class CategoryFormComponent implements OnInit {
   }
 
   save() {
+    this.loading = true;
     const categoryObject = this.prepareSaveData();
 
     if (!this.isSuperAdmin) {
@@ -333,12 +335,14 @@ export class CategoryFormComponent implements OnInit {
 
       if (!this.isCodeUnique) {
         this.toastr.error(this.translate.instant('COMMON.CODE_EXISTS'));
+        this.loading = false;
         return;
       }
 
       let errors = this.findInvalidControls();
       if (errors.length > 0) {
         this.toastr.error(this.translate.instant('COMMON.FILL_REQUIRED_FIELDS'));
+        this.loading = false;
         return;
       }
       //for debugging
@@ -348,11 +352,13 @@ export class CategoryFormComponent implements OnInit {
       if (this.category.id) {
         this.categoryService.updateCategory(this.category.id, categoryObject)
           .subscribe(result => {
+            this.loading = false;
             this.toastr.success(this.translate.instant('CATEGORY_FORM.CATEGORY_UPDATED'));
           });
       } else {
         this.categoryService.addCategory(categoryObject)
           .subscribe(result => {
+            this.loading = false;
             this.toastr.success(this.translate.instant('CATEGORY_FORM.CATEGORY_CREATED'));
             this.router.navigate(['pages/catalogue/categories/categories-list']);
           });
