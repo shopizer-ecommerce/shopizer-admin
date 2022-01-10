@@ -30,7 +30,6 @@
     "@angular/forms": "^11.2.14",
     "@angular/google-maps": "^9.1.0",
     "@angular/localize": "^11.2.14",
-    "@angular/material": "^10.2.1",
     "@angular/platform-browser": "^11.2.14",
     "@angular/platform-browser-dynamic": "^11.2.14",
     "@angular/router": "^11.2.14",

@@ -17,9 +17,9 @@ const routes: Routes = [{
       loadChildren: 'app/pages/home/home.module#HomeModule'
     },
     {
-      path: 'orders',
+      path: 'invoices',
       // canActivate: [OrdersGuard],
-      loadChildren: 'app/pages/orders/orders.module#OrdersModule'
+      loadChildren: 'app/pages/invoices/invoices.module#InvoicesModule'
     },
     {
       path: 'user-management',

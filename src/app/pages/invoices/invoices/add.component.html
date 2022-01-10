@@ -1,0 +1,154 @@
+<div class="inner_pages create_invoice">
+
+  <nb-card-header class="main_header">
+    <h1 class="page_title" *ngIf="buttonText == 'Save'">{{'INVOICES.CREATE' | translate}}</h1>
+    <h1 class="page_title" *ngIf="buttonText == 'Update'">{{'INVOICE.UPDATE' | translate}}</h1>
+
+    <div class="content_spacing">
+      <button type="button" nbButton class="cancel_button" (click)="goToback()">{{ 'ORDER_FORM.CANCLE'
+        | translate}}</button>
+    </div>
+    <div class="
+          content_spacing">
+      <button type="button" *ngIf="buttonText == 'Update'" nbButton class="success_button"
+        (click)="onAddInvoice()">{{'INVOICES.UPDATE'
+        |
+        translate }}</button>
+      <button type="button" *ngIf="buttonText == 'Save'" nbButton class="success_button" (click)="onAddInvoice()">{{'COMMON.SAVE'
+        |
+        translate }}</button>
+    </div>
+  </nb-card-header>
+
+  <div class="" [nbSpinner]="loading" nbSpinnerSize="large" nbSpinnerStatus="primary">
+
+          <form [formGroup]="invoiceForm" (ngSubmit)="onSubmit()">
+
+          <div class="app-wrapper" ng-app="InvoiceGenerator">
+            <div class="container" ng-controller="InvoiceGeneratorCtrl">
+              <div class="row">
+                <div class="col-12">
+                  <div class="invoice">
+                    <fieldset ng-disabled="previewMode">
+                      <div class="container">
+                        <div class="row">
+                          <div class="col-12">
+                            <hr/>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-5">
+                            
+                              <p-dropdown [options]="manufacturers" placeholder="{{ 'customer' | translate}}"
+                                formControlName='customer' filter="true" required>
+                                <ng-template let-item pTemplate="selectedItem">{{item.label}}</ng-template>
+                                <ng-template let-el pTemplate="item">{{el.label}}</ng-template>
+                              </p-dropdown>
+                            
+                          </div>
+
+                          <!-- Invoice date -->
+                          <div class="col-7">
+                            <div class="form-group row">
+                              <label for="inputEmail1" class="label col-sm-3 col-form-label">Invoice number</label>
+                              <div class="col-sm-9">
+                                <input type="text" nbInput fullWidth id="invoiceId" placeholder="1012345000">
+                              </div>
+                            </div>
+                            <div class="form-group row">
+                              <label for="inputPassword2" class="label col-sm-3 col-form-label">Invoice date</label>
+                              <div class="col-sm-9">
+                                <input nbInput
+                                placeholder="Invoice date"
+                                [nbDatepicker]="formpicker">
+                                <nb-datepicker #formpicker></nb-datepicker>
+                              </div>
+                            </div>
+                            <div class="form-group row">
+                              <label for="inputPassword2" class="label col-sm-3 col-form-label">Invoice due date</label>
+                              <div class="col-sm-9">
+                                <input nbInput
+                                placeholder="Invoice due date"
+                                [nbDatepicker]="formpicker">
+                                <nb-datepicker #formpicker></nb-datepicker>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-12">
+                            <table class="table">
+                              <thead>
+                                <tr>
+                                  <th>Item</th>
+                                  <th>Quantity</th>
+                                  <th>Price</th>
+                                  <th>Sub-total</th>
+                                  <th></th>
+                                </tr>
+                              </thead>
+                              <tbody class="table_body" formArrayName="lineItems">
+                                <!-- Invoice items-->
+                                <tr *ngFor="let item of lineItems().controls; let i=index; let odd=odd;" [formGroupName]="i" [ngClass]="{odd_row: odd}">
+                                  <td> 
+                                    <p-dropdown [options]="manufacturers" placeholder="{{ 'item' | translate}}"
+                                      formControlName='name' editable="true" filter="true" required>
+                                      <ng-template let-item pTemplate="selectedItem">{{item.label}}</ng-template>
+                                      <ng-template let-el pTemplate="item">{{el.label}}</ng-template>
+                                  </p-dropdown>
+                                  </td>
+                                  <td>
+                                    <input class="form-control form-control-sm" formControlName="quantity" type="text"/>
+                                  </td>
+                                  <td>
+                                    <input class="form-control form-control-sm" formControlName="price" type="text"/>
+                                  </td>
+                                  <td>$ 199.99</td>
+                                  <td> 
+                                    <button class="btn btn-danger" (click)="removeLineItem(item)"><i class="fa fa-times"></i></button>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td colspan="5"> 
+                                  <button class="btn btn-success" (click)="addLineItem()"><i class="fa fa-plus"></i></button>
+                                  </td>
+                                </tr>
+                              </tbody>
+                            </table>
+
+
+
+                            <dl class="row">
+                              <dt class="col-2 offset-8">Subtotal</dt>
+                              <dd class="col-2">{{ subtotal }}</dd>
+                              <dt class="col-2 offset-8">Tax (20%)</dt>
+                              <dd class="col-2">{{ tax }}</dd>
+                              <dt class="col-2 offset-8">Total</dt>
+                              <dd class="col-2">{{ total }}</dd>
+                            </dl>
+                            <hr/>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-12">
+                            <h5>Notes</h5>
+                            <textarea class="form-control form-control-sm" type="text" ng-model="notes"></textarea>
+                          </div>
+                        </div>
+                        <div class="row">
+                          <div class="col-12">
+                            <h5>Terms</h5>
+                            <textarea class="form-control form-control-sm" type="text" ng-model="terms"></textarea>
+                          </div>
+                        </div>
+                      </div>
+                    </fieldset>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>     
+        </form>        
+
+  </div>
+</div>

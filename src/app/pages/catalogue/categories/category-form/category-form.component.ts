@@ -117,8 +117,6 @@ export class CategoryFormComponent implements OnInit {
         res.categories.forEach((el) => {
           this.getChildren(el);
         });
-        //this.roots = [...res.categories];
-        //console.log(JSON.stringify(this.roots));
       });
     this.loader = true;
  

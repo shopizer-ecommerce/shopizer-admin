@@ -496,6 +496,21 @@ export const MENU_ITEMS: MenuItem[] = [
       }
     ]
   },
+  {
+    title: 'COMPONENTS.INVOICE',
+    key: 'COMPONENTS.INVOICE',
+    icon: 'file-outline',
+    hidden: false,
+    guards: [IsOrderManagementVisible],
+    children: [
+      {
+        title: 'COMPONENTS.INVOICE',
+        key: 'COMPONENTS.INVOICE',
+        link: '/pages/invoices',
+        guards: [IsOrderManagementVisible]
+      }
+    ]
+  }
   // {
   //   title: 'Manage taxes',
   //   // icon: 'fas fa-shopping-cart',
