@@ -10,20 +10,7 @@
         <div class="filter_left_section">
         </div>
         <div class="filter_right_section">
-          <!--
-          <p-dropdown *ngIf="stores.length > 0" [options]="stores" filter="true" (onChange)="choseStore($event)">
-            <ng-template let-item pTemplate="selectedItem">{{item.label}}</ng-template>
-            <ng-template let-car pTemplate="item">{{car.label}}</ng-template>
-          </p-dropdown>
-          -->
           <ngx-store-autocomplete (onStore)="choseStore($event)"></ngx-store-autocomplete>
-          <!-- <p-autoComplete name="merchant" [(ngModel)]="merchant" [suggestions]="stores" [dropdown]="true" (onSelect)="choseStore($event)"
-            (completeMethod)="searchStore($event)"> -->
-          <!--
-              <ng-template let-item pTemplate="selectedItem">{{item.label}}</ng-template>
-              <ng-template let-car pTemplate="item">{{car.label}}</ng-template>
-              -->
-          <!-- </p-autoComplete> -->
 
             <a class="createBtn" [routerLink]="['/pages/catalogue/products/create-product']">
               <img class="pointer sda add" src="../../../../assets/img/plus.png" title="{{ 'COMPONENTS.CREATE_PRODUCT' | translate}}"
