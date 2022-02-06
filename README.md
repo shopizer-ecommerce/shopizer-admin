@@ -21,8 +21,8 @@ Assumes your backend runs on http://localhost:8080
 
 ```
 docker run \
--e "APP_BASE_URL=http://localhost:8080/api" \
--it --rm -p 80:80 shopizerecomm/shopizer-admin
+-e "APP_BASE_URL=http://localhost:9090/api" \
+-it --rm -p 4200:80 shopizerecomm/shopizer-admin
 ```
 
 Username: admin@shopizer.com
