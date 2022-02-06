@@ -311,6 +311,7 @@ export class UserFormComponent implements OnInit {
     }
     if (this.form.value.store === '' && (this.roles.isSuperadmin || this.roles.isRetailerAdmin)) {
       this.toastr.error(this.translate.instant('USER_FORM.STORE_REQUIRED'));
+      this.loader = false;
       return;
     }
 
@@ -320,6 +321,7 @@ export class UserFormComponent implements OnInit {
 
     if (!this.isEmaillUnique) {
       this.toastr.error(this.translate.instant('USER_FORM.EMAIL_EXISTS'));
+      this.loader = false;
       return;
     }
     const newGroups = [];
