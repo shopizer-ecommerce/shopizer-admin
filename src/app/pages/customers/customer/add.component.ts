@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-// import { CrudService } from '../../shared/services/crud.service';
 import { CustomersService } from '../services/customer.service';
 import { ToastrService } from 'ngx-toastr';
 import { NbDialogService } from '@nebular/theme';
 import { ShowcaseDialogComponent } from '../../shared/components/showcase-dialog/showcase-dialog.component';
 import { PasswordPromptComponent } from '../../shared/components/password-prompt/password-prompt';
+import { ConfigService } from '../../shared/services/config.service';
 import { Router } from '@angular/router';
+import { ErrorService } from '../../shared/services/error.service';
+import { forkJoin } from 'rxjs';
 @Component({
   selector: 'ngx-add',
   templateUrl: './add.component.html',
@@ -18,12 +20,14 @@ export class AddComponent implements OnInit {
   billingCountry: Array<any> = []
   groups: Array<any> = []
   selectedGroups: Array<any> = []
-  loadingList = false;
+  loading = false;
+  languages = [];
   public scrollbarOptions = { axis: 'y', theme: 'minimal-dark' };
   info = {
     userName: '',
     language: '',
-    emailAddress: ''
+    emailAddress: '',
+    groups: []
   }
   shipping = {
     firstName: '',
@@ -49,70 +53,123 @@ export class AddComponent implements OnInit {
   }
   customerID: any;
   defaultCountry: any;
-  title: any = 'Create Customer'
+  //title: any = 'Create Customer'
   buttonText: any = 'Save'
-  languages: Array<any> = [{ 'code': 'en', 'name': 'English' }, { 'code': 'fr', 'name': 'French' }]
+  selectedItem = '1';
+  sidemenuLinks = [
+    {
+      id: '0',
+      title: 'Set credentials',
+      key: 'FORGOT_PASSWORD.RESET',
+      link: 'customer/set-credentials'
+    },
+    {
+      id: '1',
+      title: 'Customer details',
+      key: 'CUSTOMERS.DETAILS',
+      link: 'customer/add'
+    }
+  ];
   constructor(
-    // private crudService: CrudService,
     private customersService: CustomersService,
+    private configService: ConfigService,
     private toastr: ToastrService,
     public router: Router,
-    private dialogService: NbDialogService
+    private dialogService: NbDialogService,
+    private errorService: ErrorService
   ) {
-    this.getCountry();
-    this.getGroups();
+
+      this.getCountry();
+      this.getLanguages();
+      this.getGroups();
 
   }
+
   getCustomerDetails() {
-    this.loadingList = true;
+    this.loading = true;
     this.customersService.getCustomerDetails(this.customerID)
       .subscribe(data => {
-        // console.log(data, '*************')
-        this.loadingList = false;
+
+        this.loading = false;
         this.onBillingChange(data.billing.country, 0)
 
 
         this.info.emailAddress = data.emailAddress;
         this.info.language = data.language;
         this.info.userName = data.userName;
+        this.info.groups = data.groups;
         this.billing = data.billing;
         if (data.delivery) {
           this.onShippingChange(data.delivery.country, 0)
           this.shipping = data.delivery;
         }
 
+
+        this.info.groups.forEach((uGroup) => {
+          this.groups.forEach((group) => {
+
+            //check this group if usr has it
+            if (uGroup.name === group.name) {
+              group.checked = true;
+            }
+
+          });
+        });
+
+
       }, error => {
-        this.loadingList = false;
+        this.loading = false;
       });
   }
+
   ngOnInit() {
+
     if (localStorage.getItem('customerid')) {
       this.customerID = localStorage.getItem('customerid')
       this.getCustomerDetails();
-      this.title = "Update Customer"
       this.buttonText = "Update"
     }
   }
 
   getCountry() {
+    this.loading=true;
     this.customersService.getCountry()
       .subscribe(data => {
         this.shippingCountry = data;
         this.billingCountry = data;
+        this.loading=false;
       }, error => {
-
+        this.loading=false;
       });
   }
+
+  getLanguages() {
+    this.loading=true;
+    this.configService.getListOfSupportedLanguages(localStorage.getItem('merchant'))
+    .subscribe(langs => {
+      this.languages = [...langs];
+      this.loading=false;
+    });
+
+  }
+
   getGroups() {
+    this.loading=true;
     this.customersService.getGroup()
       .subscribe(data => {
-        this.groups = data;
-      }, error => {
+        console.log("GROUPS " + JSON.stringify(data));
+        this.groups = data.filter(t => t.type === 'CUSTOMER')
+        //this.groups = data;
 
+        this.loading=false;
+      }, error => {
+        this.loading=false;
+        this.errorService.error('COMMON.SYSTEM_ERROR',error);
       });
   }
+
+
   onBillingChange(value, flag) {
-    console.log(flag)
     this.customersService.getBillingZone(value)
       .subscribe(data => {
         if (data.length > 0) {
@@ -125,7 +182,7 @@ export class AddComponent implements OnInit {
           this.billing.zone = '';
         }
       }, error => {
-
+        this.errorService.error('COMMON.SYSTEM_ERROR',error);
       });
   }
   onShippingChange(value, flag) {
@@ -141,7 +198,7 @@ export class AddComponent implements OnInit {
           this.shipping.zone = '';
         }
       }, error => {
-
+        this.errorService.error('COMMON.SYSTEM_ERROR',error);
       });
   }
   addRole(group) {
@@ -155,7 +212,7 @@ export class AddComponent implements OnInit {
   }
   onAddCustomer() {
     if (this.buttonText == 'Save') {
-      this.loadingList = true;
+      this.loading = true;
       let param = {
         "billing": {
           "company": this.billing.company,
@@ -189,14 +246,15 @@ export class AddComponent implements OnInit {
       this.customersService.addCustomers(param)
         .subscribe(data => {
           // console.log(data);
-          this.loadingList = false;
-          this.toastr.success('Customer has been added successfully');
+          this.loading = false;
+          this.errorService.success('COMMON.SUCCESS_ADDED');
           this.goToback()
         }, error => {
-          this.loadingList = false;
+          this.loading = false;
+          this.errorService.error('COMMON.SYSTEM_ERROR',error);
         });
     } else {
-      this.loadingList = true;
+      this.loading = true;
       let param = {
         "id": this.customerID,
         "billing": {
@@ -231,11 +289,12 @@ export class AddComponent implements OnInit {
       this.customersService.updateCustomers(param, this.customerID)
         .subscribe(data => {
           // console.log(data);
-          this.loadingList = false;
-          this.toastr.success('Customer has been updated successfully');
+          this.loading = false;
+          this.errorService.success('COMMON.SUCCESS_ADDED');
           this.goToback()
         }, error => {
-          this.loadingList = false;
+          this.loading = false;
+          this.errorService.error('COMMON.SYSTEM_ERROR',error);
         });
     }
   }
@@ -263,6 +322,9 @@ export class AddComponent implements OnInit {
 
         });
     }
+  }
+  onClickRoute(link) {
+    this.router.navigate(['pages/' + link]);
   }
   goToback() {
     this.router.navigate(['/pages/customer/list']);

@@ -18,6 +18,7 @@ export class HeaderComponent implements OnInit {
   @Input() position = 'normal';
 
   user: string;
+  language: string;
 
   userMenu = [
     { title: 'HEADER.PROFILE', tag: 'profile' },
@@ -50,7 +51,6 @@ export class HeaderComponent implements OnInit {
       if (el.tag === 'language') {
         let lang = el.item.title
         let langCode = this.langMap[el.item.title];
-        //console.log(langCode);
         this.setLanguage(langCode);
       }
     });
@@ -65,6 +65,7 @@ export class HeaderComponent implements OnInit {
     this.userService.getUserProfile()
       .subscribe((user: any) => {
         this.user = user.firstName + ' ' + user.lastName;
+        this.setLanguage(localStorage.getItem('lang'));
       });
   }
 
@@ -91,13 +92,12 @@ export class HeaderComponent implements OnInit {
     localStorage.setItem('lang', lang);
     this.translate.setDefaultLang(lang);
     this.translate.use(lang);
-    //get reference data
+    this.language = lang;
   }
 
   toggleSidebar(): boolean {
     this.sidebarService.toggle(true, 'menu-sidebar');
     this.layoutService.changeLayoutSize();
-
     return false;
   }
 

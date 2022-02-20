@@ -1,12 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { LocalDataSource } from 'ng2-smart-table';
-// import { CrudService } from '../../shared/services/crud.service';
 import { Router } from '@angular/router';
-// import { MalihuScrollbarService } from 'ngx-malihu-scrollbar';
 import { StorageService } from '../../shared/services/storage.service';
 import { CustomersService } from '../services/customer.service';
 import { StoreService } from '../../store-management/services/store.service';
 import { TranslateService } from '@ngx-translate/core';
+import { ToastrService } from 'ngx-toastr';
+import { ErrorService } from '../../shared/services/error.service';
+
 @Component({
   selector: 'ngx-list',
   templateUrl: './list.component.html',
@@ -27,10 +28,11 @@ export class ListComponent implements OnInit {
   constructor(
     private customersService: CustomersService,
     public router: Router,
-    // private mScrollbarService: MalihuScrollbarService,
+    private toastr: ToastrService,
     private storageService: StorageService,
     private storeService: StoreService,
-    private translate: TranslateService
+    private translate: TranslateService,
+    private errorService: ErrorService
   ) {
     this.getStoreList()
     this.selectedStore = this.storageService.getMerchant();
@@ -66,12 +68,11 @@ export class ListComponent implements OnInit {
     this.loadingList = true;
     this.customersService.getCustomers(this.params)
       .subscribe(customer => {
-        // console.log(customer)
         this.loadingList = false;
         this.source.load(customer.customers);
         this.totalCount = customer.totalPages;
       }, error => {
-
+        this.errorService.error('ERROR.SYSTEM_ERROR', error);
       });
     this.setSettings();
   }
@@ -120,14 +121,7 @@ export class ListComponent implements OnInit {
         emailAddress: {
           title: this.translate.instant('USER_FORM.EMAIL_ADDRESS'),
           type: 'string'
-        },
-        // country: {
-        //   title: 'Country',
-        //   type: 'string',
-        //   valuePrepareFunction: (cell, row) => {
-        //     return row.billing.country
-        //   }
-        // }
+        }
       },
     };
   }
@@ -182,19 +176,38 @@ export class ListComponent implements OnInit {
     this.params["store"] = e.value;
     this.getCustomers();
   }
-  // ngAfterViewInit() {
-  //   this.mScrollbarService.initScrollbar('.custom_scroll', { axis: 'y', theme: 'minimal-dark', scrollButtons: { enable: true } });
-  // }
+
   onClickAction(event) {
     switch (event.action) {
       case 'edit':
         this.onEdit(event);
         break;
+      case 'delete':
+        this.onDelete(event);
+        break;
 
     }
   }
+
   onEdit(event) {
     localStorage.setItem('customerid', event.data.id);
     this.router.navigate(['/pages/customer/add']);
+  }
+
+
+
+  onDelete(event) {
+    console.log('DELETE');
+    localStorage.setItem('customerid', null);
+    //TODO dialog
+    
+    this.customersService.deleteCustomer(event.data.id,localStorage.getItem('merchant'))
+    .subscribe(data => {
+      this.loadingList = false;
+    }, error => {
+      this.errorService.error('ERROR.SYSTEM_ERROR', error);
+    });
+    this.errorService.success('COMMON.SUCCESS_REMOVE');
+    this.router.navigate(['/pages/customer/list']);
   }
 }

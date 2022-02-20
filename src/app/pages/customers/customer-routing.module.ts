@@ -4,6 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { CustomersComponent } from './customer.component';
 import { ListComponent } from './customer/list.component';
 import { AddComponent } from './customer/add.component';
+import { SetCredentialsComponent } from './set-credentials/set-credentials.component';
 // import { OptionListComponent } from './options/list.component';
 // import { OptionsAddComponent } from './options/add.component';
 // import { ValueListComponent } from './optionsvalue/list.component';
@@ -21,6 +22,10 @@ const routes: Routes = [{
     {
       path: 'add',
       component: AddComponent,
+    },
+    {
+      path: 'set-credentials',
+      component: SetCredentialsComponent,
     }
     // {
     //   path: 'option/list',
@@ -59,6 +64,7 @@ export const routedComponents = [
   CustomersComponent,
   ListComponent,
   AddComponent,
+  SetCredentialsComponent
   // OptionListComponent,
   // OptionsAddComponent,
   // ValueListComponent,

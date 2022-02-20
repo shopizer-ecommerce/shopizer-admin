@@ -48,7 +48,7 @@ export class ProductService {
     const params = {
       store: this.storageService.getMerchant()
     };
-    return this.crudService.post(`/v2/private/product/definition`, product);
+    return this.crudService.post(`/v2/private/product/definition`, product, { params });
   }
 
   deleteProduct(id): Observable<any> {

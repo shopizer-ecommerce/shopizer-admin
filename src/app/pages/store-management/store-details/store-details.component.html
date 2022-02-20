@@ -1,25 +1,3 @@
-<!-- <nb-card size="small" class="page-card">
-  <div *ngIf="loading" class="loading-block" [nbSpinner]="loading" nbSpinnerSize="large" nbSpinnerStatus="primary">
-  </div>
-  <nb-card-body *ngIf="!loading" class="storeDetails">
-    <div class="inner_pages_legacy">
-      <nb-card-header class="main_header">
-        <h1 class="page_title">{{ 'STORE.STORE_INFORMATION' | translate}}</h1>
-        <div class="content_spacing">
-          <nb-select [(selected)]="selectedItem" outline shape="rectangle" class="headerDropdown">
-            <nb-option *ngFor="let item of sidemenuLinks" [value]="item.id" (click)="route(item.link)">{{ item.title }}
-            </nb-option>
-          </nb-select>
-        </div>
-
-        <div class="content_spacing">
-
-        </div>
-
-      </nb-card-header>
-    </div> -->
 <div *ngIf="!loading">
   <ngx-store-form [store]="store" title="STORE.STORE_INFORMATION"></ngx-store-form>
 </div>
-<!-- </nb-card-body> -->
-<!-- </nb-card> -->

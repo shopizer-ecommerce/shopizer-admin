@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -11,13 +11,11 @@ import { ProductService } from '../services/product.service';
 import { ProductImageService } from '../services/product-image.service';
 import { TranslateService } from '@ngx-translate/core';
 import { validators } from '../../../shared/validation/validators';
-import { environment } from '../../../../../environments/environment';
 import { slugify } from '../../../shared/utils/slugifying';
 import { forkJoin } from 'rxjs';
 import { TypesService } from '../../types/services/types.service';
 import { StorageService } from '../../../shared/services/storage.service';
 import { Image } from '../../../shared/models/image';
-// import { ProductsImagesComponent } from './../products-images/products-images.component';
 import { ImageBrowserComponent } from '../../../../@theme/components/image-browser/image-browser.component';
 declare var jquery: any;
 declare var $: any;
@@ -30,8 +28,6 @@ declare var $: any;
 export class ProductFormComponent implements OnInit {
   @Input() product: any;
   @Input() _title: string;
-
-  // @ViewChild("imagesManager", { static: false }) imagesManager: ProductsImagesComponent;
 
   form: FormGroup;
   loaded = false;
@@ -93,7 +89,6 @@ export class ProductFormComponent implements OnInit {
     //console.log('Parent ' + this.product.id);
     const manufacture$ = this.manufactureService.getManufacturers();
     const types$ = this.productService.getProductTypes();
-    //TODO local cache
     const config$ = this.configService.getListOfSupportedLanguages(localStorage.getItem('merchant'));
     forkJoin([manufacture$, types$, config$])
       .subscribe(([manufacturers, productTypes, languages]) => {

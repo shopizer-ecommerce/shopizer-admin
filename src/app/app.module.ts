@@ -31,7 +31,6 @@ import { NbMomentDateModule } from "@nebular/moment";
 import { GlobalHttpInterceptorService } from "./pages/shared/interceptors/globalError.interceptor";
 import { ToastrModule } from "ngx-toastr";
 import { ImageBrowserComponent } from "./@theme/components/image-browser/image-browser.component";
-import { GlobalErrorHandler } from "./pages/shared/classes/error-handler/global-error-handler";
 import { FileManagerModule } from "ng6-file-man";
 import { ResetPasswordComponent } from "./pages/auth/resetpassword/reset.component";
 import { CustomComponent } from "./pages/custom-component/custom.component";
@@ -40,7 +39,6 @@ import { TinyMCEComponent } from "./@theme/components/tiny-mce/tiny-mce.componen
 import { ManageAddComponent } from "./pages/customers/manageoptions/add.component";
 import { OptionsAddComponent } from "./pages/customers/options/add.component";
 import { ValueAddComponent } from "./pages/customers/optionsvalue/add.component";
-import { FilePickerModule } from "ngx-awesome-uploader";
 @NgModule({
   declarations: [
     AppComponent,
