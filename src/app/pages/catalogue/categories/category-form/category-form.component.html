@@ -7,7 +7,7 @@
         | translate}}</button>
     </div>
     <div class="content_spacing">
-      <button type="submit" [disabled]="!form.valid" [nbSpinner]="loading" nbSpinnerSize="large"
+      <button *ngIf="!loader" type="submit" [disabled]="!form.valid" [nbSpinner]="loading" nbSpinnerSize="large"
         nbSpinnerStatus="control" (click)="save()" nbButton class="success_button">{{ ( !loading ? 'COMMON.SAVE' : '' )
         | translate
         }}</button>

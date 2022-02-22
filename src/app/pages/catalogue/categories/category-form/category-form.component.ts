@@ -11,7 +11,6 @@ import { StorageService } from '../../../shared/services/storage.service';
 import { SecurityService } from '../../../shared/services/security.service';
 import { validators } from '../../../shared/validation/validators';
 import { slugify } from '../../../shared/utils/slugifying';
-import { environment } from '../../../../../environments/environment';
 import { ImageBrowserComponent } from '../../../../@theme/components/image-browser/image-browser.component';
 declare var jquery: any;
 declare var $: any;
@@ -107,15 +106,15 @@ export class CategoryFormComponent implements OnInit {
     this.categoryService.getListOfCategories(this.params)
       .subscribe(res => {
         res.categories.push({ id: 0, code: 'root', children: [] });
-        res.categories.sort((a, b) => {
+        res.categories.forEach((el) => {
+          this.getChildren(el);
+        });
+        this.roots.sort((a, b) => {
           if (a.code < b.code)
             return -1;
           if (a.code > b.code)
             return 1;
           return 0;
-        });
-        res.categories.forEach((el) => {
-          this.getChildren(el);
         });
         //this.roots = [...res.categories];
         //console.log(JSON.stringify(this.roots));
@@ -137,6 +136,7 @@ export class CategoryFormComponent implements OnInit {
   }
 
   getChildren(node) {
+    if(node.id === this.category.id) return;
     if (node.children && node.children.length !== 0) {
       this.roots.push(node);
       node.children.forEach((el) => {
@@ -248,7 +248,6 @@ export class CategoryFormComponent implements OnInit {
     this.form.patchValue({
       selectedLanguage: lang,
     });
-    //this.fillFormArray();
   }
 
   changeName(event, index) {
@@ -380,7 +379,7 @@ export class CategoryFormComponent implements OnInit {
       });
     }
     recursiveFunc(this.form);
-    console.log('Invalids ' + invalidControls);
+    //console.log('Invalids ' + invalidControls);
     return invalidControls;
   }
   customButton(context) {
