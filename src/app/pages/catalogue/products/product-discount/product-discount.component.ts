@@ -15,6 +15,7 @@ import { ProductService } from '../services/product.service';
 export class ProductDiscountComponent implements OnInit {
   discountForm: FormGroup;
   id : any;
+  loading: false;
 
   constructor(
     private dfb: FormBuilder,
