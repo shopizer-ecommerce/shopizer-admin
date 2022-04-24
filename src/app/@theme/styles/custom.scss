@@ -1100,13 +1100,6 @@ ng2-st-tbody-custom {
     width: 60% !important;
   }
 
-  //   .ui-picklist-filter-container {
-  //     background-color: #f7f9fc !important;
-  //   }
-
-  //   .ui-picklist-filter {
-  //     border-color: #f7f9fc !important;
-  //   }
 
   .ui-picklist-item {
     border-bottom: 1px solid #edf1f7 !important;
@@ -1116,7 +1109,16 @@ ng2-st-tbody-custom {
     }
   }
 
-  //   .ui-helper-clearfix {
-  //     color: #222b45 !important;
-  //   }
 }
+
+.top-20 {
+  margin-top:20px;
+}
+
+.tab-padding {
+    padding-top: 1rem;
+    padding-right: 1.5rem;
+    padding-bottom: 1rem;
+    padding-left: 1.5rem;
+}
+

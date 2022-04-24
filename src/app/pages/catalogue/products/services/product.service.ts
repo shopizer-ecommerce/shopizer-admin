@@ -3,6 +3,8 @@ import { Injectable } from '@angular/core';
 import { CrudService } from '../../../shared/services/crud.service';
 import { Observable } from 'rxjs';
 import { StorageService } from '../../../shared/services/storage.service';
+import { UrlTree, UrlSegment, UrlSegmentGroup, ActivatedRoute, Router, PRIMARY_OUTLET } from '@angular/router';
+import {Location} from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
@@ -78,6 +80,12 @@ export class ProductService {
   }
   getProductOrderById(id): Observable<any> {
     return this.crudService.get(`/v1/products?category=${id}&count=200&lang=en&page=0`)
+  }
+  getProductIdRoute(router: Router, location: Location) {
+    const tree: UrlTree = router.parseUrl(location.path());
+    const g: UrlSegmentGroup = tree.root.children[PRIMARY_OUTLET];
+    const s: UrlSegment[] = g.segments; // returns 2 segments
+    return s[4].path;
   }
 
 }

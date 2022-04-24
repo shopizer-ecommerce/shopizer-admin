@@ -20,6 +20,7 @@ const routes: Routes = [
 
 const config: ExtraOptions = {
   useHash: true,
+  anchorScrolling: 'enabled',
   relativeLinkResolution: "legacy",
 };
 

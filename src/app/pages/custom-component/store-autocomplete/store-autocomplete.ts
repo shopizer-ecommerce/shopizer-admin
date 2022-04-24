@@ -14,7 +14,6 @@ export class storeAutoCompleteComponent implements OnInit {
     public merchant: any = '';
     public _stores = [];
     private label;
-    // private _value: any = '';
 
     constructor(
         private storeService: StoreService,
@@ -33,7 +32,6 @@ export class storeAutoCompleteComponent implements OnInit {
             });
     }
     onSelectStore(event) {
-        console.log("even", event)
         this.onStore.emit(event);
     }
 

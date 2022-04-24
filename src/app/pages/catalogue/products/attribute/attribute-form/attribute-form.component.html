@@ -6,11 +6,16 @@
     <div class="content_spacing">
       <button type="button" nbButton class="cancel_button" (click)="goToback()">{{ 'ORDER_FORM.CANCLE'
         | translate}}</button>
+      <!--
       <button type="submit" nbButton class="success_button" (click)="save()" [nbSpinner]="loader" nbSpinnerSize="large"
-        nbSpinnerStatus="control" [disabled]="!form.valid">{{ ( !loader ? 'COMMON.SAVE' : '' ) | translate }}</button>
+        nbSpinnerStatus="control" [disabled]="!form.valid">{{ ( !loader ? 'COMMON.SAVE' : '' ) | translate }}</button>-->
+      <button type="button" nbButton class="success_button" [nbSpinner]="loading" nbSpinnerSize="large"
+        nbSpinnerStatus="control" (click)="save()">
+        {{(!loading?'COMMON.SAVE':'') | translate }} {{ (!loading?'COMMON.SAVE':'') | translate}}
+      </button>
     </div>
   </nb-card-header>
-
+  <div [nbSpinner]="loading" nbSpinnerSize="large" nbSpinnerStatus="primary"></div>
   <form [formGroup]='form'>
     <nb-card class="nb-card inline-form-card">
       <nb-card-body class="nb-card-body">
@@ -18,11 +23,14 @@
           <label class="col-sm-10 col-form-label inputLabel">{{ 'PRODUCT_ATTRIBUTES.ATTRIBUTE_NAME' | translate}}
             *</label>
           <div class="col-sm-12">
+
+
             <p-dropdown *ngIf="options.length" [options]="options" placeholder="Please select options"
               formControlName='option' filter="true">
               <ng-template let-item pTemplate="selectedItem">{{item.label}}</ng-template>
-              <ng-template let-el pTemplate="item">{{el.label}}</ng-template>
+              <ng-template let-el   pTemplate="item">{{el.label}}</ng-template>
             </p-dropdown>
+
             <span *ngIf="(option.dirty || option.touched) && option.invalid && option && option.errors.required"
               class="err-message">
               {{ 'COMMON.VALUE_REQUIRED' | translate}}
@@ -44,27 +52,59 @@
           <label class="col-sm-10 col-form-label inputLabel">{{ 'PRODUCT_ATTRIBUTES.PRODUCT_OPTION' | translate}}
             *</label>
           <div class="col-sm-12">
-            <p-dropdown *ngIf="optionValues.length" [options]="optionValues" placeholder="Please select options value"
+
+                <p-dropdown *ngIf="optionValues.length" [options]="optionValues" placeholder="Please select options value"
+                  formControlName='optionValue' filter="true">
+                  <ng-template let-item pTemplate="selectedItem">{{item.label}}</ng-template>
+                  <ng-template let-el pTemplate="item">{{el.label}}</ng-template>
+                </p-dropdown>
+                <span *ngIf="(optionValue.dirty || optionValue.touched) && optionValue.invalid
+                  && optionValue && optionValue.errors.required" class="err-message">
+                  {{ 'COMMON.VALUE_REQUIRED' | translate}}
+                </span>
+              </div>
+                
+
+          <!--  
+          <p-autoComplete class="autoStore" placeholder="{{ 'OPTION_VALUE.SELECT_OPTION_VALUE' | translate }}" name="optionValue" formControlName="optionValue" [suggestions]="optionValues"
+            [dropdown]="true" (onSelect)="onSelectOptionValue($event)" (completeMethod)="searchOptionValue($event)">
+            <ng-template let-item pTemplate="selectedItem">{{item.label}}</ng-template>
+            <ng-template let-el pTemplate="item">{{el.label}}</ng-template>
+            
+          </p-autoComplete>
+          -->
+
+          <!--
+          <p-autoComplete name="searchSuggestions" formControlName="optionValue" (completeMethod)="searchOptionValue($event)" [suggestions]="optionValues" field="field"></p-autoComplete>
+          -->
+            
+          <!--
+            <p-dropdown *ngIf="optionValues.length" [options]="optionValues" placeholder="OPTION_VALUE.SELECT_OPTION_VALUE"
               formControlName='optionValue' filter="true">
               <ng-template let-item pTemplate="selectedItem">{{item.label}}</ng-template>
               <ng-template let-el pTemplate="item">{{el.label}}</ng-template>
             </p-dropdown>
-            <span *ngIf="(optionValue.dirty || optionValue.touched) && optionValue.invalid
-              && optionValue && optionValue.errors.required" class="err-message">
+           
+            <span *ngIf="(optionValue.dirty || optionValue.touched) && optionValue.errors.required" class="err-message">
               {{ 'COMMON.VALUE_REQUIRED' | translate}}
             </span>
-          </div>
+            <span *ngIf="(optionValue.dirty || optionValue.touched) && optionValue && optionValue.errors.invalid" class="err-message">
+              {{ 'COMMON.INVALID_VALUE' | translate}}
+            </span>
+          -->
+
+          
         </div>
 
 
         <div class="form-group">
           <label for="productAttributeUnformattedPrice" class="col-sm-10 col-form-label inputLabel">
-            {{ 'PRODUCT_ATTRIBUTES.OPTION_PRICE' | translate}} *<span *ngIf="currency">({{currency}})</span>
+            {{ 'PRODUCT_ATTRIBUTES.OPTION_PRICE' | translate}}<span *ngIf="currency">({{currency}})</span>
           </label>
           <div class="col-sm-12">
             <input type="text" class="form-control inputText" id="productAttributeUnformattedPrice"
               formControlName='productAttributeUnformattedPrice' ngxValidateNumber
-              placeholder="{{ 'PRODUCT_ATTRIBUTES.OPTION_PRICE' | translate}}" (blur)="transformTotal()" required>
+              placeholder="{{ 'PRODUCT_ATTRIBUTES.OPTION_PRICE' | translate}}" (blur)="transformTotal()">
             <span *ngIf="(productAttributeUnformattedPrice.dirty || productAttributeUnformattedPrice.touched) && productAttributeUnformattedPrice.invalid
               && productAttributeUnformattedPrice && productAttributeUnformattedPrice.errors.required"
               class="err-message">
@@ -115,4 +155,5 @@
       </nb-card-body>
     </nb-card>
   </form>
+  <div [nbSpinner]="loading" nbSpinnerSize="large" nbSpinnerStatus="primary"></div>
   <!-- </div> -->

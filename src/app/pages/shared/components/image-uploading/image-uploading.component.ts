@@ -88,13 +88,6 @@ export class ImageUploadingComponent implements OnInit {
   }
 
 
-
-  // drop(event: CdkDragDrop<any>) {
-  //   moveItemInArray(this.images, event.previousIndex, event.currentIndex);
-  //   let imageId = event.currentIndex;
-  //   this.updateImage(event.currentIndex, this.images[imageId])
-  // }
-
   ngOnInit() {
     this.addUrl = this.addImageUrl;
     // console.log(this.addUrl, '--------------');

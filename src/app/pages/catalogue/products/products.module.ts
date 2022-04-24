@@ -31,9 +31,10 @@ import { NbDialogModule } from '@nebular/theme';
 import { ProductDiscountComponent } from './product-discount/product-discount.component';
 import { ProductOrderingComponent } from './product-ordering/product-ordering.component';
 
-import { DragDropModule } from '@angular/cdk/drag-drop';
-@NgModule({
 
+import { DragDropModule } from '@angular/cdk/drag-drop';
+
+@NgModule({
 
   declarations: [
     ProductsComponent,

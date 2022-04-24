@@ -19,7 +19,6 @@
     "postinstall": "ngcc --properties es2015 es5 browser module main --first-only --create-ivy-entry-points"
   },
   "dependencies": {
-    "@agm/core": "^3.0.0-beta.0",
     "@akveo/ng2-completer": "^9.0.1",
     "@angular-devkit/core": "^9.1.15",
     "@angular/animations": "^11.2.14",
@@ -28,7 +27,6 @@
     "@angular/compiler": "^11.2.14",
     "@angular/core": "^11.2.14",
     "@angular/forms": "^11.2.14",
-    "@angular/google-maps": "^9.1.0",
     "@angular/localize": "^11.2.14",
     "@angular/material": "^10.2.1",
     "@angular/platform-browser": "^11.2.14",

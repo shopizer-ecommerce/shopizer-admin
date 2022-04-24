@@ -16,12 +16,11 @@ import { PickListModule } from 'primeng/picklist';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { DropdownModule } from 'primeng/dropdown';
 import { AutoCompleteModule } from 'primeng/autocomplete';
-import { BackButtonComponent } from './components/back-button/back-button.component';
 import { TreeTableModule } from 'primeng/treetable';
+import { BackButtonComponent } from './components/back-button/back-button.component';
 import { ValidateNumberDirective } from './validation/validate-number.directive';
 import { PasswordPromptComponent } from './components/password-prompt/password-prompt';
 import { FilePickerModule } from 'ngx-awesome-uploader';
-
 import { DragDropModule } from "@angular/cdk/drag-drop";
 
 

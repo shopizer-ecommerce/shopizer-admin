@@ -1,8 +1,10 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { UrlTree, UrlSegment, UrlSegmentGroup, ActivatedRoute, Router, PRIMARY_OUTLET } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { TranslateService } from '@ngx-translate/core';
 import { ProductImageService } from '../services/product-image.service';
+import { ProductService } from '../services/product.service';
+import { Location } from '@angular/common';
 
 import { Image } from '../../../shared/models/image';
 import { ImageBrowserComponent } from '../../../../@theme/components/image-browser/image-browser.component';
@@ -15,26 +17,26 @@ import { ImageBrowserComponent } from '../../../../@theme/components/image-brows
 export class ProductsImagesComponent implements OnInit {
 
   // product: any;
-  @Input() images;
-  @Input() product;
+  images : any;
+  id : any;
+  loaded = false;
+  loading = false;
+
 
   @Output() refreshProduct = new EventEmitter<string>();
-  @Output() loading = new EventEmitter<any>();
 
 
   // loading = true;
   addImageUrlComponent = '';//add image url to be used by uploader
-
-  // public setImages(mageList: Image[]) {
-  //   console.log('Setting images');
-  // }
 
   constructor(
 
     private toastr: ToastrService,
     private translate: TranslateService,
     private productImageService: ProductImageService,
-    private activatedRoute: ActivatedRoute
+    private productService: ProductService,
+    private location: Location,
+    private router: Router
 
   ) {
 
@@ -42,37 +44,46 @@ export class ProductsImagesComponent implements OnInit {
   }
 
   ngOnInit() {
-    // console.log(this.product == null);
-    // console.log(this.images == null);
-    //console.log(this.images.length);
-
-    //todo load images
-    //console.log(JSON.stringify(this.product));
-
+    this.id = this.productService.getProductIdRoute(this.router,this.location);
+    this.load();
     //specify add image url to image component
-    this.addImageUrlComponent = this.productImageService.addImageUrl(this.product.id);
-    // console.log(addImageUrlComponent)
+    this.addImageUrlComponent = this.productImageService.addImageUrl(this.id);
+    //this only happens when /images, not when default
+    if(this.location.path().includes('images')) {
+      let el = document.getElementById('tabs');
+      el.scrollIntoView();
+    }
+  }
 
+  load() {
+    this.loading = true;
+    this.productImageService.getImages(this.id)
+    .subscribe(res => {
+      this.images = res;
+      this.loading = false;
+      this.loaded = true;
+    });
   }
 
   /** image component */
   removeImage(event) {
-    this.loading.emit(true);
-    this.productImageService.removeImage(this.product.id, event)
+    this.loading = true;
+    this.productImageService.removeImage(this.id, event)
       .subscribe(res1 => {
-        //this.refreshProduct();
-        this.refreshProduct.emit();
-        this.loading.emit(false);
+        this.load();
         this.toastr.success(this.translate.instant('PRODUCT.PRODUCT_UPDATED'));
       }, error => {
         this.toastr.error(error.error.message);
-        this.loading.emit(false);
+        this.loading = false;
       });
   }
   updateImage(event) {
-    this.productImageService.updateImage(this.product.id, event).subscribe(res => {
+    this.loading = true;
+    this.productImageService.updateImage(this.id, event).subscribe(res => {
+      this.load();
     }, error => {
       this.toastr.error(error.error.message);
+      this.loading = false;
     });
 
   }
@@ -82,16 +93,14 @@ export class ProductsImagesComponent implements OnInit {
   }
 
   addedImage(event) {
-    //this.refreshProduct();
-    this.refreshProduct.emit();
-    this.loading.emit(false);
+    this.load();
     this.toastr.success(this.translate.instant('PRODUCT.PRODUCT_UPDATED'));
 
   }
   fileAdded(e) {
-    console.log('eeeeeeee', e)
-    this.loading.emit(e);
+    this.load();
   }
+
 
   /** end image component */
 

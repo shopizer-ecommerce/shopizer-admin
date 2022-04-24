@@ -399,27 +399,32 @@
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
           <div [nbSpinner]="tabLoader" nbSpinnerSize="large" nbSpinnerStatus="primary">
             <nb-card class="nb-card inline-form-card">
-              <!-- <nb-route-tabset [tabs]="tabs"></nb-route-tabset> -->
-
+                <!-- TABS -->
+               <nb-route-tabset id="tabs" [tabs]="tabs" fullWidth></nb-route-tabset>
+              
+              <!--
               <nb-tabset>
                 <nb-tab tabTitle="{{ 'COMPONENTS.PRODUCTS_IMAGES' | translate}}">
-                  <ngx-products-images [images]="images" [product]="product" (refreshProduct)="refreshProduct()"
+                  <ngx-products-images *nbTabContent [images]="images" [product]="product" (refreshProduct)="refreshProduct()"
                     (loading)="loadingTab($event)"></ngx-products-images>
                 </nb-tab>
                 <nb-tab tabTitle="{{ 'COMPONENTS.PRODUCT_TO_CATEGORY' | translate}}">
-                  <ngx-product-to-category [product]="product" (loading)="loadingTab($event)"></ngx-product-to-category>
+                  <ngx-product-to-category *nbTabContent [product]="product" (loading)="loadingTab($event)"></ngx-product-to-category>
                 </nb-tab>
                 <nb-tab tabTitle="{{ 'COMPONENTS.OPTIONS_CONFIG' | translate}}">
-                  <ngx-product-attributes [productId]="product.id" (loading)="loadingTab($event)">
+                  <ngx-product-attributes *nbTabContent [productId]="product.id" (loading)="loadingTab($event)">
                   </ngx-product-attributes>
                 </nb-tab>
                 <nb-tab tabTitle="{{ 'COMPONENTS.PRODUCTS_PROPERTIES' | translate}}">
-                  <ngx-product-property [product]="product" (loading)="loadingTab($event)"></ngx-product-property>
+                  <ngx-product-property *nbTabContent [product]="product" (loading)="loadingTab($event)"></ngx-product-property>
                 </nb-tab>
                 <nb-tab tabTitle="{{ 'COMPONENTS.PRODUCTS_DISCOUNT' | translate}}">
-                  <ngx-product-discount (loading)="loadingTab($event)"> </ngx-product-discount>
+                  <ngx-product-discount *nbTabContent (loading)="loadingTab($event)"> </ngx-product-discount>
                 </nb-tab>
               </nb-tabset>
+              -->
+              
+              
 
 
             </nb-card>

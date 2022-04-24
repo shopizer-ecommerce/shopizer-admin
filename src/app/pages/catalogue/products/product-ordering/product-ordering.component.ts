@@ -57,9 +57,7 @@ export class ProductOrderingComponent implements OnInit {
   }
   onSelectCategory(event) {
     this.categoryTemp.map((item) => {
-      console.log("item", item.name);
       if (event == item.name) {
-        console.log("in");
 
         this.productService.getProductOrderById(item.id).subscribe(res => {
           if (res.products.length == 0) {

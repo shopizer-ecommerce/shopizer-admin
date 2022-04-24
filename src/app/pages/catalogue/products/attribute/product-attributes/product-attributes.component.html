@@ -1,17 +1,8 @@
 <nb-card class="page-card inner_pages">
   <nb-card-body class="product_attribute">
     <div class="inner_pages_legacy">
-      <!-- <nb-card-header class="main_header">
-        <h1 class="page_title">{{'PRODUCT_ATTRIBUTES.PRODUCT_OPTIONS_ATTRIBUTES' | translate}}</h1>
-        <div class="content_spacing_empty"></div>
-
-      </nb-card-header> -->
 
       <form class="form-inline filter_section">
-        <!-- <div class="filter_left_section">
-          <ngx-back-button></ngx-back-button>
-        </div> -->
-
         <div class="filter_right_section">
 
           <a class="createBtn" (click)="onClickAdd()">
@@ -21,56 +12,10 @@
         </div>
 
       </form>
-      <ng2-smart-table [settings]="settings" [source]="source" (custom)="route($event)" class="home-table">
-      </ng2-smart-table>
-      <!-- <ngx-paginator (changePage)="changePage($event)" [pagesToShow]="5" [currentPage]="currentPage" [perPage]="perPage"
-        [count]="totalCount">
-      </ngx-paginator> -->
-      <ngx-paginator [pagesToShow]="5" [currentPage]="currentPage" [perPage]="perPage" [count]="totalCount">
-      </ngx-paginator>
-      <!-- <p-treeTable [value]="data" *ngIf="!loader">
-        <ng-template pTemplate="header">
-          <tr>
-            <th>{{ 'COMMON.ID' | translate}}</th>
-            <th>{{ 'PRODUCT_ATTRIBUTES.OPTION_NAME' | translate}}</th>
-            <th>{{ 'PRODUCT_ATTRIBUTES.PRODUCT_OPTION' | translate}}</th>
-            <th>{{ 'PRODUCT_ATTRIBUTES.DISPLAY_ONLY' | translate}}</th>
-            <th>{{ 'PRODUCT_ATTRIBUTES.PRICE' | translate}}</th>
-            <th>{{ 'COMMON.ORDER' | translate}}</th>
-            <th class="short-header"></th>
-            <th class="short-header"></th>
-          </tr>
-        </ng-template>
-        <ng-template pTemplate="body" let-rowNode let-rowData="rowData">
-          <tr *ngIf="!rowData.parent">
-            <td>{{rowData.id}}</td>
-            <td>{{rowData.option}}</td>
-            <td>{{rowData.optionValue}}</td>
-            <td>
-              <nb-checkbox status="success" [value]="rowData.attributeDisplayOnly"></nb-checkbox>
-            </td>
-            <td>{{rowData.productAttributePrice}}</td>
-            <td>{{rowData.sortOrder}}</td>
-            <td>
-              <a [routerLink]="['/pages/catalogue/products/' + productId + '/attribute/' + rowData.id]">
-                {{ 'COMMON.DETAILS' | translate}}
-              </a>
-            </td>
-            <td class="remove-button">
-              <i class="fas fa-trash-alt pointer" (click)="removeAttribute(rowData.id)"></i>
-            </td>
-          </tr>
-          <tr *ngIf="rowData.parent && !rowData.empty">
-            <td colspan="8">
-              <p-treeTableToggler [rowNode]="rowNode"></p-treeTableToggler>
-              {{rowData.parentName}}
-            </td>
-          </tr>
-        </ng-template>
-      </p-treeTable>
-      <div class="no-items" *ngIf="isEmpty">
-        {{'COMMON.NO_ITEMS' | translate}}
-      </div> -->
+      <ng2-smart-table [settings]="settings" [source]="source" (custom)="route($event)" class="home-table"></ng2-smart-table>
+
+      <ngx-paginator (changePage)="changePage($event)" [pagesToShow]="5" [currentPage]="currentPage" [perPage]="perPage" [count]="totalCount"></ngx-paginator>
+
     </div>
   </nb-card-body>
 </nb-card>

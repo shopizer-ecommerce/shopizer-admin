@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
-
+import { ProductService } from '../../services/product.service';
 import { ToastrService } from 'ngx-toastr';
 import { TranslateService } from '@ngx-translate/core';
 import { ConfigService } from '../../../../shared/services/config.service';
@@ -9,6 +10,7 @@ import * as moment from 'moment';
 import { InventoryService } from '../../services/inventory.service';
 import { formatMoney } from '../../../../shared/validation/price-validation';
 import { slugify } from '../../../../shared/utils/slugifying';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'ngx-price-form',
@@ -18,6 +20,7 @@ import { slugify } from '../../../../shared/utils/slugifying';
 export class PriceFormComponent implements OnInit {
   price;
   priceId;
+  id : any;
   form: FormGroup;
   loader = false;
   languages = [];
@@ -46,14 +49,20 @@ export class PriceFormComponent implements OnInit {
   constructor(
     private activatedRoute: ActivatedRoute,
     private fb: FormBuilder,
+    private router: Router,
     private toastr: ToastrService,
+    private location: Location,
     private translate: TranslateService,
+    private productService: ProductService,
     private configService: ConfigService,
     private inventoryService: InventoryService
   ) {
   }
 
   ngOnInit() {
+
+
+
     this.params.productId = this.activatedRoute.snapshot.paramMap.get('productId');
     this.params.inventoryId = this.activatedRoute.snapshot.paramMap.get('inventoryId');
     this.priceId = +this.activatedRoute.snapshot.paramMap.get('priceId');

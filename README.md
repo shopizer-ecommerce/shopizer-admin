@@ -10,7 +10,7 @@ Requires Angular cli installed (npm install -g @angular/cli@latest)
 
 ## Run locally
 
-npm i --yes
+npm install --legacy-peer-deps
 
 ng serve -o
 

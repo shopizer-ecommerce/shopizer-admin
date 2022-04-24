@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
@@ -17,8 +17,15 @@ import { TypesService } from '../../types/services/types.service';
 import { StorageService } from '../../../shared/services/storage.service';
 import { Image } from '../../../shared/models/image';
 import { ImageBrowserComponent } from '../../../../@theme/components/image-browser/image-browser.component';
+import { threadId } from 'worker_threads';
 declare var jquery: any;
 declare var $: any;
+
+export interface TabItem {
+  label: string;
+  icon: string;
+  route: string;
+}
 
 @Component({
   selector: 'ngx-product-form',
@@ -41,9 +48,39 @@ export class ProductFormComponent implements OnInit {
   defaultLanguage = localStorage.getItem('lang');
   //changed from seo section
   currentLanguage = localStorage.getItem('lang');
-  // tabs: any[];
   images: Image[] = [];
-  // addImageUrlComponent = '';//add image url to be used by uploader
+
+
+  tabs = [
+    {
+      title: this.translate.instant('COMPONENTS.PRODUCTS_IMAGES'),
+      route: 'images',
+      icon: 'home',
+      fragment: 'tabs',
+      responsive: true, // hide title before `$tabset-tab-text-hide-breakpoint` value
+    },
+    {
+      title: this.translate.instant('COMPONENTS.PRODUCT_TO_CATEGORY'),
+      route: 'category',
+      fragment: 'tabs',
+  
+    },
+    {
+      title: this.translate.instant('COMPONENTS.OPTIONS_CONFIG'),
+      route: 'options',
+      fragment: 'tab1',
+    },
+    {
+      title: this.translate.instant('COMPONENTS.PRODUCTS_PROPERTIES'),
+      route: 'properties',
+      fragment: 'tab1',
+    },
+    {
+      title: this.translate.instant('COMPONENTS.PRODUCTS_DISCOUNT'),
+      route: 'discount',
+      fragment: 'tab1',
+    }
+   ];
 
 
   //summernote
@@ -85,8 +122,9 @@ export class ProductFormComponent implements OnInit {
   }
 
   ngOnInit() {
+
     this.loadEvent();
-    //console.log('Parent ' + this.product.id);
+
     const manufacture$ = this.manufactureService.getManufacturers();
     const types$ = this.productService.getProductTypes();
     const config$ = this.configService.getListOfSupportedLanguages(localStorage.getItem('merchant'));

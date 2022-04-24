@@ -28,7 +28,7 @@ export class ProductsListComponent implements OnInit {
   isSuperadmin: boolean;
   selectedStore: String = '';
   // paginator
-  perPage = 15;
+  perPage = 20;
   currentPage = 1;
   totalCount;
   merchant;
@@ -57,6 +57,7 @@ export class ProductsListComponent implements OnInit {
       store: this.storageService.getMerchant(),
       lang: this.storageService.getLanguage(),
       count: this.perPage,
+      origin: "admin", //does not load attributes in listing
       page: 0
     };
   }
