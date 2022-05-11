@@ -1,14 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ErrorService } from '../../shared/services/error.service';
 // import { ConfigService } from '../../shared/services/config.service';
 import { ToastrService } from 'ngx-toastr';
-// import { TaxService } from '../services/tax.service';
 let moneyorder = require('../services/moneyorder.json');
 let paypalData = require('../services/paypal.json');
 let beanStreamData = require('../services/beanstream.json');
 let stripeData = require('../services/stripe.json');
 let braintreeData = require('../services/braintree.json');
 import { PaymentService } from '../services/payment.service';
+import { NbDateAdapterService } from '@nebular/theme';
 @Component({
   selector: 'ngx-payment-configure',
   templateUrl: './configure.component.html',
@@ -17,6 +18,7 @@ import { PaymentService } from '../services/payment.service';
 export class ConfigureComponent implements OnInit {
 
   active = '';
+  error: any;
   formData: Array<any> = [];
   loadingList: boolean = false;
   paymentType: any;
@@ -43,6 +45,7 @@ export class ConfigureComponent implements OnInit {
     private paymentService: PaymentService,
     private toastr: ToastrService,
     private router: Router,
+    private errorService: ErrorService,
     private activatedRoute: ActivatedRoute,
 
   ) {
@@ -50,7 +53,12 @@ export class ConfigureComponent implements OnInit {
     // this.getLanguages();
   }
   ngOnInit() {
+    this.error = null;
     let paymenttype = this.activatedRoute.snapshot.paramMap.get('id');
+     this.paymentType=paymenttype;
+
+    this.formData = [];
+
     if (paymenttype == 'moneyorder') {
       this.formData = moneyorder;
       this.paymentType = "Money Order";
@@ -70,32 +78,42 @@ export class ConfigureComponent implements OnInit {
     this.getPaymentConfigureDetails(paymenttype)
   }
   getPaymentConfigureDetails(type) {
+
     this.loadingList = true;
     this.paymentService.getPaymentModulesDetails(type)
       .subscribe(data => {
-        // console.log(data);
         this.loadingList = false;
         this.paymentData = data;
+        if(data!=null && this.paymentData.length==0) {
+
+        }
         this.setConfigureData();
       }, error => {
+        if(error.status === 404) {// payment not found
+          this.error = error;
+          this.errorService.error("ERROR.SYSTEM_ERROR_TEXT", 404);
+        } else {
+          this.errorService.error("ERROR.SYSTEM_ERROR_TEXT", 500);
+        }
         this.loadingList = false;
       });
   }
-  setConfigureData() {
-    this.formData.map(async (value, i) => {
 
+  setConfigureData() {
+    console.log(JSON.stringify(this.formData));
+    this.formData.map(async (value, i) => {
+      console.log('Value of i ' + i);
+      console.log('Value of value ' + value);
       if (value.type == 'radio') {
         let varType = Array.isArray(this.paymentData[value.objectKey][value.name])
         this.formData[i].value = varType ? this.paymentData[value.objectKey][value.name][0] : this.paymentData[value.objectKey][value.name]
       } else if (value.type == 'groupcheckbox') {
         if (value.objectKey == '') {
-
         } else {
           this.paymentData[value.objectKey][value.name].map((option) => {
             let a = value.optionData.findIndex((a) => a.value === option);
             value.optionData[a].checked = true;
           })
-
         }
       } else {
         this.formData[i].value = value.objectKey == '' ? this.paymentData[value.name] : this.paymentData[value.objectKey][value.name]

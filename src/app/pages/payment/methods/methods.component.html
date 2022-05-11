@@ -19,11 +19,13 @@
         <div class="col-lg-3 col-md-3 col-sm-3 " *ngFor="let result of paymentData; let i = index">
           <div class="grid-product">
             <div class="image bg-lightblue">
+              <span class="logo-wrapper">
               <a>
-                <img *ngIf="result.image" src="../../../../assets/img/{{result.image}}" alt="image">
-                <img *ngIf="result.image == null" src="../../../../assets/img/noimg.png" alt="image">
-
+                <img *ngIf="result.image" src="../../../../assets/img/{{result.image}}" alt="{{ result.code | translate}} " >
+                <img *ngIf="result.image == null && result.binaryImage == null" src="../../../../assets/img/noimg.png" alt="{{ result.code | translate}} " >
+                <img *ngIf="result.binaryImage" [src]="transformImage(result.binaryImage)" alt="{{ result.code | translate}} " >
               </a>
+             </span>
             </div>
             <a class="name">{{ result.code | translate}}</a>
             <div class="name-subtext">({{result.code}})</div>
@@ -31,7 +33,6 @@
             <div class="configure-button">
               <a [ngClass]="result.active && result.configured ? 'createBtn success' : !result.active && !result.configured ? 'createBtn': 'createBtn warning'"
                 (click)="onClickConfigure(result.code)">
-                
                 <label>Configure</label>
               </a>
               

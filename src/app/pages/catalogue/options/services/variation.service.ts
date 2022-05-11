@@ -19,13 +19,13 @@ export class VariationService {
     const params = {
       'code': code,
     };
-    return this.crudService.get(`/v1/private/product/variation/unique`, params);
+    return this.crudService.get(`/v2/private/product/variation/unique`, params);
   }
 
   addVariations(param): Observable<any> {
-    return this.crudService.post(`/v1/private/product/variation`, param);
+    return this.crudService.post(`/v2/private/product/variation`, param);
   }
   getListOfVariations(): Observable<any> {
-    return this.crudService.get(`/v1/private/product/variation`);
+    return this.crudService.get(`/v2/private/product/variation`);
   }
 }
