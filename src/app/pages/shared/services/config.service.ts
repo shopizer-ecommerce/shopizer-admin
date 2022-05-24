@@ -18,6 +18,7 @@ export class ConfigService {
   ) {
   }
 
+
   getListOfSupportedLanguages(store: string) {
     const params = {
       'store': store

@@ -17,7 +17,7 @@ import { TypesService } from '../../types/services/types.service';
 import { StorageService } from '../../../shared/services/storage.service';
 import { Image } from '../../../shared/models/image';
 import { ImageBrowserComponent } from '../../../../@theme/components/image-browser/image-browser.component';
-import { threadId } from 'worker_threads';
+//import { threadId } from 'worker_threads';
 declare var jquery: any;
 declare var $: any;
 
@@ -221,8 +221,6 @@ export class ProductFormComponent implements OnInit {
 
 
   fillForm() {
-    //this.addImageUrlComponent = this.productImageService.addImageUrl(this.product.id);
-    //this.refreshChilds();
     this.form.patchValue({
       identifier: this.product.identifier,
       visible: this.product.visible,
@@ -319,7 +317,6 @@ export class ProductFormComponent implements OnInit {
       selectedLanguage: lang,
     });
     this.currentLanguage = lang;
-    //this.fillFormArray();
   }
 
   changeName(event, index) {
