@@ -5,6 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 // import { TaxService } from '../services/tax.service';
 let canadapost = require('../services/canadapost.json');
 let upsData = require('../services/ups.json');
+let shiprocketData = require('../services/shiprocket.json');
 let customRulesData = require('../services/customrules.json');
 let storePickUpData = require('../services/storepickup.json');
 let weightBased = require('../services/weightbased.json');
@@ -58,6 +59,10 @@ export class ShippingConfigureComponent implements OnInit {
     else if (type == 'ups') {
       this.formData = upsData;
       this.shippingType = "UPS";
+    }
+    else if (type == 'shiprocket') {
+      this.formData = shiprocketData;
+      this.shippingType = "ShipRocket";
     }
     else if (type == 'weightBased') {
       this.formData = weightBased;
@@ -138,6 +143,8 @@ export class ShippingConfigureComponent implements OnInit {
       body = { 'code': type, 'active': param.active, 'defaultSelected': param.defaultSelected, 'integrationKeys': { 'account': param.account, 'apikey': param.apikey, 'password': param.password, 'username': param.username }, 'integrationOptions': { 'services-domestic': param['services-domestic'], 'services-intl': param['services-intl'], 'services-usa': param['services-usa'] } }
     } else if (type == 'ups') {
       body = { 'code': type, 'active': param.active, 'defaultSelected': param.defaultSelected, 'integrationKeys': { 'accessKey': param.accessKey, 'password': param.password, 'userId': param.userId }, 'integrationOptions': { 'packages': [param['packages']], 'selectservice': [param['selectservice']] } }
+    }  else if (type == 'shiprocket') {
+      body = { 'code': type, 'active': param.active, 'defaultSelected': param.defaultSelected, 'integrationKeys': {'password': param.password, 'userId': param.userId } }
     } else if (type == 'weightBased') {
       body = { 'code': type, 'active': param.active, 'defaultSelected': param.defaultSelected, 'integrationKeys': {}, 'integrationOptions': {} }
     }

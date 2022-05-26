@@ -7,6 +7,8 @@ let moneyorder = require('../services/moneyorder.json');
 let paypalData = require('../services/paypal.json');
 let beanStreamData = require('../services/beanstream.json');
 let stripeData = require('../services/stripe.json');
+let paytmData = require('../services/paytm.json');
+
 let braintreeData = require('../services/braintree.json');
 import { PaymentService } from '../services/payment.service';
 import { NbDateAdapterService } from '@nebular/theme';
@@ -71,7 +73,10 @@ export class ConfigureComponent implements OnInit {
     } else if (paymenttype == 'stripe') {
       this.formData = stripeData;
       this.paymentType = "Stripe";
-    } else if (paymenttype == 'braintree') {
+    } else if (paymenttype == 'paytm') {
+      this.formData = paytmData;
+      this.paymentType = "Paytm";
+    }else if (paymenttype == 'braintree') {
       this.formData = braintreeData;
       this.paymentType = "Braintree";
     }
