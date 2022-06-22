@@ -5,18 +5,7 @@
     <nb-card-header class="main_header">
       <h1 class="page_title">{{ 'PRODUCT_TYPE.PRODUCT_TYPE_DETAILS' | translate}}</h1>
       <div class="content_spacing">
-        <!--
-        <nb-select *ngIf="languages.length" placeholder="{{ 'COMMON.LANGUAGE' | translate }}" outline shape="rectangle"
-          class="fullWidth" formControlName='selectedLanguage' (onChange)="ngOnInit()">
-          <nb-option *ngFor="let language of languages" [value]="language.code">{{ ('LANG.'+language.code) |
-            translate }}</nb-option>
-        </nb-select>
-        -->
-        <!-- <nb-select *ngIf="languages.length" placeholder="{{ 'COMMON.LANGUAGE' | translate}}" outline shape="rectangle"
-          name='selectedLanguage' [selected]="defaultLanguage">
-          <nb-option (click)="selectLanguage(language.code)" *ngFor="let language of languages" [value]="language.code">{{
-            ('LANG.'+language.code) |translate }}</nb-option>
-        </nb-select> -->
+
       </div>
       <div class="content_spacing">
         <button type="button" nbButton class="cancel_button" (click)="goToback()">{{ 'ORDER_FORM.CANCLE'
@@ -71,57 +60,10 @@
         </div>
 
 
-        <!--
-        <div class="form-group">
-          <label class="col-sm-10 col-form-label inputLabel">{{ 'COMMON.LANGUAGE' | translate}} *</label>
-          <div class="col-sm-12">
-            <nb-select *ngIf="languages.length" placeholder="{{ 'COMMON.LANGUAGE' | translate}}" outline
-              shape="rectangle" formControlName='selectedLanguage' class="fullWidth">
-              <nb-option *ngFor="let language of languages" [value]="language.code">{{ ('LANG.'+language.code) |
-                translate }}</nb-option>
-            </nb-select>
-          </div>
-        </div>
-
-        <div *ngIf="selectedLanguage.value !== ''" formArrayName='descriptions'>
-          <div *ngFor="let descr of descriptions.controls; let j=index">
-            <div *ngIf="descr.value.language === selectedLanguage.value">
-
-              <div [formGroupName]="j" class="description-block">
-
-                <div class="form-group">
-                  <label for="name" class="col-sm-10 col-form-label inputLabel">{{ 'DESCRIPTION_FORM.NAME' |
-                    translate}}</label>
-                  <div class="col-sm-12">
-                    <input type="text" class="form-control inputText" id="name" formControlName='name'
-                      placeholder="{{ 'DESCRIPTION_FORM.NAME' | translate}}" (ngModelChange)="changeName($event, j)">
-                    <span *ngIf="(descr.get('name').dirty || descr.get('name').touched)
-                              && descr.get('name').invalid && descr.get('name').errors.required" class="err-message">
-                      {{ 'DESCRIPTION_FORM.NAME_REQUIRED' | translate}}
-                    </span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-       -->
-
-
-
-
 
         <div class="form-group">
           <label class="col-form-label inputLabel">{{ 'COMMON.LANGUAGE' | translate}} *</label>
 
-          <!--
-          <nb-select *ngIf="languages.length" placeholder="{{ 'COMMON.LANGUAGE' | translate}}" outline shape="rectangle"
-            class="fullWidth" name='selectedLanguage' [selected]="defaultLanguage">
-            <nb-option (click)="selectLanguage(language.code)" *ngFor="let language of languages"
-              [value]="language.code">{{
-              ('LANG.'+language.code) |translate }}</nb-option>
-          </nb-select>
-        -->
 
           <nb-select *ngIf="languages.length" placeholder="{{ 'COMMON.LANGUAGE' | translate}}" outline
           shape="rectangle" formControlName='selectedLanguage' class="fullWidth">

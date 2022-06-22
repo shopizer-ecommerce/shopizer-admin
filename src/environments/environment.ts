@@ -17,7 +17,8 @@ export const environment = {
     //MARKETPLACE | BTB | STANDARD
     mode: 'STANDARD',
     //API URL
-    apiUrl: "http://localhost:8080/api",
+    //apiUrl: "http://localhost:8080/api",
+    apiUrl: "https://rest-api.shopizer.com/api",
     shippingApi: 'http://localhost:9090/shipping/api/v1',
     client: {
         language: {

@@ -95,7 +95,7 @@ export class ChangePasswordComponent implements OnInit {
     this.loader = true;
     const passwords = {
       changePassword: this.form.value.newPassword,
-      password: this.form.value.newPassword
+      password: this.form.value.password
     };
     this.userService.updatePassword(this.userService.getUserId(), passwords)
       .subscribe(res => {
