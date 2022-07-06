@@ -1,6 +1,7 @@
 {
     "canadapost": "Canada Post",
     "ups": "UPS",
+    "shiprocket": "ShipRocket",
     "weightBased": "Prix d'expédition basé sur le poids",
     "customQuotesRules": "Méthode d'expédition personnalisée",
     "priceByDistance": "Prix de livraison par distance",
@@ -9,6 +10,7 @@
     "paypal-express-checkout": "PayPal Express Checkout",
     "beanstream": "Beanstream",
     "stripe": "Stripe",
+  	"paytm": "Paytm",
     "braintree": "Braintree",
     "COMPONENTS": {
         "LOGIN": "Connexion",

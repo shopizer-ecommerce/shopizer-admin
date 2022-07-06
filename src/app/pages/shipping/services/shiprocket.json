@@ -1,0 +1,61 @@
+[
+    {
+        "type": "checkbox",
+        "label": "Enabled",
+        "placeholder": "",
+        "name": "active",
+        "objectKey": "",
+        "isRequired": false,
+        "optionData": [],
+        "value": false
+    },
+    {
+        "type": "checkbox",
+        "label": "Default",
+        "placeholder": "",
+        "name": "defaultSelected",
+        "objectKey": "",
+        "isRequired": false,
+        "optionData": [],
+        "value": false
+    },
+    {
+        "type": "dropdown",
+        "label": "Environment",
+        "placeholder": "Please select environment",
+        "name": "enviroment",
+        "objectKey": "",
+        "isRequired": false,
+        "optionData": [
+            {
+                "id": "test",
+                "label": "Test"
+            },
+            {
+                "id": "prod",
+                "label": "Prod"
+            }
+        ],
+        "value": ""
+    },
+    {
+        "type": "text",
+        "label": "User ID",
+        "placeholder": "Enter a user id",
+        "name": "userId",
+        "objectKey": "integrationKeys",
+        "isRequired": true,
+        "optionData": [],
+        "value": ""
+    },
+    {
+        "type": "text",
+        "label": "Password",
+        "placeholder": "Enter a password",
+        "name": "password",
+        "objectKey": "integrationKeys",
+        "isRequired": true,
+        "optionData": [],
+        "value": ""
+    }
+]
