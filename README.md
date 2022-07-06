@@ -2,7 +2,7 @@
 
 ## Tested with node v12.22.7
 
-Requires Angular cli installed (npm install -g @angular/cli@latest)
+Requires Angular cli installed (npm install -g @angular/cli@13.3.x)
 
 # Set backend api
 
