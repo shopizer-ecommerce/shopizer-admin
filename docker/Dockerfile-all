@@ -15,7 +15,7 @@ RUN ls -al
 #### STAGE 2
 #### Deploying the application
 
-FROM nginx:alpine
+FROM nginx:1-alpine
 
 COPY --from=builder /app/dist /usr/share/nginx/html
 
