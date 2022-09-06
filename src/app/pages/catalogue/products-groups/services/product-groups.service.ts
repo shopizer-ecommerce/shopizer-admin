@@ -16,7 +16,7 @@ export class ProductGroupsService {
 
   getListOfProductGroups(param): Observable<any> {
     // const store = this.storageService.getMerchant();
-    return this.crudService.get(`/v1/private/products/groups`, param);
+    return this.crudService.get(`/v1/private/product/groups`, param);
   }
 
   // TODO
@@ -28,27 +28,27 @@ export class ProductGroupsService {
   // }
 
   createProductGroup(group): Observable<any> {
-    return this.crudService.post(`/v1/private/products/group`, group);
+    return this.crudService.post(`/v1/private/product/group`, group);
   }
 
   updateGroupActiveValue(group): Observable<any> {
-    return this.crudService.patch(`/v1/private/products/group/${group.code}`, group);
+    return this.crudService.patch(`/v1/private/product/group/${group.code}`, group);
   }
 
   addProductToGroup(productId, groupCode): Observable<any> {
-    return this.crudService.post(`/v1/private/products/${productId}/group/${groupCode}`, {});
+    return this.crudService.post(`/v1/private/product/${productId}/group/${groupCode}`, {});
   }
 
   removeProductFromGroup(productId, groupCode) {
-    return this.crudService.delete(`/v1/private/products/${productId}/group/${groupCode}`);
+    return this.crudService.delete(`/v1/private/product/${productId}/group/${groupCode}`);
   }
 
   getProductsByGroup(groupCode, params) {
-    return this.crudService.get(`/v1/products/group/${groupCode}`, params);
+    return this.crudService.get(`/v1/product/group/${groupCode}`, params);
   }
 
   removeProductGroup(groupCode) {
-    return this.crudService.delete(`/v1/products/group/${groupCode}`);
+    return this.crudService.delete(`/v1/product/group/${groupCode}`);
   }
 
 }

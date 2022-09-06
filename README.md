@@ -21,7 +21,7 @@ ng build
 
 ## Run docker images
 
-Assumes your backend runs on http://localhost:8080
+Assumes your backend runs on http://localhost:8080/api
 
 ```
 docker run \

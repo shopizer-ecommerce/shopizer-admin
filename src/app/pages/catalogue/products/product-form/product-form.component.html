@@ -29,16 +29,16 @@
               <div class="row">
                 <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
                   <div class="form-group">
-                    <label for="identifier" class="col-form-label inputLabel">{{ 'PRODUCT.UNIQUE_ID' | translate}}
+                    <label for="sku" class="col-form-label inputLabel">{{ 'PRODUCT.UNIQUE_ID' | translate}}
                       <span class="mandatory">*</span></label>
                     <div>
-                      <input type="text" class="form-control inputText" id="identifier" formControlName='identifier'
-                        placeholder="{{ 'Unique identifier' | translate}}" (change)="checkSku($event)" required>
-                      <span *ngIf="(identifier.dirty || identifier.touched) && identifier.invalid" class="err-message">
-                        <span *ngIf="identifier.errors.required">
+                      <input type="text" class="form-control inputText" id="sku" formControlName='sku'
+                        placeholder="{{ 'Unique sku' | translate}}" (change)="checkSku($event)" required>
+                      <span *ngIf="(sku.dirty || sku.touched) && sku.invalid" class="err-message">
+                        <span *ngIf="sku.errors.required">
                           {{ 'PRODUCT.ID_REQUIRED' | translate }}
                         </span>
-                        <span *ngIf="identifier.errors.pattern">
+                        <span *ngIf="sku.errors.pattern">
                           {{ 'COMMON.ALPHA_DECIMAL_RULE' | translate}}
                         </span>
                         <span *ngIf="!isCodeUnique" class="err-message">

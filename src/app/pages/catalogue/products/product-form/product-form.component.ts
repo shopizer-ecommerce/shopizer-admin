@@ -171,7 +171,7 @@ export class ProductFormComponent implements OnInit {
 
   private createForm() {
     this.form = this.fb.group({
-      identifier: ['', [Validators.required, Validators.pattern(validators.alphanumeric)]],
+      sku: ['', [Validators.required, Validators.pattern(validators.alphanumeric)]],
       visible: [false],
       dateAvailable: [new Date()],
       manufacturer: ['', [Validators.required]],
@@ -222,7 +222,7 @@ export class ProductFormComponent implements OnInit {
 
   fillForm() {
     this.form.patchValue({
-      identifier: this.product.identifier,
+      sku: this.product.sku,
       visible: this.product.visible,
       canBePurchased: this.product.canBePurchased,
       dateAvailable: new Date(this.product.dateAvailable),
@@ -277,8 +277,8 @@ export class ProductFormComponent implements OnInit {
     });
   }
 
-  get identifier() {
-    return this.form.get('identifier');
+  get sku() {
+    return this.form.get('sku');
   }
 
   get manufacturer() {
@@ -326,9 +326,9 @@ export class ProductFormComponent implements OnInit {
   }
 
   refreshProduct() {
-    this.productService.getProductDefinitionById(this.product.id)
+    //v1 product details
+    this.productService.getProductById(this.product.id)
       .subscribe(res => {
-        // console.log(res);
         this.images = res.images;
       }, error => {
         this.toastr.error(error.error.message);
@@ -340,7 +340,7 @@ export class ProductFormComponent implements OnInit {
     this.loading = true;
     this.productService.checkProductSku(event.target.value)
       .subscribe(res => {
-        this.isCodeUnique = !(res.exists && (this.product.identifier !== event.target.value));
+        this.isCodeUnique = !(res.exists && (this.product.sku !== event.target.value));
         this.loading = false;
       });
   }
@@ -377,7 +377,7 @@ export class ProductFormComponent implements OnInit {
   checkSku(event) {
     this.productService.checkProductSku(event.target.value)
       .subscribe(res => {
-        this.isCodeUnique = !(res.exists && (this.product.identifier !== event.target.value));
+        this.isCodeUnique = !(res.exists && (this.product.sku !== event.target.value));
       });
   }
   **/
@@ -436,7 +436,7 @@ export class ProductFormComponent implements OnInit {
     }
     // check required fields
     //object validations on the form
-    if (tmpObj.name === '' || tmpObj.friendlyUrl === '' || productObject.identifier === '' || productObject.manufacturer === '') {
+    if (tmpObj.name === '' || tmpObj.friendlyUrl === '' || productObject.sku === '' || productObject.manufacturer === '') {
       this.toastr.error(this.translate.instant('COMMON.FILL_REQUIRED_FIELDS'));
       this.loading = false;
     } else {
