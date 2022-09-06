@@ -92,7 +92,7 @@ export class ProductProperties implements OnInit {
     this.loading=true;
 
     forkJoin([
-      this.productService.getProductDefinitionById(this.id), 
+      this.productService.getProductById(this.id), 
       this.productAttributesService.getListOfProductsAttributes(this.id, this.params)])
     .subscribe(([productRes, attrRes]) => {
 

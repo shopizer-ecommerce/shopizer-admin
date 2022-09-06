@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, SystemJsNgModuleLoader } from '@angular/core';
 import { ProductService } from '../services/product.service';
 import { LocalDataSource } from 'ng2-smart-table';
 import { AvailableButtonComponent } from './available-button.component';
@@ -74,6 +74,7 @@ export class ProductsListComponent implements OnInit {
     //ng2-smart-table server side filter //list in field
     this.source.onChanged().subscribe((change) => {
       if (!this.loadingList) {//listing service
+        //callback from filter
         this.listingService.filterDetect(this.params, change, this.loadList.bind(this), this.resetList.bind(this));
       }
     });
@@ -97,6 +98,7 @@ export class ProductsListComponent implements OnInit {
 
   /** callback methods for table list*/
   private loadList(newParams: any) {
+    console.log(JSON.stringify(newParams));
     this.currentPage = 1; //back to page 1
     this.params = newParams;
     this.fetchTableData();
@@ -119,6 +121,7 @@ export class ProductsListComponent implements OnInit {
         this.stores = storeData;
       });
   }
+
   getList() {
     const startFrom = this.currentPage - 1;
     this.params.page = startFrom;
@@ -231,7 +234,6 @@ export class ProductsListComponent implements OnInit {
 
   }
 
-
   // paginator
   changePage(event) {
     switch (event.action) {
@@ -259,7 +261,6 @@ export class ProductsListComponent implements OnInit {
     this.getList();
   }
   route(e) {
-    //console.log(e)
     if (e.action == 'remove') {
       this.deleteRecord(e)
     } else {

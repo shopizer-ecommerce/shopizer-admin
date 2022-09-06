@@ -33,7 +33,7 @@ export class ListingService {
     //if empty array and filer values reset list
     if (params.length != 0) {
     
-      //console.log('Parameters are ' + JSON.stringify(params));
+      console.log('Parameters are ' + JSON.stringify(params));
       params.forEach(function (entry) {
         //console.log('Field ' + entry.field);
         //console.log('Value ' + entry.value);
@@ -51,7 +51,7 @@ export class ListingService {
       //console.log('Filter change A ? ' + this.state.filterChange);
       //filter
       if(this.state.filterChange) {
-        //console.log('Filter search ' + JSON.stringify(this.params));
+        //console.log('Filter search ' + JSON.stringify(params));
         //callback
         loadList(originparams);
         

@@ -19,14 +19,14 @@ export class ProductDetailsComponent implements OnInit {
 
   ngOnInit() {
     const id = this.activatedRoute.snapshot.paramMap.get('id');
-    this.productService.getProductDefinitionById(id)
+    this.productService.getProductById(id)
       .subscribe(res => {
         this.product = res;
       });
   }
 
   route(link) {
-    this.router.navigate(['pages/catalogue/products/' + this.product.id + '/' + link]);
+    this.router.navigate(['pages/catalogue/products/' + this.product.sku + '/' + link]);
   }
 
 }

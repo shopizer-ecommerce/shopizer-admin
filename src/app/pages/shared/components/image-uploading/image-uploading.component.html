@@ -5,10 +5,10 @@
 
       <ngx-awesome-uploader [enableCropper]="false" [showPreviewContainer]="false" [adapter]="adapter"
         [fileMaxCount]="10" [fileMaxSize]="4" [uploadType]="'multi'" (validationError)="onValidationError($event)"
-        [fileExtensions]="['jpg', 'jpeg', 'png', 'gif']" [enableCropper]="false"
+        [fileExtensions]="['jpg', 'jpeg', 'png', 'gif', 'webp']" [enableCropper]="false"
         (uploadSuccess)="onUploadSuccess($event)" (uploadError)="onUploadError($event)"
         (removeSuccess)="onRemoveSuccess($event)" (fileAdded)="onFileAdded($event)" [itemTemplate]="uploadItemTemplate"
-        [accept]="'.jpg, .png, .gif, .jpeg'">
+        [accept]="'.jpg, .png, .gif, .webp, .jpeg'">
         <div class="dropzoneTemplate">
           <div class="content">
             <img src="../../../../../assets/img/cloud-computing.png" width="80">
@@ -26,7 +26,7 @@
       let-uploadProgress="uploadProgress">
       <p>File Size: {{fileItem.file.size}}</p>
       <p>File Name: {{fileItem.fileName}}</p>
-      <p> Upload Progress: {{uploadProgress}} % </p>
+      <p>Upload Progress: {{uploadProgress}} % </p>
     </ng-template>
   </div>
 

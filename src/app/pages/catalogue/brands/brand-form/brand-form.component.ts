@@ -19,6 +19,7 @@ export class BrandFormComponent implements OnInit {
   @Input() title;
   form: FormGroup;
   loader = false;
+  defaultLanguage = localStorage.getItem('lang');
   languages = [];
   config = {
     placeholder: '',
@@ -66,7 +67,7 @@ export class BrandFormComponent implements OnInit {
     this.form = this.fb.group({
       code: ['', [Validators.required, Validators.pattern(validators.alphanumeric)]],
       order: ['', [Validators.required, Validators.pattern(validators.number)]],
-      selectedLanguage: ['en', [Validators.required]],
+      selectedLanguage: [this.defaultLanguage, [Validators.required]],
       descriptions: this.fb.array([]),
     });
   }
@@ -93,14 +94,14 @@ export class BrandFormComponent implements OnInit {
     this.form.patchValue({
       code: this.brand.code,
       order: this.brand.order,
-      selectedLanguage: 'en',
+      selectedLanguage: this.defaultLanguage,
       descriptions: [],
     });
     this.fillFormArray();
   }
 
   fillFormArray() {
-    console.log(this.brand.descriptions);
+    //console.log(this.brand.descriptions);
     this.form.value.descriptions.forEach((desc, index) => {
       if (this.brand != null && this.brand.descriptions) {
         this.brand.descriptions.forEach((description) => {
