@@ -47,7 +47,7 @@
     "@ngrx/store": "9.0.0",
     "@ngx-translate/core": "^12.1.2",
     "@ngx-translate/http-loader": "^5.0.0",
-    "@swimlane/ngx-charts": "^13.0.2",
+    "@swimlane/ngx-charts": "^20.4.1",
     "angular-file": "^3.1.2",
     "angular-tree-component": "^8.5.6",
     "angular2-chartjs": "0.4.1",
