@@ -25,7 +25,7 @@
     "@angular-devkit/core": "^9.1.15",
     "@angular/animations": "^11.2.14",
     "@angular/cdk": "^10.2.1",
-    "@angular/common": "^11.2.14",
+    "@angular/common": "^19.2.16",
     "@angular/compiler": "^11.2.14",
     "@angular/core": "^11.2.14",
     "@angular/forms": "^11.2.14",
